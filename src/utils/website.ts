@@ -1,6 +1,7 @@
+import Logo from "../assets/images/logo.webp"
 const website = {
-  logo: '/logo.png',
-  name: 'My website',
+  logo: Logo,
+  name: 'Lumina Medicals',
   contact: {
     email: 'email@mail.com',
     phone1: '+1 234 567 890',

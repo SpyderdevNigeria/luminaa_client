@@ -1,12 +1,22 @@
 const routeLinks = {
   auth: {
+    path:'/auth',
     login: '/auth/login',
     register: '/auth/register',
   },
   patient: {
-    dashboard: '/patient/dashboard',
+    path:'/patient',
+    lab:'/patient/lab',
+    orders:'/patient/orders',
     profile: '/patient/profile',
-    appointments: '/patient/appointments',
+    payments:'/patient/payments',
+    pharmacy:'/patient/pharmacy',
+    dashboard: '/patient/dashboard',
+    onboarding:'/patient/onboarding',
+    appointment:'/patient/appointment-booking',
+    consultations: '/patient/consultations',
+    prescription:'/patient/prescription',
+
   }
 }
 
