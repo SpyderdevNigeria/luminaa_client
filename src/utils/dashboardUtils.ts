@@ -1,6 +1,5 @@
 import { CiTablets1 } from "react-icons/ci";
 import { LiaStethoscopeSolid } from "react-icons/lia";
-import { HiOutlineCreditCard } from "react-icons/hi2";
 import { TbSmartHome } from "react-icons/tb";
 import { BiSolidClinic } from "react-icons/bi";
 import { LiaPillsSolid } from "react-icons/lia";
@@ -15,7 +14,6 @@ export const navItemsPatient = [
     { label: 'Pharmacy', title:'Pharmacy', icon: LiaPillsSolid,  to:routeLinks?.patient?.pharmacy },
     { label: 'Lab/Radiology',  title:'Lab/Radiology', icon: BiSolidClinic,  to:routeLinks?.patient?.lab },
     { label: 'Consultations', title:'Consultations',  icon: LiaStethoscopeSolid, to:routeLinks?.patient?.consultations },   
-    { label: 'Payments', title:'Payments',  icon: HiOutlineCreditCard, to:routeLinks?.patient?.payments },
    
 
 ]

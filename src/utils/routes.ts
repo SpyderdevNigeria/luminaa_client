@@ -9,7 +9,6 @@ const routeLinks = {
     lab:'/patient/lab',
     orders:'/patient/orders',
     profile: '/patient/profile',
-    payments:'/patient/payments',
     pharmacy:'/patient/pharmacy',
     dashboard: '/patient/dashboard',
     onboarding:'/patient/onboarding',
