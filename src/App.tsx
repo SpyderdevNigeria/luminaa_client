@@ -10,6 +10,10 @@ import DashboardHome from "./pages/patient/dashboard/DashboardHome";
 import Consultaion from "./pages/patient/consultation/Consultaion";
 import Prescriptions from "./pages/patient/prescriptions/Prescriptions";
 import Lab from "./pages/patient/lab/Lab";
+import Profile from "./pages/patient/profile/Profile";
+import Order from "./pages/patient/order/Order";
+import Payment from "./pages/patient/payment/Payment";
+import Pharmacy from "./pages/patient/pharmacy/Pharmacy";
 // Route
 const App = createBrowserRouter([
   {
@@ -64,6 +68,22 @@ const App = createBrowserRouter([
       {
         path:routeLinks?.patient?.lab,
         element : <Lab/>
+      },
+      {
+        path:routeLinks?.patient?.profile,
+        element : <Profile/>
+      },
+      {
+        path:routeLinks?.patient?.orders,
+        element : <Order/>
+      },
+      {
+        path:routeLinks?.patient?.pharmacy,
+        element : <Pharmacy/>
+      },
+      {
+        path:routeLinks?.patient?.payments,
+        element : <Payment/>
       }
     ]
   }

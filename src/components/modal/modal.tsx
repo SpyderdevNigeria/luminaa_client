@@ -4,12 +4,12 @@ import { FaTimes } from "react-icons/fa";
 type ModalProps = {
   open: boolean;
   onClose: () => void;
-  title: string;
-  children: React.ReactNode;
+  title?: string;
+  children?: React.ReactNode;
   hideCancel?: boolean;
-  style: string;
-  handleSubmit: () => void;
-  buttonText: string;
+  style?: string;
+  handleSubmit?: () => void;
+  buttonText?: string;
 };
 
 const Modal = ({

@@ -37,7 +37,7 @@ function AppointmentDetailsModal({
                 <button className="flex flex-row items-center py-1 px-3  bg-[#792CFF1A] text-[#792CFF] text-xs rounded-sm"><FaClock className="mr-1"/> {'12:00 - 13:00'}</button>
                 <div className="flex flex-row items-center gap-2">
                 <button className="flex flex-row items-center py-1 px-4  bg-[#00B2FF1A] text-[#00B2FF] text-xs rounded-full"><TbLocation className="mr-1"/> Hospital Location</button>
-                <button className="flex flex-row items-center py-1 px-3   text-[#00B2FF] text-xs "> <Link to={''} className="border-b border-[#00B2FF]">View address </Link><TbLocation className="ml-1"/></button>
+                <button className="flex flex-row items-center py-1 px-3   text-[#00B2FF] text-xs "> <Link to={''} className="underline">View address </Link><TbLocation className="ml-1"/></button>
                 </div>
               </div>
           </div>

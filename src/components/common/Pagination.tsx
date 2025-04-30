@@ -1,7 +1,7 @@
 import { IPaginationResponse } from "../../types/Interfaces";
 
 type Props = {
-  pagination: IPaginationResponse;
+  pagination?: IPaginationResponse;
   currentPage: number;
   onPageChange: (number: number) => void;
 };
@@ -11,7 +11,7 @@ const Pagination = ({ pagination, currentPage, onPageChange }: Props) => {
 
   return (
     <div className="mt-10 w-full">
-      <div className="md:flex items-center justify-between">
+      <div className="flex items-center justify-between">
       <button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={!pagination.hasPrevPage}

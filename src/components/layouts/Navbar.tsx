@@ -1,6 +1,8 @@
 import React from "react";
 import { FiUser, FiLogOut, FiMenu, FiX } from "react-icons/fi";
 import Notification from "./Notification";
+import { Link } from "react-router-dom";
+import routeLinks from "../../utils/routes";
 type NavbarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
@@ -26,12 +28,12 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
           />
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
-              <a
-                href="#"
+              <Link
+               to={routeLinks?.patient?.profile}
                 className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
               >
                 <FiUser /> Profile
-              </a>
+              </Link>
               <a
                 href="#"
                 className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
