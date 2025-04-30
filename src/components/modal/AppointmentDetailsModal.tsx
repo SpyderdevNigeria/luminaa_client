@@ -19,12 +19,12 @@ function AppointmentDetailsModal({
         onClose={() => setModalOpen(false)}
         title="Appointment Details"
         hideCancel={false}
-        style="!max-w-xl !mx-4 !md:mx-0 "
+        style="!md:max-w-xl !md:mx-4 !md:mx-0 "
         buttonText="Reschedule"
       >
         <div>
-          <div className="border border-gray-light rounded-sm p-2 flex flex-row  items-center gap-2">
-            <div className="w-28 h-28 overflow-hidden rounded-full">
+          <div className="border border-gray-light rounded-sm p-2 flex flex-col md:flex-row  items-center gap-2">
+            <div className="w-20 h-20 md:w-28 md:h-28 overflow-hidden rounded-full">
               <img
                 src="https://i.pravatar.cc/40"
                 alt="Profile"

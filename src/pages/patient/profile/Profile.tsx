@@ -167,7 +167,7 @@ const ProfilePage = () => {
         onClose={() => setModalOpen(false)}
         title={modalTitle}
         hideCancel={true}
-        style="!max-w-2xl !mx-4 !md:mx-0"
+        style="!md:max-w-2xl !md:mx-4 !md:mx-0"
         buttonText=""
       >
         {modalContent}

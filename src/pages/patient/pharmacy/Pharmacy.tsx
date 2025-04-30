@@ -7,13 +7,14 @@ import routeLinks from '../../../utils/routes';
 import Success from '../../../assets/images/patient/success.webp'
 import DrugsCard from '../../../components/common/DrugsCard';
 
-const medications = new Array(12).fill({
-  name: 'Homatrophine - Eye Drop',
+const medications = Array.from({ length: 12 }, () => ({
+  name: 'Homatrophine - Eye Drop ' + Math.floor(Math.random() * 100),
   dosage: '500mg',
   packSize: '10 Tablets',
   price: '10000',
-  quantity:0,
-});
+  quantity: 0,
+}));
+
 
 export default function Pharmacy() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -48,14 +49,16 @@ export default function Pharmacy() {
 
       {/* Shopping Cart Panel */}
       {cartOpen && (
-        <div className="w-[400px] bg-white p-6 shadow-xl overflow-y-auto fixed top-0 right-0 h-full z-10">
-          <div className="flex justify-between items-center mb-6">
+        <div className="w-[400px] bg-white p-6 shadow-xl overflow-y-auto fixed top-0 right-0 h-full z-10 flex flex-col justify-between">
+         
+         <div>
+         <div className="flex justify-between items-center mb-6">
             <h3 className="text-lg font-medium">Order List</h3>
             <button onClick={() => setCartOpen(false)} className="text-xl">
               &times;
             </button>
           </div>
-          <div className="space-y-5">
+          <div className="space-y-5  max-h-[80vh] overflow-y-scroll">
             {cartItems.map((item, idx) => (
               <div
                 key={idx}
@@ -81,8 +84,9 @@ export default function Pharmacy() {
             ))}
           </div>
 
+          </div> 
           {/* Footer */}
-          <div className="mt-8 pt-4 text-sm text-gray-700">
+          <div className=" pt-4 text-sm text-gray-700">
             <div className="flex justify-between mb-2">
               <span>Sub Total</span>
               <span>
@@ -114,7 +118,7 @@ export default function Pharmacy() {
         onClose={() => setModalOpen(false)}
         title=""
         hideCancel={true}
-        style="!max-w-xl !mx-4 !md:mx-0"
+        style="!md:max-w-xl !md:mx-4 !md:mx-0"
         buttonText=""
 
       >

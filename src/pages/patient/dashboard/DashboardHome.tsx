@@ -1,9 +1,11 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import { navItemsPatient } from "../../../utils/dashboardUtils";
 import AppointmentTab from "../../../components/common/AppointmentTab";
+import AppointmentBookModal from "../../../components/modal/AppointmentBookModal";
 function DashboardHome() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const links = useMemo(
     () => [
       {
@@ -22,7 +24,7 @@ function DashboardHome() {
         name: "Buy Drugs",
         description:
           "Find a Doctor to give you a diagnosis and set you up for treatment",
-        link: routeLinks?.patient?.orders,
+        link: routeLinks?.patient?.pharmacy,
       },
       {
         icon: navItemsPatient.find(
@@ -47,9 +49,14 @@ function DashboardHome() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {links?.map((i) => (
           <Link
-            to={i?.link}
+            to={i?.name.toLowerCase() === "book a consultation" ? '#' : i?.link}
             className="bg-white rounded-lg p-4 shadow-sm "
             key={i?.name}
+            onClick={()=>{
+              if (i?.name.toLowerCase() === "book a consultation") {
+                setIsModalOpen(true)
+              }
+            }}
           >
             {i.icon && <i.icon className="text-3xl text-secondary" />}
             <div className="md:max-w-[230px] mt-8">
@@ -64,7 +71,8 @@ function DashboardHome() {
         ))}
       </div>
 
-      {/* Appointment Tabs */}
+      {/* Appointment Booking Modal */}
+      <AppointmentBookModal open={isModalOpen} onClose={()=>{setIsModalOpen(false)}}/>
       <div>
         {/* Appointments List */}
         <section className="bg-white rounded-lg p-4">

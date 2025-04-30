@@ -18,7 +18,7 @@ function OrderDetailsModal({
         onClose={() => setModalOpen(false)}
         title="Order Details"
         hideCancel={false}
-        style="!max-w-2xl !mx-4 !md:mx-0 "
+        style="!md:max-w-2xl !md:mx-4 !md:mx-0 "
         buttonText="Purchase Refill"
       >
         <div>

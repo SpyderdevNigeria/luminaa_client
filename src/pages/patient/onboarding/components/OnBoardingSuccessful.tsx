@@ -14,7 +14,7 @@ function OnBoardingSuccessful() {
 
             <div className="w-full flex flex-col text-center ">
           <Link
-          to="/consultation/appointment/book"
+          to={routeLinks?.patient?.appointment}
             className=" text-xs md:text-sm bg-primary text-white px-4  py-3 font-semibold w-full rounded-md   "
           >
             Book a Consultation 

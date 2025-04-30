@@ -137,3 +137,12 @@
     padding: 1rem;
     border-radius: 10px;
   }
+
+  * {
+    scrollbar-width: none; 
+    -ms-overflow-style: none;  
+  }
+  
+  *::-webkit-scrollbar {
+    display: none; 
+  }
