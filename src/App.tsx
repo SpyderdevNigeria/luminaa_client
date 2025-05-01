@@ -1,4 +1,5 @@
 import { createBrowserRouter,Navigate } from "react-router-dom";
+import './app.css'
 import routeLinks from "./utils/routes";
 import PatientAuthLayout from "./components/layouts/PatientAuthLayout";
 import Login from "./pages/patient/auth/Login";

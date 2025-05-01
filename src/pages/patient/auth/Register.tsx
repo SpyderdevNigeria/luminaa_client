@@ -20,12 +20,12 @@ const [data, setData] = useState({
     phone:''
 })
   return (
-    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 2xl:mt-24">
+    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 mt-10">
       <div className="text-center ">
         <h5 className="text-2xl md:text-3xl px-20 md:px-28 font-[500] text-text-muted">
           Welcome to {website?.name}
         </h5>
-        <p className="text-sm md:text-sm mt-4 px-4 text-text-main leading-5">
+        <p className=" mt-4 px-4 text-text-primary leading-5">
           Please enter your email, Phone Number and password to get started with
           your medical account
         </p>
@@ -36,7 +36,7 @@ const [data, setData] = useState({
         <div className="mb-4 col-span-2 mt-8">
           <label
             htmlFor="Email"
-            className="block text-xs md:text-sm font-[500]  leading-6 mb-2 text-primary"
+            className="block text-xs md:text-sm font-[500] leading-6 mb-2 text-primary"
           >
             Email
           </label>

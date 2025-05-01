@@ -24,12 +24,12 @@ function Sidebar({ links, active }: sidebarProps) {
           </div>
         </div>
         <h4 className="py-2 text-xs text-inactive font-medium">DASHBOARD</h4>
-        <nav className="flex flex-col gap-1  font-medium">
+        <nav className="flex flex-col gap-1  font-medium mt-2">
           {links.map((i, idx) => (
             <Link
               key={idx}
               to={i?.to}
-              className={`flex items-center text-sm p-1 my-1 rounded-lg  font-[400] ${
+              className={`flex items-center text-sm p-1 my-1 rounded-lg mb-2 ${
                 active?.label === i?.label
                   ? "bg-active-primary text-primary"
                   : "text-inactive"

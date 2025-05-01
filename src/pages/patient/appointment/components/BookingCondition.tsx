@@ -1,7 +1,7 @@
 function BookingCondition({ handleStep }) {
   return (
     <div className="w-full">
-      <main className="max-w-2xl w-full mx-auto p-2 md:p-4 ">
+      <main className="max-w-2xl w-full mx-auto p-2 pt-0 md:p-4 ">
         <h5 className="text-xl md:text-2xl text-center font-[500] text-secondary-text">
           Premorbid Condition
         </h5>

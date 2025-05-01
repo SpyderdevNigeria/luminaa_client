@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.label {
+  @apply p-2
+}

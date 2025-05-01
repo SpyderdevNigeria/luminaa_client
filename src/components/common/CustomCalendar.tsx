@@ -106,9 +106,9 @@ const CustomCalendar = () => {
             : "";
           const selectedClass =
             selectedDate &&
-            day === selectedDate.getDate() &&
-            currentMonth === selectedDate.getMonth() &&
-            currentYear === selectedDate.getFullYear()
+              day === selectedDate.getDate() &&
+              currentMonth === selectedDate.getMonth() &&
+              currentYear === selectedDate.getFullYear()
               ? "bg-primary text-white"
               : "";
           const disabledClass = day && isPastDate(day)

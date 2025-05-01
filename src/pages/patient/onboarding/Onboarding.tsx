@@ -29,9 +29,10 @@ function Onboarding() {
       className="min-h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${Background})` }}
     >
-      <div className="p-4 md:p-8">
+      <div className="p-4 py-4 md:px-8">
         <Link to={routeLinks?.patient?.onboarding}>
-          <img src={website?.logo} alt="Logo" />
+          <img src={website?.logo} alt="Logo" 
+          className="w-40 object-contain mx-auto md:mx-0" />
         </Link>
       </div>
 

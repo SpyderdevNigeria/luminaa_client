@@ -32,13 +32,12 @@ function BookingCard({ title = "", type = "default" }: { title?: string; type?: 
         {title}
       </h5>
 
-      <section className={`${isSmall ? '':'mt-4'}`}>
+      <section className={`${isSmall ? '' : 'mt-4'}`}>
         {AppointmentType.map((e) => (
           <div
             key={e.id}
-            className={`cursor-pointer ${isSmall ? 'p-4 ': 'p-4 md:p-6'} rounded-lg border mb-5 ${
-              selectedType === e.id ? "border-primary shadow" : "border-gray-light"
-            }`}
+            className={`cursor-pointer ${isSmall ? 'p-4 ' : 'p-4 md:p-6'} rounded-lg border mb-5 ${selectedType === e.id ? "border-primary shadow" : "border-gray-light"
+              }`}
             onClick={() => setSelectedType(e.id)}
           >
             <div className="flex flex-row items-center justify-between">
@@ -48,16 +47,16 @@ function BookingCard({ title = "", type = "default" }: { title?: string; type?: 
               <img src={e.icon} alt="" className={isSmall ? "w-6 h-6" : "w-8 h-8"} />
             </div>
 
-            <div className={`${isSmall ? 'mt-2': 'mt-5'}`}>
-              <h6 className={`font-[500] mb-1 ${isSmall ? "text-[14px]" : "text-base"}`}>
+            <div className={`${isSmall ? 'mt-2' : 'mt-5'}`}>
+              <h6 className={`font-medium mb-1 ${isSmall ? "text-base" : "text-base"}`}>
                 {e.name}
                 {e.recommended && (
-                  <span className={`pl-4 font-[400] ${isSmall ? "text-[9px]" : "text-[11px]"} text-[#646363]`}>
+                  <span className={`pl-4 ${isSmall ? "text-[9px]" : "text-[11px]"} text-[#646363]`}>
                     (Recommended)
                   </span>
                 )}
               </h6>
-              <p className={isSmall ? "text-[8px]" : "text-[12px]"}>{e.description}</p>
+              <p className={isSmall ? "text-sm" : "text-sn"}>{e.description}</p>
             </div>
           </div>
         ))}
@@ -65,7 +64,7 @@ function BookingCard({ title = "", type = "default" }: { title?: string; type?: 
 
       <section className="mt-4">
         <h5 className={`font-[500] mb-1 ${isSmall ? "text-[14px]" : "text-lg"}`}>Available Doctors</h5>
-        <div className={`mt-2  ${isSmall ?  'max-h-[200px]' : 'max-h-[400px]'} overflow-y-scroll`}>
+        <div className={`mt-2  ${isSmall ? 'max-h-[200px]' : 'max-h-[400px]'} overflow-y-scroll`}>
           {[1, 2, 3, 4, 5, 6, 7].map((e) => (
             <div
               key={e}
@@ -80,7 +79,7 @@ function BookingCard({ title = "", type = "default" }: { title?: string; type?: 
                   />
                 </div>
                 <div>
-                  <h5 className={isSmall ? "text-[12px]" : "text-sm"}>Dr Herr Jonnes</h5>
+                  <h5 className={isSmall ? "text-base" : "text-sm"}>Dr Herr Jonnes</h5>
                   <h6 className={isSmall ? "text-[9px] text-[#ABABAB]" : "text-xs text-[#ABABAB]"}>Dr Herr Jonnes</h6>
                   <h6 className={isSmall ? "text-[9px] text-[#ABABAB]" : "text-xs text-[#ABABAB]"}>PH.D</h6>
                 </div>

@@ -24,7 +24,7 @@ const [data, setData] = useState({
         <h5 className="text-2xl md:text-3xl px-20 md:px-28 font-[500] text-text-muted">
         Welcome Back
         </h5>
-        <p className="text-sm md:text-sm mt-4 px-4 text-text-main leading-5">
+        <p className="mt-4 px-4 text-text-main leading-5">
         Please enter your email and password to get 
         started with your medical account
         </p>

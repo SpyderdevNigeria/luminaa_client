@@ -1,6 +1,5 @@
-import Logo from "../assets/images/logo.webp"
 const website = {
-  logo: Logo,
+  logo: 'http://res.cloudinary.com/dwirhx8kk/image/upload/v1742399951/cli/y0agkvfy6lgoq1ztybd7.png',
   name: 'Lumina Medicals',
   contact: {
     email: 'email@mail.com',

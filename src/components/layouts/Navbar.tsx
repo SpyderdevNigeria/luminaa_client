@@ -6,19 +6,19 @@ import routeLinks from "../../utils/routes";
 type NavbarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
-  active:object
+  active: object
 };
 function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
   return (
-    <header className="bg-white shadow-md px-4 md:px-24 py-6 flex items-center justify-between">
-        
-        <h1 className="text-base md:text-2xl text-primary-text font-semibold">{active?.title}</h1>
+    <header className="bg-white shadow px-4 md:px-24 py-6 flex items-center justify-between">
+
+      <h1 className="text-base md:text-2xl text-primary-text font-semibold">{active?.title}</h1>
 
       <div className="flex items-center gap-4">
-      {/* Notification */}
-      <Notification/>
+        {/* Notification */}
+        <Notification />
         <div className="relative hidden md:block">
           <img
             src="https://i.pravatar.cc/40"
@@ -29,7 +29,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
               <Link
-               to={routeLinks?.patient?.profile}
+                to={routeLinks?.patient?.profile}
                 className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
               >
                 <FiUser /> Profile
