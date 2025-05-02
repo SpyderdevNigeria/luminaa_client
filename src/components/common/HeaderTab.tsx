@@ -1,4 +1,3 @@
-import React from 'react'
 import { CiFilter } from "react-icons/ci";
 import { IoSearch } from "react-icons/io5";
 import { IoFilterOutline } from "react-icons/io5";

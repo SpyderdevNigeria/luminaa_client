@@ -15,9 +15,21 @@ function Onboarding() {
     address: "",
     city: "",
     state: "",
+    country: "",
+    stateOfOrigin: "",
+    lga: "",
+    postalCode: "",
+    street: "",
+    firstName: "",
+    lastName: "",
+    dob: "",
+    gender: "",
+    maritalStatus: "",
+    educationLevel: "",
+    religion: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -86,11 +98,19 @@ function Onboarding() {
                 handleNext();
               }}
               handleChange={handleChange}
-              handleBack={handleBack}
               data={form}
             />
           )}
 
+          {step === 2 && (
+                 <button
+                 type="button"
+                  className=" text-xs md:text-sm  border-primary text-primary px-4  py-3 font-semibold w-full rounded-md  mt-4 "
+                onClick={handleBack}
+              >
+                 back
+               </button>
+          )}
           {step === 3 && <OnBoardingSuccessful />}
         </main>
       </div>

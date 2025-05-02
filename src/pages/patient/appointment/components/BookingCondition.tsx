@@ -1,4 +1,4 @@
-function BookingCondition({ handleStep }) {
+function BookingCondition({ handleStep }: { handleStep: () => void }) {
   return (
     <div className="w-full">
       <main className="max-w-2xl w-full mx-auto p-2 pt-0 md:p-4 ">

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Pagination from "./Pagination"; // make sure this path is correct
+import  { useState } from "react";
+import Pagination from "./Pagination"; 
 import AppointmentDetailsModal from "../modal/AppointmentDetailsModal";
 
 const colors = [

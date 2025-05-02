@@ -1,6 +1,19 @@
 import React from "react";
 
-function BioData({ submitform = (e: React.FormEvent<HTMLFormElement>) => {}, handleChange = () => {}, data }) {
+type BioDataProps = {
+  submitform: (e: React.FormEvent) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  data: {
+    firstName: string;
+    lastName: string;
+    dob: string;
+    gender: string;
+    maritalStatus: string;
+    educationLevel: string;
+    religion: string;
+  };
+}
+function BioData({submitform, handleChange, data}: BioDataProps) {
   return (
     <div>
       <form

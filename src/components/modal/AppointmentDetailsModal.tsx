@@ -10,7 +10,6 @@ type AppointmentDetailsModalProps = {
 function AppointmentDetailsModal({
   isModalOpen,
   setModalOpen,
-  data,
 }: AppointmentDetailsModalProps) {
   return (
     <div>

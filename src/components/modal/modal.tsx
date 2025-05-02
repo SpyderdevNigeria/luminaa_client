@@ -1,6 +1,4 @@
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { FaTimes } from "react-icons/fa";
-
 type ModalProps = {
   open: boolean;
   onClose: () => void;

@@ -6,7 +6,9 @@ type MobileSidebarProps = {
   links: any[];
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
-  active: object;
+  active: {
+    label:string,
+  };
 };
 function MobileSidebar({
   active,

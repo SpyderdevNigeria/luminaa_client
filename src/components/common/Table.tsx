@@ -11,6 +11,7 @@ type PaginationType = {
   hasNextPage: boolean;
   hasPrevPage: boolean;
   totalPages: number;
+  totalDocs: number; 
 };
 
 type Props<T> = {

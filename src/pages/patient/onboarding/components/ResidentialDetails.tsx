@@ -1,5 +1,21 @@
 
-function ResidentialDetails({ submitform = (e: React.FormEvent<HTMLFormElement>) => {}, handleChange = () => {}, data}) {
+interface ResidentialDetailsProps {
+  submitform: (e: React.FormEvent) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  data: {
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    stateOfOrigin: string;
+    lga: string;
+    postalCode: string;
+    street: string;
+
+  };
+}
+
+function ResidentialDetails({ submitform, handleChange, data}: ResidentialDetailsProps) {
     return (
         <div>
           <form

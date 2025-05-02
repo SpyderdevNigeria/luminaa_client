@@ -1,18 +1,19 @@
-import { useLayoutEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Modal from "../../../components/modal/modal";
+import { useState } from "react";
+import { Link , useNavigate} from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import useErrorMessageHooks from "../../../hooks/useErrorMessageHooks";
-import EmailIcon from "../../../assets/images/auth/envelope-open-sparkle.webp";
-import website from "../../../utils/website";
 
 function Register() {
     
   const { errMsg, handleChange, handleErrorMessagesList } = useErrorMessageHooks();
   const [isLoading, setIsLoading] = useState(false);
-  const handleSubmit = async (e: any) => {};
-  const [isModalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate()
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+    setIsLoading(true)
+    navigate('/patient/dashboard')
+  };
 const [data, setData] = useState({
     email:'',
     password:'',
@@ -95,7 +96,6 @@ const [data, setData] = useState({
             className=" text-xs md:text-sm bg-primary text-white px-4  py-3 font-semibold w-full rounded-md  mt-4 "
             disabled={isLoading}
             type="button"
-            onClick={() => setModalOpen(true)}
           >
             {isLoading ? "Loading..." : "Continue"}
           </button>

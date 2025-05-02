@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../../../components/modal/modal";
 import routeLinks from "../../../utils/routes";
@@ -11,7 +11,11 @@ function Register() {
     
   const { errMsg, handleChange, handleErrorMessagesList } = useErrorMessageHooks();
   const [isLoading, setIsLoading] = useState(false);
-  const handleSubmit = async (e: any) => {};
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setModalOpen(true)
+  };
   const [isModalOpen, setModalOpen] = useState(false);
 const [data, setData] = useState({
     email:'',
@@ -113,8 +117,7 @@ const [data, setData] = useState({
           <button
             className=" text-xs md:text-sm bg-primary text-white px-4  py-3 font-semibold w-full rounded-md  mt-4 "
             disabled={isLoading}
-            type="button"
-            onClick={() => setModalOpen(true)}
+            type="submit"
           >
             {isLoading ? "Loading..." : "Continue"}
           </button>

@@ -76,8 +76,8 @@ function Notification() {
         
           {notifications.length > 0 ? (
             <div className="space-y-2 mt-2 mx-2 max-h-[75vh] overflow-y-auto">
-              {notifications.map((note, e) => (
-                <div className="p-3 border border-gray-100 shadow rounded-lg" key={e}>
+              {notifications.map((e) => (
+                <div className="p-3 border border-gray-100 shadow rounded-lg" key={e?.id}>
                     <div className="flex flex-row items-center justify-between">
                         <h3 className="text-base font-[500]">Notification title <span className="text-xs font-[300] ml-2 text-[#7C7C7C]">10mins ago</span></h3>
                         <IoMdClose/>

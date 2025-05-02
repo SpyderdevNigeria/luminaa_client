@@ -1,5 +1,5 @@
 
-export const numberWithCommas = (x) => {
+export const numberWithCommas = (x: number | string): string | number => {
   if (!x) return 0;
   x = x.toString();
   let pattern = /(-?\d+)(\d{3})/;
@@ -8,7 +8,7 @@ export const numberWithCommas = (x) => {
 };
 
 // program to convert first letter of a string to uppercase
-export const capitalizeFirstLetter = (str) => {
+export const capitalizeFirstLetter = (str: string) => {
   if (!str) {
     return "";
   }
@@ -24,7 +24,7 @@ export const capitalizeFirstLetter = (str) => {
   return capitalized || "";
 };
 
-export const capitalizeAllFirstLetter = (str) => {
+export const capitalizeAllFirstLetter = (str: string)  => {
   if (!str) {
     return "";
   }
@@ -41,7 +41,7 @@ export const capitalizeAllFirstLetter = (str) => {
     return "";
   }
 };
-export const setCookie = (cname, cvalue, exdays) => {
+export const setCookie = (cname: any, cvalue: any, exdays: number) => {
   const d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   const expires = "expires=" + d.toUTCString();
@@ -49,14 +49,14 @@ export const setCookie = (cname, cvalue, exdays) => {
   document.cookie = `${cname}=${cvalue};domain=${domain};${expires};path=/;Secure;SameSite=Lax`;
 };
 
-export const setRootDomainCookie = (cname, cvalue, exdays) => {
+export const setRootDomainCookie = (cname: any, cvalue: any, exdays: number) => {
   const d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   const expires = "expires=" + d.toUTCString();
   document.cookie = `${cname}=${cvalue};${expires};path=/;Secure;SameSite=Lax`;
 };
 
-export const setAllCookies = (cname, cvalue, exdays) => {
+export const setAllCookies = (cname: any, cvalue: string, exdays: number) => {
   const d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   const expires = "expires=" + d.toUTCString();
@@ -65,11 +65,11 @@ export const setAllCookies = (cname, cvalue, exdays) => {
   document.cookie = `${cname}=${cvalue};${expires};path=/;Secure;SameSite=Lax`;
 };
 
-export const removeCookie = (cname) => {
+export const removeCookie = (cname: any) => {
   setAllCookies(cname, "", 0);
 };
 
-export const getCookie = (cname) => {
+export const getCookie = (cname: string) => {
   const name = cname + "=";
   const decodedCookie = decodeURIComponent(document.cookie);
   const ca = decodedCookie.split(";");
@@ -90,17 +90,17 @@ export const getCookie = (cname) => {
   return null; // Return null if the cookie is not found
 }
 
-export const getItemsAsString = (items) => {
+export const getItemsAsString = (items: any[]) => {
   if (!items || !Array.isArray(items) || items.length == 0) return "";
   return items
     .map((item) => item.substitutesList)
     .reduce((item, next) => item.concat(next), [])
-    .map((item) => capitalizeFirstLetter(item.name))
+    .map((item: { name: string; }) => capitalizeFirstLetter(item.name))
     .slice(0, 3)
     .join(", ");
 };
 
-export const getFlatItemsAsString = (items, customName) => {
+export const getFlatItemsAsString = (items: any[], customName: string | number) => {
   if (!items || !Array.isArray(items) || items.length == 0) return "";
   return (
     items
@@ -111,11 +111,11 @@ export const getFlatItemsAsString = (items, customName) => {
       .join(", ") + "..."
   );
 };
-export function getRandomInt(min, max) {
+export function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const getFlatItemsAsStringOrder = (items, customName) => {
+export const getFlatItemsAsStringOrder = (items: any[], customName: string | number) => {
   if (!items || !Array.isArray(items) || items.length == 0) return "";
   return (
     items
@@ -127,12 +127,12 @@ export const getFlatItemsAsStringOrder = (items, customName) => {
   );
 };
 
-export const ReplaceImage = (error) => {
+export const ReplaceImage = (error: { target: { src: string; }; }) => {
   error.target.src =
     "https://cdn.vectorstock.com/i/preview-1x/48/06/image-preview-icon-picture-placeholder-vector-31284806.jpg";
 };
 
-export const parseJwt = (token) => {
+export const parseJwt = (token: string) => {
   let base64Url = token.split(".")[1];
   let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   let jsonPayload = decodeURIComponent(
@@ -148,11 +148,11 @@ export const parseJwt = (token) => {
   return JSON.parse(jsonPayload);
 };
 
-export const getParameterByName = (name, query) => {
+export const getParameterByName = (name: any, query: any) => {
   return getParameterByNameAction(name, query);
 };
 
-const getParameterByNameAction = (name, query) => {
+const getParameterByNameAction = (name: string, query: any) => {
   if (!name || typeof window === "undefined") return "";
   name = name.replace(/[\[\]]/g, "\\$&");
   const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
@@ -162,7 +162,7 @@ const getParameterByNameAction = (name, query) => {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 };
 
-export const validateToken = (token) => {
+export const validateToken = (token: string) => {
   try {
     const decoded = parseJwt(token); // Ensure parseJwt function is correct
     const now = Math.floor(Date.now() / 1000);
@@ -172,7 +172,7 @@ export const validateToken = (token) => {
   }
 };
 
-export const getSecureCookie = (cname) => {
+export const getSecureCookie = (cname: string) => {
   const name = cname + "=";
   const decodedCookie = decodeURIComponent(document.cookie);
   const ca = decodedCookie.split(";");

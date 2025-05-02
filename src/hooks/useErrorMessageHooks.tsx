@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const useErrorMessageHooks = () => {
-  const [errorMessagesList, setErrorMessagesList] = useState([]);
+  const [errorMessagesList, setErrorMessagesList] = useState<{ field: string; message: string }[]>([]);
   const [errMsg, setErrMsg] = useState('');
   const [data, setData] = useState({});
   const navigate = useNavigate();
@@ -15,8 +15,8 @@ export const useErrorMessageHooks = () => {
       return (
         <div className="mt-2">
           {message.map((e) => (
-            <p className="text-red-600 text-xs" key={e}>
-              {e?.message.replaceAll('Path ', '').replaceAll('`', '')}
+            <p className="text-red-600 text-xs" key={e.field}>
+              {e?.message.replace(/Path /g, '').replace(/`/g, '')}
             </p>
           ))}
         </div>
@@ -25,20 +25,20 @@ export const useErrorMessageHooks = () => {
       return (
         <div className="mt-2">
           <p className="text-red-600 text-xs">
-            {errorMessagesList?.toLowerCase().includes(key.toLowerCase()) &&
-              errorMessagesList?.replaceAll(',', ' ')}
+            {typeof errorMessagesList === 'string' && (errorMessagesList as string).toLowerCase().includes(key.toLowerCase()) &&
+              (errorMessagesList as string)?.replace(/,/g, ' ')}
           </p>
         </div>
       );
     } else {
       let message = errorMessagesList.filter((e) =>
-        e?.toLowerCase().includes(key?.toLowerCase())
+        e?.field.toLowerCase().includes(key?.toLowerCase())
       );
       return (
         <div className="mt-2">
           {message.map((e) => (
-            <p className="text-red-600 text-xs" key={e}>
-              {e}
+            <p className="text-red-600 text-xs" key={e.field}>
+              {e.message}
             </p>
           ))}
         </div>

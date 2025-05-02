@@ -16,7 +16,7 @@ const Order = () => {
   const pageSize = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setModalOpen] = useState(false)
-  const [data, setData] = useState('');
+  const [data, setData] = useState<OrderType | string>('');
 
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedOrders = allOrders.slice(startIndex, startIndex + pageSize);
@@ -25,9 +25,16 @@ const Order = () => {
     hasPrevPage: currentPage > 1,
     hasNextPage: currentPage < Math.ceil(allOrders.length / pageSize),
     totalPages: Math.ceil(allOrders.length / pageSize),
+    totalDocs: allOrders.length,
   };
 
-  const orderColumns: Column<Order>[] = [
+  interface OrderType {
+    id: string;
+    price: number;
+    status: string;
+  }
+
+  const orderColumns: Column<OrderType>[] = [
     { key: "id", label: "Order ID",  arrows:true, },
     {
       key: "price",

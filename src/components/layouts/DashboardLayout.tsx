@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
-  links: {title:string; to: string; label: string;  icon: React.ReactNode }[];
+  links: { title: string; to: string; label: string; icon: React.ComponentType<{ className?: string }> }[];
 };
 
 function DashboardLayout({ children, links }: DashboardLayoutProps) {
@@ -15,8 +15,12 @@ function DashboardLayout({ children, links }: DashboardLayoutProps) {
   const location = useLocation();
 
   useEffect(() => {
-    const active = links?.find((i) => i?.to === location?.pathname);
-    setActiveLink(active || null);
+    const active = links?.find((i) => i?.to === location?.pathname) || null;
+    setActiveLink(
+      active
+        ? { to: active.to, label: active.label, icon: <active.icon className="" /> }
+        : null
+    );
   }, [location]);
 
   return (
@@ -34,8 +38,11 @@ function DashboardLayout({ children, links }: DashboardLayoutProps) {
 
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 md:ml-62 relative">
-        {/* Top Navbar */}
-        <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}  active={activeLink || { title: '' }}/>
+        <Navbar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          active={activeLink ? { title: activeLink.label } : { title: '' }}
+        />
 
         {/* Page Content */}
         <main className="flex-1 px-4 md:px-24 py-6   overflow-y-auto">

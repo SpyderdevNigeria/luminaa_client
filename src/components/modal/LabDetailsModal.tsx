@@ -10,7 +10,6 @@ type LabDetailsModalProps = {
 function LabDetailsModal({
   isModalOpen,
   setModalOpen,
-  data,
 }: LabDetailsModalProps) {
   return (
     <div>
@@ -48,7 +47,7 @@ function LabDetailsModal({
           <main className="min-h-[200px]">
             <h4 className="text-sm  my-2">Latest Reports </h4>
             {[1, 2].map((i) => (
-              <div className=" flex flex-row items-center justify-between py-4 ">
+              <div className=" flex flex-row items-center justify-between py-4 " key={i}>
                 <div className="space-y-1">
                   <h4 className="text-[12px]  font-[300]">Test Name</h4>
                   <h3 className="text-[12px]  font-[500]">Hepaptits</h3>

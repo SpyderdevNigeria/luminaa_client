@@ -44,7 +44,7 @@ function Prescriptions() {
 
       <div className="space-y-4">
         {[1, 2, 3, 4, 5, 6, 7].map((i) => (
-          <div className="bg-white rounded-lg flex flex-row items-center justify-between py-4 md:px-8">
+          <div className="bg-white rounded-lg flex flex-row items-center justify-between py-4 md:px-8" key={i}>
             <div className="space-y-1">
                 <h3 className="text-sm md:text-base font-[500]">Treatment For hepatitis</h3>
                 <h4 className="text-xs font-[300]">Last Prescribed 04 App 2025</h4>

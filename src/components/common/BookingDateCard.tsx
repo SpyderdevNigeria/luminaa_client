@@ -3,7 +3,7 @@ import CustomCalendar from "./CustomCalendar";
 
 function BookingDateCard({ type = "default" }) {
   const isSmall = type === "small";
-  const [typeTime, setTypeTime] = useState(null);
+  const [typeTime, setTypeTime] = useState("");
 
   const AppointmentTime = [
     { id: 1, name: "9:00 AM" },
@@ -65,11 +65,11 @@ function BookingDateCard({ type = "default" }) {
               <button
                 key={e.id}
                 className={`rounded-sm font-[500] border ${isSmall ? "text-[11px] p-1.5" : "text-sm p-2"
-                  } ${typeTime === e.id
+                  } ${typeTime === e.id.toString()
                     ? "border-primary bg-primary text-white"
                     : "border-gray-light"
                   }`}
-                onClick={() => setTypeTime(e?.id)}
+                onClick={() => setTypeTime(e?.id.toString())}
               >
                 {e.name}
               </button>

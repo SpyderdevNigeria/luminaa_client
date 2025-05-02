@@ -21,27 +21,27 @@ export default function Pharmacy() {
   const [modalOpen, setModalOpen] = useState(false);
   const [cartItems, setCartItems] = useState<{ name: string; dosage: string; packSize: string; price: string; quantity: number }[]>([]);
 
-  const handleAddToCart = (med: { name: any; }) => {
-    setCartItems((prev) => {
-      const existingIndex = prev.findIndex((item) => item?.name === med.name);
-      if (existingIndex !== -1) {
-        const updatedCart = [...prev];
-        updatedCart[existingIndex]!.quantity += 1;
-        return updatedCart;
-      }
+  const handleAddToCart = (med: { name: string; dosage: string; packSize: string; price: string; }) => {
+      setCartItems((prev) => {
+        const existingIndex = prev.findIndex((item) => item?.name === med.name);
+        if (existingIndex !== -1) {
+          const updatedCart = [...prev];
+          updatedCart[existingIndex]!.quantity += 1;
+          return updatedCart;
+        }
+        
+        return [...prev, { ...med, quantity: 1 }];
+      });
       
-      return [...prev, { ...med, quantity: 1 }];
-    });
-    
-    setCartOpen(true); 
-  };
+      setCartOpen(true); 
+    };
 
   return (
     <div>
       <div className="flex-1">
         <HeaderTab title={'pharmacy'} />
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4">
-          {medications.map((med, index) => (
+          {medications.map((med) => (
             <DrugsCard med={med} handleAddToCart={handleAddToCart} />
           ))}
         </div>

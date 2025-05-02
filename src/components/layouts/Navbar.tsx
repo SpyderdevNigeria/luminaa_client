@@ -6,7 +6,9 @@ import routeLinks from "../../utils/routes";
 type NavbarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
-  active: object
+  active: {
+    title:string
+  }
 };
 function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
