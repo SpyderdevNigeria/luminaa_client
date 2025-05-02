@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import website from "../../utils/website";
 import { GoSidebarExpand } from "react-icons/go";
-import Footer from "./Footer";
+import Footer from "./SidebarFooter";
 type LinkItem = {
   to: string;
   label: string;
