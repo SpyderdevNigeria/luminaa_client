@@ -40,7 +40,7 @@ const [data, setData] = useState({
       {/* Register form  */}
       <form action="" onSubmit={handleSubmit}>
             {/* First Name */}
-            <div className=" col-span-2 ">
+            <div className=" col-span-2 mt-8">
             <label
               htmlFor="firstName"
               className="form-label text-primary"
@@ -59,7 +59,7 @@ const [data, setData] = useState({
           </div>
 
           {/* Last Name */}
-          <div className="col-span-2 ">
+          <div className="col-span-2 mt-4">
             <label
               htmlFor="lastName"
               className="form-label text-primary"
@@ -76,7 +76,7 @@ const [data, setData] = useState({
               className="form-input focus:outline-primary text-gray-light"
             />
           </div>
-        <div className="mb-4 col-span-2 mt-8">
+        <div className="mb-4 col-span-2 mt-4">
           <label
             htmlFor="Email"
             className="form-label text-primary"

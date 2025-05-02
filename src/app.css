@@ -10,6 +10,3 @@
 .form-primary-button {
   @apply  text-base  text-white px-4  py-3 font-semibold w-full rounded-md;
 }
-.form-primary-button-border {
-
-}
