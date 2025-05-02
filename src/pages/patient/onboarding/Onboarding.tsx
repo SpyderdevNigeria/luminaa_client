@@ -105,7 +105,7 @@ function Onboarding() {
           {step === 2 && (
                  <button
                  type="button"
-                  className=" text-xs md:text-sm  border-primary text-primary px-4  py-3 font-semibold w-full rounded-md  mt-4 "
+                  className="text-base  border-primary text-primary px-4  py-3 font-semibold w-full rounded-md  mt-4 "
                 onClick={handleBack}
               >
                  back

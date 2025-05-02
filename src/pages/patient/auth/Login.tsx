@@ -36,7 +36,7 @@ const [data, setData] = useState({
         <div className="mb-4 col-span-2 mt-8">
           <label
             htmlFor="Email"
-            className="block text-xs md:text-sm font-[500]  leading-6 mb-2 text-primary"
+            className="form-label text-primary"
           >
             Email
           </label>
@@ -47,7 +47,7 @@ const [data, setData] = useState({
             onChange={handleChange}
             value={data?.email}
             placeholder="Email"
-            className="w-full p-3 text-xs md:text-sm rounded-lg  font-[300] border focus:outline-primary text-gray-light"
+            className="form-input focus:outline-primary text-gray-light"
           />
           {handleErrorMessagesList("email")}
         </div>
@@ -56,7 +56,7 @@ const [data, setData] = useState({
         <div className="mb-4 col-span-2">
           <label
             htmlFor="password"
-            className="block text-xs md:text-sm font-[500]  leading-6 mb-2 text-primary"
+            className="form-label text-primary"
           >
             Password
           </label>
@@ -68,7 +68,7 @@ const [data, setData] = useState({
               value={data?.password}
               id="text"
               placeholder="Password"
-              className="w-full p-3 text-xs md:text-sm rounded-lg  font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             />
 
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
@@ -93,15 +93,15 @@ const [data, setData] = useState({
 
         <div className="w-full ">
           <button
-            className=" text-xs md:text-sm bg-primary text-white px-4  py-3 font-semibold w-full rounded-md  mt-4 "
+            className=" form-primary-button bg-primary  mt-4 "
             disabled={isLoading}
-            type="button"
+            type="submit"
           >
             {isLoading ? "Loading..." : "Continue"}
           </button>
         </div>
 
-        <h5 className="text-text-muted text-xs md:text-sm font-[500] text-center mt-4">
+        <h5 className="text-text-muted text-base text-center mt-4">
           Don't have an account?{" "}
           <Link to={routeLinks?.auth?.register} className="text-primary">
            Register

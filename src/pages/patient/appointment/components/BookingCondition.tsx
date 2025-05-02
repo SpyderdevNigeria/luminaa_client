@@ -19,7 +19,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="symptoms"
               rows={6}
               placeholder="Please Specify"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             ></textarea>
           </div>
           {/* Genotype */}
@@ -33,7 +33,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
             <select
               id="genotype"
               name="genotype"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Genotype</option>
               <option value="AA">AA</option>
@@ -54,7 +54,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
             <select
               id="bloodGroup"
               name="bloodGroup"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Blood Group</option>
               <option value="A+">A+</option>
@@ -81,7 +81,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="pastBloodTransfusion"
               name="pastBloodTransfusion"
               placeholder="Yes / No / Details"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -96,7 +96,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
             <select
               id="pastDelivery"
               name="pastDelivery"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Status</option>
               <option value="None">None</option>
@@ -119,7 +119,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="pastHospitalAdmission"
               name="pastHospitalAdmission"
               placeholder="Yes / No / Details"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -136,7 +136,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="hypertension"
               name="hypertension"
               placeholder="Yes / No / Details"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -153,7 +153,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="diabetes"
               name="diabetes"
               placeholder="Yes / No / Details"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -170,7 +170,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="asthma"
               name="asthma"
               placeholder="Yes / No / Details"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -187,7 +187,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="kidneyDisease"
               name="kidneyDisease"
               placeholder="Yes / No / Details"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -204,7 +204,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="liverDisease"
               name="liverDisease"
               placeholder="Yes / No / Details"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -221,7 +221,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="epilepsy"
               name="epilepsy"
               placeholder="Yes / No / Details"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -238,7 +238,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               id="sickleCell"
               name="sickleCell"
               placeholder="Yes / No / Details"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -255,11 +255,11 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
               name="pastMedicalHistory"
               rows={6}
               placeholder="Type here..."
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             />
           </div>
           <button
-            className="cursor-pointer text-xs md:text-sm bg-primary text-white px-4  py-3 font-semibold w-full rounded-md  mt-4 "
+            className="cursor-pointer form-primary-button bg-primary  mt-4 "
             onClick={() => {
               handleStep();
             }}

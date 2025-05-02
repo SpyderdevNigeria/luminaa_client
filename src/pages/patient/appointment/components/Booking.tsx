@@ -20,7 +20,7 @@ function Booking({ handleStep =()=>{} }) {
               id="symptoms"
               rows={6}
               placeholder="Please Specify"
-              className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className=" form-input focus:outline-primary text-gray-light"
             ></textarea>
           </div>
       </main>
@@ -29,7 +29,7 @@ function Booking({ handleStep =()=>{} }) {
       <main className="max-w-2xl w-full mx-auto p-2 md:p-0">
         <div className="w-full ">
           <button
-            className="cursor-pointer text-xs md:text-sm bg-primary text-white px-4  py-3 font-semibold w-full rounded-md  mt-4 "
+            className="cursor-pointer form-primary-button bg-primary  mt-4 "
             onClick={() => {
               handleStep();
             }}

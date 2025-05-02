@@ -35,7 +35,7 @@ function PersonalForm() {
           <div className=" col-span-2 ">
             <label
               htmlFor="firstName"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               First Name
             </label>
@@ -46,7 +46,7 @@ function PersonalForm() {
               onChange={handleChange}
               value={formData?.firstName}
               placeholder="First Name"
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -54,7 +54,7 @@ function PersonalForm() {
           <div className="col-span-2 ">
             <label
               htmlFor="lastName"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Last Name
             </label>
@@ -65,7 +65,7 @@ function PersonalForm() {
               onChange={handleChange}
               value={formData?.lastName}
               placeholder="Last Name"
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -73,7 +73,7 @@ function PersonalForm() {
           <div className="col-span-2 ">
             <label
               htmlFor="dob"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Date of Birth
             </label>
@@ -83,7 +83,7 @@ function PersonalForm() {
               id="dob"
               onChange={handleChange}
               value={formData?.dob}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -91,7 +91,7 @@ function PersonalForm() {
           <div className="col-span-2 ">
             <label
               htmlFor="gender"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Gender
             </label>
@@ -100,7 +100,7 @@ function PersonalForm() {
               id="gender"
               onChange={handleChange}
               value={formData?.gender}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
@@ -113,7 +113,7 @@ function PersonalForm() {
           <div className="col-span-2 ">
             <label
               htmlFor="maritalStatus"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Marital Status
             </label>
@@ -122,7 +122,7 @@ function PersonalForm() {
               id="maritalStatus"
               onChange={handleChange}
               value={formData?.maritalStatus}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Status</option>
               <option value="Single">Single</option>
@@ -136,7 +136,7 @@ function PersonalForm() {
           <div className="col-span-2 ">
             <label
               htmlFor="educationLevel"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Level of Education
             </label>
@@ -145,7 +145,7 @@ function PersonalForm() {
               id="educationLevel"
               onChange={handleChange}
               value={formData?.educationLevel}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Level</option>
               <option value="Primary">Primary</option>
@@ -159,7 +159,7 @@ function PersonalForm() {
           <div className="mb-4 col-span-2">
             <label
               htmlFor="religion"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Religion
             </label>
@@ -168,7 +168,7 @@ function PersonalForm() {
               id="religion"
               onChange={handleChange}
               value={formData?.religion}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Religion</option>
               <option value="Christianity">Christianity</option>

@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
-.label {
-  @apply p-2
+.form-label {
+  @apply block md:text-lg mb-2 font-semibold ;
+}
+
+.form-input {
+  @apply w-full p-3 text-base rounded-lg border ;
+}
+.form-primary-button {
+  @apply  text-base  text-white px-4  py-3 font-semibold w-full rounded-md;
+}
+.form-primary-button-border {
+
 }

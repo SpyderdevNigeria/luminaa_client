@@ -21,15 +21,17 @@ const [data, setData] = useState({
     email:'',
     password:'',
     eye:false,
-    phone:''
+    phone:'',
+    lastName:'',
+    firstName:'',
 })
   return (
-    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 mt-10">
+    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 ">
       <div className="text-center ">
         <h5 className="text-2xl md:text-3xl px-20 md:px-28 font-[500] text-text-muted">
           Welcome to {website?.name}
         </h5>
-        <p className=" mt-4 px-4 text-text-primary leading-5">
+        <p className=" my-4 px-4 text-text-primary leading-5">
           Please enter your email, Phone Number and password to get started with
           your medical account
         </p>
@@ -37,10 +39,47 @@ const [data, setData] = useState({
 
       {/* Register form  */}
       <form action="" onSubmit={handleSubmit}>
+            {/* First Name */}
+            <div className=" col-span-2 ">
+            <label
+              htmlFor="firstName"
+              className="form-label text-primary"
+            >
+              First Name
+            </label>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              onChange={handleChange}
+              value={data?.firstName}
+              placeholder="First Name"
+              className="form-input focus:outline-primary text-gray-light"
+            />
+          </div>
+
+          {/* Last Name */}
+          <div className="col-span-2 ">
+            <label
+              htmlFor="lastName"
+              className="form-label text-primary"
+            >
+              Last Name
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              onChange={handleChange}
+              value={data?.lastName}
+              placeholder="Last Name"
+              className="form-input focus:outline-primary text-gray-light"
+            />
+          </div>
         <div className="mb-4 col-span-2 mt-8">
           <label
             htmlFor="Email"
-            className="block text-xs md:text-sm font-[500] leading-6 mb-2 text-primary"
+            className="form-label text-primary"
           >
             Email
           </label>
@@ -51,7 +90,7 @@ const [data, setData] = useState({
             onChange={handleChange}
             value={data?.email}
             placeholder="Email"
-            className="w-full p-3 text-xs md:text-sm rounded-lg  font-[300] border focus:outline-primary text-gray-light"
+            className="form-input focus:outline-primary text-gray-light"
           />
           {handleErrorMessagesList("email")}
         </div>
@@ -59,7 +98,7 @@ const [data, setData] = useState({
         <div className="mb-4 col-span-2 mt-4">
           <label
             htmlFor="Phone Number"
-            className="block text-xs md:text-sm font-[500]  leading-6 mb-2 text-primary"
+            className="form-label text-primary"
           >
             Phone Number
           </label>
@@ -78,7 +117,7 @@ const [data, setData] = useState({
         <div className="mb-4 col-span-2">
           <label
             htmlFor="password"
-            className="block text-xs md:text-sm font-[500]  leading-6 mb-2 text-primary"
+            className="form-label text-primary"
           >
             Password
           </label>
@@ -90,7 +129,7 @@ const [data, setData] = useState({
               value={data?.password}
               id="text"
               placeholder="Password"
-              className="w-full p-3 text-xs md:text-sm rounded-lg  font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             />
 
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
@@ -115,7 +154,7 @@ const [data, setData] = useState({
 
         <div className="w-full ">
           <button
-            className=" text-xs md:text-sm bg-primary text-white px-4  py-3 font-semibold w-full rounded-md  mt-4 "
+            className=" form-primary-button bg-primary  mt-4 "
             disabled={isLoading}
             type="submit"
           >
@@ -123,7 +162,7 @@ const [data, setData] = useState({
           </button>
         </div>
 
-        <h5 className="text-text-muted text-xs md:text-sm font-[500] text-center mt-4">
+        <h5 className="text-text-muted text-base text-center mt-4">
           Already have an account?{" "}
           <Link to={routeLinks?.auth?.login} className="text-primary">
             Log in
@@ -140,9 +179,9 @@ const [data, setData] = useState({
         <div className="flex flex-col items-center justify-center gap-8">
           <img src={EmailIcon} alt="" className="w-[80px]" />
 
-          <h2 className="text-2xl font-[500] ">Email Confirmation</h2>
+          <h2 className="text-2xl  font-semibold">Email Confirmation</h2>
 
-          <h5 className="text-text-muted text-xs md:text-xs  font-[400] text-center ">
+          <h5 className="text-text-muted text-sm text-center ">
             If you didn't get any link,{" "}
             <Link to={routeLinks?.patient?.onboarding} className="text-primary">
               Click to resend

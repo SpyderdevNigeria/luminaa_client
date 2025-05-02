@@ -134,7 +134,7 @@ export default function Pharmacy() {
           <div className="w-full flex flex-col text-center mt-6">
             <Link
               to={routeLinks?.patient?.dashboard}
-              className=" text-xs md:text-sm bg-primary text-white px-4  py-3 font-semibold w-full rounded-md"
+              className=" form-primary-button bg-primary"
             >
               back to dashboard
             </Link>

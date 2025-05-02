@@ -59,11 +59,11 @@ function DashboardHome() {
             }}
           >
             {i.icon && <i.icon className="text-3xl text-secondary" />}
-            <div className="md:max-w-[230px] mt-8">
-              <h3 className="text-base md:text-lg font-medium mb-1 text-dashboard-gray">
+            <div className="md:max-w-[230px] 2xl:max-w-sm mt-8">
+              <h3 className="text-base md:text-lg 2xl:text-2xl font-medium mb-1 text-dashboard-gray">
                 {i?.name}
               </h3>
-              <p className="text-sm md:text-base  text-dashboard-gray">
+              <p className="text-sm md:text-base 2xl:text-lg text-dashboard-gray">
                 {i?.description}
               </p>
             </div>

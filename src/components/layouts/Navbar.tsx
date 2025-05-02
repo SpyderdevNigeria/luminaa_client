@@ -1,27 +1,46 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { FiUser, FiLogOut, FiMenu, FiX } from "react-icons/fi";
 import Notification from "./Notification";
 import { Link } from "react-router-dom";
 import routeLinks from "../../utils/routes";
+
 type NavbarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
   active: {
-    title:string
-  }
+    title: string;
+  };
 };
+
 function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header className="bg-white shadow px-4 md:px-24 py-6 flex items-center justify-between">
-
-      <h1 className="text-base md:text-2xl text-primary-text font-semibold">{active?.title}</h1>
+      <h1 className="text-base md:text-2xl text-primary-text font-semibold">
+        {active?.title}
+      </h1>
 
       <div className="flex items-center gap-4">
-        {/* Notification */}
         <Notification />
-        <div className="relative hidden md:block">
+
+        {/* Avatar & Dropdown */}
+        <div className="relative hidden md:block" ref={dropdownRef}>
           <img
             src="https://i.pravatar.cc/40"
             alt="Profile"
@@ -47,15 +66,8 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
         </div>
 
         {/* Hamburger Menu */}
-        <button
-          className="md:hidden"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        >
-          {sidebarOpen ? (
-            <FiX className="text-xl" />
-          ) : (
-            <FiMenu className="text-xl" />
-          )}
+        <button className="md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          {sidebarOpen ? <FiX className="text-xl" /> : <FiMenu className="text-xl" />}
         </button>
       </div>
     </header>

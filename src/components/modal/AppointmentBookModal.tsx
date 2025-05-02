@@ -116,7 +116,7 @@ const AppointmentBookModal = ({ open, onClose }: Props) => {
                       id="symptoms"
                       rows={6}
                       placeholder="Please Specify"
-                      className=" w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+                      className=" form-input focus:outline-primary text-gray-light"
                     ></textarea>
                   </div>
                 </>

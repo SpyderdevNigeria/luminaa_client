@@ -25,49 +25,12 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
           Bio Data
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-          {/* First Name */}
-          <div className=" col-span-2 ">
-            <label
-              htmlFor="firstName"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
-            >
-              First Name
-            </label>
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              onChange={handleChange}
-              value={data?.firstName}
-              placeholder="First Name"
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
-            />
-          </div>
-
-          {/* Last Name */}
-          <div className="col-span-2 ">
-            <label
-              htmlFor="lastName"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
-            >
-              Last Name
-            </label>
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              onChange={handleChange}
-              value={data?.lastName}
-              placeholder="Last Name"
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
-            />
-          </div>
 
           {/* Date of Birth */}
           <div className="col-span-2 ">
             <label
               htmlFor="dob"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Date of Birth
             </label>
@@ -77,7 +40,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
               id="dob"
               onChange={handleChange}
               value={data?.dob}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             />
           </div>
 
@@ -85,7 +48,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
           <div className="col-span-2 ">
             <label
               htmlFor="gender"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Gender
             </label>
@@ -94,7 +57,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
               id="gender"
               onChange={handleChange}
               value={data?.gender}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
@@ -107,7 +70,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
           <div className="col-span-2 ">
             <label
               htmlFor="maritalStatus"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Marital Status
             </label>
@@ -116,7 +79,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
               id="maritalStatus"
               onChange={handleChange}
               value={data?.maritalStatus}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Status</option>
               <option value="Single">Single</option>
@@ -130,7 +93,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
           <div className="col-span-2 ">
             <label
               htmlFor="educationLevel"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Level of Education
             </label>
@@ -139,7 +102,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
               id="educationLevel"
               onChange={handleChange}
               value={data?.educationLevel}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Level</option>
               <option value="Primary">Primary</option>
@@ -153,7 +116,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
           <div className="mb-4 col-span-2">
             <label
               htmlFor="religion"
-              className="block  text-xs md:text-sm font-[500] leading-6 mb-2  text-primary"
+              className="form-label text-primary"
             >
               Religion
             </label>
@@ -162,7 +125,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
               id="religion"
               onChange={handleChange}
               value={data?.religion}
-              className="w-full p-3 text-xs md:text-sm  rounded-lg font-[300] border focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary text-gray-light"
             >
               <option value="">Select Religion</option>
               <option value="Christianity">Christianity</option>
@@ -175,7 +138,7 @@ function BioData({submitform, handleChange, data}: BioDataProps) {
 
         <button
           type="submit"
-           className=" text-xs md:text-sm  bg-primary text-white px-4  py-3 font-semibold w-full rounded-md  mt-4 "
+           className=" text-base bg-primary text-white px-4  py-3 font-semibold w-full rounded-md  mt-4 "
         >
           Next
         </button>
