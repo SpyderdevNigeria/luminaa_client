@@ -11,7 +11,7 @@ function Booking({ handleStep =()=>{} }) {
       <div className="">
             <label
               htmlFor="symptoms"
-              className="block  text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block  text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Symptoms
             </label>

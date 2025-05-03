@@ -22,10 +22,10 @@ const [data, setData] = useState({
   return (
     <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 2xl:mt-24">
       <div className="text-center ">
-        <h5 className="text-2xl md:text-3xl px-20 md:px-28 font-[500] text-text-muted">
+        <h5 className="text-2xl md:text-3xl px-20 md:px-28  text-text-secondary">
         Welcome Back
         </h5>
-        <p className="mt-4 px-4 text-text-main leading-5">
+        <p className="mt-4 px-4 text-text-primary leading-5">
         Please enter your email and password to get 
         started with your medical account
         </p>
@@ -101,7 +101,7 @@ const [data, setData] = useState({
           </button>
         </div>
 
-        <h5 className="text-text-muted text-base text-center mt-4">
+        <h5 className="text-text-secondary text-base text-center mt-4">
           Don't have an account?{" "}
           <Link to={routeLinks?.auth?.register} className="text-primary">
            Register

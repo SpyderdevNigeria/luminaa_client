@@ -80,13 +80,13 @@ const CustomCalendar = () => {
         <button onClick={prevMonth} className="text-xl font-bold">
           <MdOutlineKeyboardArrowLeft />
         </button>
-        <div className="text-lg font-[500]">
+        <div className="text-lg ">
           {new Date(currentYear, currentMonth).toLocaleString("default", {
             month: "long",
             year: "numeric",
           })}
         </div>
-        <button onClick={nextMonth} className="text-xl font-[500]">
+        <button onClick={nextMonth} className="text-xl ">
           <MdOutlineKeyboardArrowRight />
         </button>
       </div>

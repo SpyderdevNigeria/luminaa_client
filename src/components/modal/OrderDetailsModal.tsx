@@ -1,3 +1,4 @@
+import StatusBadge from "../common/StatusBadge";
 import Modal from "./modal";
 type OrderDetailsModalProps = {
   isModalOpen: boolean;
@@ -24,16 +25,16 @@ function OrderDetailsModal({
             {[1, 2, ].map((i) => (
           <div className=" flex flex-row items-center justify-between py-4 " key={i}>
             <div className="space-y-1">
-                <h4 className="text-[12px]  font-[300]">Drug Name</h4>
-                <h3 className="text-[12px]  font-[500]">Homatrophie - Eye Drop</h3>
+                <h4 className="text-sm  font-[300]">Drug Name</h4>
+                <h3 className="text-sm  ">Homatrophie - Eye Drop</h3>
             </div>
             <div className="space-y-1">
-                <h4 className="text-[12px]  font-[300]">Category</h4>
-                <h3 className="text-[12px]   font-[500]">Pain relief</h3>
+                <h4 className="text-sm  font-[300]">Category</h4>
+                <h3 className="text-sm   ">Pain relief</h3>
             </div>
             <div className="space-y-1">
-                <h4 className="text-[12px] font-[300]">Refill</h4>
-                <h3 className="text-[12px]   font-[500]">Yes</h3>
+                <h4 className="text-sm font-[300]">Refill</h4>
+                <h3 className="text-sm   ">Yes</h3>
             </div>
           </div>
         ))}
@@ -41,10 +42,10 @@ function OrderDetailsModal({
             <div className="my-8">
             <h4 className="text-sm  my-2">Payment details </h4>
             <div className="space-y-1">
-                <h4 className="text-[12px]  font-[300]">Payment Type</h4>
-                <h3 className="text-[12px]   font-[500]">Card - 1424 **** **** **** - Mastercard</h3>
-                <h4 className="text-[12px]  font-[300]">Payment Status</h4>
-                <h4 className="text-[12px] bg-green-50 text-green-400 p-1 font-[300]">successful</h4>
+                <h4 className="text-sm  font-[300]">Payment Type</h4>
+                <h3 className="text-sm   ">Card - 1424 **** **** **** - Mastercard</h3>
+                <h4 className="text-sm  font-[300]">Payment Status</h4>
+               <StatusBadge status="success"/>
             </div>
             </div>
           </main>

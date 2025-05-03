@@ -30,7 +30,7 @@ function PrescriptionDetailsModal({
               />
             </div>
             <div  className="space-y-1">
-                <h4 className="text-base font-[500]">Prescribed By</h4>
+                <h4 className="text-base ">Prescribed By</h4>
                 <h4 className="text-xs ">Dr Herr Jones</h4>
                 <h4 className="text-xs ">#1242363</h4>
                 <button className="flex flex-row items-center py-1 px-3  bg-[#792CFF1A] text-[#792CFF] text-[10px] rounded-sm"><FaClock className="mr-1"/> {'12:00 - 13:00'}</button>
@@ -44,20 +44,20 @@ function PrescriptionDetailsModal({
             {[1, 2, ].map((i) => (
           <div className=" flex flex-row items-center justify-between py-4 " key={i}>
             <div className="space-y-1">
-                <h4 className="text-[12px]  font-[300]">Drug Name</h4>
-                <h3 className="text-[12px]  font-[500]">Homatrophie - Eye Drop</h3>
+                <h4 className="text-sm  font-[300]">Drug Name</h4>
+                <h3 className="text-sm  ">Homatrophie - Eye Drop</h3>
             </div>
             <div className="space-y-1">
-                <h4 className="text-[12px]  font-[300]">Dosage</h4>
-                <h3 className="text-[12px]   font-[500]">Homatrophie - Eye Drop</h3>
+                <h4 className="text-sm  font-[300]">Dosage</h4>
+                <h3 className="text-sm   ">Homatrophie - Eye Drop</h3>
             </div>
             <div className="space-y-1">
-                <h4 className="text-[12px]  font-[300]">Frequency</h4>
-                <h3 className="text-[12px]   font-[500]">3x/day after meals</h3>
+                <h4 className="text-sm  font-[300]">Frequency</h4>
+                <h3 className="text-sm   ">3x/day after meals</h3>
             </div>
             <div className="space-y-1">
-                <h4 className="text-[12px] font-[300]">Refill</h4>
-                <h3 className="text-[12px]   font-[500]">Yes</h3>
+                <h4 className="text-sm font-[300]">Refill</h4>
+                <h3 className="text-sm   ">Yes</h3>
             </div>
           </div>
         ))}

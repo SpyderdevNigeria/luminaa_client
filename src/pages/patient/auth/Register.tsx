@@ -28,7 +28,7 @@ const [data, setData] = useState({
   return (
     <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 ">
       <div className="text-center ">
-        <h5 className="text-2xl md:text-3xl px-20 md:px-28 font-[500] text-text-muted">
+        <h5 className="text-2xl md:text-3xl px-20 md:px-28  text-text-secondary">
           Welcome to {website?.name}
         </h5>
         <p className=" my-4 px-4 text-text-primary leading-5">
@@ -162,7 +162,7 @@ const [data, setData] = useState({
           </button>
         </div>
 
-        <h5 className="text-text-muted text-base text-center mt-4">
+        <h5 className="text-text-secondary text-base text-center mt-4">
           Already have an account?{" "}
           <Link to={routeLinks?.auth?.login} className="text-primary">
             Log in
@@ -181,7 +181,7 @@ const [data, setData] = useState({
 
           <h2 className="text-2xl  font-semibold">Email Confirmation</h2>
 
-          <h5 className="text-text-muted text-sm text-center ">
+          <h5 className="text-text-secondary text-sm text-center ">
             If you didn't get any link,{" "}
             <Link to={routeLinks?.patient?.onboarding} className="text-primary">
               Click to resend

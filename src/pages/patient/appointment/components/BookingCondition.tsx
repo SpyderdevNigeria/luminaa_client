@@ -2,7 +2,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
   return (
     <div className="w-full">
       <main className="max-w-2xl w-full mx-auto p-2 pt-0 md:p-4 ">
-        <h5 className="text-xl md:text-2xl text-center font-[500] text-secondary-text">
+        <h5 className="text-xl md:text-2xl text-center  text-secondary-text">
           Premorbid Condition
         </h5>
 
@@ -10,7 +10,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div className="">
             <label
               htmlFor="symptoms"
-              className="block  text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block  text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Symptoms
             </label>
@@ -26,7 +26,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="genotype"
-              className="block  text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block  text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Genotype
             </label>
@@ -47,7 +47,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="bloodGroup"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Blood Group
             </label>
@@ -72,7 +72,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="pastBloodTransfusion"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Past Blood Transfusion
             </label>
@@ -89,7 +89,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="pastDelivery"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Past Delivery
             </label>
@@ -110,7 +110,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="pastHospitalAdmission"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Past Hospital Admission
             </label>
@@ -127,7 +127,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="hypertension"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Hypertension
             </label>
@@ -144,7 +144,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="diabetes"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Diabetes
             </label>
@@ -161,7 +161,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="asthma"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Asthma
             </label>
@@ -178,7 +178,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="kidneyDisease"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Kidney Disease
             </label>
@@ -195,7 +195,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="liverDisease"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Liver Disease
             </label>
@@ -212,7 +212,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="epilepsy"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Epilepsy
             </label>
@@ -229,7 +229,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div>
             <label
               htmlFor="sickleCell"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Sickle Cell Disease
             </label>
@@ -246,7 +246,7 @@ function BookingCondition({ handleStep }: { handleStep: () => void }) {
           <div className="md:col-span-2">
             <label
               htmlFor="pastMedicalHistory"
-              className="block text-xs md:text-lg font-[500] leading-6 mb-2 text-primary"
+              className="block text-xs md:text-lg  leading-6 mb-2 text-primary"
             >
               Past Medical History
             </label>

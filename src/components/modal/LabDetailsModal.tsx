@@ -2,6 +2,7 @@ import Modal from "./modal";
 import { FaClock } from "react-icons/fa6";
 import { TbLocation } from "react-icons/tb";
 import { IoDocumentText } from "react-icons/io5";
+import StatusBadge from "../common/StatusBadge";
 type LabDetailsModalProps = {
   isModalOpen: boolean;
   setModalOpen: (e: any) => void;
@@ -31,7 +32,7 @@ function LabDetailsModal({
               />
             </div>
             <div className="space-y-1">
-              <h4 className="text-base font-[500]">Prescribed By</h4>
+              <h4 className="text-base ">Prescribed By</h4>
               <h4 className="text-xs ">Dr Herr Jones</h4>
               <h4 className="text-xs ">#1242363</h4>
               <button className="flex flex-row items-center py-1 px-3  bg-[#792CFF1A] text-[#792CFF] text-[10px] rounded-sm">
@@ -49,25 +50,20 @@ function LabDetailsModal({
             {[1, 2].map((i) => (
               <div className=" flex flex-row items-center justify-between py-4 " key={i}>
                 <div className="space-y-1">
-                  <h4 className="text-[12px]  font-[300]">Test Name</h4>
-                  <h3 className="text-[12px]  font-[500]">Hepaptits</h3>
+                  <h4 className="text-sm  font-[300]">Test Name</h4>
+                  <h3 className="text-sm  ">Hepaptits</h3>
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-[12px]  font-[300]">Date Requested</h4>
-                  <h3 className="text-[12px]   font-[500]">April 25, 2025</h3>
+                  <h4 className="text-sm  font-[300]">Date Requested</h4>
+                  <h3 className="text-sm   ">April 25, 2025</h3>
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-[12px]  font-[300]">Status</h4>
-                  <div className="flex items-center space-x-2 bg-amber-50 py-1 px-2 rounded-full">
-                    <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                    <h4 className="text-xs font-[300] text-amber-400">
-                      Ongoing{" "}
-                    </h4>
-                  </div>
+                  <h4 className="text-sm  font-[300]">Status</h4>
+                  <StatusBadge status="ongoing" />
                 </div>
 
                 <div className="space-y-1">
-                  <h4 className="text-[12px] font-[300]">Test Result</h4>
+                  <h4 className="text-sm font-[300]">Test Result</h4>
                   <button className="bg-gray-100 p-1 md:px-3 md:py-1 rounded-xs text-[10px] font-light text-primary flex items-center">
                     <IoDocumentText className="mr-1" />
                     View Document

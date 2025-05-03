@@ -14,6 +14,7 @@ import Lab from "./pages/patient/lab/Lab";
 import Profile from "./pages/patient/profile/Profile";
 import Order from "./pages/patient/order/Order";
 import Pharmacy from "./pages/patient/pharmacy/Pharmacy";
+import MedicalHistory from "./pages/patient/medical/MedicalHistory";
 // Route
 const App = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const App = createBrowserRouter([
         path:routeLinks?.patient?.pharmacy,
         element : <Pharmacy/>
       },
+      {
+        path:routeLinks?.patient?.medicalHistory,
+        element: <MedicalHistory/>
+      }
     ]
   }
   

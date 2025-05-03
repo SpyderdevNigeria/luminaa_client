@@ -27,7 +27,7 @@ function ResidentialDetails({
           submitform(e);
         }}
       >
-        <h2 className="text-2xl md:text-3xl my-8 px-20 font-[500] text-center text-text-muted">
+        <h2 className="text-2xl md:text-3xl my-8 px-20  text-center text-text-secondary">
           Residential Details
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4">

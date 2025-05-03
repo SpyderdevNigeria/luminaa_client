@@ -22,7 +22,7 @@ function BookingDateCard({ type = "default" }) {
         <div>
           <label
             htmlFor="maritalStatus"
-            className={`block font-[500] leading-6  text-primary ${isSmall ? "text-[12px]" : "text-xs md:text-lg mb-2"
+            className={`form-label  text-primary ${isSmall ? "!text-sm" : "mb-2"
               }`}
           >
             Consultation Location
@@ -30,7 +30,7 @@ function BookingDateCard({ type = "default" }) {
           <select
             name="maritalStatus"
             id="maritalStatus"
-            className={`w-full rounded-lg font-[300] border focus:outline-primary text-gray-light ${isSmall ? "p-1 text-[9px]" : "p-3 text-xs md:text-sm"
+            className={`form-input focus:outline-primary text-gray-light ${isSmall ? "p-1 text-sm" : "p-3"
               }`}
           >
             <option value="">Select Status</option>
@@ -48,7 +48,7 @@ function BookingDateCard({ type = "default" }) {
           }`}
       >
         <section>
-          <h3 className={`${isSmall ? "text-[14px]" : "text-sm md:text-base"} font-[500] mb-4`}>
+          <h3 className={`${isSmall ? "text-[14px]" : "text-sm md:text-base"}  mb-4`}>
             Select a Date For your appointment
           </h3>
           <div className="mt-4">
@@ -57,14 +57,14 @@ function BookingDateCard({ type = "default" }) {
         </section>
 
         <section>
-          <h3 className={`${isSmall ? "text-[14px]" : "text-sm md:text-base"} font-[500] my-4`}>
+          <h3 className={`${isSmall ? "text-[14px]" : "text-sm md:text-base"}  my-4`}>
             Select Time
           </h3>
           <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
             {AppointmentTime.map((e) => (
               <button
                 key={e.id}
-                className={`rounded-sm font-[500] border ${isSmall ? "text-[11px] p-1.5" : "text-sm p-2"
+                className={`rounded-sm  border ${isSmall ? "text-[11px] p-1.5" : "text-sm p-2"
                   } ${typeTime === e.id.toString()
                     ? "border-primary bg-primary text-white"
                     : "border-gray-light"

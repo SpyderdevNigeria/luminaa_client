@@ -31,7 +31,7 @@ function AppointmentDetailsModal({
               />
             </div>
             <div  className="space-y-1">
-                <h4 className="text-base font-[500]">Cancer Check up</h4>
+                <h4 className="text-base ">Cancer Check up</h4>
                 <h4 className="text-xs ">Dr Herr Jones</h4>
                 <button className="flex flex-row items-center py-1 px-3  bg-[#792CFF1A] text-[#792CFF] text-xs rounded-sm"><FaClock className="mr-1"/> {'12:00 - 13:00'}</button>
                 <div className="flex flex-row items-center gap-2">

@@ -28,7 +28,7 @@ function BookingCard({ title = "", type = "default" }: { title?: string; type?: 
 
   return (
     <main className="max-w-2xl w-full mx-auto p-2 md:p-4 rounded-lg border border-gray-light">
-      <h5 className={`text-center font-[500] text-secondary-text ${isSmall ? "text-[16px]" : "text-xl md:text-2xl"}`}>
+      <h5 className={`text-center  text-secondary-text ${isSmall ? "text-[16px]" : "text-xl md:text-2xl"}`}>
         {title}
       </h5>
 
@@ -48,7 +48,7 @@ function BookingCard({ title = "", type = "default" }: { title?: string; type?: 
             </div>
 
             <div className={`${isSmall ? 'mt-2' : 'mt-5'}`}>
-              <h6 className={`font-medium mb-1 ${isSmall ? "text-base" : "text-base"}`}>
+              <h6 className={`font-medium mb-1 ${isSmall ? "text-base md:text-lg" : "text-base md:text-lg"}`}>
                 {e.name}
                 {e.recommended && (
                   <span className={`pl-4 ${isSmall ? "text-[9px]" : "text-[11px]"} text-[#646363]`}>
@@ -63,7 +63,7 @@ function BookingCard({ title = "", type = "default" }: { title?: string; type?: 
       </section>
 
       <section className="mt-4">
-        <h5 className={`font-[500] mb-1 ${isSmall ? "text-[14px]" : "text-lg"}`}>Available Doctors</h5>
+        <h5 className={` mb-1 ${isSmall ? "text-[14px]" : "text-lg"}`}>Available Doctors</h5>
         <div className={`mt-2  ${isSmall ? 'max-h-[200px]' : 'max-h-[400px]'} overflow-y-scroll`}>
           {[1, 2, 3, 4, 5, 6, 7].map((e) => (
             <div

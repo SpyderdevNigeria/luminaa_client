@@ -47,7 +47,7 @@ function Notification() {
         <div className="absolute right-0 mt-2  min-w-sm bg-white shadow-lg rounded-md z-10">
         <main className="py-2 px-6 border-b border-gray-100 shadow">
         <div className="flex flex-row items-center justify-between w-full py-4">
-            <div className=" text-lg font-[500]  flex flex-row items-center gap-2">Notifications  <div className="py-[3px] px-2 text-xs rounded-full text-white bg-green-500 font-[300]">1</div></div>
+            <div className=" text-lg   flex flex-row items-center gap-2">Notifications  <div className="py-[3px] px-2 text-xs rounded-full text-white bg-green-500 font-[300]">1</div></div>
             <div className="flex flex-row items-center gap-4">
                <button className="text-xs text-green-500"> mark all as read</button>
                <BsThreeDotsVertical/>
@@ -79,7 +79,7 @@ function Notification() {
               {notifications.map((e) => (
                 <div className="p-3 border border-gray-100 shadow rounded-lg" key={e?.id}>
                     <div className="flex flex-row items-center justify-between">
-                        <h3 className="text-base font-[500]">Notification title <span className="text-xs font-[300] ml-2 text-[#7C7C7C]">10mins ago</span></h3>
+                        <h3 className="text-base ">Notification title <span className="text-xs font-[300] ml-2 text-[#7C7C7C]">10mins ago</span></h3>
                         <IoMdClose/>
                     </div>
                     <p className="text-xs text-[#525252] font-[300] py-4">

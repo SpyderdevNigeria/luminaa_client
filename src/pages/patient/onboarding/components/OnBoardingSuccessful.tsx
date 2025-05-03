@@ -7,7 +7,7 @@ function OnBoardingSuccessful() {
         <img src={Calendaricon} alt="" className='w-[200px] ' />
         <div className='text-center'>
         <h2 className="text-2xl  font-semibold">Account creation successful</h2>
-        <p className="text-text-muted text-sm  font-[400] text-center mt-2 px-4">
+        <p className="text-text-secondary text-sm  font-[400] text-center mt-2 px-4">
         Hey there!  We've sent you an important link to validate your account. This link will help you complete the registration process and gain access to all the features we offer. Don't forget to check your spam folder just in case it ended up there!
             </p>
         </div>

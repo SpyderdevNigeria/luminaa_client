@@ -5,12 +5,13 @@ import HeaderTab from "../../../components/common/HeaderTab";
 import Table, { Column } from "../../../components/common/Table";
 import OrderDetailsModal from "../../../components/modal/OrderDetailsModal";
 import { useState } from "react";
+import StatusBadge from "../../../components/common/StatusBadge";
 
 const Order = () => {
   const allOrders = new Array(50).fill(null).map((_, i) => ({
     id: `#12${500 + i}`,
     price: 50000.0,
-    status: "Paid",
+    status: "paid",
   }));
 
   const pageSize = 6;
@@ -49,10 +50,7 @@ const Order = () => {
       key: "status",
       label: "Status",
       render: (order) => (
-        <button className="flex items-center space-x-2 bg-green-50 py-1 px-2 rounded-full">
-          <span className="w-2 h-2 rounded-full bg-green-400"></span>
-          <h4 className="text-xs font-[300] text-green-400">{order.status}</h4>
-        </button>
+        <StatusBadge status={order.status} />
       ),
       arrows:true,
     },
@@ -81,7 +79,7 @@ const Order = () => {
           <p className=" text-sm mb-2">
             Wallet Balance <AiOutlineEye className="inline w-4 h-4 ml-2" />
           </p>
-          <h2 className="text-xl md:text-5xl font-[500] my-8">
+          <h2 className="text-xl md:text-5xl  my-8">
             ₦ 1004.<span className="text-2xl">89</span>
           </h2>
           <button className="mt-4 bg-primary text-white px-4 py-3 rounded flex items-center gap-2">

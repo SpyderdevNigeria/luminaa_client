@@ -46,15 +46,15 @@ function Prescriptions() {
         {[1, 2, 3, 4, 5, 6, 7].map((i) => (
           <div className="bg-white rounded-lg flex flex-row items-center justify-between py-4 md:px-8" key={i}>
             <div className="space-y-1">
-                <h3 className="text-sm md:text-base font-[500]">Treatment For hepatitis</h3>
+                <h3 className="text-sm md:text-base ">Treatment For hepatitis</h3>
                 <h4 className="text-xs font-[300]">Last Prescribed 04 App 2025</h4>
             </div>
             <div className="flex items-center space-x-2">
-            <h3 className="text-sm md:text-base font-[500]">3</h3>
+            <h3 className="text-sm md:text-base ">3</h3>
                 <h4 className="text-xs font-[300]">Active Medications</h4>
             </div>
             <div className="flex items-center space-x-2">
-            <h3 className="text-sm md:text-base font-[500]">0</h3>
+            <h3 className="text-sm md:text-base ">0</h3>
                 <h4 className="text-xs font-[300]">Refill Request </h4>
             </div>
 

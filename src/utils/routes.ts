@@ -15,6 +15,7 @@ const routeLinks = {
     appointment:'/patient/appointment-booking',
     consultations: '/patient/consultations',
     prescription:'/patient/prescription',
+    medicalHistory:'/patient/medical-history'
 
   }
 }

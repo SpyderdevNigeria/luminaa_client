@@ -1,4 +1,4 @@
-import { IoSearch } from "react-icons/io5";
+import  { IoSearch } from "react-icons/io5";
 import { IoFilterOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import {
@@ -6,9 +6,9 @@ import {
   MdOutlineArrowBackIos,
 } from "react-icons/md";
 import { useState } from "react";
-import LabDetailsModal from "../../../components/modal/LabDetailsModal";
+import MedicalReportModal from "../../../components/modal/MedicalReportModal";
 import StatusBadge from "../../../components/common/StatusBadge";
-function Lab() {
+function MedicalHistory() {
       const [data, setData] = useState<any>(null);
       const [isModalOpen, setModalOpen] = useState(false);
   return (
@@ -47,16 +47,14 @@ function Lab() {
         {[1, 2, 3, 4, 5, 6, 7].map((i) => (
           <div className="bg-white rounded-lg flex flex-row items-center justify-between py-4 md:px-8" key={i}>
             <div className="space-y-1">
-                <h3 className="text-sm md:text-base ">Treatment For hepatitis</h3>
-                <h4 className="text-xs font-[300]">Last Prescribed 04 App 2025</h4>
+                <h3 className="text-sm md:text-base ">Thyriod</h3>
+                <h4 className="text-xs font-[300]">04 Apr 2025</h4>
             </div>
             <div className="flex items-center space-x-2">
-            <h3 className="text-sm md:text-base ">3</h3>
-                <h4 className="text-xs font-[300]">Active test</h4>
+                <h4 className="text-xs font-[300]">Dr Kehlani P.</h4>
             </div>
-            <div className="flex items-center space-x-2 bg-amber-50 py-1 px-2 rounded-full">
-                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                <StatusBadge status="ongoing" />
+            <div>
+                <StatusBadge status="ongoing"/>
             </div>
 
             <button className="bg-gray-100 p-1 md:px-4 md:py-3 rounded-lg text-xs font-light text-primary"
@@ -66,10 +64,10 @@ function Lab() {
               </button>
           </div>
         ))}
-        <LabDetailsModal data={data} isModalOpen={isModalOpen} setModalOpen={(e)=>{setModalOpen(e)}} />
+        <MedicalReportModal data={data} isModalOpen={isModalOpen} setModalOpen={(e)=>{setModalOpen(e)}} />
       </div>
     </div>
   );
 }
 
-export default Lab;
+export default MedicalHistory;

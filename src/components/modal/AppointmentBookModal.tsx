@@ -87,7 +87,7 @@ const AppointmentBookModal = ({ open, onClose }: Props) => {
                 <div>
                   <p className={`font-[450] text-sm `}>{stepTitles[num - 1]}</p>
                   <p
-                    className={`text-[12px] font-[300] ${
+                    className={`text-sm font-[300] ${
                       step >= num ? "text-[#1B1A1A]" : "text-[#DADADA]"
                     }`}
                   >
@@ -154,7 +154,7 @@ const AppointmentBookModal = ({ open, onClose }: Props) => {
             <div className="flex justify-end gap-4 mt-6">
               <button
                 onClick={goToPrevStep}
-                className="px-5 py-2 border-[1.5px] font-[500] border-primary text-primary rounded-md text-sm"
+                className="px-5 py-2 border-[1.5px]  border-primary text-primary rounded-md text-sm"
               >
                 {step == 1 ? "Cancel" : "Back"}
               </button>
