@@ -4,6 +4,10 @@ import { TbSmartHome } from "react-icons/tb";
 import { BiSolidClinic } from "react-icons/bi";
 import { LiaPillsSolid } from "react-icons/lia";
 import { FiPackage } from "react-icons/fi";
+import { FaRegNewspaper, FaRegCircleUser } from "react-icons/fa6";
+import { IoCalendarClearOutline } from "react-icons/io5";
+import { TfiTimer } from "react-icons/tfi";
+import { MdPeople } from "react-icons/md";
 import routeLinks from "./routes";
 
 export const navItemsPatient = [
@@ -46,7 +50,49 @@ export const navItemsPatient = [
   {
     label: "MedicalHistory",
     title: "MedicalHistory",
-    icon: BiSolidClinic,
+    icon: FaRegNewspaper,
     to: routeLinks?.patient?.medicalHistory,
+  },
+];
+
+export const navItemsDoctor = [
+  {
+    label: "Dashboard",
+    title: "Dashboard",
+    icon: TbSmartHome,
+    to: routeLinks?.doctor?.dashboard,
+  },
+  {
+    label: "Appointments",
+    title: "Appointments",
+    icon: IoCalendarClearOutline,
+    to: routeLinks?.doctor?.appointment,
+    subLinks: [
+      {
+        label: "Appointments",
+        title: "Appointments / Appointment Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.doctor?.appointmentView,
+      },
+    ],
+  },
+
+  {
+    label: "Schedule",
+    title: "Schedule",
+    icon: TfiTimer,
+    to: routeLinks?.doctor?.schedule,
+  },
+  {
+    label: "Patients",
+    title: "Patients",
+    icon: MdPeople,
+    to: routeLinks?.doctor?.patients,
+  },
+  {
+    label: "Profile Management",
+    title: "Profile Management",
+    icon: FaRegCircleUser,
+    to: routeLinks?.doctor?.profile,
   },
 ];

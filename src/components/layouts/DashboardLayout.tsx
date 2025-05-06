@@ -6,22 +6,46 @@ import { useLocation } from 'react-router-dom';
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
-  links: { title: string; to: string; label: string; icon: React.ComponentType<{ className?: string }> }[];
+  links: { title: string; to: string; label: string; subLinks?: any, icon: React.ComponentType<{ className?: string }> }[];
+  bg?:string
 };
 
-function DashboardLayout({ children, links }: DashboardLayoutProps) {
+
+function DashboardLayout({ children, links, bg }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState<{ to: string; label: string; icon: React.ReactNode } | null>(null);
+  const [activeLink, setActiveLink] = useState<{ to: string; label: string;  sublink?: string, icon: React.ReactNode } | null>(null);
   const location = useLocation();
 
-  useEffect(() => {
+  useEffect(() => { 
+    // First, check for an exact match with the full path
     const active = links?.find((i) => i?.to === location?.pathname) || null;
-    setActiveLink(
-      active
-        ? { to: active.to, label: active.label, icon: <active.icon className="" /> }
-        : null
-    );
+  
+    if (active) {
+      setActiveLink({
+        to: active.to,
+        label: active.label,
+        icon: active ? <active.icon className="" /> : null,
+        sublink:''
+      });
+    } else {
+      const parts = location.pathname.split("/");
+  
+      // Create the parent label (without parameters)
+      const Label = `/${parts[1]}/${parts[2]}`;
+  
+      // Find the active link matching the Label (parent path)
+      const active = links?.find((i) => i?.to === Label) || null;
+
+        setActiveLink({
+          to:  active ?  active?.to : '',
+          label: active ? active?.label : '',
+          icon: active ? <active.icon className="" /> : null,
+          sublink:` / ${active?.label} Details`,
+        });
+    }
   }, [location]);
+  
+  
 
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
@@ -41,11 +65,11 @@ function DashboardLayout({ children, links }: DashboardLayoutProps) {
         <Navbar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
-          active={activeLink ? { title: activeLink.label } : { title: '' }}
+          active={activeLink ? { title: activeLink.label, sublink: activeLink.sublink || '' } : { title: '', sublink: '' }}
         />
 
         {/* Page Content */}
-        <main className="flex-1 px-4 md:px-24 py-6   overflow-y-auto">
+        <main className={`flex-1 px-4 md:px-24 py-6 ${bg}   overflow-y-auto`}>
           {children}
         </main>
       </div>

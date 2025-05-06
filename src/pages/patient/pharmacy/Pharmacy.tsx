@@ -77,7 +77,7 @@ export default function Pharmacy() {
           onClick={() => setCartOpen(true)}
           className="fixed bottom-6 right-6 bg-primary text-white rounded-full p-4 shadow-xl flex items-center gap-2 z-20"
         >
-          <FiShoppingCart />
+          <FiShoppingCart className="text-2xl" />
           {/* <span className="text-sm font-medium">{totalItems}</span> */}
         </button>
       )}

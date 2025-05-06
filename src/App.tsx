@@ -15,6 +15,12 @@ import Profile from "./pages/patient/profile/Profile";
 import Order from "./pages/patient/order/Order";
 import Pharmacy from "./pages/patient/pharmacy/Pharmacy";
 import MedicalHistory from "./pages/patient/medical/MedicalHistory";
+import DoctorLayout from "./components/layouts/DoctorLayout";
+import DoctorDashboard from "./pages/doctor/dashboard/DoctorDashboard";
+import DoctorAppointments from "./pages/doctor/appointments/DoctorAppointments";
+import DoctorAppointmentsView from "./pages/doctor/appointments/DoctorAppointmentsView";
+import DoctorPatients from "./pages/doctor/patients/DoctorPatients";
+import DoctorProfile from "./pages/doctor/profile/DoctorProfile";
 // Route
 const App = createBrowserRouter([
   {
@@ -87,8 +93,49 @@ const App = createBrowserRouter([
         element: <MedicalHistory/>
       }
     ]
-  }
+  },
   
+
+  // Doctor Routes
+  {
+    path:routeLinks?.doctor?.path,
+    element: <DoctorLayout/>,  
+    children:[
+      {
+        path: routeLinks?.doctor?.path,
+        element: <Navigate to={routeLinks?.doctor?.dashboard}/>
+      },
+      {
+        path: routeLinks?.doctor?.dashboard,
+        element: <DoctorDashboard/>,
+      },
+      // Doctor Appointment Link start
+      {
+        path:routeLinks?.doctor?.appointment,
+        element: <DoctorAppointments/>,
+      },
+      {
+        path:routeLinks?.doctor?.appointmentView,
+        element: <DoctorAppointmentsView/>
+      },
+      // Doctor Appointment Link End
+
+        // Doctor Patient Link start
+        {
+          path:routeLinks?.doctor?.patients,
+          element: <DoctorPatients/>,
+        },
+        {
+          path:routeLinks?.doctor?.patientView,
+          element: <DoctorAppointmentsView/>
+        },
+        // Doctor Patient Link End
+        {
+          path:routeLinks?.doctor?.profile,
+          element: <DoctorProfile/>
+        }
+    ]
+  }
 ])
 
 export default App

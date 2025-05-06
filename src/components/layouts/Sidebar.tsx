@@ -15,7 +15,7 @@ type sidebarProps = {
 };
 function Sidebar({ links, active }: sidebarProps) {
   return (
-    <aside className="hidden md:flex w-62 fixed inset-y-0 left-0 z-40 bg-white shadow-md px-4 flex-col justify-between pb-2 ">
+    <aside className="hidden md:flex w-63 fixed inset-y-0 left-0 z-40 border border-dashboard-gray bg-white  px-4 flex-col justify-between pb-2 ">
       <div>
         <div className="flex items-center justify-between py-4">
           <img src={website?.logo} alt={website?.name} className="h-8 md:h-8" />

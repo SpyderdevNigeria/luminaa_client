@@ -9,6 +9,7 @@ type NavbarProps = {
   setSidebarOpen: (open: boolean) => void;
   active: {
     title: string;
+    sublink?: string
   };
 };
 
@@ -31,9 +32,9 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
   }, []);
 
   return (
-    <header className="bg-white shadow px-4 md:px-24 py-6 flex items-center justify-between">
+    <header className="bg-white  px-4 md:px-24 py-6 border border-dashboard-gray flex items-center justify-between">
       <h1 className="text-base md:text-2xl text-primary-text font-semibold">
-        {active?.title}
+        <span className={`${active?.sublink && 'font-light'}`}>{active?.title}</span> {active?.sublink}
       </h1>
 
       <div className="flex items-center gap-4">

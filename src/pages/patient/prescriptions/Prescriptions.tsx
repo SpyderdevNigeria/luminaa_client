@@ -1,46 +1,12 @@
-import { IoSearch } from "react-icons/io5";
-import { IoFilterOutline } from "react-icons/io5";
-import { IoIosArrowDown } from "react-icons/io";
-import {
-  MdOutlineArrowForwardIos,
-  MdOutlineArrowBackIos,
-} from "react-icons/md";
 import { useState } from "react";
 import PrescriptionDetailsModal from "../../../components/modal/PrescriptionDetailsModal";
+import HeaderControls from "../../../components/common/HeaderControls";
 function Prescriptions() {
       const [data, setData] = useState<any>(null);
       const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div>
-      <div className="flex flex-row items-center justify-between my-4">
-        <div className="flex  flex-row items-center  gap-4">
-          <div className="text-xs p-1 flex items-center gap-2 border bg-white">
-            {" "}
-            Week <IoIosArrowDown />{" "}
-          </div>
-          <div className="text-xs p-1 flex items-center gap-2 border bg-white">
-            {" "}
-            Today{" "}
-          </div>
-          <MdOutlineArrowBackIos className="text-xs" />
-          <MdOutlineArrowForwardIos className="text-xs" />
-        </div>
-
-        <div className="flex flex-row items-center gap-3">
-          <div className="relative ">
-            <IoSearch className="absolute left-2 top-3 text-base" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full text-sm py-2 px-8 border border-[#727272] rounded-sm md:w-sm"
-            />
-          </div>
-          <div className=" text-sm bg-white py-2 px-3 flex flex-row items-center gap-2  border border-[#727272] rounded-sm ">
-            <IoFilterOutline className="text-base " />
-            <h4>Sort By</h4>
-          </div>
-        </div>
-      </div>
+     <HeaderControls/>
 
       <div className="space-y-4">
         {[1, 2, 3, 4, 5, 6, 7].map((i) => (

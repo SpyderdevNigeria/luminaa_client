@@ -50,7 +50,7 @@ function DashboardHome() {
         {links?.map((i) => (
           <Link
             to={i?.name.toLowerCase() === "book a consultation" ? '#' : i?.link}
-            className="bg-white rounded-lg p-4 shadow-sm "
+            className="bg-white rounded-lg p-4 2xl:p-8 shadow-sm "
             key={i?.name}
             onClick={()=>{
               if (i?.name.toLowerCase() === "book a consultation") {
@@ -60,10 +60,10 @@ function DashboardHome() {
           >
             {i.icon && <i.icon className="text-3xl text-secondary" />}
             <div className="md:max-w-[230px] 2xl:max-w-sm mt-8">
-              <h3 className="text-base md:text-lg 2xl:text-2xl font-medium mb-1 text-dashboard-gray">
+              <h3 className="text-base md:text-lg 2xl:text-2xl font-medium mb-1 text-text-primary">
                 {i?.name}
               </h3>
-              <p className="text-sm md:text-base 2xl:text-lg text-dashboard-gray">
+              <p className="text-sm md:text-base 2xl:text-lg text-text-secondary">
                 {i?.description}
               </p>
             </div>

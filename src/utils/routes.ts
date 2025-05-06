@@ -17,7 +17,18 @@ const routeLinks = {
     prescription:'/patient/prescription',
     medicalHistory:'/patient/medical-history'
 
-  }
+  },
+  doctor: {
+    path:'/doctor',
+    patients:'/doctor/patients',
+    profile:'/doctor/profile-management',
+    dashboard:'/doctor/dashboard',
+    schedule:'/doctor/schedule',
+    appointment:'/doctor/appointment',
+    appointmentView : '/doctor/appointment/:id',
+    patientView : '/doctor/patient/:id',
+}
+
 }
 
 export default routeLinks
