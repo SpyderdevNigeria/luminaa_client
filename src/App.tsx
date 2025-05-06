@@ -21,6 +21,7 @@ import DoctorAppointments from "./pages/doctor/appointments/DoctorAppointments";
 import DoctorAppointmentsView from "./pages/doctor/appointments/DoctorAppointmentsView";
 import DoctorPatients from "./pages/doctor/patients/DoctorPatients";
 import DoctorProfile from "./pages/doctor/profile/DoctorProfile";
+import DoctorSchedule from "./pages/doctor/Schedule/DoctorSchedule";
 // Route
 const App = createBrowserRouter([
   {
@@ -133,6 +134,10 @@ const App = createBrowserRouter([
         {
           path:routeLinks?.doctor?.profile,
           element: <DoctorProfile/>
+        },
+        {
+          path:routeLinks?.doctor?.schedule,
+          element:<DoctorSchedule/>
         }
     ]
   }
