@@ -26,7 +26,7 @@ const routeLinks = {
     schedule:'/doctor/schedule',
     appointment:'/doctor/appointment',
     appointmentView : '/doctor/appointment/:id',
-    patientView : '/doctor/patient/:id',
+    patientView : '/doctor/patients/:id',
 }
 
 }

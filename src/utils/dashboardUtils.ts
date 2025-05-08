@@ -88,6 +88,14 @@ export const navItemsDoctor = [
     title: "Patients",
     icon: MdPeople,
     to: routeLinks?.doctor?.patients,
+    subLinks: [
+      {
+        label: "Patients",
+        title: "Patients / Patients Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.doctor?.patientView,
+      },
+    ],
   },
   {
     label: "Profile Management",

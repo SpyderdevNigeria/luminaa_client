@@ -151,7 +151,7 @@ function DoctorAppointments() {
             pagination={pagination}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
-            showPaginate={false}
+
           />
         </div>
       </section>

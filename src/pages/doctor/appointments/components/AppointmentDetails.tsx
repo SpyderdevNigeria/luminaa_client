@@ -7,10 +7,13 @@ import { TfiTimer } from "react-icons/tfi";
 import { PiNotepadDuotone } from "react-icons/pi";
 import { GrCircleInformation } from "react-icons/gr";
 import { IoExitOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
+import routeLinks from "../../../../utils/routes";
+import InfoLabel from "../../../../components/common/InfoLabel";
 function DoctorAppointmentsView({ handleNext }: { handleNext: () => void }) {
   return (
     <section className="flex flex-col gap-4">
-      <div className="flex flex-row items-center justify-between text-text-secondary">
+      <div className="flex flex-row items-center justify-between text-text-secondary text-inactive">
         <div className="flex items-center gap-4 text-xs md:text-sm">
           <h5 className="">Appointment ID </h5>
           <button className="border boder-dashboard-gray bg-gray-100 rounded-sm px-1">
@@ -26,7 +29,7 @@ function DoctorAppointmentsView({ handleNext }: { handleNext: () => void }) {
       <main className="border border-dashboard-gray rounded-lg ">
         <div className="flex flex-row items-center p-4 justify-between ">
           <div className="flex items-center gap-2 ">
-            <div className="w-20 h-20 md:w-15 md:h-15 overflow-hidden rounded-full">
+            <div className="w-15 h-15 overflow-hidden rounded-full">
               <img
                 src="https://i.pravatar.cc/40"
                 alt="Profile"
@@ -71,23 +74,23 @@ function DoctorAppointmentsView({ handleNext }: { handleNext: () => void }) {
         <div className="w-full">
           <h4 className="text-sm md:text-2xl  my-2">Meeting Info </h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4 ">
-            <MeetingInformation label={"Appointment ID"} info={"#2738378"} />
-            <MeetingInformation label={"March 20, 2025"} info={"Date"} style={'bg-blue-100 text-blue-600 py-1 px-2  rounded-sm'} />
-            <MeetingInformation label={"12:58AM"} info={"Time"} style={'bg-green-100 text-green-600 py-1 px-2 rounded-sm'} />
-            <MeetingInformation label={"Hospital Visit"} info={"Meeting Type"} style={'bg-purple-100 text-purple-600 py-1 px-2 rounded-sm'} />
-            <MeetingInformation label={"Location"} info={"Meeting Link or address"} />
-            <MeetingInformation label={"Time"} info={"None"} />
+            <InfoLabel label={"Appointment ID"} info={"#2738378"} />
+            <InfoLabel label={"March 20, 2025"} info={"Date"} style={'bg-blue-100 text-blue-600 py-1 px-2  rounded-sm'} />
+            <InfoLabel label={"12:58AM"} info={"Time"} style={'bg-green-100 text-green-600 py-1 px-2 rounded-sm'} />
+            <InfoLabel label={"Hospital Visit"} info={"Meeting Type"} style={'bg-purple-100 text-purple-600 py-1 px-2 rounded-sm'} />
+            <InfoLabel label={"Location"} info={"Meeting Link or address"} />
+            <InfoLabel label={"Time"} info={"None"} />
           </div>
         </div>
         <div className="">
           <h4 className="text-sm md:text-2xl  my-2">General Info </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4 ">
-            <MeetingInformation label={"Ajayi raymond"} info={"Name"} />
-            <MeetingInformation label={"09176456787"} info={"Phone"}  />
-            <MeetingInformation label={"qjayiraymond@lumina"} info={"Email"}  />
-            <MeetingInformation label={"43"} info={"Age"}  />
-            <MeetingInformation label={"Male"} info={"Gender"}  />
-            <MeetingInformation label={"12 Lumina medicals"} info={"Address"}  />
+            <InfoLabel label={"Ajayi raymond"} info={"Name"} />
+            <InfoLabel label={"09176456787"} info={"Phone"}  />
+            <InfoLabel label={"qjayiraymond@lumina"} info={"Email"}  />
+            <InfoLabel label={"43"} info={"Age"}  />
+            <InfoLabel label={"Male"} info={"Gender"}  />
+            <InfoLabel label={"12 Lumina medicals"} info={"Address"}  />
           </div>
         </div>
       </main>
@@ -97,7 +100,7 @@ function DoctorAppointmentsView({ handleNext }: { handleNext: () => void }) {
       <button className="py-3 flex flex-row items-center justify-center text-[#4976F4] border-2 border-dashed border-[#4976F4] bg-blue-50 rounded-lg"
       onClick={handleNext}
       ><PiNotepadDuotone className="text-2xl mx-2" /> Add Medical Records</button>
-      <button className="py-3 flex flex-row items-center justify-center text-[#0091FF] border-2  border-[#0091FF1A] bg-[#0091FF1A] rounded-lg"> Add Medical Records <IoExitOutline className="text-2xl mx-2" /> </button>
+      <Link to={routeLinks?.doctor?.patients+`/847784`} className="py-3 flex flex-row items-center justify-center text-[#0091FF] border-2  border-[#0091FF1A] bg-[#0091FF1A] rounded-lg"> View Patient Details <IoExitOutline className="text-2xl mx-2" /> </Link>
       <button className="py-3 flex flex-row items-center justify-center text-gray-700 border-2  border-dashboard-gray bg-dashboard-gray rounded-lg col-span-2">Finish Consultation</button>
       <h1 className="py-3 flex flex-row items-center justify-center col-span-2 text-gray-700"><GrCircleInformation  className="text-2xl mx-2" /> Please add Medical records to finish this treatment</h1>
     </section>
@@ -106,24 +109,7 @@ function DoctorAppointmentsView({ handleNext }: { handleNext: () => void }) {
   );
 }
 
-interface MeetingInformationProps {
-  label: string;
-  info: string;
-  style?: string;
-}
 
-const MeetingInformation = ({
-  label,
-  info,
-  style,
-}: MeetingInformationProps) => {
-  return (
-    <div className="" >
-      <span className={`text-sm 2xl:text-base ${style}`}>{label}</span>
-      <h3 className="text-xs 2xl:text-sm text-gray-500 mt-3">{info}</h3>
-    </div>
-  );
-};
 
 
 export default DoctorAppointmentsView;

@@ -5,7 +5,6 @@ export type Column<T> = {
   label: string;
   render?: (item: T) => React.ReactNode;
   arrows?: boolean;
-
 };
 
 type PaginationType = {
@@ -21,7 +20,7 @@ type Props<T> = {
   pagination?: PaginationType;
   currentPage?: number;
   onPageChange?: (page: number) => void;
-  showPaginate?:boolean
+  showPaginate?: boolean;
 };
 
 const Table = <T extends object>({
@@ -32,6 +31,22 @@ const Table = <T extends object>({
   onPageChange,
   showPaginate = true,
 }: Props<T>) => {
+  const pageSize = 10;
+
+  // If data is not paginated from parent, paginate it here
+  const paginatedData = pagination
+    ? data
+    : data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+  const calculatedPagination = pagination
+    ? pagination
+    : {
+        hasPrevPage: currentPage > 1,
+        hasNextPage: currentPage < Math.ceil(data.length / pageSize),
+        totalPages: Math.ceil(data.length / pageSize),
+        totalDocs: data.length,
+      };
+
   return (
     <div className="">
       <div className="overflow-x-auto">
@@ -39,16 +54,15 @@ const Table = <T extends object>({
           <thead className="bg-[#F9F9F9] text-text-primary">
             <tr>
               {columns.map((col, index) => (
-                <th key={index} className={`p-3 font-light `}>
+                <th key={index} className="p-3 font-light">
                   <div
                     className={`${
-                      col.arrows && "flex flex-row items-center gap-2"
+                      col.arrows ? "flex flex-row items-center gap-2" : ""
                     }`}
                   >
                     {col.label}
-
                     {col.arrows && (
-                      <div className="">
+                      <div>
                         <span className="down-arrow">
                           <svg
                             width="7"
@@ -91,7 +105,7 @@ const Table = <T extends object>({
             </tr>
           </thead>
           <tbody className="text-text-primary">
-            {data.map((item, rowIndex) => (
+            {paginatedData.map((item, rowIndex) => (
               <tr
                 key={rowIndex}
                 className="bg-white border-gray-100 hover:bg-gray-50"
@@ -108,17 +122,13 @@ const Table = <T extends object>({
           </tbody>
         </table>
       </div>
-      {showPaginate && (
-        <div>
-          {/* Pagination */}
-          {pagination && onPageChange && (
-            <Pagination
-              pagination={pagination}
-              currentPage={currentPage}
-              onPageChange={onPageChange}
-            />
-          )}
-        </div>
+
+      {showPaginate && onPageChange && (
+        <Pagination
+          pagination={calculatedPagination}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
       )}
     </div>
   );
