@@ -174,7 +174,7 @@ const [data, setData] = useState({
         onClose={() => setModalOpen(false)}
         title="Reusable Modal"
         hideCancel={true}
-        style="!max-w-lg !mx-4 !md:mx-0"
+        style="!md:max-w-lg !md:mx-4 !md:mx-0"
       >
         <div className="flex flex-col items-center justify-center gap-8">
           <img src={EmailIcon} alt="" className="w-[80px]" />

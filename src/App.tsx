@@ -23,8 +23,13 @@ import DoctorPatients from "./pages/doctor/patients/DoctorPatients";
 import DoctorProfile from "./pages/doctor/profile/DoctorProfile";
 import DoctorSchedule from "./pages/doctor/Schedule/DoctorSchedule";
 import DoctorPatientsDetails from "./pages/doctor/patients/DoctorPatientsDetails";
+import Home from "./pages/business/Home";
 // Route
 const App = createBrowserRouter([
+  {
+    path:'/',
+    element:<Home/>
+  },
   {
     path: routeLinks?.auth?.path,
     element: <PatientAuthLayout/>,
