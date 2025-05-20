@@ -10,6 +10,7 @@ import { login } from "../../../reducers/authSlice";
 import { IPayload } from "../../../types/Interfaces";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import { returnMemberNavigationUrlLogic } from "../../../utils/dashboardUtils";
+import ProfileApi from "../../../api/profileApi";
 
 const initialFormState = {
   email: "",
@@ -48,16 +49,15 @@ function Register() {
 
       const payload: IPayload = {
         token: accessToken,
-        user: user || { email },
+        user: user,
       };
-
       dispatch(login(payload));
       if (!user?.isEmailVerified) {
         await AuthApi.requestEmailOtp(email);
+        await ProfileApi.getProfile();
         navigate(routeLinks?.auth?.emailVerification);
         return;
       }
-
       const redirectUrl = returnMemberNavigationUrlLogic(user);
       navigate(redirectUrl);
     } catch (error: any) {

@@ -22,6 +22,9 @@ function EmailVerification() {
     if (!userProfile) {
       navigate(routeLinks?.auth?.login);
     }
+    if (userProfile?.user?.isEmailVerified) {
+      navigate(routeLinks?.patient?.onboarding);
+    }
   }, [userProfile, navigate]);
 
   const { fields } = usePinInput({
@@ -37,7 +40,7 @@ function EmailVerification() {
       return;
     }
 
-    if (!userProfile?.email) {
+    if (!userProfile?.user?.email) {
       setErrMsg("User email not found.");
       return;
     }
@@ -46,7 +49,7 @@ function EmailVerification() {
     setErrMsg("");
 
     try {
-      await AuthApi.verifyEmailOtp(userProfile.email, otp);
+      await AuthApi.verifyEmailOtp(userProfile?.user?.email, otp);
       const url = returnMemberNavigationUrlLogic(userProfile);
       navigate(url);
     } catch (err: any) {
@@ -58,7 +61,7 @@ function EmailVerification() {
   };
 
   const handleResendOtp = async () => {
-    if (!userProfile?.email) {
+    if (!userProfile?.user?.email) {
       setErrMsg("User email not found.");
       return;
     }
@@ -67,7 +70,7 @@ function EmailVerification() {
     setErrMsg("");
 
     try {
-      await AuthApi.requestEmailOtp(userProfile.email);
+      await AuthApi.requestEmailOtp(userProfile?.user?.email);
       setOtpCode(Array(6).fill(""));
       setIsTimerExpired(false);
       setTimerKey((prev) => prev + 1);

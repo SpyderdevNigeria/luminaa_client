@@ -35,11 +35,10 @@ function BioData({ submitform, handleChange, data, getFieldErrors }: BioDataProp
               id="dateOfBirth"
               onChange={handleChange}
               value={data.dateOfBirth}
-              className={`form-input ${
-                getFieldErrors("dateOfBirth")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
+              required
+              className={`form-input border border-gray-light ${
+                getFieldErrors("dateOfBirth") ? "outline outline-red-600" : "focus:outline-primary"
+              }`}
             />
             {getFieldErrors("dateOfBirth")}
           </div>
@@ -54,11 +53,10 @@ function BioData({ submitform, handleChange, data, getFieldErrors }: BioDataProp
               id="gender"
               onChange={handleChange}
               value={data.gender}
-              className={`form-input ${
-                getFieldErrors("gender")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
+              required
+              className={`form-input border border-gray-light ${
+                getFieldErrors("gender") ? "outline outline-red-600" : "focus:outline-primary"
+              }`}
             >
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
@@ -78,11 +76,10 @@ function BioData({ submitform, handleChange, data, getFieldErrors }: BioDataProp
               id="maritalStatus"
               onChange={handleChange}
               value={data.maritalStatus}
-              className={`form-input ${
-                getFieldErrors("maritalStatus")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
+              required
+              className={`form-input border border-gray-light ${
+                getFieldErrors("maritalStatus") ? "outline outline-red-600" : "focus:outline-primary"
+              }`}
             >
               <option value="">Select Status</option>
               <option value="Single">Single</option>
@@ -103,11 +100,10 @@ function BioData({ submitform, handleChange, data, getFieldErrors }: BioDataProp
               id="religion"
               onChange={handleChange}
               value={data.religion}
-              className={`form-input ${
-                getFieldErrors("religion")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
+              required
+              className={`form-input border border-gray-light ${
+                getFieldErrors("religion") ? "outline outline-red-600" : "focus:outline-primary"
+              }`}
             >
               <option value="">Select Religion</option>
               <option value="Christianity">Christianity</option>
@@ -116,6 +112,66 @@ function BioData({ submitform, handleChange, data, getFieldErrors }: BioDataProp
               <option value="Other">Other</option>
             </select>
             {getFieldErrors("religion")}
+          </div>
+
+          {/* Phone Number */}
+          <div className="col-span-2">
+            <label htmlFor="phoneNumber" className="form-label text-primary">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              id="phoneNumber"
+              onChange={handleChange}
+              value={data.phoneNumber}
+              required
+              placeholder="Enter phone number"
+              className={`form-input border border-gray-light ${
+                getFieldErrors("phoneNumber") ? "outline outline-red-600" : "focus:outline-primary"
+              }`}
+            />
+            {getFieldErrors("phoneNumber")}
+          </div>
+
+          {/* Emergency Contact Name */}
+          <div className="col-span-2">
+            <label htmlFor="emergencyContactName" className="form-label text-primary">
+              Emergency Contact Name
+            </label>
+            <input
+              type="text"
+              name="emergencyContactName"
+              id="emergencyContactName"
+              onChange={handleChange}
+              value={data.emergencyContactName}
+              required
+              placeholder="Full name"
+              className={`form-input border border-gray-light ${
+                getFieldErrors("emergencyContactName") ? "outline outline-red-600" : "focus:outline-primary"
+              }`}
+            />
+            {getFieldErrors("emergencyContactName")}
+          </div>
+
+          {/* Emergency Contact Phone */}
+          <div className="col-span-2">
+            <label htmlFor="emergencyContactPhone" className="form-label text-primary">
+              Emergency Contact Phone
+            </label>
+            <input
+              type="tel"
+              name="emergencyContactPhone"
+              id="emergencyContactPhone"
+              onChange={handleChange}
+              value={data.emergencyContactPhone}
+              required
+              placeholder="Phone number"
+              className={`form-input border border-gray-light ${
+                getFieldErrors("emergencyContactPhone") ? "outline outline-red-600" : "focus:outline-primary"
+              }`}
+            />
+            {getFieldErrors("emergencyContactPhone")}
           </div>
         </div>
 

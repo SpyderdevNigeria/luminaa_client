@@ -3,7 +3,7 @@ import api from "./apiConfig";
 
 const ProfileApi = {
   getProfile: async () => {
-    const response = await api.get("/users/profile");
+    const response = await api.get("/patients/profile");
     return response.data;
   },
 

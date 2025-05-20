@@ -37,6 +37,7 @@ function ResidentialDetails({
               Address
             </label>
             <input
+              required
               type="text"
               name="address"
               id="address"
@@ -58,6 +59,7 @@ function ResidentialDetails({
               City
             </label>
             <input
+              required
               type="text"
               name="city"
               id="city"
@@ -79,6 +81,7 @@ function ResidentialDetails({
               State
             </label>
             <input
+              required
               type="text"
               name="state"
               id="state"
@@ -100,6 +103,7 @@ function ResidentialDetails({
               Country
             </label>
             <select
+              required
               name="country"
               id="country"
               onChange={handleChange}
@@ -110,7 +114,9 @@ function ResidentialDetails({
                   : "focus:outline-primary"
               } border border-gray-light`}
             >
-              <option value="">Select Country</option>
+              <option value="" disabled>
+                Select Country
+              </option>
               <option value="Nigeria">Nigeria</option>
               <option value="Ghana">Ghana</option>
               <option value="Kenya">Kenya</option>
@@ -125,6 +131,7 @@ function ResidentialDetails({
               Zip Code
             </label>
             <input
+              required
               type="text"
               name="zipCode"
               id="zipCode"

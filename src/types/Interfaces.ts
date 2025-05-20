@@ -7,37 +7,41 @@ export interface IPaginationResponse {
 
 
 export interface IUser {
-  photo: {
-    url: string;
-    publicId: string;
-  };
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  occupation: string;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  dateOfBirth: string;
+  gender: string;
+  maritalStatus: string;
+  religion: string;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zipCode: string;
   phoneNumber: string;
-  role: string; // Assuming role is always a string (e.g., "user", "admin")
-  accountType: "member" | "partner" | "inventory" | "admin" | "super_admin";
-  isPartnerProfileCompleted: boolean;
-  isCompletedProfile: boolean;
-  isEmailVerified: boolean;
-  isHRABooked: boolean;
-  isEnabled: boolean;
-  lastLoginDate: string;
-  accountPlan: string;
-  partnerType: "hospital" | "doctor" | "pharmacy" | "laboratory" | "sponsor";
-  gender?: string;
-  address?: {
-    street: string;
-    city: string;
-    state: string;
-    country: string;
-    zipCode?: string;
+  emergencyContactName: string;
+  emergencyContactPhone: string;
+  medicalHistory: string;
+  isBioDataCompleted: boolean;
+  isMedicalHistoryCompleted: boolean;
+  user: {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    role: string;
+    isActive: boolean;
+    phoneNumber: string;
+    lastLogin: string;
+    profilePicture: string;
+    isEmailVerified: boolean;
   };
-  cardApplicationStatus?: string;
-  createdAt: string | Date;
 }
+
 
 export interface IPayload {
   token: string;

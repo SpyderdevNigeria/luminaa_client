@@ -6,6 +6,7 @@ import ProfileApi from "../api/profileApi";
 import { updateUser, logout } from "../reducers/authSlice";
 import routeLinks from "../utils/routes";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export interface AuthInfo {
   userProfile: IUser | null;
@@ -13,20 +14,44 @@ export interface AuthInfo {
   authLoading: boolean;
 }
 
+interface DecodedToken {
+  exp: number;
+}
+
+const isTokenValid = (token: string | null): boolean => {
+  if (!token) return false;
+
+  try {
+    const decoded = jwtDecode<DecodedToken>(token);
+    const currentTime = Date.now() / 1000;
+    return decoded.exp > currentTime;
+  } catch (err) {
+    console.error("Invalid token:", err);
+    return false;
+  }
+};
+
 export const useAuth = (): AuthInfo => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!isTokenValid(token)) {
+      setAuthLoading(false);
+      return;
+    }
+
     const fetchProfile = async () => {
       try {
         const res = await ProfileApi.getProfile();
-        if (res?.data) {
-          dispatch(updateUser(res.data));
-          if (!res.data.isEmailVerified) {
-            navigate(routeLinks?.auth?.emailVerification);
-          } else if (!res.data.dateOfBirth) {
+        if (res) {
+          dispatch(updateUser(res));
+          // if (!res.user.isEmailVerified) {
+          //   navigate(routeLinks?.auth?.emailVerification);
+          // } else
+          if (!res.isBioDataCompleted) {
             navigate(routeLinks?.patient?.onboarding);
           }
         }

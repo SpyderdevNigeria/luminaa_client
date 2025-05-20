@@ -3,15 +3,16 @@ import Background from "../../assets/images/auth/Desktop - 7.webp";
 import website from "../../utils/website";
 import useAuth from "../../hooks/useAuth";
 import { useLayoutEffect } from "react";
-import routeLinks from "../../utils/routes";
 import LoadingScreen from "../loading/LoadingScreen";
+import { returnMemberNavigationUrlLogic } from "../../utils/dashboardUtils";
 
 function PatientAuthLayout() {
   const navigate = useNavigate();
   const { userProfile, authLoading } = useAuth();
   useLayoutEffect(() => {
     if (userProfile && !authLoading) {
-      navigate(routeLinks?.patient?.dashboard);
+      const redirectUrl = returnMemberNavigationUrlLogic(userProfile);
+      navigate(redirectUrl);
     }
   }, [userProfile, authLoading, navigate]);
 

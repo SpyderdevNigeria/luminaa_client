@@ -1,4 +1,4 @@
-import {  useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import BioData from "./components/BioData";
 import ResidentialDetails from "./components/ResidentialDetails";
 import OnBoardingSuccessful from "./components/OnBoardingSuccessful";
@@ -42,9 +42,14 @@ function Onboarding() {
     if (!authLoading && !userProfile) {
       navigate(routeLinks?.auth?.login);
     }
+    if (userProfile?.isBioDataCompleted) {
+      navigate(routeLinks?.patient?.dashboard);
+    }
   }, [authLoading, userProfile, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -59,15 +64,16 @@ function Onboarding() {
     setFeedback({ message: "", type: "" });
 
     try {
-      const res = await ProfileApi.updateBio(formData);
-      console.log(res.data.data);
-      setFormData(initialData);
-      handleNext();
+      await ProfileApi.updateBio(formData).then((res) => {
+        console.log(res.data.data);
+        setFormData(initialData);
+        handleNext();
+      });
     } catch (error: any) {
       const status = error?.response?.status;
       const msg = error?.response?.data?.message;
 
-      if (status && status <= 400) {
+      if (status && status == 400) {
         setErrors(msg || "Something went wrong");
       } else {
         setFeedback({
@@ -100,9 +106,7 @@ function Onboarding() {
 
       <div className="flex flex-col items-center justify-center p-4">
         <main className="max-w-lg w-full mx-auto px-2 md:px-4">
-          {step !== 3 && (
-            <ProgressIndicator step={step} />
-          )}
+          {step !== 3 && <ProgressIndicator step={step} />}
 
           {feedback.message && (
             <FeedbackMessage type={feedback.type} message={feedback.message} />
@@ -151,7 +155,9 @@ const ProgressIndicator = ({ step }: { step: number }) => (
   <div className="flex items-center justify-between mb-4 max-w-[170px] mx-auto">
     <div
       className={`w-12 h-12 rounded-full flex items-center justify-center ${
-        step >= 1 ? "bg-primary text-white" : "bg-white border border-primary text-primary"
+        step >= 1
+          ? "bg-primary text-white"
+          : "bg-white border border-primary text-primary"
       }`}
     >
       1
@@ -165,7 +171,9 @@ const ProgressIndicator = ({ step }: { step: number }) => (
     </div>
     <div
       className={`w-12 h-12 rounded-full flex items-center justify-center ${
-        step >= 2 ? "bg-primary text-white" : "bg-white border border-primary text-primary"
+        step >= 2
+          ? "bg-primary text-white"
+          : "bg-white border border-primary text-primary"
       }`}
     >
       2

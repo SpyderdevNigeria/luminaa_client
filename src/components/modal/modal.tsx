@@ -35,7 +35,7 @@ const Modal = ({
           )}
 
           <AlertDialog.Description className="w-full py-2">
-            {children}
+              {children}
           </AlertDialog.Description>
 
           {!hideCancel && (
