@@ -1,5 +1,5 @@
-import { createBrowserRouter,Navigate } from "react-router-dom";
-import './app.css'
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import "./app.css";
 import routeLinks from "./utils/routes";
 import PatientAuthLayout from "./components/layouts/PatientAuthLayout";
 import Login from "./pages/patient/auth/Login";
@@ -23,130 +23,135 @@ import DoctorPatients from "./pages/doctor/patients/DoctorPatients";
 import DoctorProfile from "./pages/doctor/profile/DoctorProfile";
 import DoctorSchedule from "./pages/doctor/Schedule/DoctorSchedule";
 import DoctorPatientsDetails from "./pages/doctor/patients/DoctorPatientsDetails";
+import EmailVerification from "./pages/patient/auth/EmailVerification";
 import Home from "./pages/business/Home";
 // Route
 const App = createBrowserRouter([
   {
-    path:'/',
-    element:<Home/>
+    path: "/",
+    element: <Home />,
   },
   {
     path: routeLinks?.auth?.path,
-    element: <PatientAuthLayout/>,
-    children:[
+    element: <PatientAuthLayout />,
+    children: [
       {
         path: routeLinks?.auth?.path,
-        element : <Navigate to={routeLinks?.auth?.login}/>
-    },
+        element: <Navigate to={routeLinks?.auth?.login} />,
+      },
       {
         path: routeLinks?.auth?.login,
-        element: <Login/>
-    },
+        element: <Login />,
+      },
+      {
+        path: routeLinks?.auth?.register,
+        element: <Register />,
+      },
+    ],
+  },
+  // VerifyEmail route
     {
-      path: routeLinks?.auth?.register,
-      element: <Register/>
+        path: routeLinks?.auth?.emailVerification,
+        element: <EmailVerification />,
   },
-    ]
-  },
-  // Patient route for Onboarding 
+  // Patient route for Onboarding
   {
     path: routeLinks?.patient?.onboarding,
-    element: <Onboarding/>,
+    element: <Onboarding />,
   },
   {
-    path:routeLinks?.patient?.appointment,
-    element:<Appointment/>,
+    path: routeLinks?.patient?.appointment,
+    element: <Appointment />,
   },
 
-  // Patient Routes for Dashboard 
+  // Patient Routes for Dashboard
   {
-    path:routeLinks?.patient?.path,
-    element: <PatientLayout/>,
-    children:[
+    path: routeLinks?.patient?.path,
+    element: <PatientLayout />,
+    children: [
       {
         path: routeLinks?.patient?.path,
-        element: <Navigate to={routeLinks?.patient?.dashboard}/>
+        element: <Navigate to={routeLinks?.patient?.dashboard} />,
       },
       {
         path: routeLinks?.patient?.dashboard,
-        element: <DashboardHome />
+        element: <DashboardHome />,
       },
       {
         path: routeLinks?.patient?.consultations,
-        element: <Consultaion/>
+        element: <Consultaion />,
       },
       {
-        path:routeLinks?.patient?.prescription,
-        element: <Prescriptions/>
+        path: routeLinks?.patient?.prescription,
+        element: <Prescriptions />,
       },
       {
-        path:routeLinks?.patient?.lab,
-        element : <Lab/>
+        path: routeLinks?.patient?.lab,
+        element: <Lab />,
       },
       {
-        path:routeLinks?.patient?.profile,
-        element : <Profile/>
+        path: routeLinks?.patient?.profile,
+        element: <Profile />,
       },
       {
-        path:routeLinks?.patient?.orders,
-        element : <Order/>
+        path: routeLinks?.patient?.orders,
+        element: <Order />,
       },
       {
-        path:routeLinks?.patient?.pharmacy,
-        element : <Pharmacy/>
+        path: routeLinks?.patient?.pharmacy,
+        element: <Pharmacy />,
       },
       {
-        path:routeLinks?.patient?.medicalHistory,
-        element: <MedicalHistory/>
-      }
-    ]
+        path: routeLinks?.patient?.medicalHistory,
+        element: <MedicalHistory />,
+      },
+    ],
   },
-  
 
   // Doctor Routes
   {
-    path:routeLinks?.doctor?.path,
-    element: <DoctorLayout/>,  
-    children:[
+    path: routeLinks?.doctor?.path,
+    element: <DoctorLayout />,
+    children: [
       {
         path: routeLinks?.doctor?.path,
-        element: <Navigate to={routeLinks?.doctor?.dashboard}/>
+        element: <Navigate to={routeLinks?.doctor?.dashboard} />,
       },
       {
         path: routeLinks?.doctor?.dashboard,
-        element: <DoctorDashboard/>,
+        element: <DoctorDashboard />,
       },
       // Doctor Appointment Link start
       {
-        path:routeLinks?.doctor?.appointment,
-        element: <DoctorAppointments/>,
+        path: routeLinks?.doctor?.appointment,
+        element: <DoctorAppointments />,
       },
       {
-        path:routeLinks?.doctor?.appointmentView,
-        element: <DoctorAppointmentsView/>
+        path: routeLinks?.doctor?.appointmentView,
+        element: <DoctorAppointmentsView />,
       },
       // Doctor Appointment Link End
 
-        // Doctor Patient Link start
-        {
-          path:routeLinks?.doctor?.patients,
-          element: <DoctorPatients/>,
-        },
-        {
-          path:routeLinks?.doctor?.patientView,
-          element: <DoctorPatientsDetails/>
-        },
-        // Doctor Patient Link End
-        {
-          path:routeLinks?.doctor?.profile,
-          element: <DoctorProfile/>
-        },
-        {
-          path:routeLinks?.doctor?.schedule,
-          element:<DoctorSchedule/>
-        }
-    ]
-  }
-])
+      // Doctor Patient Link start
+      {
+        path: routeLinks?.doctor?.patients,
+        element: <DoctorPatients />,
+      },
+      {
+        path: routeLinks?.doctor?.patientView,
+        element: <DoctorPatientsDetails />,
+      },
+      // Doctor Patient Link End
+      {
+        path: routeLinks?.doctor?.profile,
+        element: <DoctorProfile />,
+      },
+      {
+        path: routeLinks?.doctor?.schedule,
+        element: <DoctorSchedule />,
+      },
+    ],
+  },
+]);
 
-export default App
+export default App;

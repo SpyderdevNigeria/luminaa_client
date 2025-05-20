@@ -1,5 +1,7 @@
+import React from "react";
+
 interface ResidentialDetailsProps {
-  submitform: (e: React.FormEvent) => void;
+  submitform: (e: React.FormEvent<HTMLFormElement>) => void;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -8,81 +10,88 @@ interface ResidentialDetailsProps {
     city: string;
     state: string;
     country: string;
-    stateOfOrigin: string;
-    lga: string;
-    postalCode: string;
-    street: string;
+    zipCode: string;
   };
+  isLoading: boolean;
+  getFieldErrors: (field: string) => React.ReactNode;
 }
 
 function ResidentialDetails({
   submitform,
   handleChange,
   data,
+  isLoading,
+  getFieldErrors,
 }: ResidentialDetailsProps) {
   return (
     <div>
-      <form
-        onSubmit={(e) => {
-          submitform(e);
-        }}
-      >
-        <h2 className="text-2xl md:text-3xl my-8 px-20  text-center text-text-secondary">
+      <form onSubmit={submitform}>
+        <h2 className="text-2xl md:text-3xl my-8 px-20 text-center text-text-secondary">
           Residential Details
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-          {/* Street */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Address */}
           <div className="col-span-2">
-            <label htmlFor="street" className="form-label text-primary">
-              Street
+            <label htmlFor="address" className="form-label text-primary">
+              Address
             </label>
             <input
               type="text"
-              name="street"
-              id="street"
+              name="address"
+              id="address"
               onChange={handleChange}
-              value={data?.street}
+              value={data.address}
               placeholder="Street Address"
-              className="form-input focus:outline-primary text-gray-light"
+              className={`form-input ${
+                getFieldErrors("address")
+                  ? "outline outline-red-600"
+                  : "focus:outline-primary"
+              } border border-gray-light`}
             />
+            {getFieldErrors("address")}
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
-              {/* City */}
-              <div className="mt-2">
-                <select
-                  name="city"
-                  id="city"
-                  onChange={handleChange}
-                  value={data?.country}
-                  className="form-input focus:outline-primary text-gray-light"
-                >
-                  <option value="">city</option>
-                  <option value="Nigeria">Nigeria</option>
-                  <option value="Ghana">Ghana</option>
-                  <option value="Kenya">Kenya</option>
-                  <option value="South Africa">South Africa</option>
-                  {/* Add more countries as needed */}
-                </select>
-              </div>
+          {/* City */}
+          <div>
+            <label htmlFor="city" className="form-label text-primary">
+              City
+            </label>
+            <input
+              type="text"
+              name="city"
+              id="city"
+              onChange={handleChange}
+              value={data.city}
+              placeholder="City"
+              className={`form-input ${
+                getFieldErrors("city")
+                  ? "outline outline-red-600"
+                  : "focus:outline-primary"
+              } border border-gray-light`}
+            />
+            {getFieldErrors("city")}
+          </div>
 
-              {/* State */}
-              <div className=" md:mt-2">
-                <select
-                  name="state"
-                  id="state"
-                  onChange={handleChange}
-                  value={data?.country}
-                  className="form-input focus:outline-primary text-gray-light"
-                >
-                  <option value="">state</option>
-                  <option value="Nigeria">Nigeria</option>
-                  <option value="Ghana">Ghana</option>
-                  <option value="Kenya">Kenya</option>
-                  <option value="South Africa">South Africa</option>
-                  {/* Add more countries as needed */}
-                </select>
-              </div>
-            </div>
+          {/* State */}
+          <div>
+            <label htmlFor="state" className="form-label text-primary">
+              State
+            </label>
+            <input
+              type="text"
+              name="state"
+              id="state"
+              onChange={handleChange}
+              value={data.state}
+              placeholder="State"
+              className={`form-input ${
+                getFieldErrors("state")
+                  ? "outline outline-red-600"
+                  : "focus:outline-primary"
+              } border border-gray-light`}
+            />
+            {getFieldErrors("state")}
           </div>
 
           {/* Country */}
@@ -94,90 +103,51 @@ function ResidentialDetails({
               name="country"
               id="country"
               onChange={handleChange}
-              value={data?.country}
-              className="form-input focus:outline-primary text-gray-light"
+              value={data.country}
+              className={`form-input ${
+                getFieldErrors("country")
+                  ? "outline outline-red-600"
+                  : "focus:outline-primary"
+              } border border-gray-light`}
             >
               <option value="">Select Country</option>
               <option value="Nigeria">Nigeria</option>
               <option value="Ghana">Ghana</option>
               <option value="Kenya">Kenya</option>
               <option value="South Africa">South Africa</option>
-              {/* Add more countries as needed */}
             </select>
+            {getFieldErrors("country")}
           </div>
 
-          {/* State of Origin */}
+          {/* Zip Code */}
           <div className="col-span-2">
-            <label htmlFor="stateOfOrigin" className="form-label text-primary">
-              State of Origin
-            </label>
-            <select
-              name="stateOfOrigin"
-              id="stateOfOrigin"
-              onChange={handleChange}
-              value={data?.stateOfOrigin}
-              className="form-input focus:outline-primary text-gray-light"
-            >
-              <option value="">Select State</option>
-              <option value="Lagos">Lagos</option>
-              <option value="Abuja">Abuja</option>
-              <option value="Enugu">Enugu</option>
-              <option value="Rivers">Rivers</option>
-              {/* Add more states as needed */}
-            </select>
-          </div>
-
-          {/* LGA */}
-          <div className="col-span-2">
-            <label htmlFor="lga" className="form-label text-primary">
-              Local Government Area (LGA)
-            </label>
-            <select
-              name="lga"
-              id="lga"
-              onChange={handleChange}
-              value={data?.lga}
-              className="form-input focus:outline-primary text-gray-light"
-            >
-              <option value="">Select LGA</option>
-              <option value="Ikeja">Ikeja</option>
-              <option value="Kosofe">Kosofe</option>
-              <option value="Enugu North">Enugu North</option>
-              <option value="Port Harcourt">Port Harcourt</option>
-              {/* Update this dynamically based on state, if needed */}
-            </select>
-          </div>
-
-          {/* Postal Code */}
-          <div className="col-span-2">
-            <label htmlFor="postalCode" className="form-label text-primary">
-              Postal Code
+            <label htmlFor="zipCode" className="form-label text-primary">
+              Zip Code
             </label>
             <input
               type="text"
-              name="postalCode"
-              id="postalCode"
+              name="zipCode"
+              id="zipCode"
               onChange={handleChange}
-              value={data?.postalCode}
-              placeholder="Postal Code"
-              className="form-input focus:outline-primary text-gray-light"
+              value={data.zipCode}
+              placeholder="Zip Code"
+              className={`form-input ${
+                getFieldErrors("zipCode")
+                  ? "outline outline-red-600"
+                  : "focus:outline-primary"
+              } border border-gray-light`}
             />
+            {getFieldErrors("zipCode")}
           </div>
         </div>
 
         <button
           type="submit"
-          className=" text-base  bg-primary text-white px-4  py-3 font-semibold w-full rounded-md  mt-4 "
+          className="text-base bg-primary text-white px-4 py-3 font-semibold w-full rounded-md mt-4"
+          disabled={isLoading}
         >
-          Continue
+          {isLoading ? "Submitting..." : "Submit"}
         </button>
-        {/* <button
-                type="button"
-                onClick={handleBack}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
-              >
-                Back
-              </button> */}
       </form>
     </div>
   );

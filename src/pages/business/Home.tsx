@@ -14,7 +14,7 @@ export default function Home() {
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">{website?.name}</span>
               <img
-                className="h-8 w-auto"
+                className="h-8 md:h-14 w-auto"
                 src={website?.logo}
                 alt=""
               />
@@ -33,11 +33,11 @@ export default function Home() {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            <Link to={routeLinks?.doctor?.dashboard} className="text-sm font-semibold text-gray-900">Doctor</Link>
+            <Link to={routeLinks?.doctor?.dashboard} className="text-sm md:text-base font-semibold text-gray-900">Doctor</Link>
         
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <Link to={routeLinks?.auth?.login} className="text-sm font-semibold text-gray-900">
+            <Link to={routeLinks?.auth?.login} className="text-sm md:text-base font-semibold text-gray-900">
               Log in <span aria-hidden="true">&rarr;</span>
             </Link>
           </div>

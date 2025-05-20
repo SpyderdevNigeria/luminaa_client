@@ -3,6 +3,10 @@ const routeLinks = {
     path:'/auth',
     login: '/auth/login',
     register: '/auth/register',
+    forgotPassword: '/auth/forgot-password',
+    resetPassword: '/auth/reset-password',
+    emailVerification: '/auth/email-verification',
+    updatePassword: '/auth/update-password',
   },
   patient: {
     path:'/patient',

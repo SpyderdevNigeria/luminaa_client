@@ -5,7 +5,7 @@ const API_URL_RAW =
   "";
 
 const api = axios.create({
-  baseURL: `${API_URL_RAW}/api`,
+  baseURL: `${API_URL_RAW}/`,
 });
 
 api.defaults.withCredentials = true;

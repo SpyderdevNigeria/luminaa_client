@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .form-label {
-  @apply block md:text-lg mb-2 font-semibold ;
+  @apply block md:text-base mb-2 font-semibold ;
 }
 
 .form-input {
@@ -10,3 +10,4 @@
 .form-primary-button {
   @apply  text-base  text-white px-4  py-3 font-semibold w-full rounded-md;
 }
+

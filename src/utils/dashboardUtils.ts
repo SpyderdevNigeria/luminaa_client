@@ -104,3 +104,16 @@ export const navItemsDoctor = [
     to: routeLinks?.doctor?.profile,
   },
 ];
+
+
+export const returnMemberNavigationUrlLogic = (user: any) => {
+  if (!user.isEmailVerified) {
+    return routeLinks?.auth?.emailVerification;
+  }
+
+  if (!user.dateOfBirth) {
+    return routeLinks?.patient?.onboarding;
+  }
+
+  return "/patient/dashboard";
+};
