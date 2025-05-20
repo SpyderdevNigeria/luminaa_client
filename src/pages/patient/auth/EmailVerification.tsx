@@ -7,6 +7,7 @@ import AuthApi from "../../../api/authApi";
 import useAuth from "../../../hooks/useAuth";
 import routeLinks from "../../../utils/routes";
 import { returnMemberNavigationUrlLogic } from "../../../utils/dashboardUtils";
+import LoadingScreen from "../../../components/loading/LoadingScreen";
 
 function EmailVerification() {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,7 @@ function EmailVerification() {
   const [errMsg, setErrMsg] = useState("");
   const [timerKey, setTimerKey] = useState(0);
   const [isTimerExpired, setIsTimerExpired] = useState(false);
-  const { userProfile } = useAuth();
+  const { userProfile, authLoading } = useAuth();
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
@@ -81,7 +82,8 @@ function EmailVerification() {
       setResendLoading(false);
     }
   };
-
+  // Loading while auth is verifying
+  if (authLoading) return <LoadingScreen />;
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
       <div className="w-36 md:w-44 absolute top-6 left-6">
