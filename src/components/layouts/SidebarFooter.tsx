@@ -33,6 +33,7 @@ function SidebarFooter() {
       {/* Wire this button to open the logout confirmation */}
       <button
         onClick={() => setIsLogoutOpen(true)}
+        type="button"
         className="flex items-center text-sm p-2 font-[400]"
       >
         <AiOutlineLogout className="w-6 h-6 mx-2" />

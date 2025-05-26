@@ -13,16 +13,16 @@ function BookingCard({ title = "", type = "default" }: { title?: string; type?: 
       icon: UnionIcon,
       name: "A General Doctor",
       recommended: true,
-      description:
-        "Hey there!  We've sent you an important link to validate your account. This link will help you complete the registration process and gain access to all the features we offer. Don't forget to check your spam folder just in case it ended up there!",
+     description: "We've sent you a verification link to confirm your account. Please check your email to complete your registration and access all features. Be sure to check your spam or junk folder if you don't see it in your inbox."
+
     },
     {
       id: "2",
       icon: CrossHealthIcon,
       name: "A Specialist",
       recommended: false,
-      description:
-        "Hey there!  We've sent you an important link to validate your account. This link will help you complete the registration process and gain access to all the features we offer. Don't forget to check your spam folder just in case it ended up there!",
+      description: "To proceed, please verify your account using the link we've emailed you. This step is necessary to complete your signup and unlock access to specialist services. Don’t forget to check your spam folder if the email isn’t in your inbox."
+
     },
   ];
 

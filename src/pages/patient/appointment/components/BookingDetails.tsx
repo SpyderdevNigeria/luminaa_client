@@ -1,8 +1,11 @@
 import { RiLink } from "react-icons/ri";
 import { CiCalendar } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
+import routeLinks from "../../../../utils/routes";
 function BookingDetails() {
+    const navigate = useNavigate()
   return (
-    <div className='w-full '>
+    <div className='w-full mt-5 '>
         <main className='max-w-[500px] mx-4 md:mx-auto border border-gray-light rounded-lg  p-4 md:p-6 animate-fade-in'>
             <h5 className='text-xl md:text-2xl font-medium'>
                 Booking Details
@@ -39,7 +42,8 @@ function BookingDetails() {
 
             <button
             className="cursor-pointer form-primary-button bg-primary  mt-4 "
-          >
+            onClick={()=> {navigate(routeLinks?.patient?.consultations)}}
+            >
             {"Proceed to Pay"}
           </button>
             </div>

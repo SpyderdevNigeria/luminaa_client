@@ -1,65 +1,108 @@
 import React, { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
-import Modal from "../../../components/modal/modal";
 import PersonalForm from "./components/PersonalForm";
 import ResidentialForm from "./components/ResidentialForm";
-
+import useAuth from "../../../hooks/useAuth";
+import Security from "./components/Security";
+import BookingConditionForm from "./components/MorbidConditionForm";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { updateUser } from "../../../reducers/authSlice";
 const tabs = ["My Profile", "Notification", "Security"];
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("My Profile");
-  const [isModalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+  const dispatch = useAppDispatch()
+
+  type MedicalHistory = {
+    Symptoms?: string;
+    Genotype?: string;
+    BloodGroup?: string;
+    PastBloodTransfusion?: string;
+    PastDelivery?: string;
+    PastHospitalAdmission?: string;
+    Hypertension?: string;
+    Diabetes?: string;
+    Asthma?: string;
+    KidneyDisease?: string;
+    LiverDisease?: string;
+    Epilepsy?: string;
+    SickleCellDisease?: string;
+    PastMedicalHistory?: string;
+  };
+
+  type UserProfile = {
+    user?: {
+      firstName?: string;
+      lastName?: string;
+      email?: string;
+      profilePicture?: string;
+    };
+    address?: string;
+    city?: string;
+    state?: string;
+    phoneNumber?: string;
+    dateOfBirth?: string;
+    gender?: string;
+    maritalStatus?: string;
+    religion?: string;
+    emergencyContactName?: string;
+    emergencyContactPhone?: string;
+    country?: string;
+    zipCode?: string;
+    medicalHistory?: MedicalHistory;
+  };
+
+  const { userProfile } = useAuth() as { userProfile: UserProfile };
+
+  const user = userProfile?.user;
 
   const handleEditClick = (title: string) => {
     setModalTitle(title);
-    console.log(title)
     switch (title) {
-        case "Personal Information":
-            setModalContent(<PersonalForm />);
-            break;
-        case "Residential Details":
-            setModalContent(<ResidentialForm />);
-            break;
-        case "Pre Morbid Conditions":
-            setModalContent(
-              <div className="space-y-4">
-                <label className="block text-sm font-medium text-gray-700">Pre Morbid Conditions</label>
-                <input
-                  type="text"
-                  placeholder="Enter Pre Morbid Conditions"
-                  className="w-full border p-2 rounded text-sm"
-                />
-              </div>
-            );
-            break;
-        case "Profile Header":
-            setModalContent(
-              <div className="space-y-4">
-                <label className="block text-sm font-medium text-gray-700">Profile Header</label>
-                <input
-                  type="text"
-                  placeholder="Update Profile Header"
-                  className="w-full border p-2 rounded text-sm"
-                />
-              </div>
-            );
-            break;
-    
-        default:
-            break;
-    }
-
-    setModalOpen(true);
+      case "Personal Information":
+        setModalContent(<PersonalForm userProfile={userProfile} dispatch={dispatch} updateUser={updateUser} />);
+        break;
+      case "Residential Details":
+        setModalContent(<ResidentialForm userProfile={userProfile} dispatch={dispatch} updateUser={updateUser}/>);
+        break;
+      case "Pre Morbid Conditions":
+        setModalContent(
+        <BookingConditionForm userProfile={userProfile} dispatch={dispatch} updateUser={updateUser} />
+        );
+        break;
+      case "Profile Header":
+        setModalContent(
+          <div className="space-y-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Profile Header
+            </label>
+            <input
+              type="text"
+              placeholder="Update Profile Header"
+              className="w-full border p-2 rounded text-sm"
+            />
+          </div>
+        );
+        break;
+      default:
+        break;
+    };
   };
 
   return (
     <div>
       <h2 className="text-base md:text-lg font-[400] mb-2">
-        <span className={`${activeTab !== "My Profile" && 'text-gray-400' }`}>Profile</span>  {activeTab !== "My Profile" && (`/ ${activeTab}`)}</h2>
-      <div className="flex flex-col md:flex-row min-h-screen bg-gray-100 ">
-        {/* Sidebar / Tab Selector */}
+        <span className={`${activeTab !== "My Profile" && "text-gray-400"}`}>
+          Profile
+        </span>{" "}
+        {activeTab !== "My Profile" && `/ ${activeTab}`}
+      </h2>
+
+      <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+        {/* Sidebar */}
         <div className="md:w-1/4 w-full bg-white rounded-lg p-4 mb-4 md:mb-0 md:mr-6">
           <ul className="flex md:flex-col gap-4 justify-between md:justify-start text-sm md:text-base">
             {tabs.map((tab) => (
@@ -78,20 +121,23 @@ const ProfilePage = () => {
 
         {/* Content Area */}
         <div className="md:w-3/4 w-full">
-          {activeTab === "My Profile" && (
+          {!modalContent && activeTab === "My Profile" && (
             <div className="space-y-6">
               {/* Profile Header */}
               <div className="bg-white rounded-lg p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="flex items-center gap-4">
                   <img
-                    src="https://randomuser.me/api/portraits/women/44.jpg"
-                    alt="avatar"
+                    src={user?.profilePicture || "ee"}
+                    alt="profile picture"
                     className="w-12 h-12 rounded-full"
                   />
                   <div>
-                    <h3 className="font-semibold text-base">Shawna Dele</h3>
+                    <h3 className="font-semibold text-base">
+                      {user?.firstName} {user?.lastName}
+                    </h3>
                     <p className="text-sm text-gray-400">
-                      12 Jalingo Road Str Abuja
+                      {userProfile?.address}, {userProfile?.city},{" "}
+                      {userProfile?.state}
                     </p>
                   </div>
                 </div>
@@ -110,12 +156,22 @@ const ProfilePage = () => {
               >
                 <GridInfo
                   data={[
-                    ["First Name", "Shawna Dele"],
-                    ["Last Name", "Awolowo"],
-                    ["Email", "shawna@example.com"],
-                    ["Phone Number", "08012345678"],
-                    ["Marital Status", "Single"],
-                    ["Blood Group", "O-"],
+                    ["First Name", user?.firstName || "—"],
+                    ["Last Name", user?.lastName || "—"],
+                    ["Email", user?.email || "—"],
+                    ["Phone Number", userProfile?.phoneNumber || "—"],
+                    ["Date of Birth", userProfile?.dateOfBirth || "—"],
+                    ["Gender", userProfile?.gender || "—"],
+                    ["Marital Status", userProfile?.maritalStatus || "—"],
+                    ["Religion", userProfile?.religion || "—"],
+                    [
+                      "Emergency Contact Name",
+                      userProfile?.emergencyContactName || "—",
+                    ],
+                    [
+                      "Emergency Contact Phone",
+                      userProfile?.emergencyContactPhone || "—",
+                    ],
                   ]}
                 />
               </Section>
@@ -127,12 +183,11 @@ const ProfilePage = () => {
               >
                 <GridInfo
                   data={[
-                    ["Address", "12 Jalingo Road"],
-                    ["LGA", "Wuse"],
-                    ["State of Origin", "FCT"],
-                    ["Education", "B.Sc"],
-                    ["Country", "Nigeria"],
-                    ["Postal Code", "900101"],
+                    ["Address", userProfile?.address || "—"],
+                    ["City", userProfile?.city || "—"],
+                    ["State", userProfile?.state || "—"],
+                    ["Country", userProfile?.country || "—"],
+                    ["Postal Code", userProfile?.zipCode || "—"],
                   ]}
                 />
               </Section>
@@ -142,7 +197,56 @@ const ProfilePage = () => {
                 title="Pre Morbid Conditions"
                 onEdit={() => handleEditClick("Pre Morbid Conditions")}
               >
-                <p className="text-sm text-gray-600">N/A</p>
+                {userProfile?.medicalHistory &&
+                typeof userProfile.medicalHistory === "object" ? (
+                  <GridInfo
+                    data={[
+                      ["Symptoms", userProfile.medicalHistory.Symptoms || "—"],
+                      ["Genotype", userProfile.medicalHistory.Genotype || "—"],
+                      [
+                        "Blood Group",
+                        userProfile.medicalHistory.BloodGroup || "—",
+                      ],
+                      [
+                        "Past Blood Transfusion",
+                        userProfile.medicalHistory.PastBloodTransfusion || "—",
+                      ],
+                      [
+                        "Past Delivery",
+                        userProfile.medicalHistory.PastDelivery || "—",
+                      ],
+                      [
+                        "Past Hospital Admission",
+                        userProfile.medicalHistory.PastHospitalAdmission || "—",
+                      ],
+                      [
+                        "Hypertension",
+                        userProfile.medicalHistory.Hypertension || "—",
+                      ],
+                      ["Diabetes", userProfile.medicalHistory.Diabetes || "—"],
+                      ["Asthma", userProfile.medicalHistory.Asthma || "—"],
+                      [
+                        "Kidney Disease",
+                        userProfile.medicalHistory.KidneyDisease || "—",
+                      ],
+                      [
+                        "Liver Disease",
+                        userProfile.medicalHistory.LiverDisease || "—",
+                      ],
+                      ["Epilepsy", userProfile.medicalHistory.Epilepsy || "—"],
+                      [
+                        "Sickle Cell Disease",
+                        userProfile.medicalHistory.SickleCellDisease || "—",
+                      ],
+                      [
+                        "Past Medical History",
+                        userProfile.medicalHistory.PastMedicalHistory || "—",
+                      ],
+                    ]}
+                  />
+                ) : (
+                  <p className="text-sm text-gray-600">N/A</p>
+                )}
               </Section>
             </div>
           )}
@@ -152,26 +256,21 @@ const ProfilePage = () => {
               Notification Sound
             </div>
           )}
-
-          {activeTab === "Security" && (
-            <div className="bg-white rounded-lg p-6 text-gray-600 text-sm">
-              Security
+          {modalContent && 
+          <div className="bg-white rounded-lg p-6 text-sm">
+            <button className="text-base mb-3 flex items-center gap-2"
+            onClick={()=>{setModalContent(null )}}
+            > <FaArrowLeftLong /> Back </button>
+            <div className="max-w-xl mx-auto">
+              <h2 className="text-primary text-2xl my-4 ">{modalTitle}</h2>
+              {modalContent}  
             </div>
-          )}
+            </div>
+          }
+          {activeTab === "Security" && <Security />}
         </div>
+        
       </div>
-
-      {/* Modal for editing */}
-      <Modal
-        open={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        title={modalTitle}
-        hideCancel={true}
-        style="!md:max-w-2xl !md:mx-4 !md:mx-0"
-        buttonText=""
-      >
-        {modalContent}
-      </Modal>
     </div>
   );
 };

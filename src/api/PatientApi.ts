@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import api from "./apiConfig";
 
-const ProfileApi = {
+const PatientApi = {
   getProfile: async () => {
     const response = await api.get("/patients/profile");
     return response.data;
@@ -9,6 +9,13 @@ const ProfileApi = {
 
   completeMemberProfile: async (body: any) => {
     const response = await api.post("/profile/complete-member", body);
+    return response.data;
+  },
+
+
+  // Update Profile Endpoints Start
+  updateMedicalHistory: async (body: any) => {
+    const response = await api.put("/patients/medical-history", body);
     return response.data;
   },
 
@@ -21,11 +28,19 @@ const ProfileApi = {
     const response = await api.put("/patients/biodata", body);
     return response.data;
   },
+    // Update Profile Endpoints End
+
 
   getPartner: async () => {
     const response = await api.get("/profile/partner");
     return response.data;
   },
+  
+  getDoctors: async () => {
+    const response = await api.get("/admin/doctors");
+    return response.data;
+  },
+
 
   uploadPhoto: async (file: any) => {
     const formData = new FormData();
@@ -39,6 +54,23 @@ const ProfileApi = {
     const response = await api.put("/profile/address", body);
     return response.data;
   },
+
+
+  // Appointment Endpoint 
+   createAppointment: async (body: any) => {
+    const response = await api.post("/patient/appointments", body);
+    return response.data;
+  },
+
+    getAppointments: async () => {
+    const response = await api.get("/patient/appointments");
+    return response.data;
+  },
+
+      getAppointmentsById: async (id: any) => {
+    const response = await api.get(`/patient/appointments/${id}`);
+    return response.data;
+  },
 }
 
-export default ProfileApi;
+export default PatientApi;

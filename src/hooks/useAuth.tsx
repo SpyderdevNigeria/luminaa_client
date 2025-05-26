@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { IUser } from "../types/Interfaces";
 import { useAppDispatch, useAppSelector } from "./reduxHooks";
-import ProfileApi from "../api/profileApi";
+import ProfileApi from "../api/PatientApi";
 import { updateUser, logout } from "../reducers/authSlice";
 import routeLinks from "../utils/routes";
 import { useNavigate } from "react-router-dom";
@@ -47,10 +47,11 @@ export const useAuth = (): AuthInfo => {
       try {
         const res = await ProfileApi.getProfile();
         if (res) {
+          console.log(res)
           dispatch(updateUser(res));
-          // if (!res.user.isEmailVerified) {
-          //   navigate(routeLinks?.auth?.emailVerification);
-          // } else
+          if (!res.user.isEmailVerified) {
+            navigate(routeLinks?.auth?.emailVerification);
+          } else
           if (!res.isBioDataCompleted) {
             navigate(routeLinks?.patient?.onboarding);
           }

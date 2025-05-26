@@ -10,7 +10,7 @@ import { login } from "../../../reducers/authSlice";
 import { IPayload } from "../../../types/Interfaces";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import { returnMemberNavigationUrlLogic } from "../../../utils/dashboardUtils";
-import ProfileApi from "../../../api/profileApi";
+import ProfileApi from "../../../api/PatientApi";
 
 const initialFormState = {
   email: "",
@@ -49,7 +49,7 @@ function Register() {
 
       const payload: IPayload = {
         token: accessToken,
-        user: user,
+        user:user,
       };
       dispatch(login(payload));
       if (!user?.isEmailVerified) {
@@ -77,7 +77,7 @@ function Register() {
 
   return (
     <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 2xl:mt-24">
-      <div className="text-center mb-8">
+      <div className="text-center my-8">
         <h5 className="text-2xl md:text-3xl px-20 md:px-28 text-text-secondary">
           Welcome Back
         </h5>

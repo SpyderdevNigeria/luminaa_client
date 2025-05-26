@@ -38,7 +38,7 @@ const AuthApi = {
     return response;
   },
   updatePassword: async (body: any) => {
-    const response = await api.put("/auth/update-password", body);
+    const response = await api.post("/auth/update-password", body);
     return response;
   },
 };

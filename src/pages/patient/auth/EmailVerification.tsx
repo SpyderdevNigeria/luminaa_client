@@ -4,9 +4,8 @@ import { usePinInput } from "react-pin-input-hook";
 import { Timer } from "../../../components/common/Timer";
 import website from "../../../utils/website";
 import AuthApi from "../../../api/authApi";
-import useAuth from "../../../hooks/useAuth";
+import useAuth  from "../../../hooks/useAuth";
 import routeLinks from "../../../utils/routes";
-import { returnMemberNavigationUrlLogic } from "../../../utils/dashboardUtils";
 import LoadingScreen from "../../../components/loading/LoadingScreen";
 
 function EmailVerification() {
@@ -40,6 +39,7 @@ function EmailVerification() {
       setErrMsg("Please enter a valid 6-digit OTP.");
       return;
     }
+    console.log(userProfile);
 
     if (!userProfile?.user?.email) {
       setErrMsg("User email not found.");
@@ -50,9 +50,9 @@ function EmailVerification() {
     setErrMsg("");
 
     try {
-      await AuthApi.verifyEmailOtp(userProfile?.user?.email, otp);
-      const url = returnMemberNavigationUrlLogic(userProfile);
-      navigate(url);
+      await AuthApi.verifyEmailOtp(userProfile?.user?.email, otp).then(()=> {
+      navigate(routeLinks?.patient?.onboarding);
+      });
     } catch (err: any) {
       console.error("OTP verification failed:", err);
       setErrMsg(err?.response?.data?.message || "Verification failed");
@@ -62,6 +62,8 @@ function EmailVerification() {
   };
 
   const handleResendOtp = async () => {
+    console.log(userProfile);
+    
     if (!userProfile?.user?.email) {
       setErrMsg("User email not found.");
       return;
@@ -93,7 +95,7 @@ function EmailVerification() {
       </div>
 
       <div className="rounded-xl w-full max-w-[500px] p-8 text-center">
-        <h2 className="text-2xl md:text-3xl px-20 md:px-28 text-text-secondary">
+        <h2 className="text-xl md:text-3xl px-20 md:px-28 text-text-secondary">
           OTP verification
         </h2>
         <p className="mt-4 px-4 text-text-primary leading-5">

@@ -1,45 +1,59 @@
-import BookingCard from "../../../../components/common/BookingCard";
-import BookingDateCard from "../../../../components/common/BookingDateCard";
-function Booking({ handleStep =()=>{} }) {
+import { useState, useMemo } from "react";
+import BookingType from "./steps/BookingType";
+import BookingSymptoms from "./steps/BookingSymptoms";
+import BookingDoctorList from "./steps/BookingDoctorList";
+
+
+const StepPage = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [data, setData] = useState({
+    type: "",
+    selectedDoctor: "",
+    scheduledDate: "",
+    patientNote : "",
+    location : ""
+  });
+const steps = useMemo(() =>  [
+  { id: 1, title: "AppointmentType" },
+  { id: 2, title: "Personal Info" },
+  { id: 3, title: "Review & Submit" },
+], []);
+  const nextStep = () => {
+    if (currentStep < steps.length) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return <BookingType nextStep={nextStep} setData={setData} data={data} />;
+      case 2:
+        return <BookingDoctorList nextStep={nextStep} setData={setData} data={data} prevStep={prevStep} />;
+      case 3:
+        return <BookingSymptoms setData={setData} data={data} prevStep={prevStep} />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div>
-   <BookingCard title={"Book an Appointment"}/>
- 
-    <BookingDateCard/>
-
-      <main className="max-w-2xl w-full mx-auto p-2 md:py-4">
-      <div className="">
-            <label
-              htmlFor="symptoms"
-              className="block  text-xs md:text-lg  leading-6 mb-2 text-primary"
-            >
-              Symptoms
-            </label>
-            <textarea
-              name="symptoms"
-              id="symptoms"
-              rows={6}
-              placeholder="Please Specify"
-              className=" form-input focus:outline-primary text-gray-light"
-            ></textarea>
-          </div>
-      </main>
+    <div className="max-w-2xl w-full mx-auto p-2 md:p-4 rounded-lg ">
+      <h5 className={`text-center  text-secondary-text text-xl md:text-2xl`}>
+        Appointment Booking
+     </h5>
 
 
-      <main className="max-w-2xl w-full mx-auto p-2 md:p-0">
-        <div className="w-full ">
-          <button
-            className="cursor-pointer form-primary-button bg-primary  mt-4 "
-            onClick={() => {
-              handleStep();
-            }}
-          >
-            {"Next"}
-          </button>
-        </div>
-      </main>
+      {/* Step Content */}
+      <div className="">{renderStepContent()}</div>
     </div>
   );
-}
+};
 
-export default Booking;
+export default StepPage;

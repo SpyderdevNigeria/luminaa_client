@@ -15,7 +15,7 @@ function DashboardHome() {
         name: "Book a Consultation",
         description:
           "Find a Doctor to give you a diagnosis and set you up for treatment",
-        link: routeLinks?.patient?.consultations,
+        link: routeLinks?.patient?.appointment,
       },
       {
         icon: navItemsPatient.find(
@@ -49,7 +49,7 @@ function DashboardHome() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {links?.map((i) => (
           <Link
-            to={i?.name.toLowerCase() === "book a consultation" ? '#' : i?.link}
+            to={i?.link}
             className="bg-white rounded-lg p-4 2xl:p-8 shadow-sm "
             key={i?.name}
             onClick={()=>{
@@ -76,7 +76,7 @@ function DashboardHome() {
       <div>
         {/* Appointments List */}
         <section className="bg-white rounded-lg p-4">
-          <AppointmentTab />
+          <AppointmentTab appointmentsData={[]} />
         </section>
       </div>
     </div>

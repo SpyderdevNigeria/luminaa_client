@@ -1,16 +1,14 @@
 import axios from "axios";
 
 const API_URL_RAW =
-  import.meta.env.VITE_APP_API_URL_RAW ??
-  "";
+  import.meta.env.VITE_APP_API_URL_RAW ?? "";
 
 const api = axios.create({
   baseURL: `${API_URL_RAW}/`,
+  withCredentials: true,
 });
 
-api.defaults.withCredentials = true;
-
-// add token to request header
+// Request Interceptor: Add token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -20,6 +18,21 @@ api.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+// Response Interceptor: Handle 401
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Remove token
+      localStorage.removeItem("token");
+      localStorage.removeItem("hms_user");
+      // Redirect to home
+      window.location.href = "/";
+    }
+    return Promise.reject(error);
+  }
 );
 
 export default api;

@@ -13,7 +13,6 @@ interface ResidentialDetailsProps {
     zipCode: string;
   };
   isLoading: boolean;
-  getFieldErrors: (field: string) => React.ReactNode;
 }
 
 function ResidentialDetails({
@@ -21,7 +20,6 @@ function ResidentialDetails({
   handleChange,
   data,
   isLoading,
-  getFieldErrors,
 }: ResidentialDetailsProps) {
   return (
     <div>
@@ -44,13 +42,8 @@ function ResidentialDetails({
               onChange={handleChange}
               value={data.address}
               placeholder="Street Address"
-              className={`form-input ${
-                getFieldErrors("address")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
+              className={`form-input focus:outline-primary border border-gray-light`}
             />
-            {getFieldErrors("address")}
           </div>
 
           {/* City */}
@@ -66,13 +59,9 @@ function ResidentialDetails({
               onChange={handleChange}
               value={data.city}
               placeholder="City"
-              className={`form-input ${
-                getFieldErrors("city")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
+               className={`form-input focus:outline-primary border border-gray-light`}
             />
-            {getFieldErrors("city")}
+     
           </div>
 
           {/* State */}
@@ -88,13 +77,9 @@ function ResidentialDetails({
               onChange={handleChange}
               value={data.state}
               placeholder="State"
-              className={`form-input ${
-                getFieldErrors("state")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
+              className={`form-input focus:outline-primary border border-gray-light`}
             />
-            {getFieldErrors("state")}
+
           </div>
 
           {/* Country */}
@@ -108,11 +93,7 @@ function ResidentialDetails({
               id="country"
               onChange={handleChange}
               value={data.country}
-              className={`form-input ${
-                getFieldErrors("country")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
+              className={`form-input focus:outline-primary border border-gray-light`}
             >
               <option value="" disabled>
                 Select Country
@@ -122,7 +103,7 @@ function ResidentialDetails({
               <option value="Kenya">Kenya</option>
               <option value="South Africa">South Africa</option>
             </select>
-            {getFieldErrors("country")}
+           
           </div>
 
           {/* Zip Code */}
@@ -138,13 +119,9 @@ function ResidentialDetails({
               onChange={handleChange}
               value={data.zipCode}
               placeholder="Zip Code"
-              className={`form-input ${
-                getFieldErrors("zipCode")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
+           className={`form-input focus:outline-primary border border-gray-light`}
             />
-            {getFieldErrors("zipCode")}
+          
           </div>
         </div>
 

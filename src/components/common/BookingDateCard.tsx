@@ -52,7 +52,7 @@ function BookingDateCard({ type = "default" }) {
             Select a Date For your appointment
           </h3>
           <div className="mt-4">
-            <CustomCalendar />
+            <CustomCalendar handleSelectedDate={()=>{} } />
           </div>
         </section>
 

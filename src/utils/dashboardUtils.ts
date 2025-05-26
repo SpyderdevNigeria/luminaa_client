@@ -4,8 +4,9 @@ import { TbSmartHome } from "react-icons/tb";
 import { BiSolidClinic } from "react-icons/bi";
 import { LiaPillsSolid } from "react-icons/lia";
 import { FiPackage } from "react-icons/fi";
-import { FaRegNewspaper, FaRegCircleUser } from "react-icons/fa6";
+import { FaRegNewspaper, FaRegCircleUser    } from "react-icons/fa6";
 import { IoCalendarClearOutline } from "react-icons/io5";
+import { FaRegUserCircle } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
 import { MdPeople } from "react-icons/md";
 import routeLinks from "./routes";
@@ -52,6 +53,13 @@ export const navItemsPatient = [
     title: "MedicalHistory",
     icon: FaRegNewspaper,
     to: routeLinks?.patient?.medicalHistory,
+  },
+
+   {
+    label: "profile",
+    title: "profile",
+     icon: FaRegUserCircle  ,
+    to: routeLinks?.patient?.profile,
   },
 ];
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MdOutlineKeyboardArrowRight,
   MdOutlineKeyboardArrowLeft,
@@ -23,7 +23,11 @@ const generateDays = (year: number, month: number) => {
   return days;
 };
 
-const CustomCalendar = () => {
+interface CustomCalendarProps {
+  handleSelectedDate?: (date: Date | null) => void;
+}
+
+const CustomCalendar = ({ handleSelectedDate }: CustomCalendarProps) => {
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
@@ -73,8 +77,14 @@ const CustomCalendar = () => {
     return date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
   };
 
+  useEffect(() => {
+    if(handleSelectedDate) {
+          handleSelectedDate(selectedDate);
+    }
+  }, [selectedDate]);
+
   return (
-    <div className="w-full mx-auto p-4 bg-white rounded-lg border border-gray-light">
+    <div className="w-full mx-auto p-4 bg-white rounded-lg border ">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <button onClick={prevMonth} className="text-xl font-bold">

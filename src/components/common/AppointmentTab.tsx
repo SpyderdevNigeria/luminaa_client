@@ -15,33 +15,23 @@ const assignRandomColor = (data: any[]) => {
   });
 };
 
-const rawAppointments = [
-  { type: "upcoming", doctor: "DR Kenya", date: "Feb 14, 2025", time: "6:30AM" },
-  { type: "upcoming", doctor: "DR Kenya", date: "Feb 14, 2025", time: "6:30AM" },
-  { type: "upcoming", doctor: "DR Kenya", date: "Feb 14, 2025", time: "6:30AM" },
-  { type: "past", doctor: "DR Kenya", date: "Feb 14, 2025", time: "6:30AM" },
-  { type: "past", doctor: "DR Kenya", date: "Feb 14, 2025", time: "6:30AM" },
-  { type: "upcoming", doctor: "DR Kenya", date: "Feb 14, 2025", time: "6:30AM" },
-  { type: "past", doctor: "DR Kenya", date: "Feb 14, 2025", time: "6:30AM" },
-  { type: "past", doctor: "DR Kenya", date: "Feb 14, 2025", time: "6:30AM" },
-];
 
-const itemsPerPage = 3;
-const AppointmentTab = () => {
+const AppointmentTab = ({ appointmentsData }: { appointmentsData: any[] }) => {
   const [activeTab, setActiveTab] = useState<"all" | "upcoming" | "past">("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState<any>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const appointments = assignRandomColor(rawAppointments);
+  const appointments = assignRandomColor(appointmentsData || []);
 
   const upcomingAppointments = appointments.filter((app) => app.type === "upcoming");
   const pastAppointments = appointments.filter((app) => app.type === "past");
-
   const allAppointments = [...upcomingAppointments, ...pastAppointments];
 
-  const totalPages = Math.ceil(allAppointments.length / itemsPerPage);
-
+  const itemsPerPage = 3;
+  const totalPages = Math.ceil(
+    (activeTab === "all" ? allAppointments.length : (activeTab === "upcoming" ? upcomingAppointments.length : pastAppointments.length)) / itemsPerPage
+  );
 
   const handlePageChange = (page: number) => setCurrentPage(page);
 
@@ -62,14 +52,24 @@ const AppointmentTab = () => {
                   {app.date} | {app.time}
                 </p>
               </div>
-              <button className="bg-white p-1 md:p-4 rounded-lg text-xs font-medium text-gray-700"
-              onClick={() => {setData(app); setModalOpen(true)}}
+              <button
+                className="bg-white p-1 md:p-4 rounded-lg text-xs font-medium text-gray-700"
+                onClick={() => {
+                  setData(app);
+                  setModalOpen(true);
+                }}
               >
                 View details
               </button>
             </div>
           ))}
-          <AppointmentDetailsModal data={data} isModalOpen={isModalOpen} setModalOpen={(e)=>{setModalOpen(e)}} />
+          <AppointmentDetailsModal
+            data={data}
+            isModalOpen={isModalOpen}
+            setModalOpen={(e) => {
+              setModalOpen(e);
+            }}
+          />
         </div>
       </div>
     );
@@ -101,34 +101,14 @@ const AppointmentTab = () => {
       <div className="animate-fade-in">
         {activeTab === "all" ? (
           <>
-            {/* {renderAppointments(
-              paginatedAll.filter((app) => app.type === "upcoming"),
+            {renderAppointments(
+              upcomingAppointments.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage),
               "Upcoming Appointments"
             )}
             {renderAppointments(
-              paginatedAll.filter((app) => app.type === "past"),
+              pastAppointments.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage),
               "Past Appointments"
-            )} */}
-
-            {
-                   renderAppointments(
-                    (upcomingAppointments).slice(
-                      (currentPage - 1) * itemsPerPage,
-                      currentPage * itemsPerPage
-                    ),
-                    `${"upcoming"} Appointments`
-                  )
-            }
-
-{
-                   renderAppointments(
-                    (pastAppointments).slice(
-                      (currentPage - 1) * itemsPerPage,
-                      currentPage * itemsPerPage
-                    ),
-                    `${"Past"} Appointments`
-                  )
-            }
+            )}
           </>
         ) : (
           renderAppointments(
@@ -145,7 +125,12 @@ const AppointmentTab = () => {
       {totalPages > 1 && (
         <Pagination
           pagination={{
-            totalDocs: activeTab === "all" ? allAppointments.length : (activeTab === "upcoming" ? upcomingAppointments.length : pastAppointments.length),
+            totalDocs:
+              activeTab === "all"
+                ? allAppointments.length
+                : activeTab === "upcoming"
+                ? upcomingAppointments.length
+                : pastAppointments.length,
             totalPages,
             hasPrevPage: currentPage > 1,
             hasNextPage: currentPage < totalPages,
@@ -157,6 +142,7 @@ const AppointmentTab = () => {
     </div>
   );
 };
+
 
 
 export default AppointmentTab

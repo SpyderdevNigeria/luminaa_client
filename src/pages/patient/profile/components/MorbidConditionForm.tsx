@@ -1,6 +1,9 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect} from "react";
 import PatientApi from "../../../../api/PatientApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
+
+const yesNoDetailsOptions = ["", "Yes", "No", "Details"];
+
 interface MedicalHistoryFormData {
   Genotype: string;
   BloodGroup: string;
@@ -14,15 +17,20 @@ interface MedicalHistoryFormData {
   LiverDisease: string;
   Epilepsy: string;
   SickleCellDisease: string;
+  [key: string]: string; 
 }
 
-const yesNoDetailsOptions = ["not sure", "Yes", "No",];
-
-interface BookingConditionProps {
-  handleClose: (success?: boolean) => void;
+interface BookingConditionFormProps {
+  userProfile: any;
+  updateUser?: (user: any) => void; 
+  dispatch?: (action: any) => void;
 }
 
-function BookingCondition({ handleClose }: BookingConditionProps) {
+const BookingConditionForm = ({
+  userProfile,
+  updateUser,
+  dispatch
+}: BookingConditionFormProps) => {
   const [formData, setFormData] = useState<MedicalHistoryFormData>({
     Genotype: "",
     BloodGroup: "",
@@ -37,58 +45,72 @@ function BookingCondition({ handleClose }: BookingConditionProps) {
     Epilepsy: "",
     SickleCellDisease: "",
   });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ message: "", type: "" });
+
+useEffect(() => {
+  if (userProfile) {
+    setFormData((prev: any) => ({
+      ...prev,
+      ...userProfile?.medicalHistory,
+    }));
+  }
+}, [userProfile]);
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: { target: { name: any; value: any; }; }
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [name]: value,
     }));
   };
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setMessage({ message: "", type: "" });
+
     try {
-     await PatientApi.updateMedicalHistory(formData).then((res) => {
+      const res = await PatientApi.updateMedicalHistory(formData);
+
       if (res) {
-      setMessage({
-        message:"Medical history updated successfully.",
-        type: "success",
-      });
-      handleClose(false)
+        setMessage({
+          message: "Medical history updated successfully.",
+          type: "success",
+        });
+        if (dispatch && updateUser) {
+          dispatch(updateUser({ ...userProfile, medicalHistory: { ...formData } }));
+        }
       }
-      });
     } catch (error) {
-      
       console.error("Failed to update medical history", error);
       setMessage({
-        message: (error instanceof Error ? error.message : typeof error === "string" ? error : "An error occurred"),
+        message:
+          error instanceof Error
+            ? error.message
+            : typeof error === "string"
+            ? error
+            : "An error occurred",
         type: "error",
       });
-    }finally {
+    } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
     <div className="w-full">
-      <main className="max-w-2xl w-full mx-auto p-2 pt-0 md:p-4">
-        <h5 className="text-xl md:text-2xl text-center text-secondary-text">
-          Premorbid Condition
-        </h5>
-
-
-          {message.message && (
+      <main>
+        {message.message && (
           <FeedbackMessage type={message.type} message={message.message} />
         )}
 
-
-        <form onSubmit={handleSubmit} className="space-y-4 mt-8 gap-4 w-full">
+        <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-2">
           {/* Genotype */}
           <div>
-            <label htmlFor="Genotype" className="block text-xs md:text-lg leading-6 mb-2 text-primary">
+            <label htmlFor="Genotype"  className="form-label text-primary">
               Genotype
             </label>
             <select
@@ -97,7 +119,7 @@ function BookingCondition({ handleClose }: BookingConditionProps) {
               value={formData.Genotype}
               onChange={handleChange}
               required
-              className="form-input focus:outline-primary text-gray-light"
+            className="form-input focus:outline-primary border border-gray-light"
             >
               <option value="">Select Genotype</option>
               <option value="AA">AA</option>
@@ -109,7 +131,7 @@ function BookingCondition({ handleClose }: BookingConditionProps) {
 
           {/* Blood Group */}
           <div>
-            <label htmlFor="BloodGroup" className="block text-xs md:text-lg leading-6 mb-2 text-primary">
+            <label htmlFor="BloodGroup" className="form-label text-primary">
               Blood Group
             </label>
             <select
@@ -118,7 +140,7 @@ function BookingCondition({ handleClose }: BookingConditionProps) {
               value={formData.BloodGroup}
               onChange={handleChange}
               required
-              className="form-input focus:outline-primary text-gray-light"
+              className="form-input focus:outline-primary border border-gray-light"
             >
               <option value="">Select Blood Group</option>
               <option value="A+">A+</option>
@@ -145,17 +167,17 @@ function BookingCondition({ handleClose }: BookingConditionProps) {
             { id: "Epilepsy", label: "Epilepsy" },
             { id: "SickleCellDisease", label: "Sickle Cell Disease" },
           ].map(({ id, label, options }) => (
-            <div key={id}>
-              <label htmlFor={id} className="block text-xs md:text-lg leading-6 mb-2 text-primary">
+            <div key={id} className="col-span-2">
+              <label htmlFor={id} className="form-label text-primary">
                 {label}
               </label>
               <select
                 id={id}
                 name={id}
-                value={formData[id as keyof MedicalHistoryFormData]}
+                value={formData[id]}
                 onChange={handleChange}
                 required
-                className="form-input focus:outline-primary text-gray-light"
+             className="form-input focus:outline-primary border border-gray-light"
               >
                 <option value="">Select Option</option>
                 {(options || yesNoDetailsOptions).map((opt) => (
@@ -167,19 +189,17 @@ function BookingCondition({ handleClose }: BookingConditionProps) {
             </div>
           ))}
 
-          <button
-            type="submit"
-              disabled={isSubmitting}
-          className={`form-primary-button bg-primary my-4 ${
-            isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          >
-           {isSubmitting ? "Submitting..." : "Finish"}
-          </button>
+        <button
+          type="submit"
+          className="w-full col-span-2 text-base bg-primary text-white px-4 py-3 font-semibold  rounded-md my-4"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "updating..." : "update"}
+        </button>
         </form>
       </main>
     </div>
   );
-}
+};
 
-export default BookingCondition;
+export default BookingConditionForm;

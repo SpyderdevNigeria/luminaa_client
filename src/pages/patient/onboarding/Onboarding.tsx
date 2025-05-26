@@ -5,8 +5,7 @@ import OnBoardingSuccessful from "./components/OnBoardingSuccessful";
 import { Link, useNavigate } from "react-router-dom";
 import Background from "../../../assets/images/auth/Desktop - 7.webp";
 import website from "../../../utils/website";
-import ProfileApi from "../../../api/profileApi";
-import useFlatErrorList from "../../../hooks/useFlatErrorList";
+import ProfileApi from "../../../api/PatientApi";
 import FeedbackMessage from "../../../components/common/FeedbackMessage";
 import useAuth from "../../../hooks/useAuth";
 import routeLinks from "../../../utils/routes";
@@ -32,8 +31,6 @@ function Onboarding() {
   const [formData, setFormData] = useState(initialData);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState({ message: "", type: "" });
-
-  const { setErrors, getFieldErrors } = useFlatErrorList();
   const navigate = useNavigate();
   const { userProfile, authLoading } = useAuth();
 
@@ -60,22 +57,25 @@ function Onboarding() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
-    setErrors([]);
     setFeedback({ message: "", type: "" });
 
     try {
-      await ProfileApi.updateBio(formData).then((res) => {
-        console.log(res.data.data);
+    await ProfileApi.updateBio(formData).then((res) => {
+      console.log(res);
+       if (res) {
         setFormData(initialData);
         handleNext();
+       }
       });
     } catch (error: any) {
       const status = error?.response?.status;
       const msg = error?.response?.data?.message;
-
       if (status && status == 400) {
-        setErrors(msg || "Something went wrong");
-      } else {
+            setFeedback({
+          message: msg || "An error occurred",
+          type: "error",
+        });
+      } else if (status >= 500) {
         setFeedback({
           message: msg || "An error occurred",
           type: "error",
@@ -120,7 +120,7 @@ function Onboarding() {
               }}
               handleChange={handleChange}
               data={formData}
-              getFieldErrors={getFieldErrors}
+           
             />
           )}
 
@@ -130,7 +130,6 @@ function Onboarding() {
                 submitform={handleSubmit}
                 handleChange={handleChange}
                 data={formData}
-                getFieldErrors={getFieldErrors}
                 isLoading={submitting}
               />
               <button
