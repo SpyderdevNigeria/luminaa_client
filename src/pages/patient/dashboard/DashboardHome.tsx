@@ -4,8 +4,10 @@ import routeLinks from "../../../utils/routes";
 import { navItemsPatient } from "../../../utils/dashboardUtils";
 import AppointmentTab from "../../../components/common/AppointmentTab";
 import AppointmentBookModal from "../../../components/modal/AppointmentBookModal";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 function DashboardHome() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+const userProfile = useAppSelector((state) => state.auth.user);
   const links = useMemo(
     () => [
       {
@@ -42,7 +44,7 @@ function DashboardHome() {
     <div>
       <h2 className="text-sm italic text-gray-500 mb-1">Welcome</h2>
       <h1 className="text-2xl md:text-4xl font-medium text-black mb-4">
-        Sarah Adeniji
+        {userProfile?.user?.firstName + " " + userProfile?.user?.lastName}
       </h1>
 
       {/* Cards */}

@@ -2,15 +2,16 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-import routeLinks from "../../../utils/routes";
-import useFlatErrorList from "../../../hooks/useFlatErrorList";
-import AuthApi from "../../../api/authApi";
-import FeedbackMessage from "../../../components/common/FeedbackMessage";
-import { login } from "../../../reducers/authSlice";
-import { IPayload } from "../../../types/Interfaces";
-import { useAppDispatch } from "../../../hooks/reduxHooks";
-import { returnMemberNavigationUrlLogic } from "../../../utils/dashboardUtils";
-import ProfileApi from "../../../api/PatientApi";
+import routeLinks from "../../utils/routes";
+import useFlatErrorList from "../../hooks/useFlatErrorList";
+import AuthApi from "../../api/authApi";
+import FeedbackMessage from "../../components/common/FeedbackMessage";
+import { login } from "../../reducers/authSlice";
+import { IPayload } from "../../types/Interfaces";
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { returnMemberNavigationUrlLogic } from "../../utils/dashboardUtils";
+import ProfileApi from "../../api/PatientApi";
+import website from "../../utils/website";
 
 const initialFormState = {
   email: "",
@@ -18,7 +19,7 @@ const initialFormState = {
   eye: false,
 };
 
-function Login() {
+function PartnerLogin() {
   const [formData, setFormData] = useState(initialFormState);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ message: "", type: "" });
@@ -76,7 +77,13 @@ function Login() {
   };
 
   return (
-    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 2xl:mt-24">
+      <div className="block lg:flex  items-start px-4  max-w-[1366px] mx-auto">
+     
+        <div className=" lg:w-1/2 my-auto animated fadeInDown">
+    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4  flex flex-col  justify-center">
+           <Link to="/" className="mb-2">
+            <img src={website?.logo} alt="" className="w-36 mx-auto" />
+          </Link>
       <div className="text-center my-8">
         <h5 className="text-2xl md:text-3xl px-20 md:px-28 text-text-secondary">
           Welcome Back
@@ -166,7 +173,16 @@ function Login() {
         </h5>
       </form>
     </main>
+        </div>
+           <div className=" hidden lg:block w-1/2 h-screen py-4">
+        <img
+          src={'https://images.pexels.com/photos/5214995/pexels-photo-5214995.jpeg?auto=compress&cs=tinysrgb&w=600'}
+          alt="Right Side"
+          className="w-full h-full object-cover rounded-xl  animate-fade-in"
+        />
+      </div>
+    </div>
   );
 }
 
-export default Login;
+export default PartnerLogin;

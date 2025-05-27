@@ -33,7 +33,7 @@ export default function Home() {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            <Link to={routeLinks?.doctor?.dashboard} className="text-sm md:text-base font-semibold text-gray-900">Doctor</Link>
+            <Link to={routeLinks?.auth?.partnerLogin} className="text-sm md:text-base font-semibold text-gray-900">Doctor</Link>
         
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">

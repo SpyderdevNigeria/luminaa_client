@@ -1,6 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import PatientApi from "../../../../api/PatientApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
+import { useAppDispatch } from "../../../../hooks/reduxHooks";
+import { updateUser } from "../../../../reducers/authSlice";
 interface MedicalHistoryFormData {
   Genotype: string;
   BloodGroup: string;
@@ -18,11 +20,8 @@ interface MedicalHistoryFormData {
 
 const yesNoDetailsOptions = ["not sure", "Yes", "No",];
 
-interface BookingConditionProps {
-  handleClose: (success?: boolean) => void;
-}
 
-function BookingCondition({ handleClose }: BookingConditionProps) {
+function BookingCondition({userProfile}: { userProfile: any }) {
   const [formData, setFormData] = useState<MedicalHistoryFormData>({
     Genotype: "",
     BloodGroup: "",
@@ -37,6 +36,7 @@ function BookingCondition({ handleClose }: BookingConditionProps) {
     Epilepsy: "",
     SickleCellDisease: "",
   });
+  const dispatch = useAppDispatch();
     const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ message: "", type: "" });
   const handleChange = (
@@ -50,6 +50,7 @@ function BookingCondition({ handleClose }: BookingConditionProps) {
   };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true)
     try {
      await PatientApi.updateMedicalHistory(formData).then((res) => {
       if (res) {
@@ -57,7 +58,7 @@ function BookingCondition({ handleClose }: BookingConditionProps) {
         message:"Medical history updated successfully.",
         type: "success",
       });
-      handleClose(false)
+      dispatch(updateUser({...userProfile, medicalHistory: { ...formData } }));
       }
       });
     } catch (error) {

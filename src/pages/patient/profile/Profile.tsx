@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import PersonalForm from "./components/PersonalForm";
 import ResidentialForm from "./components/ResidentialForm";
-import useAuth from "../../../hooks/useAuth";
 import Security from "./components/Security";
 import BookingConditionForm from "./components/MorbidConditionForm";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { updateUser } from "../../../reducers/authSlice";
+import ProfilePictureForm from "./components/ProfilePictureForm";
+
 const tabs = ["My Profile", "Notification", "Security"];
 
 const ProfilePage = () => {
@@ -16,46 +17,46 @@ const ProfilePage = () => {
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
   const dispatch = useAppDispatch()
 
-  type MedicalHistory = {
-    Symptoms?: string;
-    Genotype?: string;
-    BloodGroup?: string;
-    PastBloodTransfusion?: string;
-    PastDelivery?: string;
-    PastHospitalAdmission?: string;
-    Hypertension?: string;
-    Diabetes?: string;
-    Asthma?: string;
-    KidneyDisease?: string;
-    LiverDisease?: string;
-    Epilepsy?: string;
-    SickleCellDisease?: string;
-    PastMedicalHistory?: string;
-  };
+  // type MedicalHistory = {
+  //   Symptoms?: string;
+  //   Genotype?: string;
+  //   BloodGroup?: string;
+  //   PastBloodTransfusion?: string;
+  //   PastDelivery?: string;
+  //   PastHospitalAdmission?: string;
+  //   Hypertension?: string;
+  //   Diabetes?: string;
+  //   Asthma?: string;
+  //   KidneyDisease?: string;
+  //   LiverDisease?: string;
+  //   Epilepsy?: string;
+  //   SickleCellDisease?: string;
+  //   PastMedicalHistory?: string;
+  // };
 
-  type UserProfile = {
-    user?: {
-      firstName?: string;
-      lastName?: string;
-      email?: string;
-      profilePicture?: string;
-    };
-    address?: string;
-    city?: string;
-    state?: string;
-    phoneNumber?: string;
-    dateOfBirth?: string;
-    gender?: string;
-    maritalStatus?: string;
-    religion?: string;
-    emergencyContactName?: string;
-    emergencyContactPhone?: string;
-    country?: string;
-    zipCode?: string;
-    medicalHistory?: MedicalHistory;
-  };
+  // type UserProfile = {
+  //   user?: {
+  //     firstName?: string;
+  //     lastName?: string;
+  //     email?: string;
+  //     profilePicture?: string;
+  //   };
+  //   address?: string;
+  //   city?: string;
+  //   state?: string;
+  //   phoneNumber?: string;
+  //   dateOfBirth?: string;
+  //   gender?: string;
+  //   maritalStatus?: string;
+  //   religion?: string;
+  //   emergencyContactName?: string;
+  //   emergencyContactPhone?: string;
+  //   country?: string;
+  //   zipCode?: string;
+  //   medicalHistory?: MedicalHistory;
+  // };
 
-  const { userProfile } = useAuth() as { userProfile: UserProfile };
+  const userProfile = useAppSelector((state) => state.auth.user);
 
   const user = userProfile?.user;
 
@@ -75,16 +76,7 @@ const ProfilePage = () => {
         break;
       case "Profile Header":
         setModalContent(
-          <div className="space-y-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Profile Header
-            </label>
-            <input
-              type="text"
-              placeholder="Update Profile Header"
-              className="w-full border p-2 rounded text-sm"
-            />
-          </div>
+        <ProfilePictureForm userProfile={userProfile} />
         );
         break;
       default:
@@ -127,7 +119,7 @@ const ProfilePage = () => {
               <div className="bg-white rounded-lg p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="flex items-center gap-4">
                   <img
-                    src={user?.profilePicture || "ee"}
+                    src={userProfile?.user?.profilePicture?.url || "ee"}
                     alt="profile picture"
                     className="w-12 h-12 rounded-full"
                   />
@@ -201,7 +193,6 @@ const ProfilePage = () => {
                 typeof userProfile.medicalHistory === "object" ? (
                   <GridInfo
                     data={[
-                      ["Symptoms", userProfile.medicalHistory.Symptoms || "—"],
                       ["Genotype", userProfile.medicalHistory.Genotype || "—"],
                       [
                         "Blood Group",
@@ -237,10 +228,6 @@ const ProfilePage = () => {
                       [
                         "Sickle Cell Disease",
                         userProfile.medicalHistory.SickleCellDisease || "—",
-                      ],
-                      [
-                        "Past Medical History",
-                        userProfile.medicalHistory.PastMedicalHistory || "—",
                       ],
                     ]}
                   />

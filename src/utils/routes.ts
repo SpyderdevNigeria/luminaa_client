@@ -7,6 +7,9 @@ const routeLinks = {
     resetPassword: '/auth/reset-password',
     emailVerification: '/auth/email-verification',
     updatePassword: '/auth/update-password',
+    partnerAuth: '/auth/partner',
+    partnerLogin: '/auth/partner/login',
+    partnerEmailVerification: '/auth/partner/login'
   },
   patient: {
     path:'/patient',

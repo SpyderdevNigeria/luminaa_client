@@ -25,6 +25,8 @@ import DoctorSchedule from "./pages/doctor/Schedule/DoctorSchedule";
 import DoctorPatientsDetails from "./pages/doctor/patients/DoctorPatientsDetails";
 import EmailVerification from "./pages/patient/auth/EmailVerification";
 import Home from "./pages/business/Home";
+import PartnerAuthLayout from "./components/layouts/PartnerAuthLayout";
+import PartnerLogin from "./pages/auth/PartnerLogin";
 // Route
 const App = createBrowserRouter([
   {
@@ -48,6 +50,22 @@ const App = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+
+  // partner Authentication routers 
+  {
+    path: routeLinks?.auth?.partnerAuth,
+    element : <PartnerAuthLayout/>,
+    children: [
+       {
+        path: routeLinks?.auth?.partnerAuth,
+        element: <Navigate to={routeLinks?.auth?.partnerLogin} />,
+      },
+      {
+        path:routeLinks?.auth?.partnerLogin,
+        element : <PartnerLogin/>
+      }
+    ]
   },
   // VerifyEmail route
     {

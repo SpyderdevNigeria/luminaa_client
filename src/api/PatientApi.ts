@@ -28,6 +28,11 @@ const PatientApi = {
     const response = await api.put("/patients/biodata", body);
     return response.data;
   },
+
+  updateProfilePicture: async (body: any) => {
+    const response = await api.post("/users/update-profile-picture", body);
+    return response.data;
+  },
     // Update Profile Endpoints End
 
 

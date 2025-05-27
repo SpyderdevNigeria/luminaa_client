@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import website from "../../../utils/website";
 import Booking from "./components/Booking";
@@ -11,7 +11,6 @@ import { useAppDispatch } from "../../../hooks/reduxHooks";
 function Appointment() {
   const navigate = useNavigate();
   const { userProfile, authLoading } = useAuth();
-  const [show, setShow] = useState(false);
   const dispatch = useAppDispatch();
   // Redirect if not logged in
   useLayoutEffect(() => {
@@ -22,10 +21,7 @@ function Appointment() {
       dispatch(logout());
       navigate(routeLinks?.auth?.login);
     }
-    if (!userProfile?.medicalHistory) {
-      setShow(true)
-    }
-  }, [authLoading, userProfile, navigate, show]);
+  }, [authLoading, userProfile, navigate, ]);
 
   // Loading while auth is verifying
   if (authLoading) return <LoadingScreen />;
@@ -39,7 +35,7 @@ function Appointment() {
       </Link>
     </div>
     <div className="flex flex-col items-center justify-center  p-4 ">
-        {show  ? <BookingCondition handleClose={(e)=> {setShow(!!e)}}/> : <Booking />} 
+        {!userProfile?.medicalHistory  ? <BookingCondition userProfile={userProfile}/> : <Booking />} 
       </div>
     </div>
   )

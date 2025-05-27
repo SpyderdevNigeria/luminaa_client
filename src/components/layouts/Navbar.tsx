@@ -3,7 +3,7 @@ import { FiUser, FiLogOut, FiMenu, FiX } from "react-icons/fi";
 import Notification from "./Notification";
 import { Link } from "react-router-dom";
 import routeLinks from "../../utils/routes";
-import useAuth from "../../hooks/useAuth";
+import { useAppSelector } from "../../hooks/reduxHooks";
 
 type NavbarProps = {
   sidebarOpen: boolean;
@@ -15,7 +15,7 @@ type NavbarProps = {
 };
 
 function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
-   const { userProfile } = useAuth();
+  const userProfile = useAppSelector((state) => state.auth.user);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -45,7 +45,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
         {/* Avatar & Dropdown */}
         <div className="relative hidden md:block" ref={dropdownRef}>
           <img
-            src={userProfile?.user?.profilePicture || "ee" }
+            src={userProfile?.user?.profilePicture?.url || "ee" }
             alt={userProfile?.user?.firstName + " " + userProfile?.user?.lastName}
             className="w-10 h-10 rounded-full cursor-pointer bg-gray-100"
             onClick={() => setDropdownOpen(!dropdownOpen)}
