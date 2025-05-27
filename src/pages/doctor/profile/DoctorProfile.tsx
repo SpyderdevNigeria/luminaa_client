@@ -25,7 +25,6 @@ const DoctorProfile = () => {
   });
 
   useEffect(() => {
-    console.log(userProfile);
     if (userProfile?.user) {
     setData({
     firstName: userProfile?.user?.firstName,
@@ -62,6 +61,7 @@ const DoctorProfile = () => {
       ) : (
         <MedicalInfoForm
           data={data}
+          userProfile={userProfile}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           handleImageUpload={function (_file: File): void {
