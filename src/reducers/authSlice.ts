@@ -42,10 +42,14 @@ const authSlice = createSlice({
       localStorage.setItem("hms_user", JSON.stringify(action.payload));
       state.user = action.payload;
     },
+     updateAuth: (state, action: PayloadAction<boolean | null>) => {
+      // console.log("updateUser action", action.payload);
+       state.isAuthenticated = action.payload;
+    },
   },
 });
 
-export const { login, logout, updateUser } = authSlice.actions;
+export const { login, logout, updateUser, updateAuth } = authSlice.actions;
 
 export const selectToken = (state: { auth: AuthState }) => state.auth.token;
 export const selectIsAuthenticated = (state: { auth: AuthState }) =>

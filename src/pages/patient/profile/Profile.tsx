@@ -7,7 +7,7 @@ import BookingConditionForm from "./components/MorbidConditionForm";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { updateUser } from "../../../reducers/authSlice";
-import ProfilePictureForm from "./components/ProfilePictureForm";
+import ProfilePictureForm from "./components/ProfilePicForm";
 
 const tabs = ["My Profile", "Notification", "Security"];
 

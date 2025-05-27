@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { IUser } from "../types/Interfaces";
 import { useAppDispatch, useAppSelector } from "./reduxHooks";
 import patientApi from "../api/patientApi";
-import { updateUser, logout } from "../reducers/authSlice";
+import { updateUser, logout, updateAuth } from "../reducers/authSlice";
 import routeLinks from "../utils/routes";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -38,38 +38,44 @@ const useAuth = (): AuthInfo => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const [authLoading, setAuthLoading] = useState(true);
 
+  const fetchProfile = async () => {
+    try {
+      const res = await patientApi.getProfile();
+      if (res) {
+        console.log("Fetched profile:", res);
+        dispatch(updateUser(res));
+
+        if (!res.user.isEmailVerified) {
+          navigate(routeLinks.auth.emailVerification);
+        } else if (!res.isBioDataCompleted) {
+          navigate(routeLinks.patient.onboarding);
+        }
+      }
+    } catch (error: any) {
+      console.error("Failed to fetch user profile:", error);
+      if (error?.response?.status === 401) {
+        dispatch(logout());
+        dispatch(updateAuth(false));
+        navigate(routeLinks.auth.login);
+      }
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
-
+    if (isAuthenticated) {
+      fetchProfile();
+      return;
+    }
     if (!isTokenValid(token) || userProfile) {
       setAuthLoading(false);
       return;
+    } else {
+      fetchProfile();
     }
-
-    const fetchProfile = async () => {
-      try {
-        const res = await patientApi.getProfile();
-        if (res) {
-          console.log("Fetched profile:", res);
-          dispatch(updateUser(res));
-
-          if (!res.user.isEmailVerified) {
-            navigate(routeLinks.auth.emailVerification);
-          } else if (!res.isBioDataCompleted) {
-            navigate(routeLinks.patient.onboarding);
-          }
-        }
-      } catch (error: any) {
-        console.error("Failed to fetch user profile:", error);
-        if (error?.response?.status === 401) {
-          dispatch(logout());
-          navigate(routeLinks.auth.login);
-        }
-      } finally {
-        setAuthLoading(false);
-      }
-    };
-
+    console.log("full fetch");
     fetchProfile();
   }, []);
 

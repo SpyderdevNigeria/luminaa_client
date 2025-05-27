@@ -1,16 +1,21 @@
 import { FaShieldAlt, FaUserMd } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MedicalInfoForm from "./components/MedicalInfoForm";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 
 const DoctorProfile = () => {
+  const userProfile = useAppSelector((state) => state.auth.user);
+
   const [showMedicalForm, setShowMedicalForm] = useState(false);
 
   const handleShowForm = () => setShowMedicalForm(true);
 
   const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
     name: "",
     annualLicense: "",
-    phone: "",
+    phoneNumber: "",
     registrationLicence: "",
     specialty: "",
     graduationCertificate: "",
@@ -19,6 +24,24 @@ const DoctorProfile = () => {
     contactInfo: "",
   });
 
+  useEffect(() => {
+    console.log(userProfile);
+    if (userProfile?.user) {
+    setData({
+    firstName: userProfile?.user?.firstName,
+    lastName: userProfile?.user?.lastName,
+    name: "",
+    annualLicense: "",
+    phoneNumber: userProfile?.user?.phoneNumber,
+    registrationLicence: "",
+    specialty: "",
+    graduationCertificate: "",
+    additionalCertificates: "",
+    experience: "",
+    contactInfo: "",
+  });
+    }
+  }, [userProfile]);
   const handleChange = (e: any) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };

@@ -61,7 +61,7 @@ function PartnerEmailVerification() {
       await AuthApi.verifyEmailOtp(userProfile?.user?.email, otp).then(
         (res) => {
           if (res) {
-            dispatch(updateUser({ ...res?.data, user: res?.data }));
+            dispatch(updateUser({ ...userProfile, user: {...userProfile.user, isEmailVerified  : true} }));
             const redirectUrl = returnPartnerNavigationUrlLogic(
               userProfile.user.role,
               userProfile
