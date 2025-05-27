@@ -1,8 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import { FiUser, FiLogOut, FiMenu, FiX } from "react-icons/fi";
+import {  FiMenu, FiX } from "react-icons/fi";
 import Notification from "./Notification";
-import { Link } from "react-router-dom";
-import routeLinks from "../../utils/routes";
 import { useAppSelector } from "../../hooks/reduxHooks";
 
 type NavbarProps = {
@@ -50,7 +48,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
             className="w-10 h-10 rounded-full cursor-pointer bg-gray-100"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           />
-          {dropdownOpen && (
+          {/* {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
               <Link
                 to={routeLinks?.patient?.profile}
@@ -65,7 +63,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
                 <FiLogOut /> Logout
               </a>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Hamburger Menu */}

@@ -9,7 +9,7 @@ const routeLinks = {
     updatePassword: '/auth/update-password',
     partnerAuth: '/auth/partner',
     partnerLogin: '/auth/partner/login',
-    partnerEmailVerification: '/auth/partner/login'
+    partnerEmailVerification: '/auth/partner/email-verification'
   },
   patient: {
     path:'/patient',

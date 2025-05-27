@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, DragEvent, ChangeEvent } from "react";
-import PatientApi from "../../../../api/PatientApi";
+import PatientApi from "../../../../api/patientApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import { IoIosCloudUpload } from "react-icons/io";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";

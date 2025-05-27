@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { IUser } from "../types/Interfaces";
 import { useAppDispatch, useAppSelector } from "./reduxHooks";
-import ProfileApi from "../api/PatientApi";
+import patientApi from "../api/patientApi";
 import { updateUser, logout } from "../reducers/authSlice";
 import routeLinks from "../utils/routes";
 import { useNavigate } from "react-router-dom";
@@ -31,35 +31,39 @@ const isTokenValid = (token: string | null): boolean => {
   }
 };
 
-export const useAuth = (): AuthInfo => {
+const useAuth = (): AuthInfo => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const userProfile = useAppSelector((state) => state.auth.user);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!isTokenValid(token)) {
+
+    if (!isTokenValid(token) || userProfile) {
       setAuthLoading(false);
       return;
     }
 
     const fetchProfile = async () => {
       try {
-        const res = await ProfileApi.getProfile();
+        const res = await patientApi.getProfile();
         if (res) {
-          console.log(res)
+          console.log("Fetched profile:", res);
           dispatch(updateUser(res));
+
           if (!res.user.isEmailVerified) {
-            navigate(routeLinks?.auth?.emailVerification);
-          } else
-          if (!res.isBioDataCompleted) {
-            navigate(routeLinks?.patient?.onboarding);
+            navigate(routeLinks.auth.emailVerification);
+          } else if (!res.isBioDataCompleted) {
+            navigate(routeLinks.patient.onboarding);
           }
         }
       } catch (error: any) {
         console.error("Failed to fetch user profile:", error);
         if (error?.response?.status === 401) {
           dispatch(logout());
+          navigate(routeLinks.auth.login);
         }
       } finally {
         setAuthLoading(false);
@@ -69,12 +73,11 @@ export const useAuth = (): AuthInfo => {
     fetchProfile();
   }, []);
 
-  const userProfile = useAppSelector((state) => state.auth.user);
-  const isAuthenticated = !!useAppSelector(
-    (state) => state.auth.isAuthenticated
-  );
-
-  return { userProfile, isAuthenticated, authLoading };
+  return {
+    userProfile,
+    isAuthenticated: !!isAuthenticated,
+    authLoading,
+  };
 };
 
 export default useAuth;

@@ -125,3 +125,34 @@ export const returnMemberNavigationUrlLogic = (user: any) => {
 
   return "/patient/dashboard";
 };
+
+
+
+
+export const returnPartnerNavigationUrlLogic = (
+  partnerType: string,
+  partnerProfile: any
+) => {
+  if (partnerProfile){
+  if (partnerType === "doctor") {
+    return routeLinks?.doctor?.dashboard;
+  }
+
+  if (partnerType === "lab") {
+    return "/lab/dashboard";
+  }
+
+  if (partnerType === "hospital") {
+    return "/hospital/dashboard";
+  }
+
+  if (partnerType === "pharmacy") {
+    return "/pharmacy/dashboard";
+  }
+
+  if (partnerType === "sponsor") {
+    return "/sponsor/dashboard";
+  }
+  }
+  return routeLinks?.auth?.partnerLogin;
+};

@@ -27,6 +27,7 @@ import EmailVerification from "./pages/patient/auth/EmailVerification";
 import Home from "./pages/business/Home";
 import PartnerAuthLayout from "./components/layouts/PartnerAuthLayout";
 import PartnerLogin from "./pages/auth/PartnerLogin";
+import PartnerEmailVerification from "./pages/auth/PartnerEmailVerification";
 // Route
 const App = createBrowserRouter([
   {
@@ -72,6 +73,12 @@ const App = createBrowserRouter([
         path: routeLinks?.auth?.emailVerification,
         element: <EmailVerification />,
   },
+
+  {
+        path: routeLinks?.auth?.partnerEmailVerification,
+        element: <PartnerEmailVerification />,
+  },
+
   // Patient route for Onboarding
   {
     path: routeLinks?.patient?.onboarding,

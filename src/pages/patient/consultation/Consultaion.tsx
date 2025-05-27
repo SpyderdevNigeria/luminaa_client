@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AppointmentTab from "../../../components/common/AppointmentTab";
 import HeaderTab from "../../../components/common/HeaderTab";
-import PatientApi from "../../../api/PatientApi";
+import PatientApi from "../../../api/patientApi";
 
 function Consultaion() {
   const [appointments, setAppointments] = useState([]);

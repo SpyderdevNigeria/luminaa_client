@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../node_modules/swiper/swiper-bundle.css";
 
 .form-label {
   @apply block md:text-base mb-2 font-semibold ;

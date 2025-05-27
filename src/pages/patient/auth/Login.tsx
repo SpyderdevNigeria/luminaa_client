@@ -10,7 +10,6 @@ import { login } from "../../../reducers/authSlice";
 import { IPayload } from "../../../types/Interfaces";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import { returnMemberNavigationUrlLogic } from "../../../utils/dashboardUtils";
-import ProfileApi from "../../../api/PatientApi";
 
 const initialFormState = {
   email: "",
@@ -49,12 +48,11 @@ function Login() {
 
       const payload: IPayload = {
         token: accessToken,
-        user:user,
+        user: {...user, user: user},
       };
       dispatch(login(payload));
       if (!user?.isEmailVerified) {
         await AuthApi.requestEmailOtp(email);
-        await ProfileApi.getProfile();
         navigate(routeLinks?.auth?.emailVerification);
         return;
       }

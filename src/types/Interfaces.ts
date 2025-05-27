@@ -7,6 +7,8 @@ export interface IPaginationResponse {
 
 
 export interface IUser {
+  role(role: any, user: IUser): unknown;
+  isEmailVerified: any;
   id: string;
   createdAt: string;
   updatedAt: string;

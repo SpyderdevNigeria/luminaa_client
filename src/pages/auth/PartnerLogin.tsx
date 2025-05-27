@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-
 import routeLinks from "../../utils/routes";
 import useFlatErrorList from "../../hooks/useFlatErrorList";
 import AuthApi from "../../api/authApi";
@@ -9,9 +8,7 @@ import FeedbackMessage from "../../components/common/FeedbackMessage";
 import { login } from "../../reducers/authSlice";
 import { IPayload } from "../../types/Interfaces";
 import { useAppDispatch } from "../../hooks/reduxHooks";
-import { returnMemberNavigationUrlLogic } from "../../utils/dashboardUtils";
-import ProfileApi from "../../api/PatientApi";
-import website from "../../utils/website";
+import { returnPartnerNavigationUrlLogic } from "../../utils/dashboardUtils";
 
 const initialFormState = {
   email: "",
@@ -47,20 +44,26 @@ function PartnerLogin() {
     try {
       const response = await AuthApi.login(email, password);
       const { accessToken, user } = response.data.data;
-
       const payload: IPayload = {
         token: accessToken,
-        user:user,
+        user: {...user, user : user},
       };
+          setMessage({
+          message: "Login was successful",
+          type: "success",
+        });
       dispatch(login(payload));
-      if (!user?.isEmailVerified) {
+      if (!payload?.user?.isEmailVerified) {
         await AuthApi.requestEmailOtp(email);
-        await ProfileApi.getProfile();
-        navigate(routeLinks?.auth?.emailVerification);
+        navigate(routeLinks?.auth?.partnerEmailVerification);
         return;
       }
-      const redirectUrl = returnMemberNavigationUrlLogic(user);
-      navigate(redirectUrl);
+
+      const url = returnPartnerNavigationUrlLogic(
+        user.role,
+        user
+      );
+      navigate(url);
     } catch (error: any) {
       const { response } = error;
       if (response?.data?.statusCode <= 400) {
@@ -77,111 +80,95 @@ function PartnerLogin() {
   };
 
   return (
-      <div className="block lg:flex  items-start px-4  max-w-[1366px] mx-auto">
-     
-        <div className=" lg:w-1/2 my-auto animated fadeInDown">
-    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4  flex flex-col  justify-center">
-           <Link to="/" className="mb-2">
-            <img src={website?.logo} alt="" className="w-36 mx-auto" />
-          </Link>
-      <div className="text-center my-8">
-        <h5 className="text-2xl md:text-3xl px-20 md:px-28 text-text-secondary">
-          Welcome Back
-        </h5>
-        <p className="mt-4 px-4 text-text-primary leading-5">
-          Please enter your email and password to get started with your medical
-          account
-        </p>
-      </div>
+   <div className="w-full max-w-md 2xl:max-w-lg  mx-auto space-y-6">
+  <div className="text-center">
+    <h2 className="text-xl md:text-2xl 2xl:text-4xl px-6 md:px-20 text-text-secondary">Login to your account</h2>
+    <p className="text-sm 2xl:text-base text-gray-500 mt-1">
+      Welcome back, please enter your details
+    </p>
+  </div>
 
-      {message.message && (
-        <FeedbackMessage type={message.type} message={message.message} />
-      )}
+  {message.message && (
+    <FeedbackMessage type={message.type} message={message.message} />
+  )}
 
-      <form onSubmit={handleSubmit}>
-        {/* Email Field */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="email" className="form-label text-primary">
-            Email
-          </label>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            value={email}
-            onChange={handleChange}
-            placeholder="Email"
-            className={`form-input ${
-              getFieldErrors("email")
-                ? "outline outline-red-600"
-                : "focus:outline-primary"
-            } border border-gray-light`}
-          />
-          {getFieldErrors("email")}
-        </div>
-
-        {/* Password Field */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="password" className="form-label text-primary">
-            Password
-          </label>
-          <div className="mb-4 relative">
-            <input
-              type={eye ? "text" : "password"}
-              name="password"
-              id="password"
-              value={password}
-              onChange={handleChange}
-              placeholder="Password"
-              className={`form-input ${
-                getFieldErrors("password")
-                  ? "outline outline-red-600"
-                  : "focus:outline-primary"
-              } border border-gray-light`}
-            />
-            <div
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-              onClick={toggleEye}
-            >
-              {eye ? (
-                <AiOutlineEyeInvisible size={20} className="text-primary" />
-              ) : (
-                <AiOutlineEye size={20} className="text-primary" />
-              )}
-            </div>
-          </div>
-          {getFieldErrors("password")}
-        </div>
-
-        {/* Submit Button */}
-        <div className="w-full">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="form-primary-button bg-primary mt-4"
-          >
-            {isLoading ? "Loading..." : "Continue"}
-          </button>
-        </div>
-
-        {/* Footer */}
-        <h5 className="text-text-secondary text-base text-center mt-4">
-          Don't have an account?{" "}
-          <Link to={routeLinks?.auth?.register} className="text-primary">
-            Register
-          </Link>
-        </h5>
-      </form>
-    </main>
-        </div>
-           <div className=" hidden lg:block w-1/2 h-screen py-4">
-        <img
-          src={'https://images.pexels.com/photos/5214995/pexels-photo-5214995.jpeg?auto=compress&cs=tinysrgb&w=600'}
-          alt="Right Side"
-          className="w-full h-full object-cover rounded-xl  animate-fade-in"
-        />
-      </div>
+  <form onSubmit={handleSubmit} className="space-y-4">
+    {/* Email */}
+    <div>
+      <label htmlFor="email" className="form-label text-primary 2xl:text-xl">
+        Email address
+      </label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        value={email}
+        onChange={handleChange}
+        placeholder="Enter your email"
+        className={`form-input  py-4 ${
+          getFieldErrors("email")
+            ? "outline outline-red-600"
+            : "focus:outline-primary"
+        } border border-gray-light`}
+      />
+      {getFieldErrors("email")}
     </div>
+
+    {/* Password */}
+    <div>
+      <label htmlFor="password" className="form-label text-primary 2xl:text-xl">
+        Password
+      </label>
+      <div className="relative mt-1">
+        <input
+          id="password"
+          type={eye ? "text" : "password"}
+          name="password"
+          value={password}
+          onChange={handleChange}
+          placeholder="Enter your password"
+          className={`form-input py-4 ${
+            getFieldErrors("password")
+              ? "outline outline-red-600"
+              : "focus:outline-primary"
+          } border border-gray-light`}
+        />
+        <div
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+          onClick={toggleEye}
+        >
+          {eye ? (
+            <AiOutlineEyeInvisible size={20} className="text-gray-600" />
+          ) : (
+            <AiOutlineEye size={20} className="text-gray-600" />
+          )}
+        </div>
+      </div>
+      {getFieldErrors("password")}
+    </div>
+
+    {/* Keep me logged in + Forgot password */}
+    <div className="flex justify-between items-center text-sm 2xl:text-base">
+      <label className="flex items-center gap-2">
+        <input type="checkbox" className="form-checkbox" />
+        Keep me logged in
+      </label>
+      <Link to="/forgot-password" className="text-primary">
+        Forgot password?
+      </Link>
+    </div>
+
+    {/* Submit */}
+    <button
+      type="submit"
+      disabled={isLoading}
+      className="form-primary-button bg-primary mt-4 text-base 2xl:text-xl"
+    >
+      {isLoading ? "Loading..." : "Log in"}
+    </button>
+  </form>
+</div>
+
   );
 }
 

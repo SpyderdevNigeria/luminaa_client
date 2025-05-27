@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import CustomCalendar from "../../../../../components/common/CustomCalendar";
-import PatientApi from "../../../../../api/PatientApi";
+import PatientApi from "../../../../../api/patientApi";
 import DoctorIcon from "../../../../../assets/images/doctor/doctor.png";
 
 interface Doctor {
@@ -105,7 +105,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({ nextStep, setData
           {loading ? (
             <div className="mt-4 text-center text-sm">Loading doctors...</div>
           ) : (
-            <div className="mt-2 max-h-[400px] overflow-y-scroll">
+            <div className="mt-2 max-h-[900px] overflow-y-scroll">
               {doctors.map((doctor) => (
                 <div
                   key={doctor?.id}

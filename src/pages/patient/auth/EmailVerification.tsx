@@ -4,9 +4,11 @@ import { usePinInput } from "react-pin-input-hook";
 import { Timer } from "../../../components/common/Timer";
 import website from "../../../utils/website";
 import AuthApi from "../../../api/authApi";
-import useAuth  from "../../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 import routeLinks from "../../../utils/routes";
 import LoadingScreen from "../../../components/loading/LoadingScreen";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../../reducers/authSlice";
 
 function EmailVerification() {
   const [loading, setLoading] = useState(false);
@@ -17,7 +19,7 @@ function EmailVerification() {
   const [isTimerExpired, setIsTimerExpired] = useState(false);
   const { userProfile, authLoading } = useAuth();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   useLayoutEffect(() => {
     if (!userProfile) {
       navigate(routeLinks?.auth?.login);
@@ -50,9 +52,14 @@ function EmailVerification() {
     setErrMsg("");
 
     try {
-      await AuthApi.verifyEmailOtp(userProfile?.user?.email, otp).then(()=> {
-      navigate(routeLinks?.patient?.onboarding);
-      });
+      await AuthApi.verifyEmailOtp(userProfile?.user?.email, otp).then(
+        (res) => {
+          if (res) {
+            dispatch(updateUser({ ...userProfile, user: {...userProfile.user, isEmailVerified  : true} }));
+            navigate(routeLinks?.patient?.onboarding);
+          }
+        }
+      );
     } catch (err: any) {
       console.error("OTP verification failed:", err);
       setErrMsg(err?.response?.data?.message || "Verification failed");
@@ -63,7 +70,7 @@ function EmailVerification() {
 
   const handleResendOtp = async () => {
     console.log(userProfile);
-    
+
     if (!userProfile?.user?.email) {
       setErrMsg("User email not found.");
       return;
@@ -153,8 +160,10 @@ function EmailVerification() {
       </div>
 
       <div className="text-center mt-6 text-sm text-gray-600">
-       Want to know why email verification is important?{" "}
-        <span className="text-primary underline cursor-pointer">Find out here</span>
+        Want to know why email verification is important?{" "}
+        <span className="text-primary underline cursor-pointer">
+          Find out here
+        </span>
       </div>
     </div>
   );

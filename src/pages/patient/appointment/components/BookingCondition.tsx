@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import PatientApi from "../../../../api/PatientApi";
+import PatientApi from "../../../../api/patientApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
 import { updateUser } from "../../../../reducers/authSlice";

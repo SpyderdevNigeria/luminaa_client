@@ -7,11 +7,6 @@ const PatientApi = {
     return response.data;
   },
 
-  completeMemberProfile: async (body: any) => {
-    const response = await api.post("/profile/complete-member", body);
-    return response.data;
-  },
-
 
   // Update Profile Endpoints Start
   updateMedicalHistory: async (body: any) => {
@@ -19,10 +14,6 @@ const PatientApi = {
     return response.data;
   },
 
-  updateProfile: async (body: any) => {
-    const response = await api.put("/profile", body);
-    return response.data;
-  },
 
   updateBio: async (body: any) => {
     const response = await api.put("/patients/biodata", body);

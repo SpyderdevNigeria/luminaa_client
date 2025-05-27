@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import BookingDetails from "../BookingDetails";
-import PatientApi from "../../../../../api/PatientApi"; 
+import PatientApi from "../../../../../api/patientApi"; 
 import FeedbackMessage from "../../../../../components/common/FeedbackMessage";
 interface BookingSymptomsProps {
   prevStep: () => void;

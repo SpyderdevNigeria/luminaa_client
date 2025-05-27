@@ -5,12 +5,13 @@ import OnBoardingSuccessful from "./components/OnBoardingSuccessful";
 import { Link, useNavigate } from "react-router-dom";
 import Background from "../../../assets/images/auth/Desktop - 7.webp";
 import website from "../../../utils/website";
-import ProfileApi from "../../../api/PatientApi";
+import ProfileApi from "../../../api/patientApi";
 import FeedbackMessage from "../../../components/common/FeedbackMessage";
 import useAuth from "../../../hooks/useAuth";
 import routeLinks from "../../../utils/routes";
 import LoadingScreen from "../../../components/loading/LoadingScreen";
-
+import { updateUser } from "../../../reducers/authSlice";
+import { useAppDispatch } from "../../../hooks/reduxHooks";
 const initialData = {
   dateOfBirth: "",
   gender: "",
@@ -31,15 +32,17 @@ function Onboarding() {
   const [formData, setFormData] = useState(initialData);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState({ message: "", type: "" });
+  const [completeInfo, setCompleteInfo] = useState<boolean>(false)
   const navigate = useNavigate();
   const { userProfile, authLoading } = useAuth();
+  const dispatch = useAppDispatch();
 
   // Redirect if not logged in
   useLayoutEffect(() => {
     if (!authLoading && !userProfile) {
       navigate(routeLinks?.auth?.login);
     }
-    if (userProfile?.isBioDataCompleted) {
+    if (userProfile?.isBioDataCompleted && completeInfo === false) {
       navigate(routeLinks?.patient?.dashboard);
     }
   }, [authLoading, userProfile, navigate]);
@@ -64,10 +67,13 @@ function Onboarding() {
       console.log(res);
        if (res) {
         setFormData(initialData);
+        setCompleteInfo(true)
+         dispatch(updateUser({ ...userProfile, ...res }));
         handleNext();
        }
       });
     } catch (error: any) {
+      console.log(error)
       const status = error?.response?.status;
       const msg = error?.response?.data?.message;
       if (status && status == 400) {
@@ -181,3 +187,5 @@ const ProgressIndicator = ({ step }: { step: number }) => (
 );
 
 export default Onboarding;
+
+
