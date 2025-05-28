@@ -1,5 +1,5 @@
 import { useState, useEffect} from "react";
-import PatientApi from "../../../../api/patientApi";
+import PatientApi from "../../../../api/PatientApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 
 const yesNoDetailsOptions = ["", "Yes", "No", "Details"];

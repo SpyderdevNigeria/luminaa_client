@@ -1,5 +1,5 @@
 import { useState, FormEvent } from "react";
-import PatientApi from "../../../../api/patientApi";
+import PatientApi from "../../../../api/PatientApi";
 import ProfilePictureForm from "../../../../components/common/ProfilePictureForm";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
 import { updateUser } from "../../../../reducers/authSlice";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PatientApi from "../../../../api/patientApi";
+import PatientApi from "../../../../api/PatientApi";
 import { useNavigate } from "react-router-dom";
 import routeLinks from "../../../../utils/routes";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { IUser } from "../types/Interfaces";
 import { useAppDispatch, useAppSelector } from "./reduxHooks";
-import patientApi from "../api/patientApi";
+import patientApi from "../api/PatientApi";
 import { updateUser, logout, updateAuth } from "../reducers/authSlice";
 import routeLinks from "../utils/routes";
 import { useNavigate } from "react-router-dom";

@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import CustomCalendar from "../../../../../components/common/CustomCalendar";
-import PatientApi from "../../../../../api/patientApi";
+import PatientApi from "../../../../../api/PatientApi";
 import DoctorIcon from "../../../../../assets/images/doctor/doctor.png";
 
 interface Doctor {

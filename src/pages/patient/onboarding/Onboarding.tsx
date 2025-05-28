@@ -5,7 +5,7 @@ import OnBoardingSuccessful from "./components/OnBoardingSuccessful";
 import { Link, useNavigate } from "react-router-dom";
 import Background from "../../../assets/images/auth/Desktop - 7.webp";
 import website from "../../../utils/website";
-import ProfileApi from "../../../api/patientApi";
+import ProfileApi from "../../../api/PatientApi";
 import FeedbackMessage from "../../../components/common/FeedbackMessage";
 import useAuth from "../../../hooks/useAuth";
 import routeLinks from "../../../utils/routes";
