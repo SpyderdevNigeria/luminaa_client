@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   MdOutlineKeyboardArrowRight,
   MdOutlineKeyboardArrowLeft,
@@ -24,30 +24,35 @@ const generateDays = (year: number, month: number) => {
 };
 
 interface CustomCalendarProps {
-  handleSelectedDate?: (date: Date | null) => void;
+  selected?: string; // ISO date string
+  onChange?: (date: string) => void;
 }
 
-const CustomCalendar = ({ handleSelectedDate }: CustomCalendarProps) => {
+const CustomCalendar = ({ selected, onChange }: CustomCalendarProps) => {
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const selectedDate = selected ? new Date(selected) : null;
+
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
 
   const days = generateDays(currentYear, currentMonth);
 
   const handleDateClick = (day: number | null) => {
-    if (day) {
-      const selected = new Date(currentYear, currentMonth, day);
-      if (selected >= new Date(today.getFullYear(), today.getMonth(), today.getDate())) {
-        setSelectedDate(selected);
-      }
+    if (!day) return;
+
+    const date = new Date(currentYear, currentMonth, day);
+    const isValid =
+      date >= new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    if (isValid && onChange) {
+      onChange(date.toISOString());
     }
   };
 
   const prevMonth = () => {
     setCurrentMonth((prev) => {
       if (prev === 0) {
-        setCurrentYear((prevYear) => prevYear - 1);
+        setCurrentYear((y) => y - 1);
         return 11;
       }
       return prev - 1;
@@ -57,7 +62,7 @@ const CustomCalendar = ({ handleSelectedDate }: CustomCalendarProps) => {
   const nextMonth = () => {
     setCurrentMonth((prev) => {
       if (prev === 11) {
-        setCurrentYear((prevYear) => prevYear + 1);
+        setCurrentYear((y) => y + 1);
         return 0;
       }
       return prev + 1;
@@ -77,26 +82,20 @@ const CustomCalendar = ({ handleSelectedDate }: CustomCalendarProps) => {
     return date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
   };
 
-  useEffect(() => {
-    if(handleSelectedDate) {
-          handleSelectedDate(selectedDate);
-    }
-  }, [selectedDate]);
-
   return (
-    <div className="w-full mx-auto p-4 bg-white rounded-lg border ">
+    <div className="w-full mx-auto p-4 bg-white rounded-lg border">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <button onClick={prevMonth} className="text-xl font-bold">
           <MdOutlineKeyboardArrowLeft />
         </button>
-        <div className="text-lg ">
+        <div className="text-lg">
           {new Date(currentYear, currentMonth).toLocaleString("default", {
             month: "long",
             year: "numeric",
           })}
         </div>
-        <button onClick={nextMonth} className="text-xl ">
+        <button onClick={nextMonth} className="text-xl">
           <MdOutlineKeyboardArrowRight />
         </button>
       </div>
@@ -114,13 +113,15 @@ const CustomCalendar = ({ handleSelectedDate }: CustomCalendarProps) => {
           const todayClass = day && isToday(day)
             ? "border border-primary"
             : "";
-          const selectedClass =
+
+          const isSelected =
             selectedDate &&
-              day === selectedDate.getDate() &&
-              currentMonth === selectedDate.getMonth() &&
-              currentYear === selectedDate.getFullYear()
-              ? "bg-primary text-white"
-              : "";
+            day === selectedDate.getDate() &&
+            currentMonth === selectedDate.getMonth() &&
+            currentYear === selectedDate.getFullYear();
+
+          const selectedClass = isSelected ? "bg-primary text-white" : "";
+
           const disabledClass = day && isPastDate(day)
             ? "text-gray-300 cursor-not-allowed"
             : "hover:bg-blue-100 cursor-pointer";

@@ -1,44 +1,44 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import CustomCalendar from "../../../../../components/common/CustomCalendar";
 import PatientApi from "../../../../../api/patientApi";
 import DoctorIcon from "../../../../../assets/images/doctor/doctor.png";
 
 interface Doctor {
-  id: number;
+  id: string;
   user: {
-    id: number;
-    profilePicture: string;
+    id: string;
+    profilePicture: { url: string } | null;
     firstName: string;
     lastName: string;
   };
   specialty: string;
+  availability: {
+    allDay: boolean;
+    dayOfWeek: string;
+    startTime: string;
+    endTime: string;
+  }[] | null;
 }
 
 interface BookingDoctorListProps {
-  nextStep: () => void;   
+  nextStep: () => void;
   setData: (data: any) => void;
   data: any;
   prevStep: () => void;
 }
 
-const BookingDoctorList: React.FC<BookingDoctorListProps> = ({ nextStep, setData, data, prevStep }) => {
+const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
+  nextStep,
+  setData,
+  data,
+  prevStep,
+}) => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [typeTime, setTypeTime] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const AppointmentTime = useMemo(
-    () => [
-      { id: 1, name: "9:00 AM" },
-      { id: 2, name: "10:00 AM" },
-      { id: 3, name: "11:00 AM" },
-      { id: 4, name: "12:00 PM" },
-      { id: 5, name: "1:00 PM" },
-      { id: 6, name: "2:00 PM" },
-    ],
-    []
-  );
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -65,19 +65,46 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({ nextStep, setData
     setSelectedDoctor(null);
     setTypeTime("");
     setSelectedDate("");
+    setAvailableTimes([]);
   };
 
   const canProceed = selectedDoctor && typeTime && selectedDate;
 
+  const handleDateChange = (dateStr: string) => {
+    setSelectedDate(dateStr);
+    setTypeTime("");
+
+    if (!selectedDoctor?.availability) {
+      setAvailableTimes([]);
+      return;
+    }
+
+    const date = new Date(dateStr);
+    const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+
+    const slot = selectedDoctor.availability.find((slot) => slot.dayOfWeek === dayName);
+    if (!slot) {
+      setAvailableTimes([]);
+      return;
+    }
+
+    const start = parseInt(slot.startTime.split(":")[0], 10);
+    const end = parseInt(slot.endTime.split(":")[0], 10);
+    const times = [];
+
+    for (let hour = start; hour <= end; hour++) {
+      const suffix = hour >= 12 ? "PM" : "AM";
+      const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+      times.push(`${displayHour}:00 ${suffix}`);
+    }
+
+    setAvailableTimes(times);
+  };
+
   const handleNextStep = () => {
     if (!canProceed || !selectedDoctor) return;
 
-    const selectedTimeObj = AppointmentTime.find(
-      (t) => t.name.toString() === typeTime
-    );
-    if (!selectedTimeObj) return;
-
-    const [time, period] = selectedTimeObj.name.split(" ");
+    const [time, period] = typeTime.split(" ");
     let [hour, minute] = time.split(":").map(Number);
 
     if (period === "PM" && hour !== 12) hour += 12;
@@ -97,6 +124,8 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({ nextStep, setData
     nextStep();
   };
 
+  console.log(selectedDoctor)
+
   return (
     <div>
       {!selectedDoctor ? (
@@ -115,7 +144,11 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({ nextStep, setData
                   <div className="flex flex-row items-center gap-2">
                     <div className="overflow-hidden rounded-full w-18 h-18">
                       <img
-                        src={doctor?.user?.profilePicture || DoctorIcon}
+                        src={
+                          doctor?.user?.profilePicture
+                            ? doctor.user.profilePicture?.url
+                            : DoctorIcon
+                        }
                         alt="Profile"
                         className="w-full h-full object-cover"
                       />
@@ -135,88 +168,105 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({ nextStep, setData
           )}
         </section>
       ) : (
-        <main>
-          <section className="flex justify-between items-center my-8">
-            <div className="flex flex-row items-center gap-2">
-              <div className="overflow-hidden rounded-full w-18 h-18">
-                <img
-                  src={selectedDoctor.user.profilePicture || DoctorIcon}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <h5 className="text-sm font-semibold md:text-lg">
-                  Dr {selectedDoctor?.user?.firstName}{" "}
-                  {selectedDoctor?.user?.lastName}
-                </h5>
-                <h6 className="text-xs md:text-sm text-[#ABABAB]">
-                  {selectedDoctor?.specialty}
-                </h6>
-                <h6 className="text-xs text-[#ABABAB]">PH.D</h6>
-              </div>
+        <main className="mt-4">
+          <section className="flex flex-row items-center justify-between mb-4">
+                      <div className="flex items-center gap-4">
+                  <div className="overflow-hidden rounded-full w-18 h-18">
+                      <img
+                        src={
+                          selectedDoctor?.user?.profilePicture
+                            ? selectedDoctor.user.profilePicture?.url
+                            : DoctorIcon
+                        }
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+            <div>
+                <h5 className="text-lg font-medium">
+              Dr {selectedDoctor.user.firstName} {selectedDoctor.user.lastName}
+            </h5>
+            <p className="text-sm text-gray-500">{selectedDoctor.specialty}</p>
             </div>
-            <button
-              className="text-sm text-red-500 underline"
-              onClick={handleCancelDoctor}
-            >
-              Cancel
-            </button>
+          </div>
+                      <button
+            className="text-sm text-red-500 underline mb-4"
+            onClick={handleCancelDoctor}
+          >
+            ← Change Doctor
+          </button>
           </section>
 
-          <section>
-            <h3 className="text-sm md:text-base mb-4">
-              Select a Date For your appointment
-            </h3>
-            <div className="mt-4">
-              <CustomCalendar
-                handleSelectedDate={(date:any) => setSelectedDate(date)}
-              />
-            </div>
-          </section>
-
-          <section>
-            <h3 className="text-sm md:text-base my-4">Select Time</h3>
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
-              {AppointmentTime.map((e) => (
-                <button
-                  key={e.name}
-                  className={`rounded-sm border text-sm p-2 ${
-                    typeTime === e.name.toString()
-                      ? "border-primary bg-primary text-white"
-                      : ""
-                  }`}
-                  onClick={() => setTypeTime(e.name.toString())}
-                >
-                  {e.name}
-                </button>
-              ))}
-            </div>
-          </section>
-
-          <div className="flex flex-col gap-2 mt-6">
-            {canProceed && (
-              <button
-                onClick={handleNextStep}
-                disabled={!canProceed}
-                className={`cursor-pointer form-primary-button ${
-                  canProceed ? "bg-primary" : "bg-gray-300 cursor-not-allowed"
-                }`}
-              >
-                Next
-              </button>
+          <div className="mb-6">
+            <h6 className="font-semibold mb-2">Doctor's Weekly Availability</h6>
+            {selectedDoctor.availability?.length ? (
+              <ul className="text-sm text-gray-700">
+                {selectedDoctor.availability.map((slot, index) => (
+                  <li key={index} className="mb-1">
+                    {slot.dayOfWeek}: {slot.startTime} - {slot.endTime}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500">No availability info provided.</p>
             )}
+          </div>
+
+          <div className="mb-6">
+            <h6 className="font-semibold mb-2">Select Date</h6>
+            <CustomCalendar
+              selected={selectedDate}
+              onChange={(date) => handleDateChange(date)}
+            />
+          </div>
+
+          <div className="mb-6">
+            <h6 className="font-semibold mb-2">Select Time</h6>
+            {availableTimes.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {availableTimes.map((time, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setTypeTime(time)}
+                    className={`p-2 rounded-lg border ${
+                      typeTime === time
+                        ? "bg-primary text-white"
+                        : "bg-white text-black border-gray-300"
+                    }`}
+                  >
+                    {time}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500">No available times for selected date.</p>
+            )}
+          </div>
+
+          <div className="mt-6">
+             <button
+              onClick={handleNextStep}
+              disabled={!canProceed}
+              className={`${
+                canProceed
+                  ? "form-primary-button bg-primary my-4 "
+                  : "form-primary-button bg-primary my-4  bg-gray-300 text-gray-500 cursor-not-allowed"
+              }`}
+            >
+              Continue
+            </button>
+            <button
+              onClick={prevStep}
+         className="text-primary cursor-pointer w-full"
+            >
+              Back
+            </button>
+           
           </div>
         </main>
       )}
-      <button
-        onClick={prevStep}
-        className="!w-full text-primary cursor-pointer mt-4"
-      >
-        Back
-      </button>
     </div>
   );
-}
+};
 
 export default BookingDoctorList;

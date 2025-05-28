@@ -1,14 +1,15 @@
 import { FaShieldAlt, FaUserMd } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import MedicalInfoForm from "./components/MedicalInfoForm";
+import SecurityPreferences from "./components/SecurityPreferences";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 
 const DoctorProfile = () => {
   const userProfile = useAppSelector((state) => state.auth.user);
 
-  const [showMedicalForm, setShowMedicalForm] = useState(false);
+  const [showMedicalForm, setShowMedicalForm] = useState("");
 
-  const handleShowForm = () => setShowMedicalForm(true);
+  const handleShowForm = (e: SetStateAction<string>) => setShowMedicalForm(e);
 
   const [data, setData] = useState({
     firstName: "",
@@ -51,15 +52,15 @@ const DoctorProfile = () => {
   };
 
   const handleClose = () => {
-    setShowMedicalForm(false);
+    setShowMedicalForm('');
   };
 
   return (
     <div>
-      {!showMedicalForm ? (
-        <Settings onMedicalClick={handleShowForm} />
-      ) : (
-        <MedicalInfoForm
+      {showMedicalForm === 'security' &&  <SecurityPreferences  handleClose={handleClose}/>}
+      {showMedicalForm === '' && (
+        <Settings onMedicalClick={(e)=> {handleShowForm(e)}} />
+      )} {showMedicalForm === 'update' && <MedicalInfoForm
           data={data}
           userProfile={userProfile}
           handleChange={handleChange}
@@ -68,16 +69,18 @@ const DoctorProfile = () => {
             throw new Error("Function not implemented.");
           }}
           handleClose={handleClose}
-        />
-      )}
+        />}
+
     </div>
   );
 };
 
-const Settings = ({ onMedicalClick }: { onMedicalClick: () => void }) => {
+const Settings = ({ onMedicalClick }: { onMedicalClick: (e: any) => void }) => {
   return (
     <div className="max-w-3xl md:max-w-5xl mx-auto p-4">
-      <div className="flex items-center justify-between py-4 border-b border-dashboard-gray">
+      <div className="flex items-center justify-between py-4 border-b border-dashboard-gray"
+         onClick={()=> {onMedicalClick('security')}}
+      >
         <div className="flex items-center gap-3">
           <FaShieldAlt className="text-xl" />
           <div>
@@ -92,7 +95,7 @@ const Settings = ({ onMedicalClick }: { onMedicalClick: () => void }) => {
 
       <div
         className="flex items-center justify-between py-4 border-b border-dashboard-gray cursor-pointer"
-        onClick={onMedicalClick}
+        onClick={()=> {onMedicalClick('update')}}
       >
         <div className="flex items-center gap-3">
           <FaUserMd className="text-xl" />

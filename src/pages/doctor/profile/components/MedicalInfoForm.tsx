@@ -1,6 +1,5 @@
 // MedicalInfoForm.jsx
-import React, { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
+import React from "react";
 import { IoClose } from "react-icons/io5";
 import DoctorProfilePicForm from "./DoctorProfilePicForm";
 interface MedicalInfoFormProps {

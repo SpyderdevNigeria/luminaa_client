@@ -50,6 +50,7 @@ function Login() {
         token: accessToken,
         user: {...user, user: user},
       };
+      localStorage.setItem("auth", "true");
       dispatch(login(payload));
       if (!user?.isEmailVerified) {
         await AuthApi.requestEmailOtp(email);

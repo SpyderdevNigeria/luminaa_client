@@ -50,6 +50,7 @@ const useAuth = (): AuthInfo => {
         } else if (!res.isBioDataCompleted) {
           navigate(routeLinks.patient.onboarding);
         }
+         localStorage.removeItem('auth')
       }
     } catch (error: any) {
       console.error("Failed to fetch user profile:", error);
@@ -57,6 +58,7 @@ const useAuth = (): AuthInfo => {
         dispatch(logout());
         dispatch(updateAuth(false));
         navigate(routeLinks.auth.login);
+       
       }
     } finally {
       setAuthLoading(false);
@@ -65,15 +67,18 @@ const useAuth = (): AuthInfo => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (isAuthenticated) {
+    const auth = localStorage.getItem("auth");
+    if (auth && isTokenValid(token)) {
       fetchProfile();
       return;
+    }
+    if (userProfile?.user?.role !== "patient") {
+        dispatch(logout());
+        navigate(routeLinks.auth.login);
     }
     if (!isTokenValid(token) || userProfile) {
       setAuthLoading(false);
       return;
-    } else {
-      fetchProfile();
     }
     console.log("full fetch");
     fetchProfile();

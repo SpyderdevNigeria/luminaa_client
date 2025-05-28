@@ -82,7 +82,7 @@ function BookingType({ nextStep, data, setData }: BookingTypeProps) {
         </button>
         <button
           onClick={()=> {  navigate(routeLinks?.patient?.dashboard)}}
-        className=" !w-full  text-primary cursor-pointer form-back-button  border border-primary"
+        className=" !w-full  text-primary cursor-pointer form-back-button  "
       >
         Cancel
       </button>

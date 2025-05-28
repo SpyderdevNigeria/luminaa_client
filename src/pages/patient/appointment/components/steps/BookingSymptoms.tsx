@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import BookingDetails from "../BookingDetails";
-import PatientApi from "../../../../../api/patientApi"; 
+import PatientApi from "../../../../../api/patientApi";
 import FeedbackMessage from "../../../../../components/common/FeedbackMessage";
 interface BookingSymptomsProps {
   prevStep: () => void;
-  data: any; 
+  data: any;
   setData: React.Dispatch<React.SetStateAction<any>>;
 }
 
@@ -17,14 +17,14 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: { target: { name: any; value: any } }) => {
     setForm((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     // Ensure both fields are filled
@@ -67,7 +67,7 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
   };
 
   if (isSuccess) {
-    return <BookingDetails  />;
+    return <BookingDetails />;
   }
 
   return (
@@ -80,6 +80,12 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
           <FeedbackMessage type={message.type} message={message.message} />
         )}
         <div>
+          <h4 className="my-6 mx-4  text-base font-[300] text-center  ">
+            Please select your preferred consultation location and provide a
+            detailed description of your symptoms. This information helps our
+            medical team prepare for your appointment and offer the best
+            possible care.
+          </h4>
           <label htmlFor="location" className="form-label text-primary mb-2">
             Consultation Location
           </label>
