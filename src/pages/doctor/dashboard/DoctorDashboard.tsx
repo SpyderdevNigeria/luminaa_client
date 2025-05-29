@@ -21,6 +21,7 @@ function DoctorDashboard() {
     limit,
     total,
     dateTo,
+    errorAppoint,
     getAppointments,
     handleSetPage,
   } = useAppointments(doctorApi);
@@ -61,6 +62,7 @@ function DoctorDashboard() {
     },
   ];
 
+    if (errorAppoint) return <p className="text-center mt-10 text-red-500">{errorAppoint}</p>;
   return (
     <div className="flex flex-col gap-4">
       <section className="flex flex-col gap-4">
