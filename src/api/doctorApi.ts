@@ -47,8 +47,8 @@ const DoctorApi = {
     return response.data;
   },
 
-    getAppointments: async () => {
-    const response = await api.get("/doctor/appointments");
+    getAppointments: async (query:any) => {
+    const response = await api.get(`/doctor/appointments${query}`);
     return response.data;
   },
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Pagination from "./Pagination";
 import AppointmentDetailsModal from "../modal/AppointmentDetailsModal";
+import PaginationComponent from "./PaginationComponent";
 
 const colors = [
   { bg: "bg-[#FFEBC6]", border: "border-l-[#F1C87E]" },
@@ -30,9 +30,17 @@ const transformAppointments = (data: any[]) => {
   );
 };
 
-const AppointmentTab = ({ appointmentsData }: { appointmentsData: any[] }) => {
+interface appointmentTabProps {
+    appointmentsData : any;
+    total? : number;
+    totalPages? : number;
+    setPage? : (page : number ) => void;
+    page: number;
+    limit:number;
+}
+
+const AppointmentTab = ({ appointmentsData, page,limit, total, totalPages, setPage }: appointmentTabProps) => {
   const [activeTab, setActiveTab] = useState<"all" | "upcoming" | "past">("all");
-  const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState<any>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -46,17 +54,6 @@ const AppointmentTab = ({ appointmentsData }: { appointmentsData: any[] }) => {
     (app) => app.status === "completed"
   );
   const allAppointments = transformedAppointments;
-
-  const itemsPerPage = 3;
-  const totalPages = Math.ceil(
-    (activeTab === "all"
-      ? allAppointments.length
-      : activeTab === "upcoming"
-      ? upcomingAppointments.length
-      : pastAppointments.length) / itemsPerPage
-  );
-
-  const handlePageChange = (page: number) => setCurrentPage(page);
 
   const renderAppointments = (apps: any[], title: string) => {
     if (!apps.length) return null;
@@ -104,9 +101,7 @@ const AppointmentTab = ({ appointmentsData }: { appointmentsData: any[] }) => {
         : activeTab === "upcoming"
         ? upcomingAppointments
         : pastAppointments;
-    const start = (currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    return apps.slice(start, end);
+    return apps;
   };
 
   return (
@@ -118,7 +113,6 @@ const AppointmentTab = ({ appointmentsData }: { appointmentsData: any[] }) => {
             key={tab}
             onClick={() => {
               setActiveTab(tab as "all" | "upcoming" | "past");
-              setCurrentPage(1);
             }}
             className={`cursor-pointer ${
               activeTab === tab
@@ -144,23 +138,15 @@ const AppointmentTab = ({ appointmentsData }: { appointmentsData: any[] }) => {
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
-        <Pagination
-          pagination={{
-            totalDocs:
-              activeTab === "all"
-                ? allAppointments.length
-                : activeTab === "upcoming"
-                ? upcomingAppointments.length
-                : pastAppointments.length,
-            totalPages,
-            hasPrevPage: currentPage > 1,
-            hasNextPage: currentPage < totalPages,
-          }}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
-      )}
+     <div>
+      <PaginationComponent
+        page={page}
+        total={total ?? 0}
+        limit={limit}
+        totalPages={totalPages ?? 1}
+        onPageChange={(e: number) => { if (setPage) setPage(e); }}
+      />
+     </div>
     </div>
   );
 };

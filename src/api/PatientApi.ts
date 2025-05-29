@@ -58,8 +58,8 @@ const PatientApi = {
     return response.data;
   },
 
-    getAppointments: async () => {
-    const response = await api.get("/patient/appointments");
+    getAppointments: async (query: any) => {
+    const response = await api.get(`/patient/appointments${query}`);
     return response.data;
   },
 

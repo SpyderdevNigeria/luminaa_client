@@ -18,8 +18,8 @@ function DoctorAppointmentsView() {
       const fetchAppointment = async () => {
         try {
           const data = await doctorApi.getAppointmentsById(id);
-          if (data?.data) {
-                setAppointment(data?.data);
+          if (data) {
+                setAppointment(data);
           }
         } catch (err) {
           console.error(err);

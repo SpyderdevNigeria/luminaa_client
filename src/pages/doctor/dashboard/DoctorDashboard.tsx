@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState, AppDispatch } from "../../../store";
-import { setAppointments } from "../../../reducers/appointmentSlice";
+import { useEffect } from "react";
 import doctorApi from "../../../api/doctorApi";
 
 import DashboardCard from "../../../components/common/DashboardCard";
@@ -9,71 +6,58 @@ import HeaderTab from "../../../components/common/HeaderTab";
 import Table, { Column } from "../../../components/common/Table";
 import StatusBadge from "../../../components/common/StatusBadge";
 import CustomCalendar from "../../../components/common/CustomCalendar";
+import moment from "moment";
+import useAppointments from "../../../hooks/useAppointments";
 
 function DoctorDashboard() {
-  const dispatch = useDispatch<AppDispatch>();
-  const appointments = useSelector((state: RootState) => state.appointments.appointments);
-
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
-  const getAppointments = async () => {
-    setLoading(true);
-    try {
-      const response = await doctorApi.getAppointments();
-      console.log(response)
-      if (response?.data) {
-        dispatch(setAppointments(response.data));
-      }
-    } catch (error) {
-      console.error("Error fetching appointments:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (appointments.length > 0) {
-      setLoading(false);
+  const {
+    appointments,
+    loadingAppointment,
+    setLoadingAppointment,
+    page,
+    totalPages,
+    status,
+    dataFrom,
+    limit,
+    total,
+    dateTo,
+    getAppointments,
+    handleSetPage,
+  } = useAppointments(doctorApi);
+ 
+    useEffect(() => {
+       if (appointments.length > 0 && status === "" && dataFrom === "" && dateTo === "" && page === 1 ) {
+      setLoadingAppointment(false);
       return 
     }
     getAppointments();
-  }, []);
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const paginatedOrders = appointments.slice(startIndex, startIndex + pageSize);
-
-  const pagination = {
-    hasPrevPage: currentPage > 1,
-    hasNextPage: currentPage < Math.ceil(appointments.length / pageSize),
-    totalPages: Math.ceil(appointments.length / pageSize),
-    totalDocs: appointments.length,
-  };
+  }, [page, status, dataFrom, dateTo]);
 
   const appointmentColumns: Column<any>[] = [
-    { key: "id", label: "ID", arrows: true },
+    { key: "id", label: "ID", arrows: true,
+      render: (appointment) => <h4 className="max-w-[50px] line-clamp-1">{appointment?.id}</h4>,
+
+     },
     {
       key: "patientName",
       label: "Patient Name",
-      render: (item) => (
+      render: (appointment) => (
         <div className="flex items-center gap-2">
-          <img src="" alt="" className="w-5 h-5 rounded-full" />
-          <h5 className="text-sm">{item.patientName}</h5>
+          <h5 className="text-sm">{appointment?.patient.firstName} {appointment?.patient.LastName}</h5>
         </div>
       ),
       arrows: true,
     },
     {
-      key: "location",
-      label: "Location",
-      render: (item) => <h4>{item.location}</h4>,
-    },
-    {
       key: "status",
       label: "Status",
-      render: (item) => <StatusBadge status={item.status} />,
+      render: (appointment) => <StatusBadge status={appointment.status} />,
       arrows: true,
+    },
+        {
+      key: "scheduledDate",
+      label: "date",
+      render: (appointment) => <h4>{moment(appointment.scheduledDate).format("YYYY-MM-DD HH:mm")}</h4>,
     },
   ];
 
@@ -100,17 +84,19 @@ function DoctorDashboard() {
       <section>
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="col-span-2 border border-dashboard-gray p-2 rounded-lg">
-            <HeaderTab title="Appointment" showSearch={false} showSort={true} />
+            <HeaderTab title="Appointment" showSearch={false} showSort={false} />
             <div>
-              {loading ? (
+              {loadingAppointment ? (
                 <p>Loading...</p>
               ) : (
                 <Table
-                  data={paginatedOrders}
+                  data={appointments}
                   columns={appointmentColumns}
-                  pagination={pagination}
-                  currentPage={currentPage}
-                  onPageChange={setCurrentPage}
+                  page={page}
+                  total={total}
+                  limit={limit} 
+                 totalPages={totalPages}
+                  setPage={(e) => {return  handleSetPage(e)}}
                   showPaginate={false}
                 />
               )}

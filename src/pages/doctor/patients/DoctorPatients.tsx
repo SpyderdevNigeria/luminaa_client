@@ -5,7 +5,7 @@ import { FiPlus } from "react-icons/fi";
 import DashboardCard from "../../../components/common/DashboardCard";
 import HeaderTab from "../../../components/common/HeaderTab";
 import Table, { Column } from "../../../components/common/Table";
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 function DoctorPatients() {
@@ -20,18 +20,7 @@ function DoctorPatients() {
     action: "",
   }));
 
-  const pageSize = 10;
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const startIndex = (currentPage - 1) * pageSize;
-  const pgAppoint = allAppointment.slice(startIndex, startIndex + pageSize);
-
-  const pagination = {
-    hasPrevPage: currentPage > 1,
-    hasNextPage: currentPage < Math.ceil(allAppointment.length / pageSize),
-    totalPages: Math.ceil(allAppointment.length / pageSize),
-    totalDocs: allAppointment.length,
-  };
 
   interface appointmentType {
     id: string;
@@ -45,10 +34,11 @@ function DoctorPatients() {
   }
 
   const appointmentColumns: Column<appointmentType>[] = [
-    { key: "id", label: "ID", arrows: true, render: (pgAppoint) =>
-    (
-      <h5 className="text-sm">#{pgAppoint?.id}</h5>
-    )
+    {
+      key: "id",
+      label: "ID",
+      arrows: true,
+      render: (pgAppoint) => <h5 className="text-sm">#{pgAppoint?.id}</h5>,
     },
     {
       key: "patientName",
@@ -68,7 +58,11 @@ function DoctorPatients() {
     {
       key: "email",
       label: "Email",
-      render: (pgAppoint) => <a href="mailto:" className="text-sm underline">{pgAppoint.email}</a>,
+      render: (pgAppoint) => (
+        <a href="mailto:" className="text-sm underline">
+          {pgAppoint.email}
+        </a>
+      ),
     },
     {
       key: "phone",
@@ -96,7 +90,12 @@ function DoctorPatients() {
       key: "action",
       label: "Action",
       render: (pgAppoint) => (
-        <Link to={routeLinks?.doctor?.patients+'/'+pgAppoint?.id} className="text-primary underline text-xs">View</Link>
+        <Link
+          to={routeLinks?.doctor?.patients + "/" + pgAppoint?.id}
+          className="text-primary underline text-xs"
+        >
+          View
+        </Link>
       ),
     },
   ];
@@ -146,11 +145,15 @@ function DoctorPatients() {
         <HeaderTab title="Appointment" showSearch={false} showSort={true} />
         <div className="">
           <Table
-            data={pgAppoint}
+            data={allAppointment}
             columns={appointmentColumns}
-            pagination={pagination}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
+            page={1}
+            total={10}
+            limit={10}
+            totalPages={10}
+            setPage={(e) => {
+              console.log(e);
+            }}
             showPaginate={false}
           />
         </div>

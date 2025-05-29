@@ -1,4 +1,4 @@
-import Pagination from "./Pagination";
+import PaginationComponent from "./PaginationComponent";
 
 export type Column<T> = {
   key: keyof T | string;
@@ -7,45 +7,23 @@ export type Column<T> = {
   arrows?: boolean;
 };
 
-type PaginationType = {
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-  totalPages: number;
-  totalDocs: number;
-};
-
 type Props<T> = {
   data: T[];
   columns: Column<T>[];
-  pagination?: PaginationType;
-  currentPage?: number;
-  onPageChange?: (page: number) => void;
   showPaginate?: boolean;
+     total? : number;
+    totalPages? : number;
+    setPage? : (page : number ) => void;
+    page: number;
+    limit:number;
 };
 
 const Table = <T extends object>({
   data,
   columns,
-  pagination,
-  currentPage = 1,
-  onPageChange,
+  page,limit, total, totalPages, setPage,
   showPaginate = true,
 }: Props<T>) => {
-  const pageSize = 10;
-
-  // If data is not paginated from parent, paginate it here
-  const paginatedData = pagination
-    ? data
-    : data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-
-  const calculatedPagination = pagination
-    ? pagination
-    : {
-        hasPrevPage: currentPage > 1,
-        hasNextPage: currentPage < Math.ceil(data.length / pageSize),
-        totalPages: Math.ceil(data.length / pageSize),
-        totalDocs: data.length,
-      };
 
   return (
     <div className="">
@@ -105,7 +83,7 @@ const Table = <T extends object>({
             </tr>
           </thead>
           <tbody className="text-text-primary">
-            {paginatedData.map((item, rowIndex) => (
+            {data.map((item, rowIndex) => (
               <tr
                 key={rowIndex}
                 className="bg-white border-gray-100 hover:bg-gray-50"
@@ -122,13 +100,17 @@ const Table = <T extends object>({
           </tbody>
         </table>
       </div>
-
-      {showPaginate && onPageChange && (
-        <Pagination
-          pagination={calculatedPagination}
-          currentPage={currentPage}
-          onPageChange={onPageChange}
-        />
+      {/* Pagination */}
+      {showPaginate && (
+         <div>
+            <PaginationComponent
+              page={page}
+              total={total ?? 0}
+              limit={limit}
+              totalPages={totalPages ?? 1}
+              onPageChange={(e: number) => { if (setPage) setPage(e); }}
+            />
+           </div>
       )}
     </div>
   );

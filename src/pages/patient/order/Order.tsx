@@ -4,30 +4,20 @@ import WalletImage from "../../../assets/images/patient/wallet.png";
 import HeaderTab from "../../../components/common/HeaderTab";
 import Table, { Column } from "../../../components/common/Table";
 import OrderDetailsModal from "../../../components/modal/OrderDetailsModal";
-import { useState } from "react";
 import StatusBadge from "../../../components/common/StatusBadge";
+import  { useState } from "react";
 
 const Order = () => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [data, setData] = useState<any>(null);
+
   const allOrders = new Array(50).fill(null).map((_, i) => ({
     id: `#12${500 + i}`,
     price: 50000.0,
     status: "paid",
   }));
 
-  const pageSize = 6;
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setModalOpen] = useState(false)
-  const [data, setData] = useState<OrderType | string>('');
 
-  const startIndex = (currentPage - 1) * pageSize;
-  const paginatedOrders = allOrders.slice(startIndex, startIndex + pageSize);
-
-  const pagination = {
-    hasPrevPage: currentPage > 1,
-    hasNextPage: currentPage < Math.ceil(allOrders.length / pageSize),
-    totalPages: Math.ceil(allOrders.length / pageSize),
-    totalDocs: allOrders.length,
-  };
 
   interface OrderType {
     id: string;
@@ -36,7 +26,7 @@ const Order = () => {
   }
 
   const orderColumns: Column<OrderType>[] = [
-    { key: "id", label: "Order ID",  arrows:true, },
+    { key: "id", label: "Order ID", arrows: true },
     {
       key: "price",
       label: "Price",
@@ -44,26 +34,24 @@ const Order = () => {
         `NGN ${order.price.toLocaleString(undefined, {
           minimumFractionDigits: 2,
         })}`,
-        arrows:true,
+      arrows: true,
     },
     {
       key: "status",
       label: "Status",
-      render: (order) => (
-        <StatusBadge status={order.status} />
-      ),
-      arrows:true,
+      render: (order) => <StatusBadge status={order.status} />,
+      arrows: true,
     },
     {
       key: "action",
       label: "Action",
-      arrows:false,
-      render: (order) => (
-        <button  className="text-primary underline text-xs"
-        onClick={()=>{
-          setData(order)
-          setModalOpen(true)
-        }}
+      arrows: false,
+      render: (data) => (
+        <button
+          className="text-primary underline text-xs"
+          onClick={()=>{
+            setData(data)
+          }}
         >
           View Details
         </button>
@@ -95,22 +83,28 @@ const Order = () => {
       </div>
 
       <HeaderTab title={"All Orders"} />
-      <OrderDetailsModal isModalOpen={isModalOpen} setModalOpen={setModalOpen} data={data}/>
+      <OrderDetailsModal
+        isModalOpen={isModalOpen}
+        setModalOpen={setModalOpen}
+        data={data}
+      />
       <div className="">
         {/* Table */}
-        <Table
-          data={paginatedOrders}
+        <Table<OrderType>
+          data={allOrders}
           columns={orderColumns}
-          pagination={pagination}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
+          page={1}
+          total={10}
+          limit={10}
+          totalPages={10}
+          setPage={(e) => {
+            console.log(e);
+          }}
+          showPaginate={false}
         />
       </div>
     </div>
   );
 };
 
-
 export default Order;
-
-

@@ -52,8 +52,8 @@ const DoctorSchedule = () => {
         const {data} = await DoctorApi.getAvailability();
         const formatted = { ...workingDays };
 
-      if (data) {
-         data.forEach((item: any) => {
+      if (data?.data) {
+         data?.data.forEach((item: any) => {
           formatted[item.dayOfWeek] = {
             active: true,
             from: convertTo12Hour(item.startTime),
