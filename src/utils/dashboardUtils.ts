@@ -47,6 +47,14 @@ export const navItemsPatient = [
     title: "Consultations",
     icon: LiaStethoscopeSolid,
     to: routeLinks?.patient?.consultations,
+        subLinks: [
+      {
+        label: "Consultations",
+        title: "Consultations / Consultations Details",
+        icon: LiaStethoscopeSolid,
+        to: routeLinks?.patient?.consultationsid,
+      },
+    ],
   },
   {
     label: "MedicalHistory",

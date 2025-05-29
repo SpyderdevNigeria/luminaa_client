@@ -21,6 +21,7 @@ const routeLinks = {
     onboarding:'/patient/onboarding',
     appointment:'/patient/appointment-booking',
     consultations: '/patient/consultations',
+     consultationsid: '/patient/consultations/:id',
     prescription:'/patient/prescription',
     medicalHistory:'/patient/medical-history'
 

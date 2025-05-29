@@ -117,14 +117,12 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
 
     setData({
       ...data,
-      doctorId: selectedDoctor?.user?.id,
+      doctorId: selectedDoctor?.id,
       scheduledDate: isoString,
     });
 
     nextStep();
   };
-
-  console.log(selectedDoctor)
 
   return (
     <div>

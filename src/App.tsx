@@ -28,6 +28,7 @@ import Home from "./pages/business/Home";
 import PartnerAuthLayout from "./components/layouts/PartnerAuthLayout";
 import PartnerLogin from "./pages/auth/PartnerLogin";
 import PartnerEmailVerification from "./pages/auth/PartnerEmailVerification";
+import ConsultationView from "./pages/patient/consultation/ConsultationView";
 // Route
 const App = createBrowserRouter([
   {
@@ -105,6 +106,10 @@ const App = createBrowserRouter([
       {
         path: routeLinks?.patient?.consultations,
         element: <Consultaion />,
+      },
+        {
+        path: routeLinks?.patient?.consultationsid,
+        element: <ConsultationView />,
       },
       {
         path: routeLinks?.patient?.prescription,
