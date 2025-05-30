@@ -133,7 +133,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
           {loading ? (
             <div className="mt-4 text-center text-sm">Loading doctors...</div>
           ) : (
-            <div className="mt-2 max-h-[900px] overflow-y-scroll">
+            <div className="mt-2  overflow-y-scroll">
               {doctors.map((doctor) => (
                 <div
                   key={doctor?.id}
