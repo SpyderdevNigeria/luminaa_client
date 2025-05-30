@@ -13,12 +13,13 @@ interface Doctor {
   };
   specialty: string;
   availability: {
-    data: Array<any>;
-    allDay: boolean;
-    dayOfWeek: string;
-    startTime: string;
-    endTime: string;
+    data: {
+    allDay:boolean;
+    endTime:string;
+    dayOfWeek:string;
+    startTime:string;
   }[] | null;
+  } | null;
 }
 
 interface BookingDoctorListProps {
@@ -86,10 +87,12 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
 
     const slot = selectedDoctor.availability?.data?.find((slot) => slot.dayOfWeek === dayName);
     if (!slot) {
+      alert("Doctor is not available on this day")
       setAvailableTimes([]);
       return;
     }
 
+      
     const start = parseInt(slot.startTime.split(":")[0], 10);
     const end = parseInt(slot.endTime.split(":")[0], 10);
     const times = [];
@@ -125,6 +128,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
 
     nextStep();
   };
+
 
   return (
     <div>
@@ -199,9 +203,9 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
 
           <div className="mb-6">
             <h6 className="font-semibold mb-2">Doctor's Weekly Availability</h6>
-            {selectedDoctor.availability?.length ? (
+            {selectedDoctor.availability?.data?.length ? (
               <ul className="text-sm text-gray-700">
-                {selectedDoctor.availability.map((slot, index) => (
+                {selectedDoctor.availability?.data?.map((slot, index) => (
                   <li key={index} className="mb-1">
                     {slot.dayOfWeek}: {slot.startTime} - {slot.endTime}
                   </li>
