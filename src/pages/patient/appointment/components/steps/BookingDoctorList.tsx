@@ -46,6 +46,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
       try {
         const response = await PatientApi.getDoctors();
         if (response?.status) {
+          // set data 
           setDoctors(response.data.data);
         }
       } catch (error) {
