@@ -13,6 +13,13 @@ interface Doctor {
   };
   specialty: string;
   availability: {
+    data : {
+      id: string;
+      allDay: boolean;
+      dayOfWeek: string;
+      startTime: string;
+      endTime: string;  
+    }
     allDay: boolean;
     dayOfWeek: string;
     startTime: string;
@@ -83,7 +90,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
     const date = new Date(dateStr);
     const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
 
-    const slot = selectedDoctor.availability.find((slot) => slot.dayOfWeek === dayName);
+    const slot = selectedDoctor.availability.data.find((slot) => slot.dayOfWeek === dayName);
     if (!slot) {
       setAvailableTimes([]);
       return;
