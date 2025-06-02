@@ -44,7 +44,7 @@ function DoctorDashboard() {
       label: "Patient Name",
       render: (appointment) => (
         <div className="flex items-center gap-2">
-          <h5 className="text-sm">{appointment?.patient.firstName} {appointment?.patient.LastName}</h5>
+          <h5 className="text-sm">{appointment?.patient?.firstName} {appointment?.patient?.LastName}</h5>
         </div>
       ),
       arrows: true,
@@ -52,13 +52,13 @@ function DoctorDashboard() {
     {
       key: "status",
       label: "Status",
-      render: (appointment) => <StatusBadge status={appointment.status} />,
+      render: (appointment) => <StatusBadge status={appointment?.status} />,
       arrows: true,
     },
         {
       key: "scheduledDate",
       label: "date",
-      render: (appointment) => <h4>{moment(appointment.scheduledDate).format("YYYY-MM-DD HH:mm")}</h4>,
+      render: (appointment) => <h4>{moment(appointment?.scheduledDate).format("YYYY-MM-DD HH:mm")}</h4>,
     },
   ];
 
