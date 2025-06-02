@@ -2,21 +2,37 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FaClock } from "react-icons/fa6";
 import { TbLocation } from "react-icons/tb";
-import PatientApi from "../../../api/PatientApi";
-import DoctorImage from "../../../assets/images/doctor/doctor.png"
 import { SiGooglemeet } from "react-icons/si";
+import PatientApi from "../../../api/PatientApi";
+import DoctorImage from "../../../assets/images/doctor/doctor.png";
+
+interface Diagnosis {
+  id?: string; // assuming each diagnosis has an ID
+  primaryDiagnosis: string;
+  symptoms: string;
+  notes: string;
+  severity: string;
+  diagnosisCode: string;
+  isConfirmed: boolean;
+  additionalRecommendations: string;
+}
+
 const ConsultationView = () => {
   const { id } = useParams<{ id: string }>();
   const [appointment, setAppointment] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [showDiagnosis, setShowDiagnosis] = useState(false);
+  const [diagnosis, setDiagnosis] = useState<Diagnosis[]>([]);
+  const [diagnosisLoading, setDiagnosisLoading] = useState(false);
+
   useEffect(() => {
     const fetchAppointment = async () => {
       try {
         const data = await PatientApi.getAppointmentsById(id);
         if (data?.data) {
-              setAppointment(data?.data);
+          setAppointment(data.data);
         }
       } catch (err) {
         console.error(err);
@@ -28,7 +44,21 @@ const ConsultationView = () => {
 
     fetchAppointment();
   }, [id]);
-  console.log(appointment)
+
+  const handleViewDiagnosis = async () => {
+    setDiagnosisLoading(true);
+    try {
+      const res = await PatientApi.getDiagnosesAppointmentbyId(id);
+      if (res?.data) {
+        setDiagnosis(res.data);
+        setShowDiagnosis(true);
+      }
+    } catch (err) {
+      console.error("Failed to load diagnosis", err);
+    } finally {
+      setDiagnosisLoading(false);
+    }
+  };
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
@@ -42,7 +72,7 @@ const ConsultationView = () => {
   const doctorUser = doctor?.user;
 
   return (
-    <div className="p-4 md:p-6 bg-white shadow rounded ">
+    <div className="p-4 md:p-6 bg-white shadow rounded">
       <h1 className="text-xl md:text-2xl font-semibold mb-6">Appointment Details</h1>
 
       <div className="border border-gray-200 rounded p-4 flex flex-col md:flex-row gap-6">
@@ -76,21 +106,21 @@ const ConsultationView = () => {
         </div>
       </div>
 
+      {/* Meeting */}
+      <main className="flex items-center justify-between py-4 px-2 border-b border-dashboard-gray">
+        <h5 className="text-text-primary flex flex-row gap-2 text-sm">
+          <SiGooglemeet className="text-2xl" />
+          Meeting Details
+        </h5>
+        <div className="flex items-center gap-2">
+          <button className="px-8 py-2 rounded-sm bg-primary text-white text-xs">
+            Join Meeting
+          </button>
+        </div>
+      </main>
 
-            <main className="flex items-center justify-between py-4 px-2 border-b border-dashboard-gray">
-              <h5 className="text-text-primary flex flex-row gap-2 text-sm">
-                <SiGooglemeet className="text-2xl" />
-                Meeting Details
-              </h5>
-              <div className="flex items-center gap-2">
-                <button className="px-8 py-2 rounded-sm bg-primary text-white text-xs">
-                  Join Meeting
-                </button>
-              </div>
-            </main>
-
-      {/* Appointment Status & Note */}
-      <div className=" pt-4">
+      {/* Appointment Notes */}
+      <div className="pt-4">
         <h3 className="text-sm font-medium text-gray-500 mb-2">Appointment Status</h3>
         <p className="text-sm capitalize">{appointment.status}</p>
 
@@ -98,13 +128,63 @@ const ConsultationView = () => {
         <p className="text-sm">{appointment.patientNote || "No note provided."}</p>
       </div>
 
-
-
-            {/* Appointment Status & Note */}
+      {/* Doctor Note */}
       <div className="mt-4 border-t border-gray-200 pt-2">
         <h3 className="text-sm font-medium text-gray-500 mt-6 mb-2">Doctor Note</h3>
         <p className="text-sm">{appointment.doctorNote || "No note provided."}</p>
       </div>
+
+      {/* View Diagnosis Button */}
+      <div className="mt-6">
+        <button
+          onClick={handleViewDiagnosis}
+          disabled={diagnosisLoading}
+          className="px-6 py-2 bg-primary text-white text-sm rounded"
+        >
+          {diagnosisLoading ? "Loading Diagnosis..." : "View Diagnosis"}
+        </button>
+      </div>
+
+      {/* Diagnosis Section */}
+      {showDiagnosis && diagnosis.length > 0 && diagnosis.map((d) => (
+        <div className="mt-6 bg-gray-50 border border-dashboard-gray rounded-md p-4" key={d.id || d.diagnosisCode}>
+          <h3 className="text-lg font-semibold mb-4">Diagnosis Details</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <strong>Primary Diagnosis:</strong>
+              <p>{d.primaryDiagnosis}</p>
+            </div>
+            <div>
+              <strong>Symptoms:</strong>
+              <p>{d.symptoms}</p>
+            </div>
+            <div>
+              <strong>Notes:</strong>
+              <p>{d.notes}</p>
+            </div>
+            <div>
+              <strong>Severity:</strong>
+              <p>{d.severity}</p>
+            </div>
+            <div>
+              <strong>Diagnosis Code:</strong>
+              <p>{d.diagnosisCode}</p>
+            </div>
+            <div>
+              <strong>Confirmed:</strong>
+              <p>{d.isConfirmed ? "Yes" : "No"}</p>
+            </div>
+            <div className="md:col-span-2">
+              <strong>Additional Recommendations:</strong>
+              <p>{d.additionalRecommendations}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {showDiagnosis && diagnosis.length === 0 && (
+        <p className="mt-4 text-sm text-gray-500">No diagnosis found for this appointment.</p>
+      )}
     </div>
   );
 };

@@ -67,6 +67,24 @@ const PatientApi = {
     const response = await api.get(`/patient/appointments/${id}`);
     return response.data;
   },
+
+
+    // Diagnoses endpoints 
+  getDiagnoses: async (query: any) => {
+    const response = await api.get(`/patient/diagnoses${query}`);
+    return response.data;
+  },
+   getDiagnosesById: async (id: any) => {
+    const response = await api.get(`/patient/diagnoses${id}}`);
+    return response.data;
+  },
+
+  getDiagnosesAppointmentbyId: async (id: any) => {
+    const response = await api.get(`/patient/diagnoses/appointment/${id}`);  
+    return response.data;
+  },
+
+  // Diagnoses endpoints end
 }
 
 export default PatientApi;

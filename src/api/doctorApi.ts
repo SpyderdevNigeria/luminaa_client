@@ -47,6 +47,8 @@ const DoctorApi = {
     return response.data;
   },
 
+
+  // Appointment endpoints
     getAppointments: async (query:any) => {
     const response = await api.get(`/doctor/appointments${query}`);
     return response.data;
@@ -56,6 +58,41 @@ const DoctorApi = {
     const response = await api.get(`/doctor/appointments/${id}`);
     return response.data;
   },
+
+  //Appointment endpoints end 
+
+
+  // Diagnoses endpoints 
+  getDiagnoses: async () => {
+    const response = await api.get("/doctor/diagnoses");
+    return response.data;
+  },
+   getDiagnosesById: async (id: any) => {
+    const response = await api.get(`/doctor/diagnoses${id}}`);
+    return response.data;
+  },
+
+  getDiagnosesAppointmentbyId: async (id: any) => {
+    const response = await api.get(`/doctor/diagnoses/appointment/${id}`);  
+    return response.data;
+  },
+
+  createDiagnosis: async (body: any) => {
+    const response = await api.post("/doctor/diagnoses", body);
+    return response.data;
+  },
+
+  updateDiagnosis: async (id: string, body: any) => {
+    const response = await api.patch(`/doctor/diagnoses/${id}`, body);
+    return response.data;
+  },
+
+  deleteDiagnosis: async (id: string) => {
+    const response = await api.delete(`/doctor/diagnoses/${id}`);
+    return response.data;
+  },
+
+  // Diagnoses endpoints end
 
 }
 

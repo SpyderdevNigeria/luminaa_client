@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DiagnosisForm from "./DiagnosisForm";
+// import DiagnosisForm from "./DiagnosisForm";
 import PrescriptionsForm from "./PrescriptionsForm";
 import PharmacyForm  from "./PharmacyForm";
 import ExtraTestsForm from "./ExtraTestsForm";
@@ -94,7 +94,7 @@ function Medical({ handleBack }: Props) {
                 <>
                   <Header title="Complete your diagnosis report  " />
                   <div className="">
-                    <DiagnosisForm />
+                    {/* <DiagnosisForm /> */}
                   </div>
                 </>
               )}

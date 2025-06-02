@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import AppointmentDetails from "./components/AppointmentDetails";
-import Medical from "./components/medical/Medical";
+// import Medical from "./components/medical/Medical";
 import { useParams } from "react-router-dom";
+import DiagnosisDetails from "./components/DiagnosisDetails"
 import doctorApi from "../../../api/doctorApi";
 
 function DoctorAppointmentsView() {
@@ -41,8 +42,12 @@ function DoctorAppointmentsView() {
      {step === 0 && (
       <AppointmentDetails appointment={appointment} handleNext={handleNext}/>
      )}
-        {step === 1 && (
+        {/* {step === 1 && (
       <Medical  handleNext={handleNext} handleBack={handleBack}/>
+     )} */}
+
+             {step === 1 && (
+      <DiagnosisDetails  appointmentId={id || ""}  handleBack={handleBack}/>
      )}
   </div>;
 }
