@@ -125,7 +125,6 @@ function MedicalReportModal({
         </main>
       </Modal>
 
-      {/* ✅ Hidden printable version ONLY used for PDF rendering */}
       <div
         ref={printRef}
         style={{
