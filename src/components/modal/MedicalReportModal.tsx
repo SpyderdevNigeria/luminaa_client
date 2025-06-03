@@ -38,7 +38,7 @@ function MedicalReportModal({
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("medical_report.pdf");
+      pdf.save("diagnosis_report.pdf");
     } catch (error) {
       console.error("PDF generation failed:", error);
       alert("Something went wrong while generating the PDF. Please try again.");
@@ -138,7 +138,7 @@ function MedicalReportModal({
           color: "#111",
         }}
       >
-        <h2 style={{ marginBottom: "10px", fontSize: "18px" }}>Medical Report</h2>
+        <h2 style={{ marginBottom: "10px", fontSize: "18px" }}>Diagnosis Report</h2>
         <p>
           <strong>Diagnosis:</strong> {diagnosis?.primaryDiagnosis}
         </p>
