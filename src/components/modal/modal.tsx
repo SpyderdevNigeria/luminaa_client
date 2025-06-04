@@ -40,19 +40,24 @@ const Modal = ({
           </AlertDialog.Description>
 
           {!hideCancel && (
-            <div className="flex flex-row items-center justify-center gap-2 px-8">
+            <div className="flex flex-row items-center justify-between">
+              <div>
+
+              </div>
+                   <div className=" flex items-center gap-2 ">
               <button
                 onClick={onClose}
-                className="w-full text-center text-sm py-3 font-medium border-[1.5px] border-primary text-primary rounded-lg"
+                className="w-full text-center text-sm p-3 px-6  whitespace-nowrap font-medium border-[1.5px] border-primary text-primary rounded-lg"
               >
                 Back
               </button>
               <button
                 onClick={handleSubmit}
-                className=" w-full text-center text-sm py-3 font-medium  border-[1.5px] border-primary bg-primary text-white rounded-lg "
+                className=" w-full text-center text-sm p-3  px-6 font-medium whitespace-nowrap  border-[1.5px] border-primary bg-primary text-white rounded-lg "
               >
                 {buttonText}
               </button>
+            </div>
             </div>
           )}
         </div>

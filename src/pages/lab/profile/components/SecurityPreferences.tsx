@@ -79,7 +79,7 @@ const NotificationSettingsForm = ({ handleClose }: NotificationSettingsFormProps
   return (
     <form onSubmit={handleSubmit} className="max-w-6xl mx-auto">
       {/* Notifications */}
-      <div className="flex flex-row gap-8 mb-6">
+      <div className="  flex flex-row gap-8 mb-6">
         <div>
           <h2 className="text-lg font-semibold">Notifications</h2>
           <p className="text-sm text-gray-500">This is where you’ll receive notifications</p>

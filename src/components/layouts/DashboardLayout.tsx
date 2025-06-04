@@ -69,7 +69,7 @@ function DashboardLayout({ children, links, bg }: DashboardLayoutProps) {
         />
 
         {/* Page Content */}
-        <main className={`flex-1 px-4 md:px-24 py-6 ${bg}   overflow-y-auto`}>
+        <main className={`flex-1 px-4 md:px-8 py-6 ${bg}   overflow-y-auto`}>
           {children}
         </main>
       </div>

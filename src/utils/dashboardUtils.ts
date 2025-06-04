@@ -9,8 +9,8 @@ import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
 import { MdPeople } from "react-icons/md";
+import { GrTest } from "react-icons/gr";
 import routeLinks from "./routes";
-
 export const navItemsPatient = [
   {
     label: "Dashboard",
@@ -121,6 +121,34 @@ export const navItemsDoctor = [
   },
 ];
 
+export const navItemsLab = [
+      {
+    label: "Dashboard",
+    title: "Dashboard",
+    icon: TbSmartHome,
+    to: routeLinks?.lab?.dashboard,
+  },
+  {
+    label: "Test Requests",
+    title: "Test Requests",
+    icon: GrTest,
+    to: routeLinks?.lab?.labRequests,
+      subLinks: [
+      {
+        label: "Test Requests",
+        title: "Test Requests / Request Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.lab?.labRequestsDetails,
+      },
+    ],
+  },
+  {
+    label: "Profile Management",
+    title: "Profile Management",
+    icon: FaRegCircleUser,
+    to: routeLinks?.lab?.profile,
+  },
+]
 
 export const returnMemberNavigationUrlLogic = (user: any) => {
   if (!user.isEmailVerified) {

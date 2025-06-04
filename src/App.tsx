@@ -29,6 +29,11 @@ import PartnerAuthLayout from "./components/layouts/PartnerAuthLayout";
 import PartnerLogin from "./pages/auth/PartnerLogin";
 import PartnerEmailVerification from "./pages/auth/PartnerEmailVerification";
 import ConsultationView from "./pages/patient/consultation/ConsultationView";
+import LabLayout from "./components/layouts/LabLayout";
+import LabDashboard from "./pages/lab/dashboard/LabDashboard";
+import LabTestRequests from "./pages/lab/test/LabTestRequests";
+import LabTestRequestsDetails from "./pages/lab/test/LabTestRequestsDetails";
+import LabProfile from "./pages/lab/profile/LabProfile";
 // Route
 const App = createBrowserRouter([
   {
@@ -182,6 +187,34 @@ const App = createBrowserRouter([
       },
     ],
   },
+
+  //lab
+  {
+    path: routeLinks?.lab?.path,
+    element: <LabLayout/>,
+    children : [
+        {
+        path:  routeLinks?.lab?.path,
+        element: <Navigate to={routeLinks?.lab?.dashboard} />,
+      },
+            {
+        path:  routeLinks?.lab?.dashboard,
+        element: <LabDashboard/>,
+      },
+      {
+        path:  routeLinks?.lab?.labRequests,
+        element: <LabTestRequests/>,
+      },
+        {
+        path:  routeLinks?.lab?.labRequestsDetails,
+        element: <LabTestRequestsDetails/>,
+      },
+        {
+        path: routeLinks?.lab?.profile,
+        element: <LabProfile />,
+      },
+    ]
+  }
 ]);
 
 export default App;

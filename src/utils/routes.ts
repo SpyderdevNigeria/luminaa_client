@@ -1,3 +1,4 @@
+
 const routeLinks = {
   auth: {
     path:'/auth',
@@ -35,6 +36,14 @@ const routeLinks = {
     appointment:'/doctor/appointment',
     appointmentView : '/doctor/appointment/:id',
     patientView : '/doctor/patients/:id',
+},
+
+lab: { 
+    path:'/lab',
+    dashboard: '/lab/dashboard',
+    labRequests: '/lab/requests',  
+    labRequestsDetails: '/lab/requests/:id', 
+    profile: '/lab/profile',
 }
 
 }

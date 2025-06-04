@@ -73,7 +73,7 @@ function DoctorDashboard() {
           <DashboardCard title="Cancelled" count={20} />
         </div>
 
-        <main className="flex items-center justify-between p-2 border-y border-dashboard-gray">
+        <main className="flex items-center justify-between p-2 lg:p-4 border-y border-dashboard-gray">
           <h5 className="text-text-primary font-semibold">
             Please Update your profile to verify your Account
           </h5>
@@ -85,7 +85,7 @@ function DoctorDashboard() {
 
       <section>
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="col-span-2 border border-dashboard-gray p-2 rounded-lg">
+          <div className="col-span-2 border border-dashboard-gray p-2 lg:p-4 rounded-lg">
             <HeaderTab title="Appointment" showSearch={false} showSort={false} />
             <div>
               {loadingAppointment ? (

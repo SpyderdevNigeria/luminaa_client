@@ -23,7 +23,7 @@ function HeaderTab({
     console.log("Filter by:", value);
   };
   return (
-    <div className="flex flex-col md:flex-row gap-4  items-center justify-between my-4">
+    <div className="flex flex-col md:flex-row gap-4  items-center justify-between mb-4">
       <h1 className="text-base md:text-xl">{title}</h1>
 
       <div className="flex flex-row items-center gap-3  ">

@@ -4,7 +4,7 @@ import MedicalInfoForm from "./components/MedicalInfoForm";
 import SecurityPreferences from "./components/SecurityPreferences";
 import { useAppSelector } from "../../../hooks/reduxHooks";
 
-const DoctorProfile = () => {
+const LabProfile = () => {
   const userProfile = useAppSelector((state) => state.auth.user);
 
   const [showMedicalForm, setShowMedicalForm] = useState("");
@@ -111,4 +111,4 @@ const Settings = ({ onMedicalClick }: { onMedicalClick: (e: any) => void }) => {
     </div>
   );
 };
-export default DoctorProfile;
+export default LabProfile;
