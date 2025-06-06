@@ -99,6 +99,12 @@ export const navItemsDoctor = [
     icon: TfiTimer,
     to: routeLinks?.doctor?.schedule,
   },
+    {
+    label: "Prescription",
+    title: "Prescription",
+    icon: CiTablets1,
+    to: routeLinks?.doctor?.prescription,
+  },
   {
     label: "Patients",
     title: "Patients",
@@ -174,7 +180,7 @@ export const returnPartnerNavigationUrlLogic = (
     return routeLinks?.doctor?.dashboard;
   }
 
-  if (partnerType === "lab") {
+  if (partnerType === "lab_tech") {
     return "/lab/dashboard";
   }
 

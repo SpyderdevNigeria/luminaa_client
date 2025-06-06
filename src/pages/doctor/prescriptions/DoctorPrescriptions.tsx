@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import PrescriptionDetailsModal from "../../../components/modal/PrescriptionDetailsModal";
+import PrescriptionReportModal from "../../../components/modal/PrescriptionReportModal";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import usePrescriptions from "../../../hooks/usePrescriptions";
-import PatientApi from "../../../api/PatientApi";
+import DoctorApi from "../../../api/doctorApi";
 import HeaderTab from "../../../components/common/HeaderTab";
 // import useAppointments from "../../../hooks/useAppointments";
-function Prescriptions() {
+function DoctorPrescriptions() {
   const [selectedPrescription, setSelectedPrescription] = useState<any>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -26,11 +26,11 @@ function Prescriptions() {
     setPrescriptionIsRefillable,
     setPage,
     getPrescriptions,
-  } = usePrescriptions(PatientApi);
+  } = usePrescriptions(DoctorApi);
   //  const {
   //   appointments,
   //   getAppointments
-  // } = useAppointments(PatientApi);
+  // } = useAppointments(DoctorApi);
   useEffect(() => {
     if (
       prescriptions.length > 0 &&
@@ -83,7 +83,7 @@ function Prescriptions() {
           {prescriptions.map((prescription) => (
             <div
               key={prescription._id}
-              className="bg-white rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between py-4 md:px-8 space-y-3 md:space-y-0"
+              className="bg-white border border-dashboard-gray rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between py-4 md:px-8 space-y-3 md:space-y-0"
             >
               <div className="space-y-1">
                 <h3 className="text-sm md:text-base">
@@ -135,13 +135,15 @@ function Prescriptions() {
       )}
 
       {/* Details Modal */}
-      <PrescriptionDetailsModal
-        data={selectedPrescription}
-        isModalOpen={isModalOpen}
-        setModalOpen={setModalOpen}
-      />
+              {selectedPrescription && (
+            <PrescriptionReportModal
+              data={selectedPrescription}
+              isModalOpen={isModalOpen}
+              setModalOpen={setModalOpen}
+            />
+          )}
     </div>
   );
 }
 
-export default Prescriptions;
+export default DoctorPrescriptions;

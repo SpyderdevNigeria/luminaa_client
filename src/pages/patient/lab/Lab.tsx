@@ -1,13 +1,13 @@
 import { useState } from "react";
 import LabDetailsModal from "../../../components/modal/LabDetailsModal";
 import StatusBadge from "../../../components/common/StatusBadge";
-import HeaderControls from "../../../components/common/HeaderControls";
+import HeaderTab from "../../../components/common/HeaderTab";
 function Lab() {
       const [data, setData] = useState<any>(null);
       const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div>
-       <HeaderControls/>
+       <HeaderTab title="Lab"/>
 
       <div className="space-y-4">
         {[1, 2, 3, 4, 5, 6, 7].map((i) => (

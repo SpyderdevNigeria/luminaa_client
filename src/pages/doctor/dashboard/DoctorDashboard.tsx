@@ -8,6 +8,8 @@ import StatusBadge from "../../../components/common/StatusBadge";
 import CustomCalendar from "../../../components/common/CustomCalendar";
 import moment from "moment";
 import useAppointments from "../../../hooks/useAppointments";
+import routeLinks from "../../../utils/routes";
+import { Link } from "react-router-dom";
 
 function DoctorDashboard() {
   const {
@@ -60,6 +62,11 @@ function DoctorDashboard() {
       label: "date",
       render: (appointment) => <h4>{moment(appointment?.scheduledDate).format("YYYY-MM-DD HH:mm")}</h4>,
     },
+         {
+      key: "Action",
+      label: "view",
+      render: (appointment) => <Link to={routeLinks?.doctor?.appointment+'/'+appointment?.id} className="underline text-primary">view</Link>,
+    },
   ];
 
     if (errorAppoint) return <p className="text-center mt-10 text-red-500">{errorAppoint}</p>;
@@ -86,7 +93,7 @@ function DoctorDashboard() {
       <section>
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="col-span-2 border border-dashboard-gray p-2 lg:p-4 rounded-lg">
-            <HeaderTab title="Appointment" showSearch={false} showSort={false} />
+            <HeaderTab title="Appointment" showSearch={false} />
             <div>
               {loadingAppointment ? (
                 <p>Loading...</p>

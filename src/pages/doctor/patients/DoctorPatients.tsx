@@ -142,7 +142,7 @@ function DoctorPatients() {
       </main>
 
       <section className="border border-dashboard-gray p-2 rounded-lg">
-        <HeaderTab title="Appointment" showSearch={false} showSort={true} />
+        <HeaderTab title="Appointment" showSearch={false}  />
         <div className="">
           <Table
             data={allAppointment}

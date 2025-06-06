@@ -27,7 +27,6 @@ function LabDashboard() {
             <HeaderTab
               title="Sample Collection"
               showSearch={false}
-              showSort={false}
             />
             <div>
               {loading ? (

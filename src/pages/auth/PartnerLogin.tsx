@@ -48,6 +48,12 @@ function PartnerLogin() {
         token: accessToken,
         user: {...user, user : user},
       };
+      if (user?.role == 'patient') {
+        return setMessage({
+          message: "Unauthorized access",
+          type: "error",
+        });
+      }
           setMessage({
           message: "Login was successful",
           type: "success",
@@ -167,7 +173,7 @@ function PartnerLogin() {
       {isLoading ? "Loading..." : "Log in"}
     </button>
   </form>
-</div>
+  </div>
 
   );
 }

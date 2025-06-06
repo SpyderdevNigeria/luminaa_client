@@ -78,7 +78,6 @@ const useAuth = (): AuthInfo => {
       setAuthLoading(false);
       return;
     }
-    console.log("full fetch");
     fetchProfile();
   }, []);
 

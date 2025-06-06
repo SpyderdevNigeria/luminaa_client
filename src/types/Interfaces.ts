@@ -4,7 +4,19 @@ export interface IPaginationResponse {
   hasPrevPage: boolean;
   hasNextPage: boolean;
 }
-
+export interface IPrescription {
+  _id: string;
+  id:string;
+  medicationName: string;
+  dosage: string;
+  frequency: string;
+  duration: string;
+  notes?: string;
+  status:string;
+  instructions:string;
+  createdAt: string;
+  isRefillable:string;
+}
 
 export interface IUser {
   role(role: any, user: IUser): unknown;
@@ -27,6 +39,7 @@ export interface IUser {
   medicalHistory: string;
   isBioDataCompleted: boolean;
   isMedicalHistoryCompleted: boolean;
+  licenseNumber:string;
   user: {
     id: string;
     createdAt: string;

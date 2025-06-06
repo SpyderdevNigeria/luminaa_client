@@ -35,7 +35,6 @@ function LabTestRequests() {
         <HeaderTab
           title="Sample Collection"
           showSearch={true}
-          showSort={true}
         />
         <section>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

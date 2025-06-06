@@ -38,7 +38,7 @@ const authSlice = createSlice({
     },
     // update only user profile info
     updateUser: (state, action: PayloadAction<AuthState["user"]>) => {
-      // console.log("updateUser action", action.payload);
+      //console.log("updateUser action", action.payload);
       localStorage.setItem("hms_user", JSON.stringify(action.payload));
       state.user = action.payload;
     },

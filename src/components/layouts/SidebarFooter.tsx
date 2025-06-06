@@ -27,7 +27,7 @@ function SidebarFooter() {
       />
       <Link to="" className="flex items-center text-sm p-2 font-[400]">
         <BsQuestionCircle className="w-6 h-6 mx-2" />
-        Help
+        Help me
       </Link>
 
       {/* Wire this button to open the logout confirmation */}

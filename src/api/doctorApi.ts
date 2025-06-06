@@ -94,6 +94,39 @@ const DoctorApi = {
 
   // Diagnoses endpoints end
 
+
+  // Prescriptions endpoints 
+  getPrescriptions: async (query:any) => {
+    const response = await api.get(`/doctor/prescriptions${query}`);
+    return response.data;
+  },
+   getPrescriptionsById: async (id: any) => {
+    const response = await api.get(`/doctor/prescriptions${id}}`);
+    return response.data;
+  },
+
+  getPrescriptionsAppointmentbyId: async (id: any) => {
+    const response = await api.get(`/doctor/prescriptions/appointment/${id}`);  
+    return response.data;
+  },
+
+  createPrescriptions: async (body: any) => {
+    const response = await api.post("/doctor/prescriptions", body);
+    return response.data;
+  },
+
+  updatePrescriptions: async (id: string, body: any) => {
+    const response = await api.patch(`/doctor/prescriptions/${id}`, body);
+    return response.data;
+  },
+
+  deletePrescriptions: async (id: string) => {
+    const response = await api.delete(`/doctor/prescriptions/${id}`);
+    return response.data;
+  },
+
+  // Prescriptions endpoints end
+
 }
 
 export default DoctorApi;

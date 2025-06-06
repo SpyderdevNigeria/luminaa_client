@@ -3,7 +3,6 @@ import { SetStateAction, useEffect, useState } from "react";
 import MedicalInfoForm from "./components/MedicalInfoForm";
 import SecurityPreferences from "./components/SecurityPreferences";
 import { useAppSelector } from "../../../hooks/reduxHooks";
-
 const LabProfile = () => {
   const userProfile = useAppSelector((state) => state.auth.user);
 
@@ -14,15 +13,11 @@ const LabProfile = () => {
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
-    name: "",
-    annualLicense: "",
-    phoneNumber: "",
-    registrationLicence: "",
-    specialty: "",
-    graduationCertificate: "",
-    additionalCertificates: "",
-    experience: "",
-    contactInfo: "",
+    department: "",
+    licenseNumber: "",
+    licenseExpiryDate: "",
+    hireDate: "",
+
   });
 
   useEffect(() => {
@@ -30,15 +25,10 @@ const LabProfile = () => {
     setData({
     firstName: userProfile?.user?.firstName,
     lastName: userProfile?.user?.lastName,
-    name: "",
-    annualLicense: "",
-    phoneNumber: userProfile?.user?.phoneNumber,
-    registrationLicence: "",
-    specialty: "",
-    graduationCertificate: "",
-    additionalCertificates: "",
-    experience: "",
-    contactInfo: "",
+    department:  userProfile?.user?.department || "",
+    licenseNumber: userProfile?.user?.licenseNumber || "",
+    licenseExpiryDate: userProfile?.user?.licenseExpiryDate || "",
+    hireDate: userProfile?.user?.hireDate || '',
   });
     }
   }, [userProfile]);
@@ -46,10 +36,6 @@ const LabProfile = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    console.log("Submitted Data:", data);
-    // Add logic to send data to API or update state
-  };
 
   const handleClose = () => {
     setShowMedicalForm('');
@@ -61,15 +47,10 @@ const LabProfile = () => {
       {showMedicalForm === '' && (
         <Settings onMedicalClick={(e)=> {handleShowForm(e)}} />
       )} {showMedicalForm === 'update' && <MedicalInfoForm
-          data={data}
-          userProfile={userProfile}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          handleImageUpload={function (_file: File): void {
-            throw new Error("Function not implemented.");
-          }}
-          handleClose={handleClose}
-        />}
+        data={data}
+        userProfile={userProfile}
+        handleChange={handleChange}
+        handleClose={handleClose}   />}
 
     </div>
   );

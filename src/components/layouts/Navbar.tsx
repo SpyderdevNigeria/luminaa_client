@@ -2,7 +2,8 @@ import React, { useRef, useEffect } from "react";
 import {  FiMenu, FiX } from "react-icons/fi";
 import Notification from "./Notification";
 import { useAppSelector } from "../../hooks/reduxHooks";
-
+import UserImage from '../../assets/images/patient/user.png'
+import PartnerImage from '../../assets/images/doctor/doctor.png'
 type NavbarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
@@ -43,7 +44,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
         {/* Avatar & Dropdown */}
         <div className="relative hidden md:block" ref={dropdownRef}>
           <img
-            src={userProfile?.user?.profilePicture?.url || "ee" }
+            src={userProfile?.user?.profilePicture?.url || userProfile?.role === 'patient' ? UserImage : PartnerImage  }
             alt={userProfile?.user?.firstName + " " + userProfile?.user?.lastName}
             className="w-10 h-10 rounded-full cursor-pointer bg-gray-100"
             onClick={() => setDropdownOpen(!dropdownOpen)}

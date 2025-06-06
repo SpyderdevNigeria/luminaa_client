@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import BookingCard from "../common/BookingCard";
-import BookingDateCard from "../common/BookingDateCard";
 type Props = {
   open: boolean;
   onClose: () => void;
@@ -122,23 +120,23 @@ const AppointmentBookModal = ({ open, onClose }: Props) => {
                 </>
               )}
 
-              {step === 2 && (
+              {/* {step === 2 && (
                 <>
                   <Header title="Select your doctor & Specialty" />
                   <div className="max-w-lg">
                     <BookingCard type="small" />
                   </div>
                 </>
-              )}
+              )} */}
 
-              {step === 3 && (
+              {/* {step === 3 && (
                 <>
                   <Header title="Appointment Date" />
                   <div className="max-w-lg">
                     <BookingDateCard type="small" />
                   </div>
                 </>
-              )}
+              )} */}
 
               {step === 4 && (
                 <>

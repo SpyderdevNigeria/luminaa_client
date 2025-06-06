@@ -36,23 +36,9 @@ const isTokenValid = (token: string | null): boolean => {
   const navigate = useNavigate();
   const [authLoading, setAuthLoading] = useState(true);
 
-useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (!isTokenValid(token)) {
-    setAuthLoading(false);
-    return;
-  }
-
-  if (userProfile) {
-    // Skip if already fetched
-    setAuthLoading(false);
-    return;
-  }
-
-  const fetchProfile = async () => {
+    const fetchProfile = async () => {
     try {
       const res = await PartnerApi.getProfile();
-      console.log(res)
       if (res?.data) {
         dispatch(updateUser({ ...res?.data, user: res?.data }));
         if (!res?.data.isEmailVerified) {
@@ -62,15 +48,44 @@ useEffect(() => {
     } catch (error: any) {
       console.error("Failed to fetch user profile:", error);
       if (error?.response?.status === 401) {
-        dispatch(logout());
+         dispatch(logout());
       }
     } finally {
       setAuthLoading(false);
     }
   };
 
-  fetchProfile();
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  // If no valid token, or already have a userProfile, exit early
+  if (!isTokenValid(token) || userProfile) {
+    setAuthLoading(false);
+    return;
+  }
+
+  // If the user is patient, log them out
+  if (userProfile?.user?.role === "patient") {
+    dispatch(logout());
+    navigate(routeLinks.auth.login);
+    return;
+  }
+
+  // Only fetch if authenticated and no existing profile
+  if (isAuthenticated && !userProfile) {
+    fetchProfile();
+    return;
+  }
+
+  // Fallback - fetch anyway if token exists and we’re not authenticated
+  if (token && !isAuthenticated) {
+    fetchProfile();
+  } else {
+    setAuthLoading(false);
+  }
 }, []);
+
 
 
   const userProfile = useAppSelector((state) => state.auth.user);

@@ -7,6 +7,7 @@ import routeLinks from "../../utils/routes";
 import LoadingScreen from "../loading/LoadingScreen";
 import { logout } from "../../reducers/authSlice";
 import { useAppDispatch } from "../../hooks/reduxHooks";
+
 function DoctorLayout() {
   const navigate = useNavigate();
   const { userProfile, authLoading } = usePartnerAuth();
@@ -17,14 +18,16 @@ function DoctorLayout() {
     if (!authLoading && !userProfile) {
       navigate(routeLinks?.auth?.partnerLogin);
     }
+
+     if (userProfile && userProfile.user &&  userProfile.user.isEmailVerified !== true) {
+      navigate(routeLinks?.auth?.partnerEmailVerification);
+    }
     if (userProfile && userProfile.user && userProfile.user.role !== "doctor") {
       dispatch(logout());
       navigate(routeLinks?.auth?.partnerLogin);
     }
 
-     if (userProfile && userProfile.user &&  userProfile.user.isEmailVerified !== true) {
-      navigate(routeLinks?.auth?.partnerEmailVerification);
-    }
+    
   }, [authLoading, userProfile, navigate]);
 
   // Loading while auth is verifying

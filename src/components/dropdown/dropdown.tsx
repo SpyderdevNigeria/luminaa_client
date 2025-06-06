@@ -18,7 +18,7 @@ export default function Dropdown({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <div className="cursor-pointer inline-flex items-center gap-2 text-sm py-2 px-3 border border-dashboard-gray rounded-sm">
+        <div className="cursor-pointer bg-white inline-flex items-center gap-2 text-base py-2 px-3 border border-dashboard-gray rounded-sm">
           {triggerIcon && <span>{triggerIcon}</span>}
           <h4>{triggerLabel}</h4>
           {showArrow && <MdKeyboardArrowDown />}

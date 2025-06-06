@@ -1,134 +1,193 @@
-import { useState } from "react";
-import { FiPlus } from "react-icons/fi";
+import { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import doctorApi from "../../../../../api/doctorApi";
+import FeedbackMessage from "../../../../../components/common/FeedbackMessage";
+import { IPrescription } from "../../../../../types/Interfaces";
 
-const PrescriptionsForm = () => {
-  const [data, setData] = useState({
-    drugCategory: "",
-    drug: "",
-    frequency: "",
-    dosage: "",
-    refill: "",
-    notes: "",
+interface PrescriptionsFormProps {
+  appointmentId: string;
+  initialData?: IPrescription | null;
+  onSuccess?: () => void;
+  setShowForm: () => void;
+}
+
+const defaultData: IPrescription = {
+  medicationName: "",
+  dosage: "",
+  frequency: "",
+  duration: "",
+  instructions: "",
+  isRefillable: 'false',
+  status: "active",
+  _id:'',
+  id:'',
+  createdAt:'',
+};
+
+const PrescriptionsForm = ({
+  appointmentId,
+  initialData = null,
+  onSuccess,
+  setShowForm,
+}: PrescriptionsFormProps) => {
+  const [formData, setFormData] = useState<IPrescription>(defaultData);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ message: string; type: "success" | "error" | "" }>({
+    message: "",
+    type: "",
   });
 
-  const handleChange = (e:any) => {
-    const { name, value } = e.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
+  useEffect(() => {
+    if (initialData) setFormData(initialData);
+  }, [initialData]);
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+    setFormData((prev:any) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      let response;
+      if (initialData?.id) {
+        response = await doctorApi.updatePrescriptions(initialData.id, formData);
+      } else {
+        response = await doctorApi.createPrescriptions({ ...formData, appointmentId });
+      }
+      setMessage({ message: response?.data?.message || "Request successful", type: "success" });
+      if (onSuccess) onSuccess();
+    } catch (error: any) {
+      const { response } = error;
+      console.error("Failed to submit prescription", error);
+      setMessage({
+        message: response?.data?.message || "An error occurred",
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* Drug Category */}
+    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="col-span-2">
-        <label htmlFor="drugCategory" className="form-label !text-base !font-light">
-          Drug Category
-        </label>
+        {message.message && (
+          <FeedbackMessage type={message.type} message={message.message} />
+        )}
+      </div>
+
+      <div className="col-span-2">
+        <label className="form-label !text-base !font-light">Medication Name</label>
         <input
           type="text"
-          name="drugCategory"
-          id="drugCategory"
-          placeholder="Drug Category"
+          name="medicationName"
+          value={formData.medicationName}
           onChange={handleChange}
-          value={data.drugCategory}
+          required
+          placeholder="eg .. Lisinopril"
           className="form-input focus:outline-primary text-gray-light"
         />
       </div>
 
-      {/* Select Drug */}
-      <div className="col-span-2">
-        <label htmlFor="drug" className="form-label !text-base !font-light">
-          Select Drug
-        </label>
-        <input
-          type="text"
-          name="drug"
-          id="drug"
-          placeholder="Select Drug"
-          onChange={handleChange}
-          value={data.drug}
-          className="form-input focus:outline-primary text-gray-light"
-        />
-      </div>
-
-      {/* Frequency */}
-      <div className="col-span-2">
-        <label htmlFor="frequency" className="form-label !text-base !font-light">
-          Frequency
-        </label>
-        <input
-          type="text"
-          name="frequency"
-          id="frequency"
-          placeholder="Frequency"
-          onChange={handleChange}
-          value={data.frequency}
-          className="form-input focus:outline-primary text-gray-light"
-        />
-      </div>
-
-      {/* Dosage */}
-      <div className="col-span-2">
-        <label htmlFor="dosage" className="form-label !text-base !font-light">
-          Dosage
-        </label>
+      <div>
+        <label className="form-label !text-base !font-light">Dosage</label>
         <input
           type="text"
           name="dosage"
-          id="dosage"
-          placeholder="Dosage"
+          value={formData.dosage}
           onChange={handleChange}
-          value={data.dosage}
+          required
+           placeholder="eg .. 10mg"
           className="form-input focus:outline-primary text-gray-light"
         />
       </div>
 
-      {/* Select Refill */}
-      <div className="col-span-2">
-        <label htmlFor="refill" className="form-label !text-base !font-light">
-          Select Refill
-        </label>
-        <select
-          name="refill"
-          id="refill"
+      <div>
+        <label className="form-label !text-base !font-light">Frequency</label>
+        <input
+          type="text"
+          name="frequency"
+          value={formData.frequency}
           onChange={handleChange}
-          value={data.refill}
+          required
+          placeholder="eg .. Once daily"
+          className="form-input focus:outline-primary text-gray-light"
+        />
+      </div>
+
+      <div>
+        <label className="form-label !text-base !font-light">Duration</label>
+        <input
+          type="text"
+          name="duration"
+          value={formData.duration}
+          onChange={handleChange}
+          required
+           placeholder="eg .. 30 days"
+          className="form-input focus:outline-primary text-gray-light"
+        />
+      </div>
+
+  
+
+      <div>
+        <label className="form-label !text-base !font-light">Status</label>
+        <select
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+          required
           className="form-input focus:outline-primary text-gray-light"
         >
-          <option value="">Select Refill</option>
-          <option value="No Refill">No Refill</option>
-          <option value="1 Refill">1 Refill</option>
-          <option value="2 Refills">2 Refills</option>
-          <option value="3+ Refills">3+ Refills</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
         </select>
       </div>
 
-      {/* Symptoms / Notes */}
       <div className="col-span-2">
-        <label htmlFor="notes" className="form-label !text-base !font-light">
-          Symptoms / Notes
-        </label>
+        <label className="form-label !text-base !font-light">Instructions</label>
         <textarea
-          name="notes"
-          id="notes"
-          rows={4}
-          placeholder="Enter symptoms or notes"
+          name="instructions"
+          value={formData.instructions}
           onChange={handleChange}
-          value={data.notes}
+          rows={3}
+          required
           className="form-input focus:outline-primary text-gray-light resize-none"
-        ></textarea>
+        />
       </div>
-
-      {/* Add Item Button */}
-      <div className="col-span-2">
+    <div>
+        <label className="form-label !text-base !font-light">Refillable</label>
+        <div className="flex items-center gap-2 mt-2">
+          <input
+            type="checkbox"
+            name="isRefillable"
+            checked={formData.isRefillable == 'true' ? true: false}
+            onChange={handleChange}
+          />
+          <span className="text-sm">Is Refillable</span>
+        </div>
+      </div>
+      <div className="col-span-2 flex justify-end gap-4 mt-6">
         <button
           type="button"
-          className="px-4 py-2 rounded-md flex items-center gap-2 text-sm"
+          onClick={setShowForm}
+          className="px-5 py-2 border-[1.5px] border-primary text-primary rounded-md text-sm"
         >
-          <FiPlus className="text-base" />
-          Add Item
+          Cancel
+        </button>
+        <button
+          type="submit"
+          disabled={loading}
+          className="px-5 py-2 bg-primary border-[1.5px] border-primary text-white rounded-md text-sm"
+        >
+          {loading ? "Saving..." : initialData ? "Update Prescription" : "Add Prescription"}
         </button>
       </div>
     </form>

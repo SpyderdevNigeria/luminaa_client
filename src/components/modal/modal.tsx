@@ -33,31 +33,29 @@ const Modal = ({
               </AlertDialog.Title>
             </div>
           )}
-          <div className="w-full py-2">
-              {children}
-          </div>
-          <AlertDialog.Description >
-          </AlertDialog.Description>
+          <div className="w-full py-2">{children}</div>
+          <AlertDialog.Description></AlertDialog.Description>
 
           {!hideCancel && (
-            <div className="flex flex-row items-center justify-between">
-              <div>
-
+            <div className="w-full flex items-center justify-end">
+              <div className=" flex items-center gap-2 ">
+                <button
+                  onClick={onClose}
+                  className="w-full text-center text-sm p-3 px-6  whitespace-nowrap font-medium border-[1.5px] border-primary text-primary rounded-lg"
+                >
+                  Back
+                </button>
+                {buttonText && handleSubmit ? (
+                  <button
+                    onClick={handleSubmit}
+                    className=" w-full text-center text-sm p-3  px-6 font-medium whitespace-nowrap  border-[1.5px] border-primary bg-primary text-white rounded-lg "
+                  >
+                    {buttonText}
+                  </button>
+                ) : (
+                  ""
+                )}
               </div>
-                   <div className=" flex items-center gap-2 ">
-              <button
-                onClick={onClose}
-                className="w-full text-center text-sm p-3 px-6  whitespace-nowrap font-medium border-[1.5px] border-primary text-primary rounded-lg"
-              >
-                Back
-              </button>
-              <button
-                onClick={handleSubmit}
-                className=" w-full text-center text-sm p-3  px-6 font-medium whitespace-nowrap  border-[1.5px] border-primary bg-primary text-white rounded-lg "
-              >
-                {buttonText}
-              </button>
-            </div>
             </div>
           )}
         </div>

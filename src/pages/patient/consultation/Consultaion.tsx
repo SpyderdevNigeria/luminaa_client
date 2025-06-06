@@ -5,7 +5,7 @@ import PatientApi from "../../../api/PatientApi";
 import useAppointments from "../../../hooks/useAppointments";
 
 function Consultaion() {
-   const {
+  const {
     appointments,
     loadingAppointment,
     setLoadingAppointment,
@@ -13,34 +13,61 @@ function Consultaion() {
     totalPages,
     status,
     dataFrom,
+    setDataFrom,
+    dateTo,
+    setDateTo,
     limit,
     total,
-    dateTo,
     errorAppoint,
     getAppointments,
     handleSetPage,
   } = useAppointments(PatientApi);
- 
-    useEffect(() => {
-    if (appointments.length > 0 && status === "" && dataFrom === "" && dateTo === "" && page === 1 ) {
+
+  useEffect(() => {
+    if (
+      appointments.length > 0 &&
+      status === "" &&
+      dataFrom === "" &&
+      dateTo === "" &&
+      page === 1
+    ) {
       setLoadingAppointment(false);
-      return 
+      return;
     }
     getAppointments();
   }, [page, status, dataFrom, dateTo]);
 
   return (
     <div>
-      <HeaderTab title="Appointment" />
+      <HeaderTab
+        title="Appointment"
+        showSearch={false}
+        dateFrom={dataFrom}
+        onDateFromChange={setDataFrom}
+        dateTo={dateTo}
+        onDateToChange={setDateTo}
+      />
+
       <section className="bg-white rounded-lg p-4 min-h-[200px]">
         {loadingAppointment ? (
-          <div className="text-center text-gray-500 py-10">Loading appointments...</div>
+          <div className="text-center text-gray-500 py-10">
+            Loading appointments...
+          </div>
         ) : errorAppoint ? (
           <div className="text-center text-red-500 py-10">{errorAppoint}</div>
         ) : appointments.length === 0 ? (
-          <div className="text-center text-gray-500 py-10">No appointments found.</div>
+          <div className="text-center text-gray-500 py-10">
+            No appointments found.
+          </div>
         ) : (
-          <AppointmentTab appointmentsData={appointments} page={page} total={total} limit={limit} totalPages={totalPages} setPage={(e) => {return handleSetPage(e);}} />
+          <AppointmentTab
+            appointmentsData={appointments}
+            page={page}
+            total={total}
+            limit={limit}
+            totalPages={totalPages}
+            setPage={(e) => handleSetPage(e)}
+          />
         )}
       </section>
     </div>

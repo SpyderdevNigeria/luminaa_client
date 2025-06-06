@@ -24,7 +24,7 @@ const generateDays = (year: number, month: number) => {
 };
 
 interface CustomCalendarProps {
-  selected?: string; // ISO date string
+  selected?: string;
   onChange?: (date: string) => void;
 }
 
@@ -83,7 +83,7 @@ const CustomCalendar = ({ selected, onChange }: CustomCalendarProps) => {
   };
 
   return (
-    <div className="w-full mx-auto p-4 bg-white rounded-lg border">
+    <div className={`w-full mx-auto p-4 bg-white rounded-lg border ${selected !== "" ? 'border-dashboard-gray' : ''}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <button onClick={prevMonth} className="text-xl font-bold">

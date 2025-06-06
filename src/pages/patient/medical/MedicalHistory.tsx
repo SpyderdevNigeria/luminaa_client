@@ -4,8 +4,7 @@ import StatusBadge from "../../../components/common/StatusBadge";
 import useDiagnoses from "../../../hooks/useDiagnoses";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import PatientApi from "../../../api/PatientApi";
-import moment from "moment";
-import HeaderControlsDiagnosis from "../../../components/common/HeaderControlsDiagnosis";
+import HeaderTab from "../../../components/common/HeaderTab";
 
 function MedicalHistory() {
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<any>(null);
@@ -26,18 +25,28 @@ function MedicalHistory() {
 
   // Filters
 
-
   useEffect(() => {
     getDiagnoses();
   }, [page, severity]);
 
   return (
     <div>
-      <HeaderControlsDiagnosis
-        // search={search}
-        // onSearchChange={(e) => setSearch(e.target.value)}
-        severity={severity}
-        onSeverityChange={(e) => setSeverity(e.target.value)}
+      <HeaderTab
+        title="Medical History"
+         showSearch={false}
+        dropdowns={[
+          {
+            label: "Severity",
+            options: ["All Severities", "Mild", "Moderate", "Severe"],
+            value: severity,
+            onChange: (value) =>
+              setSeverity(
+                value.toLowerCase() === "all severities"
+                  ? ""
+                  : value.toLowerCase()
+              ),
+          },
+        ]}
       />
 
       <div className="space-y-4">
@@ -54,12 +63,12 @@ function MedicalHistory() {
               className="bg-white rounded-lg flex flex-row items-center justify-between py-4 md:px-8"
               key={diagnosis._id}
             >
-              <div className="space-y-1  md:w-[300px] line-clamp-1">
-                <h3 className="text-sm md:text-base">
+              <div className="space-y-1 ">
+                <h3 className="text-sm md:text-base  md:w-[300px] line-clamp-1">
                   {diagnosis.primaryDiagnosis}
                 </h3>
                 <h4 className="text-xs font-[300]">
-                  {moment(diagnosis.createdAt).format("MMMM D, YYYY")}
+                  on {new Date(diagnosis.createdAt).toLocaleDateString()}
                 </h4>
               </div>
 

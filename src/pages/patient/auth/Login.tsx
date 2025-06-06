@@ -50,6 +50,13 @@ function Login() {
         token: accessToken,
         user: {...user, user: user},
       };
+
+          if (user?.role !== 'patient') {
+        return setMessage({
+          message: "Unauthorized access",
+          type: "error",
+        });
+      }
       dispatch(login(payload));
       if (!user?.isEmailVerified) {
         await AuthApi.requestEmailOtp(email);

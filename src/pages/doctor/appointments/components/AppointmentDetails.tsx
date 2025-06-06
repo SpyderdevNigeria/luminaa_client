@@ -10,10 +10,11 @@ import { IoExitOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import routeLinks from "../../../../utils/routes";
 import InfoLabel from "../../../../components/common/InfoLabel";
+import UserProfile from "../../../../assets/images/patient/user.png"
 import moment from "moment";
 
 interface DoctorAppointmentsViewProps {
-  handleNext: () => void;
+  handleNext: (e:string) => void;
   appointment: any;
 }
 
@@ -21,7 +22,7 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
   const { patient, scheduledDate, status, patientNote, location, id } = appointment;
 
   const patientName = `${patient?.user?.firstName || ""} ${patient?.user?.lastName || ""}`;
-  const patientImage = patient?.user?.profilePicture?.url || "https://i.pravatar.cc/40";
+  const patientImage = patient?.user?.profilePicture?.url || UserProfile;
   const scheduledMoment = moment(scheduledDate);
 
   return (
@@ -65,7 +66,7 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
             <MdOutlineStickyNote2 className="text-2xl" />
             {patientNote || "No patient note provided..."}
           </h5>
-          <button className="text-blue-800 text-sm">Edit</button>
+          <Link to={routeLinks?.doctor?.patients + `/${patient?.id}`} className="text-blue-800 text-sm underline">View Patient Details</Link>
         </main>
       </main>
 
@@ -138,16 +139,16 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <button
           className="py-3 flex flex-row items-center justify-center text-[#4976F4] border-2 border-dashed border-[#4976F4] bg-blue-50 rounded-lg"
-          onClick={handleNext}
+          onClick={ () => {handleNext("DiagnosisDetails")}}
         >
           <PiNotepadDuotone className="text-2xl mx-2" /> Add Medical Records
         </button>
-        <Link
-          to={routeLinks?.doctor?.patients + `/${patient?.id}`}
+        <button
+          onClick={ () => {handleNext("PrescriptionDetails")}}
           className="py-3 flex flex-row items-center justify-center text-[#0091FF] border-2 border-[#0091FF1A] bg-[#0091FF1A] rounded-lg"
         >
-          View Patient Details <IoExitOutline className="text-2xl mx-2" />
-        </Link>
+          Add Prescriptions <IoExitOutline className="text-2xl mx-2" />
+        </button>
         <button className="py-3 flex flex-row items-center justify-center text-gray-700 border-2 border-dashboard-gray bg-dashboard-gray rounded-lg col-span-2">
           Finish Consultation
         </button>

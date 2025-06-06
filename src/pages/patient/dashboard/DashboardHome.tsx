@@ -111,7 +111,7 @@ function DashboardHome() {
         <section className="bg-white rounded-lg p-4">
           {loadingAppointment ? (
             <div className="text-center text-gray-500 py-10">
-              Loading appointments...
+              Loading appointments..
             </div>
           ) : errorAppoint ? (
             <div className="text-center text-red-500 py-10">{errorAppoint}</div>

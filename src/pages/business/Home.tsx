@@ -33,8 +33,7 @@ export default function Home() {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            <Link to={routeLinks?.auth?.partnerLogin} className="text-sm md:text-base font-semibold text-gray-900">Doctor</Link>
-                 <Link to={routeLinks?.lab?.dashboard} className="text-sm md:text-base font-semibold text-gray-900">Lab</Link>
+            <Link to={routeLinks?.auth?.partnerLogin} className="text-sm md:text-base font-semibold text-gray-900">Partner</Link>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link to={routeLinks?.auth?.login} className="text-sm md:text-base font-semibold text-gray-900">
@@ -71,8 +70,8 @@ export default function Home() {
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-gray-500/10">
                   <div className="space-y-2 py-6">
-                     <Link to={routeLinks?.doctor?.dashboard} className="text-sm font-semibold text-gray-900">Doctor</Link>
-                    <Link to={routeLinks?.lab?.dashboard} className="text-sm font-semibold text-gray-900">Lab</Link>
+                     <Link to={routeLinks?.auth?.partnerLogin}  className="text-sm font-semibold text-gray-900">Partner</Link>
+                    {/* <Link to={routeLinks?.lab?.dashboard} className="text-sm font-semibold text-gray-900">Lab</Link> */}
                   </div>
                   <div className="py-6">
                     <a href="#" className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50">Log in</a>

@@ -1,242 +1,191 @@
-// MedicalInfoForm.jsx
-import React from "react";
+import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import DoctorProfilePicForm from "./LabProfilePicForm";
+import LabApi from "../../../../api/labApi";
+import FeedbackMessage from "../../../../components/common/FeedbackMessage";
+import { useAppDispatch } from "../../../../hooks/reduxHooks";
+import { updateUser } from "../../../../reducers/authSlice";
 interface MedicalInfoFormProps {
   data: {
-    name: string;
     firstName: string;
     lastName: string;
-    annualLicense: string;
-
-    phoneNumber: string;
-    registrationLicence: string;
-    specialty: string;
-    graduationCertificate: string;
-    additionalCertificates: string;
-    experience: string;
-    contactInfo: string;
+    department: string;
+    licenseNumber: string;
+    licenseExpiryDate: string;
+    hireDate: string;
   };
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: () => void;
-  handleImageUpload: (file: File) => void;
   handleClose: () => void;
-  userProfile:any
+  userProfile: any;
 }
 
 const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
   data,
   handleChange,
-  handleSubmit,
   handleClose,
   userProfile,
 }) => {
+  const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState({ message: "", type: "" });
+  const dispatch = useAppDispatch();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await LabApi.updateProfile(data).then((res) => {
+        if (res?.status) {
+          setFeedback({
+            type: "success",
+            message: "Profile updated successfully!",
+          });
+          console.log(res);
+          dispatch(
+            updateUser({
+              ...userProfile,
+              ...res?.data,
+              user: { ...userProfile?.user, ...res?.data },
+            })
+          );
+        }
+      });
+    } catch (error) {
 
+        setFeedback({
+          type: "error",
+          message:
+           "Something went wrong. Try again.",
+        });
+
+    }
+    setLoading(false);
+  };
+  console.log(userProfile);
   return (
     <main className="bg-white rounded-lg border border-dashboard-gray max-w-6xl mx-auto">
       <div className="flex items-center justify-between p-4 border-b border-dashboard-gray">
-        <h4 className="text-2xl 2xl:text-4xl ">Update Medical Information</h4>
+        <h4 className="text-2xl 2xl:text-4xl">Update Medical Information</h4>
         <IoClose
-          className="text-2xl 2xl:text-4xl text-dashboard-gray cursor pointer "
+          className="text-2xl 2xl:text-4xl text-dashboard-gray cursor-pointer"
           onClick={handleClose}
         />
       </div>
-      <div className="p-4 grid grid-cols-2 gap-6">
-        {/* Left: Form Section */}
-        <div className=" grid grid-cols-2 gap-4">
-          {/* Doctor name */}
-          <div className="col-span-2">
+
+      <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left: Info Fields */}
+
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          {/* First Name (Disabled) */}
+          {feedback.message && (
+            <FeedbackMessage type={feedback.type} message={feedback.message} />
+          )}
+          <div>
             <label
               htmlFor="firstName"
-              className="form-label !text-base !font-light flex items-center gap-2"
+              className="form-label !text-base !font-light"
             >
               First Name
             </label>
             <input
               type="text"
-              name="firstName"
               id="firstName"
-              onChange={handleChange}
               value={data.firstName}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
+              disabled
+              className="form-input bg-gray-100 text-gray-500 w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
-          {/* Doctor name */}
-          <div className="col-span-2">
+
+          {/* Last Name (Disabled) */}
+          <div>
             <label
               htmlFor="lastName"
-              className="form-label !text-base !font-light flex items-center gap-2"
+              className="form-label !text-base !font-light"
             >
               Last Name
             </label>
             <input
               type="text"
-              name="lastName"
               id="lastName"
-              onChange={handleChange}
               value={data.lastName}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
+              disabled
+              className="form-input bg-gray-100 text-gray-500 w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
 
-          {/* Doctor annual license */}
-          <div className="col-span-2">
+          <div>
             <label
-              htmlFor="annualLicense"
-              className="form-label !text-base !font-light flex items-center gap-2"
+              htmlFor="department"
+              className="form-label !text-base !font-light"
             >
-              Doctor annual license
+              Department
             </label>
             <input
               type="text"
-              name="annualLicense"
-              id="annualLicense"
+              name="department"
+              id="department"
+              value={data.department}
               onChange={handleChange}
-              value={data.annualLicense}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
+              required
+              className="form-input text-gray-700 w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
 
-          {/* Phone number */}
-          <div className="col-span-2">
+          {/* License Number */}
+          <div>
             <label
-              htmlFor="phoneNumber"
-              className="form-label !text-base !font-light flex items-center gap-2"
+              htmlFor="licenseNumber"
+              className="form-label !text-base !font-light"
             >
-              Phone Number
+              License Number
             </label>
             <input
               type="text"
-              name="phoneNumber"
-              id="phoneNumber"
+              name="licenseNumber"
+              id="licenseNumber"
+              value={data.licenseNumber}
               onChange={handleChange}
-              value={data.phoneNumber}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
+              required
+              className="form-input text-gray-700 w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
 
-          {/* Full registration licence */}
-          <div className="col-span-2">
+          {/* License Expiry Date */}
+          <div>
             <label
-              htmlFor="registrationLicence"
-              className="form-label !text-base !font-light flex items-center gap-2"
+              htmlFor="licenseExpiryDate"
+              className="form-label !text-base !font-light"
             >
-              Doctor full registration licence
+              License Expiry Date
             </label>
             <input
-              type="text"
-              name="registrationLicence"
-              id="registrationLicence"
+              type="date"
+              name="licenseExpiryDate"
+              id="licenseExpiryDate"
+              value={
+                data.licenseExpiryDate
+                  ? new Date(data?.licenseExpiryDate).toISOString().split("T")[0]
+                  : ""
+              }
               onChange={handleChange}
-              value={data.registrationLicence}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
-            />
-          </div>
-
-          {/* Doctor specialty */}
-          <div className="col-span-2">
-            <label
-              htmlFor="specialty"
-              className="form-label !text-base !font-light flex items-center gap-2"
-            >
-              Doctor specialty
-            </label>
-            <input
-              type="text"
-              name="specialty"
-              id="specialty"
-              onChange={handleChange}
-              value={data.specialty}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
-            />
-          </div>
-
-          {/* Graduation certificate */}
-          <div className="col-span-2">
-            <label
-              htmlFor="graduationCertificate"
-              className="form-label !text-base !font-light flex items-center gap-2"
-            >
-              Graduation certificate
-            </label>
-            <input
-              type="text"
-              name="graduationCertificate"
-              id="graduationCertificate"
-              onChange={handleChange}
-              value={data.graduationCertificate}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
-            />
-          </div>
-
-          {/* Additional certificates */}
-          <div className="col-span-2">
-            <label
-              htmlFor="additionalCertificates"
-              className="form-label !text-base !font-light flex items-center gap-2"
-            >
-              Doctor additional certificates
-            </label>
-            <input
-              type="text"
-              name="additionalCertificates"
-              id="additionalCertificates"
-              onChange={handleChange}
-              value={data.additionalCertificates}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
-            />
-          </div>
-
-          {/* Years of experience */}
-          <div className="col-span-2">
-            <label
-              htmlFor="experience"
-              className="form-label !text-base !font-light flex items-center gap-2"
-            >
-              Years of experience
-            </label>
-            <input
-              type="text"
-              name="experience"
-              id="experience"
-              onChange={handleChange}
-              value={data.experience}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
-            />
-          </div>
-
-          {/* Contact Information */}
-          <div className="col-span-2">
-            <label
-              htmlFor="contactInfo"
-              className="form-label !text-base !font-light flex items-center gap-2"
-            >
-              Contact Information
-            </label>
-            <input
-              type="text"
-              name="contactInfo"
-              id="contactInfo"
-              onChange={handleChange}
-              value={data.contactInfo}
-              className="form-input focus:outline-primary text-gray-light w-full border border-gray-300 rounded-md px-3 py-2"
+              required
+              className="form-input text-gray-700 w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
 
           {/* Submit Button */}
-          <div className="col-span-2 mt-4">
+          <div className="pt-4">
             <button
-              onClick={handleSubmit}
-              className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary transition"
+              type="submit"
+              className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90 transition"
+              disabled={loading}
             >
-              Update Information
+              {loading ? "Updating..." : "Update Information"}
             </button>
           </div>
-        </div>
+        </form>
 
         {/* Right: Upload Image */}
         <div className="flex items-start justify-center">
-        <DoctorProfilePicForm userProfile={userProfile}/>
+          <DoctorProfilePicForm userProfile={userProfile} />
         </div>
       </div>
     </main>

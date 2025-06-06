@@ -18,7 +18,7 @@ import MedicalHistory from "./pages/patient/medical/MedicalHistory";
 import DoctorLayout from "./components/layouts/DoctorLayout";
 import DoctorDashboard from "./pages/doctor/dashboard/DoctorDashboard";
 import DoctorAppointments from "./pages/doctor/appointments/DoctorAppointments";
-import DoctorAppointmentsView from "./pages/doctor/appointments/DoctorAppointmentsView";
+import DoctorAppointmentsView from "./pages/doctor/appointments/DoctorAppointmentsDetails";
 import DoctorPatients from "./pages/doctor/patients/DoctorPatients";
 import DoctorProfile from "./pages/doctor/profile/DoctorProfile";
 import DoctorSchedule from "./pages/doctor/Schedule/DoctorSchedule";
@@ -34,6 +34,7 @@ import LabDashboard from "./pages/lab/dashboard/LabDashboard";
 import LabTestRequests from "./pages/lab/test/LabTestRequests";
 import LabTestRequestsDetails from "./pages/lab/test/LabTestRequestsDetails";
 import LabProfile from "./pages/lab/profile/LabProfile";
+import DoctorPrescriptions from "./pages/doctor/prescriptions/DoctorPrescriptions";
 // Route
 const App = createBrowserRouter([
   {
@@ -185,6 +186,10 @@ const App = createBrowserRouter([
         path: routeLinks?.doctor?.schedule,
         element: <DoctorSchedule />,
       },
+      {
+        path:routeLinks?.doctor?.prescription,
+        element:<DoctorPrescriptions/>
+      }
     ],
   },
 

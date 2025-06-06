@@ -85,6 +85,24 @@ const PatientApi = {
   },
 
   // Diagnoses endpoints end
+
+
+     // Prescriptions endpoints 
+  getPrescriptions: async (query:any) => {
+    const response = await api.get(`/patient/prescriptions${query}`);
+    return response.data;
+  },
+   getPrescriptionsById: async (id: any) => {
+    const response = await api.get(`/patient/prescriptions${id}}`);
+    return response.data;
+  },
+
+  getPrescriptionsAppointmentbyId: async (id: any) => {
+    const response = await api.get(`/patient/prescriptions/appointment/${id}`);  
+    return response.data;
+  },
+
+   // Prescriptions endpoints end
 }
 
 export default PatientApi;

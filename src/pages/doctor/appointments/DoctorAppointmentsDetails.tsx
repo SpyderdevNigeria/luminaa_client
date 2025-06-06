@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import AppointmentDetails from "./components/AppointmentDetails";
-// import Medical from "./components/medical/Medical";
 import { useParams } from "react-router-dom";
 import DiagnosisDetails from "./components/DiagnosisDetails"
+import PrescriptionDetails from "./components/PrescriptionDetails";
 import doctorApi from "../../../api/doctorApi";
 
-function DoctorAppointmentsView() {
-  const [step, setStep] = useState(0);
-  const handleNext = () => setStep((prev) => prev + 1);
-  const handleBack = () => setStep((prev) => prev - 1);
+function DoctorAppointmentsDetails() {
+  const [step, setStep] = useState('AppointmentDetails');
+  const handleNext = (e: SetStateAction<string>) => setStep(e);
+  const handleBack = () => setStep('AppointmentDetails');
 
     const { id } = useParams<{ id: string }>();
     const [appointment, setAppointment] = useState<any>(null);
@@ -39,17 +39,22 @@ function DoctorAppointmentsView() {
   if (!appointment) return <p className="text-center mt-10">No appointment found.</p>;
   
   return <div>
-     {step === 0 && (
-      <AppointmentDetails appointment={appointment} handleNext={handleNext}/>
+     {step === "AppointmentDetails" && (
+      <AppointmentDetails appointment={appointment} handleNext={(e)=>{handleNext(e)}}/>
      )}
         {/* {step === 1 && (
       <Medical  handleNext={handleNext} handleBack={handleBack}/>
      )} */}
 
-             {step === 1 && (
+      {step === "DiagnosisDetails" && (
       <DiagnosisDetails  appointmentId={id || ""}  handleBack={handleBack}/>
+     )}
+
+     
+      {step === "PrescriptionDetails" && (
+      <PrescriptionDetails  appointmentId={id || ""}  handleBack={handleBack}/>
      )}
   </div>;
 }
 
-export default DoctorAppointmentsView;
+export default DoctorAppointmentsDetails;
