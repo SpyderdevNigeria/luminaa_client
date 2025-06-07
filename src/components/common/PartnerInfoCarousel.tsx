@@ -8,7 +8,7 @@ type PatnerInfoProps = {
 
 export default function PartnerInfoCarousel({image}:PatnerInfoProps) {
   return (
-    <div className="hidden lg:flex items-center justify-center p-4">
+    <div className="hidden lg:flex items-center justify-center p-4 ">
       <div className="relative w-full h-full rounded-xl overflow-hidden">
         <img
           src={image || "https://images.pexels.com/photos/8949904/pexels-photo-8949904.jpeg?auto=compress&cs=tinysrgb&w=600"}

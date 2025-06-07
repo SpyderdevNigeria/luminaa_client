@@ -8,7 +8,7 @@ import usePartnerAuth from "../../hooks/usePartnerAuth";
 import routeLinks from "../../utils/routes";
 import LoadingScreen from "../../components/loading/LoadingScreen";
 import { returnPartnerNavigationUrlLogic } from "../../utils/dashboardUtils";
-import PartnerInfoCarousel from "../../components/common/PartnerInfoCarousel";
+// import PartnerInfoCarousel from "../../components/common/PartnerInfoCarousel";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../reducers/authSlice";
 function PartnerEmailVerification() {
@@ -171,11 +171,11 @@ function PartnerEmailVerification() {
       </div>
 
       {/* Right - Image & Testimonial Swiper */}
-      <PartnerInfoCarousel
+      {/* <PartnerInfoCarousel
         image={
           "https://images.pexels.com/photos/8413295/pexels-photo-8413295.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         }
-      />
+      /> */}
     </div>
   );
 }
