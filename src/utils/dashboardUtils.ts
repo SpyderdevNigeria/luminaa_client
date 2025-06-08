@@ -165,15 +165,9 @@ export const navItemsAdmin = [
     to: routeLinks?.admin?.dashboard,
   },
   {
-    label: "Patients",
-    title: "Patients",
-    icon: FaUserDoctor,
-    to: routeLinks?.admin?.patients,
-  },
-  {
     label: "Doctors",
     title: "Doctors",
-    icon: FaRegCircleUser,
+    icon:  FaUserDoctor,
     to: routeLinks?.admin?.doctors,
   },
     {
@@ -181,6 +175,12 @@ export const navItemsAdmin = [
     title: "Laboratories",
     icon: GiTestTubes ,
     to: routeLinks?.admin?.lab,
+  },
+    {
+    label: "Patients",
+    title: "Patients",
+    icon: FaRegCircleUser ,
+    to: routeLinks?.admin?.patients,
   },
   // {
   //   label: "Reports",

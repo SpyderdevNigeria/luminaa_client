@@ -29,7 +29,7 @@ function AdminDashboard() {
           <DashboardCard title="Patients" count={patientsLoading ? 0 : patientsTotal} />
           <DashboardCard title="Doctors" count={doctorsLoading ? 0 : doctorsTotal} />
           <DashboardCard title="Laboratory" count={labsLoading ? 0 : labsTotal} />
-          <DashboardCard title="Users" count={0} />
+          <DashboardCard title="Pharmacy" count={0} />
         </div>
       </section>
     </div>
