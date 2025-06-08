@@ -30,11 +30,14 @@ export const useFlatErrorList = () => {
 
       return (
         <div className="mt-2">
-          {filtered.map((msg, index) => (
+          {/* {filtered.map((msg, index) => (
             <p className="text-red-600 text-sm" key={index}>
               {msg}
             </p>
-          ))}
+          ))} */}
+                <p className="text-red-600 text-sm" >
+              {filtered[0]}
+            </p>
         </div>
       );
     }
