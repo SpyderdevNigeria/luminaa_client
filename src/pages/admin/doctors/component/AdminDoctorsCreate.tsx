@@ -141,26 +141,26 @@ const AdminDoctorsCreate: React.FC<Props> = ({
             )}
           </div>
           {[
-            { name: "firstName", label: "First Name" },
-            { name: "lastName", label: "Last Name" },
-            { name: "email", label: "Email", type: "email" },
+            { name: "firstName", label: "First Name", required: true, },
+            { name: "lastName", label: "Last Name", required: true,  },
+            { name: "email", label: "Email", type: "email", required: true,  },
             {
               name: "password",
               label: "Password",
               type: "text",
               required: !doctor,
             },
-            { name: "specialty", label: "Specialty" },
-            { name: "licenseNumber", label: "License Number" },
-            { name: "contactNumber", label: "Contact Number" },
+            { name: "specialty", label: "Specialty", required: true,  },
+            { name: "licenseNumber", label: "License Number", required: true,  },
+            { name: "contactNumber", label: "Contact Number" , required: true, },
             {
               name: "gender",
               label: "Gender",
-              type: "select",
+              type: "select", required: true, 
               options: ["male", "female", "other"],
             },
-            { name: "dateOfBirth", label: "Date of Birth", type: "date" },
-            { name: "joinedDate", label: "Joined Date", type: "date" },
+            { name: "dateOfBirth", label: "Date of Birth", type: "date" , required: true,  },
+            { name: "joinedDate", label: "Joined Date", type: "date", required: true, },
           ].map(({ name, label, type = "text", required, options }) => (
             <div key={name}>
               <label className="form-label !text-base !font-light">

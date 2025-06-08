@@ -134,23 +134,24 @@ const AdminLabsCreate: React.FC<Props> = ({ lab = null, onBack, onClose }) => {
           </div>
 
           {[
-            { name: "firstName", label: "First Name" },
-            { name: "lastName", label: "Last Name" },
-            { name: "email", label: "Email", type: "email" },
+            { name: "firstName", label: "First Name" , required: true,  },
+            { name: "lastName", label: "Last Name" , required: true,  },
+            { name: "email", label: "Email", type: "email" , required: true,  },
             {
               name: "password",
               label: "Password",
               type: "text",
               required: !lab,
             },
-            { name: "department", label: "Department" },
-            { name: "licenseNumber", label: "License Number" },
+            { name: "department", label: "Department", required: true,  },
+            { name: "licenseNumber", label: "License Number", required: true,  },
             {
               name: "licenseExpiryDate",
               label: "License Expiry Date",
               type: "date",
+               required: true, 
             },
-            { name: "hireDate", label: "Hire Date", type: "date" },
+            { name: "hireDate", label: "Hire Date", type: "date" , required: true,  },
           ].map(({ name, label, type = "text", required }) => (
             <div key={name}>
               <label className="form-label !text-base !font-light">
