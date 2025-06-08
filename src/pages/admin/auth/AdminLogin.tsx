@@ -170,16 +170,6 @@ function AdminLogin() {
           {getFieldErrors("password")}
         </div>
 
-        {/* Keep me logged in + Forgot password */}
-        <div className="flex justify-between items-center text-sm 2xl:text-base">
-          <label className="flex items-center gap-2">
-            <input type="checkbox" className="form-checkbox" />
-            Keep me logged in
-          </label>
-          <Link to="/forgot-password" className="text-primary">
-            Forgot password?
-          </Link>
-        </div>
 
         {/* Submit */}
         <button
