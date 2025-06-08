@@ -10,7 +10,9 @@ const routeLinks = {
     updatePassword: '/auth/update-password',
     partnerAuth: '/auth/partner',
     partnerLogin: '/auth/partner/login',
-    partnerEmailVerification: '/auth/partner/email-verification'
+    partnerEmailVerification: '/auth/partner/email-verification',
+    adminAuth: '/auth/admin',
+    adminLogin: '/auth/admin/login',
   },
   patient: {
     path:'/patient',
@@ -45,8 +47,28 @@ lab: {
     labRequests: '/lab/requests',  
     labRequestsDetails: '/lab/requests/:id', 
     profile: '/lab/profile',
-}
+},
 
+admin: {
+  path:'/admin',
+  dashboard: '/admin/dashboard',
+  patients: '/admin/patients',
+  userDetails: '/admin/patients/:id',
+  appointments: '/admin/appointments',
+  appointmentDetails: '/admin/appointments/:id',
+  profile: '/admin/profile',
+  settings: '/admin/settings',
+  notifications: '/admin/notifications',
+  reports: '/admin/reports',
+  lab: '/admin/lab',
+  labDetails: '/admin/lab/:id',
+  pharmacyRequests: '/admin/pharmacy-requests',
+  pharmacyRequestsDetails: '/admin/pharmacy-requests/:id',
+  consultations: '/admin/consultations',
+  consultationsDetails: '/admin/consultations/:id',
+  doctors: '/admin/doctors',
+  doctorDetails: '/admin/doctors/:id',
+}
 }
 
 export default routeLinks

@@ -4,12 +4,13 @@ import { TbSmartHome } from "react-icons/tb";
 import { BiSolidClinic } from "react-icons/bi";
 import { LiaPillsSolid } from "react-icons/lia";
 import { FiPackage } from "react-icons/fi";
-import { FaRegNewspaper, FaRegCircleUser    } from "react-icons/fa6";
+import { FaRegNewspaper, FaRegCircleUser,FaUserDoctor    } from "react-icons/fa6";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
 import { MdPeople } from "react-icons/md";
 import { GrTest } from "react-icons/gr";
+import { GiTestTubes } from "react-icons/gi";
 import routeLinks from "./routes";
 export const navItemsPatient = [
   {
@@ -156,6 +157,45 @@ export const navItemsLab = [
   },
 ]
 
+export const navItemsAdmin = [
+  {  
+    label: "Dashboard",
+    title: "Dashboard",
+    icon: TbSmartHome,
+    to: routeLinks?.admin?.dashboard,
+  },
+  {
+    label: "Patients",
+    title: "Patients",
+    icon: FaUserDoctor,
+    to: routeLinks?.admin?.patients,
+  },
+  {
+    label: "Doctors",
+    title: "Doctors",
+    icon: FaRegCircleUser,
+    to: routeLinks?.admin?.doctors,
+  },
+    {
+    label: "Laboratories",
+    title: "Laboratories",
+    icon: GiTestTubes ,
+    to: routeLinks?.admin?.lab,
+  },
+  // {
+  //   label: "Reports",
+  //   title: "Reports",
+  //   icon: FaRegNewspaper,
+  //   to: routeLinks?.admin?.lab,
+  // },
+  // {
+  //   label: "Settings",
+  //   title: "Settings",
+  //   icon: FaRegCircleUser,
+  //   to: routeLinks?.admin?.settings,
+  // },
+];
+
 export const returnMemberNavigationUrlLogic = (user: any) => {
   if (!user.isEmailVerified) {
     return routeLinks?.auth?.emailVerification;
@@ -197,4 +237,18 @@ export const returnPartnerNavigationUrlLogic = (
   }
   }
   return routeLinks?.auth?.partnerLogin;
+};
+
+
+
+export const returnAdminNavigationUrlLogic = (
+  partnerType: string,
+  partnerProfile: any
+) => {
+  if (partnerProfile){
+  if (partnerType) {
+    return routeLinks?.admin?.dashboard;
+  }
+  }
+  return routeLinks?.auth?.adminLogin;
 };

@@ -18,11 +18,18 @@ export default function Dropdown({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <div className="cursor-pointer bg-white inline-flex items-center gap-2 text-base py-2 px-3 border border-dashboard-gray rounded-sm">
+        <button
+          type="button"
+          className={
+            triggerLabel !== ""
+              ? "cursor-pointer bg-white inline-flex items-center gap-2 text-base py-2 px-3 border border-dashboard-gray rounded-sm"
+              : "cursor-pointer"
+          }
+        >
           {triggerIcon && <span>{triggerIcon}</span>}
-          <h4>{triggerLabel}</h4>
+          <span>{triggerLabel}</span>
           {showArrow && <MdKeyboardArrowDown />}
-        </div>
+        </button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>

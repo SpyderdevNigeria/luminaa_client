@@ -35,6 +35,13 @@ import LabTestRequests from "./pages/lab/test/LabTestRequests";
 import LabTestRequestsDetails from "./pages/lab/test/LabTestRequestsDetails";
 import LabProfile from "./pages/lab/profile/LabProfile";
 import DoctorPrescriptions from "./pages/doctor/prescriptions/DoctorPrescriptions";
+import AdminAuthLayout from "./components/layouts/AdminAuthLayout";
+import AdminLayout from "./components/layouts/AdminLayout";
+import AdminLogin from "./pages/admin/auth/AdminLogin";
+import AdminDashboard from "./pages/admin/dashboard/AdminDashboard";
+import AdminLab from "./pages/admin/lab/AdminLab";
+import AdminPatients from "./pages/admin/patients/AdminPatients";
+import AdminDoctors from "./pages/admin/doctors/AdminDoctors";
 // Route
 const App = createBrowserRouter([
   {
@@ -193,7 +200,7 @@ const App = createBrowserRouter([
     ],
   },
 
-  //lab
+  //lab Routes
   {
     path: routeLinks?.lab?.path,
     element: <LabLayout/>,
@@ -219,7 +226,52 @@ const App = createBrowserRouter([
         element: <LabProfile />,
       },
     ]
-  }
+  },
+
+
+  // Admin Routes
+  {
+    path: routeLinks?.auth?.adminAuth,
+    element: <AdminAuthLayout />,
+    children: [
+      { 
+        path:  routeLinks?.auth?.adminAuth,
+        element: <Navigate to={routeLinks?.auth?.adminLogin} />,
+     },
+      {
+        path: routeLinks?.auth?.adminLogin,
+        element: <AdminLogin />,
+      },
+]
+  },
+  {
+    path:routeLinks?.admin?.path,
+    element: <AdminLayout />,
+    children: [
+      {
+        path: routeLinks?.admin?.path,
+        element: <Navigate to={routeLinks?.admin?.dashboard} />,
+       },
+      {
+        path: routeLinks?.admin?.dashboard,
+        element: <AdminDashboard />,
+      },
+      {
+        path: routeLinks?.admin?.lab,
+        element:<AdminLab/>
+      },
+      {
+        path:routeLinks?.admin?.patients,
+        element: <AdminPatients/>
+      },
+      {
+        path:routeLinks?.admin?.doctors,
+        element:<AdminDoctors/>
+      }
+      ]
+},
+
+
 ]);
 
 export default App;
