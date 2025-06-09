@@ -5,7 +5,7 @@ import PaginationComponent from "../../../components/common/PaginationComponent"
 
 import useOrder from "../../../hooks/useOrder";
 import LabApi from "../../../api/labApi";
-
+import { labRequestStatus } from "../../../utils/dashboardUtils";
 function LabTestRequests() {
   const {
     orders,
@@ -35,12 +35,12 @@ function LabTestRequests() {
     <div className="flex flex-col gap-4 bg-white">
       <div className="p-2 lg:p-4 rounded-lg">
         <HeaderTab
-          title="Sample Collection"
+          title="lab "
           showSearch={false}
           dropdowns={[
             {
               label: "Status",
-              options: ["All", "Pending", "In Progress", "Completed", "Cancelled"],
+              options: ["All", ...labRequestStatus],
               value: statusFilter,
               onChange: (value) => setStatusFilter(value),
             },

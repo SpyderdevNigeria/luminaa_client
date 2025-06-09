@@ -43,6 +43,8 @@ import AdminLab from "./pages/admin/lab/AdminLab";
 import AdminPatients from "./pages/admin/patients/AdminPatients";
 import AdminDoctors from "./pages/admin/doctors/AdminDoctors";
 import DoctorOrder from "./pages/doctor/order/DoctorLabOrder";
+import DoctorLabOrderDetails from "./pages/doctor/order/DoctorLabOrderDetails";
+import LabDetails from "./pages/patient/lab/LabDetails";
 // Route
 const App = createBrowserRouter([
   {
@@ -134,6 +136,10 @@ const App = createBrowserRouter([
         element: <Lab />,
       },
       {
+        path:routeLinks?.patient?.labDetails,
+        element:<LabDetails/>
+      },
+      {
         path: routeLinks?.patient?.profile,
         element: <Profile />,
       },
@@ -197,6 +203,10 @@ const App = createBrowserRouter([
          {
         path: routeLinks?.doctor?.labOrders,
         element: <DoctorOrder />,
+      },
+        {
+        path: routeLinks?.doctor?.labOrdersDetails,
+        element: <DoctorLabOrderDetails />,
       },
       {
         path:routeLinks?.doctor?.prescription,

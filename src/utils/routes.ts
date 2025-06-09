@@ -17,6 +17,7 @@ const routeLinks = {
   patient: {
     path:'/patient',
     lab:'/patient/lab',
+    labDetails:'/patient/lab/:id',
     orders:'/patient/orders',
     orderDetails:'/patient/orders/:id',
     profile: '/patient/profile',

@@ -9,6 +9,7 @@ function LabTestRequestsDetails() {
   const { id } = useParams<{ id: string }>();
   const [labOrder, setLabOrder] = useState<any>(null);
   const [labResults, setLabResults] = useState<any[]>([]);
+  const [labResultMeta, setLabResultMeta] = useState<any>(null);
   const [selectedResult, setSelectedResult] = useState<any>(null);
   const [isLoadingOrder, setLoadingOrder] = useState(true);
   const [isLoadingResults, setLoadingResults] = useState(true);
@@ -16,8 +17,8 @@ function LabTestRequestsDetails() {
   const [resultError, setResultError] = useState<string | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchOrder = async () => {
+
+      const fetchOrder = async () => {
       try {
         const orderData = await LabApi.getLabOrderById(id);
         setLabOrder(orderData);
@@ -31,8 +32,9 @@ function LabTestRequestsDetails() {
 
     const fetchResults = async () => {
       try {
-        const resultData = await LabApi.getLabOrderResultByOrderId(id);
-        setLabResults(resultData || []);
+        const response = await LabApi.getLabOrderResultByOrderId(id);
+        setLabResults(response?.data?.results || []);
+        setLabResultMeta(response?.data || null);
       } catch (err) {
         console.error(err);
         setResultError("Failed to load lab test results.");
@@ -40,6 +42,10 @@ function LabTestRequestsDetails() {
         setLoadingResults(false);
       }
     };
+
+
+  useEffect(() => {
+
 
     if (id) {
       fetchOrder();
@@ -50,15 +56,16 @@ function LabTestRequestsDetails() {
   const handleResult = async (payload: any) => {
     try {
       if (selectedResult) {
-        await LabApi.updateLabOrderResultById(payload?.id, payload);
+        await LabApi.updateLabOrderResultById(labResultMeta?.id, payload);
         alert("Result updated successfully.");
       } else {
         await LabApi.createLabOrderResult(id, payload);
         alert("Result submitted successfully.");
       }
-
-      const resultData = await LabApi.getLabOrderResultByOrderId(id);
-      setLabResults(resultData || []);
+      fetchOrder();
+      const response = await LabApi.getLabOrderResultByOrderId(id);
+      setLabResults(response?.data?.results || []);
+      setLabResultMeta(response?.data || null);
     } catch (err) {
       console.error("Error submitting result:", err);
       alert("Failed to submit result.");
@@ -74,6 +81,7 @@ function LabTestRequestsDetails() {
       if (data) {
         alert("Status updated successfully.");
       }
+      fetchOrder();
     } catch (err) {
       console.error(err);
       setOrderError("Failed to update lab order status.");
@@ -81,7 +89,6 @@ function LabTestRequestsDetails() {
   };
 
   const handleOpenModal = (result?: any) => {
-    console.log(result);
     setSelectedResult(result || null);
     setModalOpen(true);
   };
@@ -115,7 +122,7 @@ function LabTestRequestsDetails() {
         onSubmit={handleResult}
       />
 
-      <div className="mt-6">
+      <div className="mt-6 container-bd">
         <h2 className="text-xl font-semibold text-gray-700 mb-2">Test Results</h2>
 
         {isLoadingResults ? (

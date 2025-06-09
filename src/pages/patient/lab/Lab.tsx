@@ -1,38 +1,75 @@
-import { useState } from "react";
-import LabDetailsModal from "../../../components/modal/LabDetailsModal";
-import StatusBadge from "../../../components/common/StatusBadge";
+import { useEffect, useState } from "react";
 import HeaderTab from "../../../components/common/HeaderTab";
+import LabCard from "../../../components/common/LabOrderCard";
+import PaginationComponent from "../../../components/common/PaginationComponent";
+
+import useOrder from "../../../hooks/useOrder";
+import PatientApi from "../../../api/PatientApi";
+import { labRequestStatus } from "../../../utils/dashboardUtils";
 function Lab() {
-      const [data, setData] = useState<any>(null);
-      const [isModalOpen, setModalOpen] = useState(false);
+  const {
+    orders,
+    ordersPage,
+    ordersLimit,
+    ordersTotal,
+    ordersLoading,
+    setOrdersFilters,
+    getOrders,
+  } = useOrder(PatientApi);
+
+  const [statusFilter, setStatusFilter] = useState("All");
+  const totalPages = Math.ceil((ordersTotal ?? 0) / ordersLimit);
+
+  useEffect(() => {
+    getOrders();
+  }, [ordersPage, statusFilter]);
+
+  useEffect(() => {
+    setOrdersFilters({
+      page: 1,
+      status: statusFilter === "All" ? undefined : statusFilter.toLowerCase(),
+    });
+  }, [statusFilter]);
+
   return (
-    <div>
-       <HeaderTab title="Lab"/>
+    <div className="flex flex-col gap-4 bg-white">
+      <div className="p-2 lg:p-4 rounded-lg">
+        <HeaderTab
+          title="Sample Collection"
+          showSearch={false}
+          dropdowns={[
+            {
+              label: "Status",
+              options: ["All", ...labRequestStatus],
+              value: statusFilter,
+              onChange: (value) => setStatusFilter(value),
+            },
+          ]}
+        />
 
-      <div className="space-y-4">
-        {[1, 2, 3, 4, 5, 6, 7].map((i) => (
-          <div className="bg-white rounded-lg flex flex-row items-center justify-between py-4 md:px-8" key={i}>
-            <div className="space-y-1">
-                <h3 className="text-sm md:text-base ">Treatment For hepatitis</h3>
-                <h4 className="text-xs font-[300]">Last Prescribed 04 App 2025</h4>
+        <section className="min-h-[300px]">
+          {ordersLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+              {orders.length > 0 ? (
+                orders.map((order) => <LabCard key={order.id} order={order} type="lab" />)
+              ) : (
+                <p className="col-span-full text-center">No lab test requests found.</p>
+              )}
             </div>
-            <div className="flex items-center space-x-2">
-            <h3 className="text-sm md:text-base ">3</h3>
-                <h4 className="text-xs font-[300]">Active test</h4>
-            </div>
-            <div className="flex items-center space-x-2 bg-amber-50 py-1 px-2 rounded-full">
-                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                <StatusBadge status="ongoing" />
-            </div>
+          )}
+        </section>
 
-            <button className="bg-gray-100 p-1 md:px-4 md:py-3 rounded-lg text-xs font-light text-primary"
-              onClick={() => {setData({}); setModalOpen(true)}}
-              >
-                View details
-              </button>
-          </div>
-        ))}
-        <LabDetailsModal data={data} isModalOpen={isModalOpen} setModalOpen={(e)=>{setModalOpen(e)}} />
+        <div className="mt-4">
+          <PaginationComponent
+            page={ordersPage}
+            total={ordersTotal ?? 0}
+            limit={ordersLimit}
+            totalPages={totalPages ?? 1}
+            onPageChange={(page) => setOrdersFilters({ page })}
+          />
+        </div>
       </div>
     </div>
   );

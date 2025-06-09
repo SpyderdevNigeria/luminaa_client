@@ -2,7 +2,12 @@ import UserImage from "../../assets/images/patient/user.png";
 import InfoLabel from "../../components/common/InfoLabel";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import moment from "moment";
-import { ILabOrder, IPatient, IDoctor, IAppointment } from "../../types/Interfaces";
+import {
+  ILabOrder,
+  IPatient,
+  IDoctor,
+  IAppointment,
+} from "../../types/Interfaces";
 
 interface LabOrderDetailsProps {
   data: {
@@ -44,19 +49,23 @@ const LabOrderDetails = ({
     createdAt,
   } = data.data;
 
-  const fullPatientName = `${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`;
+  const fullPatientName = `${patient?.firstName ?? ""} ${
+    patient?.lastName ?? ""
+  }`;
   const fullDoctorName = `${doctor?.firstName ?? ""} ${doctor?.lastName ?? ""}`;
 
   return (
-    <div className="bg-white">
-      <div className="w-full border border-dashboard-gray rounded-lg p-4 lg:p-8 col-span-4 space-y-6 pb-8">
+    <div className="container-bd">
+      <div className="w-full space-y-6 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-6">
           <section className="lg:col-span-4">
-            <h2 className="text-xl font-semibold text-primary underline">Test Details</h2>
+            <h2 className="text-xl font-semibold text-primary underline">
+              Test Details
+            </h2>
             <main className="grid grid-cols-2 lg:grid-cols-3 gap-4 pt-6 ">
               <InfoLabel label={testName} info="Test Name" />
               <InfoLabel
-                label={status || 'pending'}
+                label={status || "pending"}
                 info="Status"
                 style="bg-blue-100 text-blue-700 py-1 px-2 rounded-sm"
               />
@@ -74,7 +83,9 @@ const LabOrderDetails = ({
               <InfoLabel
                 label={
                   appointment?.date
-                    ? `${moment(appointment.date).format("MMM D, YYYY")} at ${moment(appointment.date).format("h:mm A")}`
+                    ? `${moment(appointment.date).format(
+                        "MMM D, YYYY"
+                      )} at ${moment(appointment.date).format("h:mm A")}`
                     : "N/A"
                 }
                 info="Appointment Date"
@@ -100,16 +111,38 @@ const LabOrderDetails = ({
               </div>
 
               <div className="col-span-2 lg:col-span-3">
-                <h3 className="text-sm font-semibold text-gray-700">Status History</h3>
-                <ul className="text-sm mt-2 space-y-1">
-                  {statusHistory?.map((entry , index) => (
-                    <li key={index}>
-                      <span className="font-medium text-gray-800">{entry.status}</span> on{" "}
-                      {moment(entry.updatedAt).format("MMM D, YYYY h:mm A")} by{" "}
-                      <span className="text-gray-600">{entry.updatedBy}</span>
+                <h3 className="text-sm font-semibold text-gray-700 mb-4">
+                  Status History
+                </h3>
+
+                <ol className="relative border-l-2 border-gray-300 ml-4">
+                  {statusHistory?.map((entry, index) => (
+                    <li key={index} className="mb-10 ml-6">
+                      {/* Dot */}
+                      <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full ring-8 ring-white">
+                        <span className="w-2.5 h-2.5 bg-primary rounded-full" />
+                      </span>
+
+                      {/* Status Label */}
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm font-semibold text-gray-800">
+                          {entry.status}
+                        </span>
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                          {moment(entry.updatedAt).format("MMM D, YYYY")}
+                        </span>
+                      </div>
+
+                      {/* Meta info */}
+                      <p className="text-xs text-gray-500">
+                        {moment(entry.updatedAt).format("h:mm A")} by{" "}
+                        <span className="font-medium text-gray-700">
+                          {entry.updatedBy}
+                        </span>
+                      </p>
                     </li>
                   ))}
-                </ul>
+                </ol>
               </div>
             </main>
           </section>
@@ -138,26 +171,33 @@ const LabOrderDetails = ({
 
         {type === "lab" && (
           <div className="flex flex-col gap-3 pt-4">
-            <button
-              className="w-full bg-primary hover:bg-primary/50 text-white text-sm px-4 py-3 rounded-md"
-              onClick={() => {
-                if (confirm("Do you want to change the status to 'IN_PROGRESS'?")) {
-                  if (typeof handleStatus === "function") {
-                    handleStatus();
-                  } else {
-                    alert("handleStatus function is not defined.");
+            {!collectedSample ? (
+              <button
+                className="w-full bg-primary hover:bg-primary/50 text-white text-sm px-4 py-3 rounded-md"
+                onClick={() => {
+                  if (
+                    confirm(
+                      "Do you want to change the status to 'IN_PROGRESS'?"
+                    )
+                  ) {
+                    if (typeof handleStatus === "function") {
+                      handleStatus();
+                    } else {
+                      alert("handleStatus function is not defined.");
+                    }
                   }
-                }
-              }}
-            >
-              Start Test
-            </button>
-            <button
-              className="w-full bg-gray-300 text-gray-600 text-sm px-4 py-3 rounded-md"
-              onClick={() => setModalOpen()}
-            >
-              Input Test Results
-            </button>
+                }}
+              >
+                Start Test
+              </button>
+            ) : (
+              <button
+                className="w-full bg-primary hover:bg-primary/50 text-white text-sm px-4 py-3 rounded-md"
+                onClick={() => setModalOpen()}
+              >
+                Input Test Results
+              </button>
+            )}
           </div>
         )}
       </div>

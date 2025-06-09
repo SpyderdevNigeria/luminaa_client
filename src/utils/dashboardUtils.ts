@@ -42,6 +42,14 @@ export const navItemsPatient = [
     title: "Lab/Radiology",
     icon: BiSolidClinic,
     to: routeLinks?.patient?.lab,
+      subLinks: [
+      {
+        label: "Lab/Radiology",
+        title: "Lab/Radiology",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.patient?.labDetails,
+      },
+    ],
   },
   {
     label: "Consultations",
@@ -101,10 +109,18 @@ export const navItemsDoctor = [
     to: routeLinks?.doctor?.schedule,
   },
       {
-    label: "Orders",
-    title: "Orders",
+    label: "Lab Request",
+    title: "Lab Request",
     icon: FiPackage,
     to: routeLinks?.doctor?.labOrders,
+     subLinks: [
+      {
+        label: "Lab Requests",
+        title: "Lab Requests / Request Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.doctor?.labOrdersDetails,
+      },
+    ],
   },
 
     {
@@ -222,6 +238,10 @@ export const adminDoctorSpecialties = [
 
 export const appointmentStatus = [
   "scheduled", "confirmed", "completed", "cancelled"," no_show"
+]
+
+export const labRequestStatus = [
+  "PENDING", "IN_PROGRESS","COMPLETED", "CANCELLED"
 ]
 export const returnMemberNavigationUrlLogic = (user: any) => {
   if (!user.isEmailVerified) {

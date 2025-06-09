@@ -1,16 +1,12 @@
-import { useState, useEffect } from "react";
-import { FiEye, FiTrash2 } from "react-icons/fi";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-
+import { useEffect, useState } from "react";
+import HeaderTab from "../../../components/common/HeaderTab";
+import LabCard from "../../../components/common/LabOrderCard";
+import PaginationComponent from "../../../components/common/PaginationComponent";
+import { labRequestStatus } from "../../../utils/dashboardUtils";
 import useOrder from "../../../hooks/useOrder";
 import DoctorApi from "../../../api/doctorApi";
 
-import Table, { Column } from "../../../components/common/Table";
-import HeaderTab from "../../../components/common/HeaderTab";
-import Dropdown from "../../../components/dropdown/dropdown";
-import StatusBadge from "../../../components/common/StatusBadge";
-
-function DoctorLabOrders() {
+function LabTestRequests() {
   const {
     orders,
     ordersPage,
@@ -22,6 +18,7 @@ function DoctorLabOrders() {
   } = useOrder(DoctorApi);
 
   const [statusFilter, setStatusFilter] = useState("All");
+  const totalPages = Math.ceil((ordersTotal ?? 0) / ordersLimit);
 
   useEffect(() => {
     getOrders();
@@ -34,98 +31,48 @@ function DoctorLabOrders() {
     });
   }, [statusFilter]);
 
-  const handleView = (order: any) => {
-    console.log("Viewing order:", order);
-  };
-
-  const handleDelete = (orderId: string) => {
-    console.log("Deleting order with ID:", orderId);
-  };
-
-  const columns: Column<any>[] = [
-    {
-      key: "test",
-      label: "Test",
-      render: (order) => <span>{order?.testName || "—"}</span>,
-    },
-    {
-      key: "patient",
-      label: "Patient",
-      render: (order) => (
-        <span>
-          {order?.patient?.firstName} {order?.patient?.lastName}
-        </span>
-      ),
-    },
-    {
-      key: "priority",
-      label: "Priority",
-      render: (order) => <span>{order?.priority || "—"}</span>,
-    },
-    {
-      key: "status",
-      label: "Status",
-      render: (order) => <StatusBadge status={order?.status} />,
-    },
-    {
-      key: "actions",
-      label: "Actions",
-      render: (order) => (
-        <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
-          <ul className="space-y-2 text-sm">
-            <li
-              onClick={() => handleView(order)}
-              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
-            >
-              <FiEye /> View
-            </li>
-            <li
-              onClick={() => handleDelete(order.id)}
-              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"
-            >
-              <FiTrash2 /> Delete
-            </li>
-          </ul>
-        </Dropdown>
-      ),
-    },
-  ];
-
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">Lab Orders</h1>
-      </div>
+    <div className="flex flex-col gap-4 bg-white">
+      <div className="p-2 lg:p-4 rounded-lg">
+        <HeaderTab
+          title="orders"
+          showSearch={false}
+          dropdowns={[
+            {
+              label: "Status",
+             options: ["All", ...labRequestStatus],
+              value: statusFilter,
+              onChange: (value) => setStatusFilter(value),
+            },
+          ]}
+        />
 
-      <HeaderTab
-        title=""
-        showSearch={false}
-        dropdowns={[
-          {
-            label: "Status",
-            options: ["All", "Pending", "In Progress", "Completed", "Cancelled"],
-            value: statusFilter,
-            onChange: (value) => setStatusFilter(value),
-          },
-        ]}
-      />
+        <section className="min-h-[300px]">
+          {ordersLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+              {orders.length > 0 ? (
+                orders.map((order) => <LabCard key={order.id} order={order} type="doctor" />)
+              ) : (
+                <p className="col-span-full text-center">No lab test requests found.</p>
+              )}
+            </div>
+          )}
+        </section>
 
-      <div>
-        {ordersLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <Table
-            data={orders}
-            columns={columns}
+        <div className="mt-4">
+          <PaginationComponent
             page={ordersPage}
-            total={ordersTotal}
+            total={ordersTotal ?? 0}
             limit={ordersLimit}
-            setPage={(page) => setOrdersFilters({ page })}
+            totalPages={totalPages ?? 1}
+            onPageChange={(page) => setOrdersFilters({ page })}
           />
-        )}
+        </div>
       </div>
     </div>
   );
 }
 
-export default DoctorLabOrders;
+export default LabTestRequests;

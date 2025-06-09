@@ -103,6 +103,22 @@ const PatientApi = {
   },
 
    // Prescriptions endpoints end
+
+       // Lab Orders
+    getLabOrders: async (query:any) => {
+    const response = await api.get(`/patient/lab-tests/orders${query}`);
+    return response.data;
+  },
+
+     getLabOrderById: async (id: any) => {
+    const response = await api.get(`/patient/lab-tests/orders/${id}`);
+    return response.data;
+  },
+
+       getLabOrderResultByOrderId: async (id: any) => {
+    const response = await api.get(`/patient/lab-tests/results/order/${id}`);
+    return response.data;
+  },
 }
 
 export default PatientApi;

@@ -27,7 +27,7 @@ function useOrder(api: any) {
       params.append("page", page.toString());
       params.append("limit", limit.toString());
       if (search) params.append("search", search);
-      if (status) params.append("status", status);
+      if (status) params.append("status", status.toUpperCase());
       if (priority) params.append("priority", priority);
       if (patientId) params.append("patientId", patientId);
       if (appointmentId) params.append("appointmentId", appointmentId);
