@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import DiagnosisDetails from "./components/DiagnosisDetails"
 import PrescriptionDetails from "./components/PrescriptionDetails";
 import doctorApi from "../../../api/doctorApi";
+import OrderDetails from "./components/OrderDetails";
 
 function DoctorAppointmentsDetails() {
   const [step, setStep] = useState('AppointmentDetails');
@@ -20,6 +21,7 @@ function DoctorAppointmentsDetails() {
         try {
           const data = await doctorApi.getAppointmentsById(id);
           if (data) {
+            console.log(data?.patient?.id)
                 setAppointment(data);
           }
         } catch (err) {
@@ -38,13 +40,10 @@ function DoctorAppointmentsDetails() {
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
   if (!appointment) return <p className="text-center mt-10">No appointment found.</p>;
   
-  return <div>
+  return <div className="container-bd">
      {step === "AppointmentDetails" && (
       <AppointmentDetails appointment={appointment} handleNext={(e)=>{handleNext(e)}}/>
      )}
-        {/* {step === 1 && (
-      <Medical  handleNext={handleNext} handleBack={handleBack}/>
-     )} */}
 
       {step === "DiagnosisDetails" && (
       <DiagnosisDetails  appointmentId={id || ""}  handleBack={handleBack}/>
@@ -53,6 +52,10 @@ function DoctorAppointmentsDetails() {
      
       {step === "PrescriptionDetails" && (
       <PrescriptionDetails  appointmentId={id || ""}  handleBack={handleBack}/>
+     )}
+
+         {step === "OrderDetails" && (
+       <OrderDetails  appointmentId={id || ""} patientId={appointment?.patient?.id || ""}  handleBack={handleBack}/>
      )}
   </div>;
 }

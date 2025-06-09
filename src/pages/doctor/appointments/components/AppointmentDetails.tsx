@@ -149,6 +149,11 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
         >
           Add Prescriptions <IoExitOutline className="text-2xl mx-2" />
         </button>
+             <button className="py-3 flex flex-row items-center justify-center text-white border-2 bg-primary rounded-lg col-span-2"
+              onClick={ () => {handleNext("OrderDetails")}}
+             >
+          Order Tests
+        </button>
         <button className="py-3 flex flex-row items-center justify-center text-gray-700 border-2 border-dashboard-gray bg-dashboard-gray rounded-lg col-span-2">
           Finish Consultation
         </button>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
+import CommonFormField from "../../../../components/common/CommonFormField";
 
 type LabUser = {
   firstName: string;
@@ -65,15 +66,25 @@ const AdminLabsCreate: React.FC<Props> = ({ lab = null, onBack, onClose }) => {
     }
   }, [lab]);
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
+const handleChange = (
+  e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+) => {
+  const target = e.target;
+  const { name, value } = target;
+
+  if (target instanceof HTMLInputElement && target.type === "checkbox") {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: target.checked,
+    }));
+  } else {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }
+};
+
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -101,7 +112,7 @@ const AdminLabsCreate: React.FC<Props> = ({ lab = null, onBack, onClose }) => {
       onClose();
     } catch (error) {
       setMessage({
-        message:  "An error occurred",
+        message: "An error occurred",
         type: "error",
       });
       console.log(error);
@@ -134,39 +145,36 @@ const AdminLabsCreate: React.FC<Props> = ({ lab = null, onBack, onClose }) => {
           </div>
 
           {[
-            { name: "firstName", label: "First Name" , required: true,  },
-            { name: "lastName", label: "Last Name" , required: true,  },
-            { name: "email", label: "Email", type: "email" , required: true,  },
+            { name: "firstName", label: "First Name", required: true, type: "text" },
+            { name: "lastName", label: "Last Name", required: true, type: "text" },
+            { name: "email", label: "Email", type: "email", required: true },
             {
               name: "password",
               label: "Password",
               type: "text",
               required: !lab,
             },
-            { name: "department", label: "Department", required: true,  },
-            { name: "licenseNumber", label: "License Number", required: true,  },
+            { name: "department", label: "Department", required: true, type: "text" },
+            { name: "licenseNumber", label: "License Number", required: true, type: "text" },
             {
               name: "licenseExpiryDate",
               label: "License Expiry Date",
               type: "date",
-               required: true, 
+              required: true,
             },
-            { name: "hireDate", label: "Hire Date", type: "date" , required: true,  },
-          ].map(({ name, label, type = "text", required }) => (
-            <div key={name}>
-              <label className="form-label !text-base !font-light">
-                {label}
-              </label>
-              <input
-                type={type}
-                name={name}
-                placeholder=""
-                value={(formData as any)[name]}
-                onChange={handleChange}
-                className="form-input focus:outline-primary text-gray-light resize-none"
-                required={required}
-              />
-            </div>
+            {
+              name: "hireDate",
+              label: "Hire Date",
+              type: "date",
+              required: true,
+            },
+          ].map((field) => (
+            <CommonFormField
+              key={field.name}
+              {...field}
+              value={formData[field.name as keyof FormData]}
+              onChange={handleChange}
+            />
           ))}
 
           <div className="col-span-1 md:col-span-2 flex justify-end">

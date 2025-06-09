@@ -1,5 +1,5 @@
 interface InfoLabelProps {
-    label: string;
+    label?: string;
     info: string;
     style?: string;
   }
@@ -7,8 +7,8 @@ interface InfoLabelProps {
   const InfoLabel = ({ label, info, style = "" }: InfoLabelProps) => {
     return (
       <div>
-        <span className={`text-sm 2xl:text-base ${style}`}>{label}</span>
-        <h3 className="text-xs 2xl:text-sm text-inactive mt-3">{info}</h3>
+        <h3 className="text-xs 2xl:text-sm text-inactive">{info}</h3>
+        <span className={`text-sm 2xl:text-base ${style}  mt-3`}>{label}</span>
       </div>
     );
   };

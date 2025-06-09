@@ -1,102 +1,134 @@
 import Modal from "./modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CommonFormField from "../common/CommonFormField";
+
 type LabInputTestResultModalProps = {
   isModalOpen: boolean;
-  setModalOpen: (e: any) => void;
+  setModalOpen: (e: boolean) => void;
+  labTestOrderId: string;
+  initialData?: {
+    testName: string;
+    result: string;
+    unit: string;
+    referenceRange: string;
+    notes: string;
+  };
+  onSubmit: (payload: any) => void;
 };
-function LabInputTestResultModal({
+
+const LabInputTestResultModal = ({
   isModalOpen,
   setModalOpen,
-}: LabInputTestResultModalProps) {
+  labTestOrderId,
+  initialData,
+  onSubmit,
+}: LabInputTestResultModalProps) => {
+  const [formData, setFormData] = useState({
+    testName: "",
+    result: "",
+    unit: "",
+    referenceRange: "",
+    notes: "",
+  });
 
-   const [data, setData] = useState({
-      connectToLab: "",
-      testType: "",
-      status: "",
-      lab: "",
-      notes: "",
-    });
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
 
-      const handleChange = (e:any) => {
+  const formFields = [
+    {
+      type: "text",
+      name: "testName",
+      label: "Test Name",
+      required: true,
+    },
+    {
+      type: "text",
+      name: "result",
+      label: "Result",
+      required: true,
+    },
+    {
+      type: "text",
+      name: "unit",
+      label: "Unit",
+      required: true,
+    },
+    {
+      type: "text",
+      name: "referenceRange",
+      label: "Reference Range",
+      required: true,
+    },
+    {
+      type: "textarea",
+      name: "notes",
+      label: "Notes",
+      required: true,
+    },
+  ];
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setData({
-      ...data,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
+
+  const handleSumbit = () => {
+    const payload = {
+      labTestOrderId,
+      results: [
+        {
+          testName: formData.testName,
+          result: formData.result,
+          unit: formData.unit,
+          referenceRange: formData.referenceRange,
+        },
+      ],
+      documents: [],
+      notes: formData.notes,
+    };
+
+    onSubmit(payload); 
+    setModalOpen(false);
+  };
+
   return (
     <div>
       <Modal
         open={isModalOpen}
         onClose={() => setModalOpen(false)}
-        title="Input test results"
+        title={initialData ? "Edit Test Result" : "Input Test Result"}
         hideCancel={false}
-        style="lg:min-w-4xl !mx-4 !md:mx-0 "
+        style="lg:min-w-4xl !mx-4 !md:mx-0"
         buttonText="Save & Continue"
+        handleSubmit={handleSumbit}
       >
-        <div className="w-full ">
+        <div className="w-full">
           <form className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            {/* Need to connect to a Lab? */}
-            <div className="col-span-2">
-              <label
-                htmlFor="connectToLab"
-                className="form-label !text-base !font-light"
+            {formFields.map((field) => (
+              <div
+                key={field.name}
+                className={field.name === "notes" ? "col-span-2" : ""}
               >
-                Test Name
-              </label>
-              <input
-                type="text"
-                name="connectToLab"
-                id="connectToLab"
-                placeholder="Yes / No / Notes"
-                onChange={handleChange}
-                value={data.connectToLab}
-                className="form-input focus:outline-primary text-gray-light"
-              />
-            </div>
-
-            {/* Test Type */}
-            <div className="col-span-2">
-              <label
-                htmlFor="testType"
-                className="form-label !text-base !font-light"
-              >
-                Test Type
-              </label>
-              <input
-                type="text"
-                name="testType"
-                id="testType"
-                placeholder="e.g. Blood, X-Ray"
-                onChange={handleChange}
-                value={data.testType}
-                className="form-input focus:outline-primary text-gray-light"
-              />
-            </div>
-
-            {/* Symptoms / Notes */}
-            <div className="col-span-2">
-              <label
-                htmlFor="notes"
-                className="form-label !text-base !font-light"
-              >
-                Symptoms / Notes
-              </label>
-              <textarea
-                name="notes"
-                id="notes"
-                rows={4}
-                placeholder="Enter symptoms or notes"
-                onChange={handleChange}
-                value={data.notes}
-                className="form-input focus:outline-primary text-gray-light resize-none"
-              ></textarea>
-            </div>
+                <CommonFormField
+                  {...field}
+                  value={(formData as any)[field.name]}
+                  onChange={handleChange}
+                />
+              </div>
+            ))}
           </form>
         </div>
       </Modal>
     </div>
   );
-}
+};
 
 export default LabInputTestResultModal;

@@ -1,6 +1,7 @@
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import doctorApi from "../../../../../api/doctorApi";
 import FeedbackMessage from "../../../../../components/common/FeedbackMessage";
+import CommonFormField from "../../../../../components/common/CommonFormField";
 
 interface DiagnosisData {
   primaryDiagnosis: string;
@@ -86,118 +87,106 @@ const DiagnosisForm = ({
     }
   };
 
+const fields = [
+  {
+    name: "primaryDiagnosis",
+    label: "Primary Diagnosis",
+    type: "text",
+    required: true,
+  },
+  {
+    name: "symptoms",
+    label: "Symptoms",
+    type: "text",
+    required: true,
+  },
+  {
+    name: "notes",
+    label: "Notes",
+    type: "textarea",
+    required: true,
+  },
+  {
+    name: "severity",
+    label: "Severity",
+    type: "select",
+    required: true,
+    options: [
+      { value: "", label: "Select" },
+      { value: "mild", label: "Mild" },
+      { value: "moderate", label: "Moderate" },
+      { value: "severe", label: "Severe" },
+    ],
+  },
+  {
+    name: "diagnosisCode",
+    label: "Diagnosis Code",
+    type: "text",
+    optional: true,
+  },
+  {
+    name: "isConfirmed",
+    label: "Confirmed Diagnosis",
+    type: "checkbox",
+  },
+  {
+    name: "additionalRecommendations",
+    label: "Additional Recommendations",
+    type: "textarea",
+    required: true,
+  },
+];
+
+
   return (
-    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div className="col-span-2">
-        {message.message && (
-          <FeedbackMessage type={message.type} message={message.message} />
-        )}
-      </div>
+<form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div className="col-span-2">
+    {message.message && <FeedbackMessage type={message.type} message={message.message} />}
+  </div>
 
-      <div className="col-span-2">
-        <label className="form-label !text-base !font-light">Primary Diagnosis</label>
-        <input
-          type="text"
-          name="primaryDiagnosis"
-          value={formData.primaryDiagnosis}
-          onChange={handleChange}
-          required
-          className="form-input focus:outline-primary text-gray-light"
-        />
-      </div>
+  {fields.map((field) => (
+    <div
+      key={field.name}
+      className={
+        field.name === "notes" ||
+        field.name === "symptoms" ||
+        field.name === "primaryDiagnosis" ||
+        field.name === "additionalRecommendations"
+          ? "col-span-2"
+          : "col-span-2 md:col-span-1"
+      }
+    >
+      <CommonFormField
+        label={field.label}
+        name={field.name}
+        value={(formData as any)[field.name]}
+        onChange={handleChange}
+        type={field.type as any}
+        required={field.required}
+        options={field.options}
+      />
+    </div>
+  ))}
 
-      <div className="col-span-2">
-        <label className="form-label !text-base !font-light">Symptoms</label>
-        <input
-          type="text"
-          name="symptoms"
-          value={formData.symptoms}
-          onChange={handleChange}
-          required
-          className="form-input focus:outline-primary text-gray-light"
-        />
-      </div>
+  <div className="col-span-2 flex justify-end gap-4 mt-6">
+    <button
+      type="button"
+      onClick={setShowForm}
+      className="px-5 py-2 border-[1.5px] border-primary text-primary rounded-md text-sm"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      disabled={loading}
+      className="px-5 py-2 bg-primary border-[1.5px] border-primary text-white rounded-md text-sm"
+    >
+      {loading ? "Saving..." : initialData ? "Update Diagnosis" : "Add Diagnosis"}
+    </button>
+  </div>
+</form>
 
-      <div className="col-span-2">
-        <label className="form-label !text-base !font-light">Notes</label>
-        <textarea
-          name="notes"
-          value={formData.notes}
-          onChange={handleChange}
-          required
-          rows={3}
-          className="form-input focus:outline-primary text-gray-light resize-none"
-        />
-      </div>
 
-      <div className="col-span-2 md:col-span-1">
-        <label className="form-label !text-base !font-light">Severity</label>
-        <select
-          name="severity"
-          value={formData.severity}
-          onChange={handleChange}
-          required
-          className="form-input focus:outline-primary text-gray-light"
-        >
-          <option value="">Select</option>
-          <option value="mild">Mild</option>
-          <option value="moderate">Moderate</option>
-          <option value="severe">Severe</option>
-        </select>
-      </div>
-
-      <div className="col-span-2 md:col-span-1">
-        <label className="form-label !text-base !font-light">Diagnosis Code <span className="text-xs">(optional)</span></label>
-        <input
-          type="text"
-          name="diagnosisCode"
-          value={formData.diagnosisCode}
-          onChange={handleChange}
-          className="form-input focus:outline-primary text-gray-light"
-        />
-      </div>
-
-      <div className="col-span-2">
-        <label className="inline-flex items-center gap-2">
-          <input
-            type="checkbox"
-            name="isConfirmed"
-            checked={formData.isConfirmed}
-            onChange={handleChange}
-          />
-          Confirmed Diagnosis
-        </label>
-      </div>
-
-      <div className="col-span-2">
-        <label className="form-label !text-base !font-light">Additional Recommendations</label>
-        <textarea
-          name="additionalRecommendations"
-          value={formData.additionalRecommendations}
-          onChange={handleChange}
-          required
-          rows={3}
-          className="form-input focus:outline-primary text-gray-light resize-none"
-        />
-      </div>
-
-      <div className="col-span-2 flex justify-end gap-4 mt-6">
-        <button
-          type="button"
-          onClick={setShowForm}
-          className="px-5 py-2 border-[1.5px] border-primary text-primary rounded-md text-sm"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          disabled={loading}
-          className="px-5 py-2 bg-primary border-[1.5px] border-primary text-white rounded-md text-sm"
-        >
-          {loading ? "Saving..." : initialData ? "Update Diagnosis" : "Add Diagnosis"}
-        </button>
-      </div>
-    </form>
   );
 };
 

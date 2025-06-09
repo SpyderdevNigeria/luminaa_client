@@ -8,6 +8,7 @@ import HeaderTab from "../../../components/common/HeaderTab";
 import AdminDoctorsCreate from "./component/AdminDoctorsCreate";
 import Dropdown from "../../../components/dropdown/dropdown";
 import StatusBadge from "../../../components/common/StatusBadge";
+import { adminDoctorSpecialties } from "../../../utils/dashboardUtils"
 function AdminDoctors() {
   const {
     doctors,
@@ -17,6 +18,8 @@ function AdminDoctors() {
     doctorsLoading,
     setDoctorsPage,
     getDoctors,
+    setDoctorSpecialty,
+    doctorSpecialty,
   } = useAdmin(AdminApi);
 
   const [showForm, setShowForm] = useState(false);
@@ -24,7 +27,7 @@ function AdminDoctors() {
 
   useEffect(() => {
     getDoctors();
-  }, [doctorsPage]);
+  }, [doctorsPage,doctorSpecialty, doctorsPage,]);
 
   const handleEdit = (doctor: any) => {
     setEditDoctor(doctor);
@@ -103,7 +106,7 @@ function AdminDoctors() {
         onClose={() => {
           setShowForm(false);
           setEditDoctor(null);
-          getDoctors(); // refresh after create/edit
+          getDoctors();
         }}
         onBack={()=> {
             setShowForm(false);
@@ -129,7 +132,24 @@ function AdminDoctors() {
       <HeaderTab
         title=""
         showSearch={false}
-        dropdowns={[]} 
+        dropdowns={[
+            {
+                label: "Status",
+                options: ["All", "Active", "Inactive"],
+                value: "All",
+                onChange: (value) => {
+                console.log("Status filter changed to:", value);
+                },
+            },
+            {
+                label: "Specialty",
+                options: adminDoctorSpecialties,
+                value: doctorSpecialty,
+                onChange: (value) => {
+              setDoctorSpecialty(value);
+                },
+            },
+        ]} 
       />
 
       <div>

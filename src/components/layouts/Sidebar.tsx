@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import website from "../../utils/website";
-import { GoSidebarExpand } from "react-icons/go";
 import Footer from "./SidebarFooter";
 type LinkItem = {
   to: string;
@@ -15,13 +14,10 @@ type sidebarProps = {
 };
 function Sidebar({ links, active }: sidebarProps) {
   return (
-    <aside className="hidden md:flex w-63 fixed inset-y-0 left-0 z-40 border border-dashboard-gray bg-white  px-4 flex-col justify-between pb-2 ">
+    <aside className="hidden md:flex w-63 fixed inset-y-0 left-0 z-40 bg-white  px-4 flex-col justify-between pb-2 ">
       <div>
         <div className="flex items-center justify-between py-4">
-          <img src={website?.logo} alt={website?.name} className="h-8 md:h-8" />
-          <div className="hidden md:flex items-center gap-2 text-base text-primary-text ml-6 md:ml-18">
-            <GoSidebarExpand className="w-5 h-5" />
-          </div>
+          <img src={website?.logo} alt={website?.name} className="h-10 md:h-10" />
         </div>
         <h4 className="py-2 text-xs text-inactive font-medium">DASHBOARD</h4>
         <nav className="flex flex-col gap-1  font-medium mt-2">
@@ -31,7 +27,7 @@ function Sidebar({ links, active }: sidebarProps) {
               to={i?.to}
               className={`flex items-center text-sm p-1 my-1 rounded-lg mb-2 ${
                 active?.label === i?.label
-                  ? "bg-active-primary text-primary"
+                  ? "text-primary"
                   : "text-inactive"
               }`}
             >

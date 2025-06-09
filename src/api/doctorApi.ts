@@ -127,6 +127,38 @@ const DoctorApi = {
 
   // Prescriptions endpoints end
 
+
+  // Lab Orders
+    getLabOrders: async (query:any) => {
+    const response = await api.get(`/doctor/lab-orders${query}`);
+    return response.data;
+  },
+   getLabOrderById: async (id: any) => {
+    const response = await api.get(`/doctor/lab-orders/${id}`);
+    return response.data;
+  },
+
+  getLabOrdersAppointmentbyId: async (id: any) => {
+    const response = await api.get(`/doctor/lab-orders/appointment/${id}`);  
+    return response.data;
+  },
+
+  createLabOrder: async (body: any) => {
+    const response = await api.post("/doctor/lab-orders", body);
+    return response.data;
+  },
+
+  updateLabOrder: async (id: string, body: any) => {
+    const response = await api.patch(`/doctor/lab-orders/${id}`, body);
+    return response.data;
+  },
+
+  deleteLabOrder: async (id: string) => {
+    const response = await api.delete(`/doctor/lab-orders/${id}`);
+    return response.data;
+  },
+
+  // Lab Order endpoint end
 }
 
 export default DoctorApi;

@@ -100,6 +100,13 @@ export const navItemsDoctor = [
     icon: TfiTimer,
     to: routeLinks?.doctor?.schedule,
   },
+      {
+    label: "Orders",
+    title: "Orders",
+    icon: FiPackage,
+    to: routeLinks?.doctor?.labOrders,
+  },
+
     {
     label: "Prescription",
     title: "Prescription",
@@ -196,6 +203,26 @@ export const navItemsAdmin = [
   // },
 ];
 
+export const adminDoctorSpecialties = [
+  "Cardiology",
+  "Dermatology",
+  "Endocrinology",
+  "Gastroenterology",
+  "General Medicine",
+  "Gynecology",
+  "Neurology",
+  "Ophthalmology",
+  "Orthopedics",
+  "Pediatrics",
+  "Psychiatry",
+  "Pulmonology",
+  "Urology",
+]
+
+
+export const appointmentStatus = [
+  "scheduled", "confirmed", "completed", "cancelled"," no_show"
+]
 export const returnMemberNavigationUrlLogic = (user: any) => {
   if (!user.isEmailVerified) {
     return routeLinks?.auth?.emailVerification;

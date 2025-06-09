@@ -56,7 +56,48 @@ export interface IUser {
     isEmailVerified: boolean;
   };
 }
+export interface IDoctor {
+    specialty?:string;
+    firstName?:string;
+    lastName?:string;
 
+}
+
+export interface IPatient {
+    firstName?:string;
+    lastName?:string;
+    email?:string;
+    id:string;
+
+}
+export interface ILabOrder {
+  id: string;
+  testName: string;
+  notes?: string;
+  status?: "pending" | "completed" | "cancelled" | string;
+  createdAt: string;
+  updatedAt?: string;
+  appointmentId?: string;
+  patientId?: string;
+  priority?:string;
+  collectedSample?:boolean;
+  statusHistory?: Array<any>
+  patient?:Object
+  doctor?:Object
+}
+export interface IAppointment {
+  id: string;
+  title: string;
+  scheduledDate: string;
+  status?: string;
+  patient:IPatient;
+  location?: string;
+  doctor:IDoctor;
+  patientNote?: string;
+  [key: string]: any;
+  date:string;
+  createdAt:string;
+}
 
 export interface IPayload {
   token: string;

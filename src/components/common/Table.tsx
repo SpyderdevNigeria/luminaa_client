@@ -29,7 +29,7 @@ const Table = <T extends object>({
     <div className="">
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm border-separate border-spacing-y-2">
-          <thead className="bg-[#F9F9F9] text-text-primary">
+          <thead className="bg-primary text-white">
             <tr>
               {columns.map((col, index) => (
                 <th key={index} className="p-3 font-light">

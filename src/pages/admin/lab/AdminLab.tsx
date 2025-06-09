@@ -18,6 +18,7 @@ function AdminLabs() {
     labsLoading,
     setLabsPage,
     getLabs,
+    labDepartment,
   } = useAdmin(AdminApi);
 
   const [showForm, setShowForm] = useState(false);
@@ -25,7 +26,7 @@ function AdminLabs() {
 
   useEffect(() => {
     getLabs();
-  }, [labsPage]);
+  }, [labsPage, labDepartment]);
 
   const handleEdit = (lab: any) => {
     setEditLab(lab);

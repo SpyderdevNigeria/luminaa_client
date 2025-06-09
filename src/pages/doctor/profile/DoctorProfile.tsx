@@ -56,7 +56,7 @@ const DoctorProfile = () => {
   };
 
   return (
-    <div>
+    <div className="container-bd">
       {showMedicalForm === 'security' &&  <SecurityPreferences  handleClose={handleClose}/>}
       {showMedicalForm === '' && (
         <Settings onMedicalClick={(e)=> {handleShowForm(e)}} />

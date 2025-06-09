@@ -111,7 +111,7 @@ const DoctorSchedule = () => {
   };
 
   return (
-    <div className="">
+    <div className="container-bd">
       <h2 className="text-xl font-semibold mb-4">Choose how & when you work</h2>
       <div className="flex flex-col gap-4">
         {daysOfWeek.map((day) => (
@@ -127,7 +127,7 @@ const DoctorSchedule = () => {
                   onChange={() => handleToggle(day)}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-teal-500 relative">
+                <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-primary relative">
                   <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"></div>
                 </div>
               </label>
@@ -163,7 +163,7 @@ const DoctorSchedule = () => {
         ))}
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 flex justify-end">
         <button
           onClick={handleSave}
           className="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary transition"

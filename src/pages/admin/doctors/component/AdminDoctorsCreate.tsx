@@ -2,6 +2,8 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
+import CommonFormField from "../../../../components/common/CommonFormField";
+
 type DoctorUser = {
   firstName: string;
   lastName: string;
@@ -44,7 +46,7 @@ const AdminDoctorsCreate: React.FC<Props> = ({
   onClose,
 }) => {
   const [message, setMessage] = useState({ message: "", type: "" });
-    const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -76,7 +78,7 @@ const AdminDoctorsCreate: React.FC<Props> = ({
   }, [doctor]);
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -88,35 +90,75 @@ const AdminDoctorsCreate: React.FC<Props> = ({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const payload = { ...formData };
-    setLoading(true)
-    // Remove password if editing and it's empty
+    setLoading(true);
     if (doctor && !payload.password) {
       delete payload.password;
     }
+
     try {
       if (doctor) {
         const response = await AdminApi.updateDoctors(payload);
         setMessage({
-          message: response?.data?.message || "doctor updated successfully",
+          message: response?.data?.message || "Doctor updated successfully",
           type: "success",
         });
       } else {
         const response = await AdminApi.createDoctors(payload);
         setMessage({
-          message: response?.data?.message || "doctor created successfully",
+          message: response?.data?.message || "Doctor created successfully",
           type: "success",
         });
       }
       onClose();
     } catch (error) {
-        console.error(error)
+      console.error(error);
       setMessage({
         message: "An error occurred",
         type: "error",
       });
     }
-    setLoading(false)
+    setLoading(false);
   };
+
+  const fields: {
+    name: keyof FormData;
+    label: string;
+    type?: string;
+    required?: boolean;
+    options?: string[];
+  }[] = [
+    { name: "firstName", label: "First Name", required: true },
+    { name: "lastName", label: "Last Name", required: true },
+    { name: "email", label: "Email", type: "email", required: true },
+    {
+      name: "password",
+      label: "Password",
+      type: "text",
+      required: !doctor,
+    },
+    { name: "specialty", label: "Specialty", required: true },
+    { name: "licenseNumber", label: "License Number", required: true },
+    { name: "contactNumber", label: "Contact Number", required: true },
+    {
+      name: "gender",
+      label: "Gender",
+      type: "select",
+      required: true,
+      options: ["male", "female", "other"],
+    },
+    {
+      name: "dateOfBirth",
+      label: "Date of Birth",
+      type: "date",
+      required: true,
+    },
+    {
+      name: "joinedDate",
+      label: "Joined Date",
+      type: "date",
+      required: true,
+    },
+  ];
 
   return (
     <main>
@@ -140,67 +182,29 @@ const AdminDoctorsCreate: React.FC<Props> = ({
               <FeedbackMessage type={message.type} message={message.message} />
             )}
           </div>
-          {[
-            { name: "firstName", label: "First Name", required: true, },
-            { name: "lastName", label: "Last Name", required: true,  },
-            { name: "email", label: "Email", type: "email", required: true,  },
-            {
-              name: "password",
-              label: "Password",
-              type: "text",
-              required: !doctor,
-            },
-            { name: "specialty", label: "Specialty", required: true,  },
-            { name: "licenseNumber", label: "License Number", required: true,  },
-            { name: "contactNumber", label: "Contact Number" , required: true, },
-            {
-              name: "gender",
-              label: "Gender",
-              type: "select", required: true, 
-              options: ["male", "female", "other"],
-            },
-            { name: "dateOfBirth", label: "Date of Birth", type: "date" , required: true,  },
-            { name: "joinedDate", label: "Joined Date", type: "date", required: true, },
-          ].map(({ name, label, type = "text", required, options }) => (
-            <div key={name}>
-              <label className="form-label !text-base !font-light">
-                {label}
-              </label>
-              {type === "select" ? (
-                <select
-                  name={name}
-                  value={(formData as any)[name]}
-                  onChange={handleChange}
-                  className="form-input focus:outline-primary text-gray-light resize-none"
-                >
-                  <option value="">Select {label}</option>
-                  {options?.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <input
-                  type={type}
-                  name={name}
-                  placeholder=""
-                  value={(formData as any)[name]}
-                  onChange={handleChange}
-                  className="form-input focus:outline-primary text-gray-light resize-none"
-                  required={required}
-                />
-              )}
-            </div>
+
+          {fields.map((field) => (
+            <CommonFormField
+              key={field.name}
+              type={field.type || "text"}
+              name={field.name}
+              label={field.label}
+              value={formData[field.name] || ""}
+              required={field.required}
+              onChange={handleChange}
+              options={
+                field.options?.map((opt) => ({ value: opt, label: opt })) || []
+              }
+            />
           ))}
 
           <div className="col-span-1 md:col-span-2 flex justify-end">
             <button
               type="submit"
               className="bg-primary text-white px-6 py-2 rounded-md mt-4"
-            disabled={loading}
+              disabled={loading}
             >
-              {loading ? "loading" : doctor ? "Update Doctor" : "Create Doctor"}
+              {loading ? "Loading..." : doctor ? "Update Doctor" : "Create Doctor"}
             </button>
           </div>
         </form>

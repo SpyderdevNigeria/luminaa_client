@@ -18,6 +18,7 @@ const routeLinks = {
     path:'/patient',
     lab:'/patient/lab',
     orders:'/patient/orders',
+    orderDetails:'/patient/orders/:id',
     profile: '/patient/profile',
     pharmacy:'/patient/pharmacy',
     dashboard: '/patient/dashboard',
@@ -37,7 +38,9 @@ const routeLinks = {
     schedule:'/doctor/schedule',
     appointment:'/doctor/appointments',
     prescription:'/doctor/prescriptions',
-    appointmentView : '/doctor/appointment/:id',
+    labOrders:'/doctor/lab-orders',
+    labOrdersDetails:'/doctor/lab-orders/:id',
+    appointmentView : '/doctor/appointments/:id',
     patientView : '/doctor/patients/:id',
 },
 

@@ -11,7 +11,7 @@ type DashboardLayoutProps = {
 };
 
 
-function DashboardLayout({ children, links, bg }: DashboardLayoutProps) {
+function DashboardLayout({ children, links }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeLink, setActiveLink] = useState<{ to: string; label: string;  sublink?: string, icon: React.ReactNode } | null>(null);
   const location = useLocation();
@@ -48,7 +48,7 @@ function DashboardLayout({ children, links, bg }: DashboardLayoutProps) {
   
 
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-100">
+    <div  className="min-h-screen bg-gray-100">
       {/* Sidebar*/}
         <Sidebar links={links} active={activeLink || { label: '' }} />
 
@@ -61,7 +61,7 @@ function DashboardLayout({ children, links, bg }: DashboardLayoutProps) {
       />
 
       {/* Main Content Area */}
-      <div className="flex flex-col flex-1 md:ml-62 relative">
+      <div className="flex flex-col flex-1 md:ml-63 relative">
         <Navbar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
@@ -69,7 +69,7 @@ function DashboardLayout({ children, links, bg }: DashboardLayoutProps) {
         />
 
         {/* Page Content */}
-        <main className={`flex-1 px-4 md:px-8 py-6 ${bg}   overflow-y-auto`}>
+        <main className={`flex-1 px-4 md:px-8 py-6 max-h-[90vh]  overflow-y-scroll `}>
           {children}
         </main>
       </div>

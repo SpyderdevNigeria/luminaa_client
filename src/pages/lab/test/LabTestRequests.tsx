@@ -1,48 +1,75 @@
-import Dropdown from "../../../components/dropdown/dropdown";
+import { useEffect, useState } from "react";
 import HeaderTab from "../../../components/common/HeaderTab";
-import { IoCalendarClearOutline } from "react-icons/io5";
-import LabCard from '../../../components/common/LabCard';
-import { FiPlus } from "react-icons/fi";
+import LabCard from "../../../components/common/LabOrderCard";
+import PaginationComponent from "../../../components/common/PaginationComponent";
+
+import useOrder from "../../../hooks/useOrder";
+import LabApi from "../../../api/labApi";
+
 function LabTestRequests() {
+  const {
+    orders,
+    ordersPage,
+    ordersLimit,
+    ordersTotal,
+    ordersLoading,
+    setOrdersFilters,
+    getOrders,
+  } = useOrder(LabApi);
+
+  const [statusFilter, setStatusFilter] = useState("All");
+  const totalPages = Math.ceil((ordersTotal ?? 0) / ordersLimit);
+
+  useEffect(() => {
+    getOrders();
+  }, [ordersPage, statusFilter]);
+
+  useEffect(() => {
+    setOrdersFilters({
+      page: 1,
+      status: statusFilter === "All" ? undefined : statusFilter.toLowerCase(),
+    });
+  }, [statusFilter]);
+
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-row items-center justify-between my-2">
-        <Dropdown
-          triggerLabel="Date range : This Week"
-          showArrow
-          triggerIcon={<IoCalendarClearOutline />}
-        >
-          <ul className="space-y-2 text-sm">
-            <li className="cursor-pointer hover:bg-gray-100 p-1 rounded">
-              Day
-            </li>
-            <li className="cursor-pointer hover:bg-gray-100 p-1 rounded">
-              Week
-            </li>
-            <li className="cursor-pointer hover:bg-gray-100 p-1 rounded">
-              Month
-            </li>
-          </ul>
-        </Dropdown>
-        <div className="flex flex-row items-center gap-3">
-          <button className="bg-primary text-white px-6 py-2  text-sm rounded-md flex items-center gap-2">
-            <FiPlus />
-            New Test
-          </button>
-        </div>
-      </div>
-      <div className=" border border-dashboard-gray p-2 lg:p-4 rounded-lg">
+    <div className="flex flex-col gap-4 bg-white">
+      <div className="p-2 lg:p-4 rounded-lg">
         <HeaderTab
           title="Sample Collection"
-          showSearch={true}
+          showSearch={false}
+          dropdowns={[
+            {
+              label: "Status",
+              options: ["All", "Pending", "In Progress", "Completed", "Cancelled"],
+              value: statusFilter,
+              onChange: (value) => setStatusFilter(value),
+            },
+          ]}
         />
-        <section>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[1, 2, 3, 4,5,6,7,8,9,10,11,12,13,14].map((i) => (
-              <LabCard key={i} />
-            ))}
-          </div>
+
+        <section className="min-h-[300px]">
+          {ordersLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+              {orders.length > 0 ? (
+                orders.map((order) => <LabCard key={order.id} order={order} type="lab" />)
+              ) : (
+                <p className="col-span-full text-center">No lab test requests found.</p>
+              )}
+            </div>
+          )}
         </section>
+
+        <div className="mt-4">
+          <PaginationComponent
+            page={ordersPage}
+            total={ordersTotal ?? 0}
+            limit={ordersLimit}
+            totalPages={totalPages ?? 1}
+            onPageChange={(page) => setOrdersFilters({ page })}
+          />
+        </div>
       </div>
     </div>
   );

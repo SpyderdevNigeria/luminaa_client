@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import DashboardCard from "../../../components/common/DashboardCard";
 import HeaderTab from "../../../components/common/HeaderTab";
 import Table from "../../../components/common/Table";
-import LabCard from '../../../components/common/LabCard';
+import LabCard from '../../../components/common/LabOrderCard';
 import { Link } from 'react-router-dom';
 import routeLinks from '../../../utils/routes';
 function LabDashboard() {
@@ -22,8 +22,8 @@ function LabDashboard() {
       </section>
 
       <section>
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-7 gap-4">
-          <div className="md:col-span-4 border border-dashboard-gray p-2 lg:p-4 rounded-lg">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-7   2xl:grid-cols-7 gap-4">
+          <div className="lg:col-span-4 2xl:col-span-5 bg-white p-2 lg:p-4 rounded-lg">
             <HeaderTab
               title="Sample Collection"
               showSearch={false}
@@ -48,14 +48,14 @@ function LabDashboard() {
           </div>
 
           {/* testing request  */}
-              <main className='md:col-span-3 border border-dashboard-gray p-2 lg:p-4 rounded-lg'>
+              <main className=' lg:col-span-3  2xl:col-span-2 bg-white p-2 lg:p-4 rounded-lg'>
                 <div className='flex items-center justify-between'>
                     <h4 className="text-sm 2xl:text-xl">Pending Test Requests </h4>
                     <Link to={routeLinks?.lab?.labRequests} className='text-sm'>See all</Link>
                 </div>
                 <div className='space-y-4 my-4'>
                     { [1,2,3,4].map((i) => (
-                        <LabCard key={i}/>
+                        <LabCard key={i} order={undefined} type={''}/>
                     ))}
                 </div>
               </main>
