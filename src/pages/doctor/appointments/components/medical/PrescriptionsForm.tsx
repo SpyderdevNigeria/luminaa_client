@@ -45,6 +45,7 @@ const PrescriptionsForm = ({
   ) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
+    console.log(checked)
     setFormData((prev:any) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -59,7 +60,7 @@ const PrescriptionsForm = ({
       if (initialData?.id) {
         response = await doctorApi.updatePrescriptions(initialData.id, formData);
       } else {
-        response = await doctorApi.createPrescriptions({ ...formData, appointmentId });
+        response = await doctorApi.createPrescriptions({ ...formData, appointmentId, isRefillable : formData.isRefillable == 'true' ? true : false });
       }
       setMessage({ message: response?.data?.message || "Request successful", type: "success" });
       if (onSuccess) onSuccess();
@@ -75,6 +76,10 @@ const PrescriptionsForm = ({
     }
   };
 
+  function stringToBoolean(value: string) {
+  if (value === "true") return true;
+  if (value === "false") return false;
+}
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="col-span-2">
@@ -168,7 +173,7 @@ const PrescriptionsForm = ({
           <input
             type="checkbox"
             name="isRefillable"
-            checked={formData.isRefillable == 'true' ? true: false}
+            checked={stringToBoolean(formData.isRefillable)}
             onChange={handleChange}
           />
           <span className="text-sm">Is Refillable</span>

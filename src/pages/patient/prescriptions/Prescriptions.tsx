@@ -4,6 +4,7 @@ import PaginationComponent from "../../../components/common/PaginationComponent"
 import usePrescriptions from "../../../hooks/usePrescriptions";
 import PatientApi from "../../../api/PatientApi";
 import HeaderTab from "../../../components/common/HeaderTab";
+import PrescriptionCard from "../../../components/common/PrescriptionCard";
 // import useAppointments from "../../../hooks/useAppointments";
 function Prescriptions() {
   const [selectedPrescription, setSelectedPrescription] = useState<any>(null);
@@ -46,7 +47,7 @@ function Prescriptions() {
   }, [search, appointmentId, status, patientId, isRefillable, page, limit]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 container-bd">
       {/* Filter Controls */}
       <HeaderTab
         title="Prescriptions"
@@ -74,54 +75,27 @@ function Prescriptions() {
       />
 
       {/* Prescription List */}
-      {loading ? (
-        <div className="text-center py-10">Loading prescriptions...</div>
-      ) : prescriptions.length === 0 ? (
-        <div className="text-center py-10">No prescriptions found.</div>
-      ) : (
-        <div className="space-y-4">
+   {loading ? (
+  <div className="text-center py-10 text-gray-500">Loading prescriptions...</div>
+) : prescriptions.length === 0 ? (
+  <div className="text-center py-10 text-gray-500">No prescriptions found.</div>
+) : (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 my-4">
           {prescriptions.map((prescription) => (
-            <div
+            <PrescriptionCard
               key={prescription._id}
-              className="bg-white rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between py-4 md:px-8 space-y-3 md:space-y-0"
-            >
-              <div className="space-y-1">
-                <h3 className="text-sm md:text-base">
-                  {prescription.medicationName}
-                </h3>
-                <h4 className="text-xs font-[300]">
-                  Prescribed on{" "}
-                  {new Date(prescription.createdAt).toLocaleDateString()}
-                </h4>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <h3 className="text-sm md:text-base">
-                  {prescription.duration}
-                </h3>
-                <h4 className="text-xs font-[300]">Duration</h4>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <h3 className="text-sm md:text-base">
-                  {prescription.frequency}
-                </h3>
-                <h4 className="text-xs font-[300]">Frequency</h4>
-              </div>
-
-              <button
-                className="bg-gray-100 p-1 md:px-4 md:py-3 rounded-lg text-xs font-light text-primary"
-                onClick={() => {
-                  setSelectedPrescription(prescription);
-                  setModalOpen(true);
-                }}
-              >
-                View details
-              </button>
-            </div>
+              prescription={prescription}
+              onView={() => {
+                setSelectedPrescription(prescription);
+                setModalOpen(true);
+              }}
+            />
           ))}
         </div>
-      )}
+
+
+)}
+
 
       {/* Pagination */}
       {totalPages > 1 && (

@@ -1,30 +1,34 @@
 import { useEffect, useState } from "react";
-import moment from "moment";
 import PrescriptionsForm from "./medical/PrescriptionsForm";
 import doctorApi from "../../../../api/doctorApi";
-import StatusBadge from "../../../../components/common/StatusBadge";
 import PrescriptionReportModal from "../../../../components/modal/PrescriptionReportModal";
 import { IPrescription } from "../../../../types/Interfaces";
-// import PaginationComponent from "../../../../components/common/PaginationComponent";
-
+import PrescriptionCard from "../../../../components/common/PrescriptionCard";
 
 interface PrescriptionDetailsProps {
   appointmentId: string;
   handleBack: () => void;
 }
 
-const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsProps) => {
+const PrescriptionDetails = ({
+  appointmentId,
+  handleBack,
+}: PrescriptionDetailsProps) => {
   const [prescriptions, setPrescriptions] = useState<IPrescription[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showForm, setShowForm] = useState<boolean>(false);
-  const [editingPrescription, setEditingPrescription] = useState<IPrescription | null>(null);
-  const [selectedPrescription, setSelectedPrescription] = useState<IPrescription | null>(null);
+  const [editingPrescription, setEditingPrescription] =
+    useState<IPrescription | null>(null);
+  const [selectedPrescription, setSelectedPrescription] =
+    useState<IPrescription | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const fetchPrescriptions = async () => {
     setLoading(true);
     try {
-      const response = await doctorApi.getPrescriptionsAppointmentbyId(appointmentId);
+      const response = await doctorApi.getPrescriptionsAppointmentbyId(
+        appointmentId
+      );
       setPrescriptions(response?.data || []);
     } catch (error) {
       console.error("Error fetching prescriptions:", error);
@@ -65,12 +69,15 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
           </h2>
           <PrescriptionsForm
             appointmentId={appointmentId}
-            initialData={editingPrescription
-              ? {
-                  ...editingPrescription,
-                  isRefillable: (editingPrescription as any).isRefillable ?? false,
-                }
-              : undefined}
+            initialData={
+              editingPrescription
+                ? {
+                    ...editingPrescription,
+                    isRefillable:
+                      (editingPrescription as any).isRefillable ?? false,
+                  }
+                : undefined
+            }
             onSuccess={() => {
               fetchPrescriptions();
               setShowForm(false);
@@ -104,59 +111,32 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
           <h4 className="text-xl my-2">Prescriptions</h4>
 
           {loading ? (
-            <p className="text-gray-600 text-center mt-20">Loading prescriptions...</p>
+            <p className="text-gray-600 text-center mt-20">
+              Loading prescriptions...
+            </p>
           ) : null}
           {!loading && prescriptions.length === 0 ? (
-            <p className="text-gray-600 text-center mt-20">No prescriptions found for this appointment.</p>
+            <p className="text-gray-600 text-center mt-20">
+              No prescriptions found for this appointment.
+            </p>
           ) : (
-            prescriptions.map((prescription) => (
-              <div
-                className="bg-white border rounded-lg flex flex-col md:flex-row md:items-center justify-between py-4 px-4 md:px-8 mb-4"
-                key={prescription._id}
-              >
-                <div className="space-y-1 mb-2 md:mb-0 md:w-[300px] line-clamp-1">
-                  <h3 className="text-sm md:text-base">{prescription.medicationName}</h3>
-                  <h4 className="text-xs font-[300]">
-                    {moment(prescription.createdAt).format("MMMM D, YYYY")}
-                  </h4>
-                </div>
-
-                <div className="text-xs font-[300] mb-2 md:mb-0 md:w-[300px] line-clamp-1">
-                  {prescription?.instructions || "Unknown"}
-                </div>
-
-                <div className="mb-2 md:mb-0">
-                  <StatusBadge status={prescription.status || "pending"} />
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    className="text-xs text-primary underline"
-                    onClick={() => {
-                      setSelectedPrescription(prescription);
-                      setModalOpen(true);
-                    }}
-                  >
-                    View
-                  </button>
-                  <button
-                    className="text-xs text-yellow-600 underline"
-                    onClick={() => {
-                      setEditingPrescription(prescription);
-                      setShowForm(true);
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="text-xs text-red-600 underline"
-                    onClick={() => handleDelete(prescription.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 my-4">
+              {prescriptions.map((prescription) => (
+                <PrescriptionCard
+                  key={prescription._id}
+                  prescription={prescription}
+                  onView={() => {
+                    setSelectedPrescription(prescription);
+                    setModalOpen(true);
+                  }}
+                  onEdit={() => {
+                    setEditingPrescription(prescription);
+                    setShowForm(true);
+                  }}
+                  onDelete={() => handleDelete(prescription.id)}
+                />
+              ))}
+            </div>
           )}
 
           {selectedPrescription && (
