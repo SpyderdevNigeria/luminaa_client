@@ -41,6 +41,11 @@ const statusStyles: Record<string, { bg: string; dot: string; text: string }> =
       dot: "bg-yellow-400",
       text: "text-yellow-500",
     },
+      in_progress: {
+      bg: "bg-yellow-50",
+      dot: "bg-yellow-400",
+      text: "text-yellow-500",
+    },
     paid: {
       bg: "bg-green-50",
       dot: "bg-green-400",
@@ -64,7 +69,7 @@ const statusStyles: Record<string, { bg: string; dot: string; text: string }> =
   };
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
-  const style = statusStyles[status] || {
+  const style = statusStyles[status.toLowerCase()] || {
     bg: "bg-gray-50",
     dot: "bg-gray-400",
     text: "text-gray-400",

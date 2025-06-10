@@ -46,12 +46,6 @@ const LabInputTestResultModal = ({
     },
     {
       type: "text",
-      name: "result",
-      label: "Result",
-      required: true,
-    },
-    {
-      type: "text",
       name: "unit",
       label: "Unit",
       required: true,
@@ -64,8 +58,8 @@ const LabInputTestResultModal = ({
     },
     {
       type: "textarea",
-      name: "notes",
-      label: "Notes",
+      name: "result",
+      label: "Result",
       required: true,
     },
   ];

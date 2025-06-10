@@ -35,7 +35,7 @@ function Lab() {
     <div className="flex flex-col gap-4 bg-white">
       <div className="p-2 lg:p-4 rounded-lg">
         <HeaderTab
-          title="Sample Collection"
+          title="Lab Test"
           showSearch={false}
           dropdowns={[
             {
@@ -53,7 +53,7 @@ function Lab() {
           ) : (
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {orders.length > 0 ? (
-                orders.map((order) => <LabCard key={order.id} order={order} type="lab" />)
+                orders.map((order) => <LabCard key={order.id} order={order} type="patient" />)
               ) : (
                 <p className="col-span-full text-center">No lab test requests found.</p>
               )}

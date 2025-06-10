@@ -30,7 +30,7 @@ api.interceptors.response.use(
       localStorage.removeItem("token");
       localStorage.removeItem("hms_user");
       // Redirect to home
-      window.location.href = "/";
+      // window.location.href = "/unauthorized-access";
     }
     return Promise.reject(error);
   }

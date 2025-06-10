@@ -14,7 +14,7 @@ function LabCard({ order, type = "lab" }: { order: any; type: string }) {
       case "doctor":
         return navigate(`${routeLinks?.doctor?.labOrders}/${order?.id}`);
       case "patient":
-        return navigate(`${routeLinks?.patient?.orderDetails}/${order?.id}`);
+        return navigate(`${routeLinks?.patient?.lab}/${order?.id}`);
       default:
         break;
     }

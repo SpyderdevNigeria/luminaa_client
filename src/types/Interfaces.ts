@@ -60,6 +60,7 @@ export interface IDoctor {
     specialty?:string;
     firstName?:string;
     lastName?:string;
+    id?:string;
 
 }
 
@@ -102,4 +103,20 @@ export interface IAppointment {
 export interface IPayload {
   token: string;
   user: IUser;
+}
+
+export interface IResult {
+  testName?:string;
+  result?:string;
+  unit?:string;
+  referenceRange?:string;
+}
+
+export interface IResults {
+  id:string;
+  labTestOrderId?:string;
+  results?:IResult[];
+  documents: Array<any>;
+  status?:string;
+  notes?:string;
 }
