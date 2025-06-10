@@ -4,6 +4,8 @@ import StatusBadge from "./StatusBadge";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
+const STATUS_STEPS = ["PENDING", "IN_PROGRESS", "COMPLETED"];
+
 function LabCard({ order, type = "lab" }: { order: any; type: string }) {
   const navigate = useNavigate();
 
@@ -20,78 +22,115 @@ function LabCard({ order, type = "lab" }: { order: any; type: string }) {
     }
   };
 
-  const patientName = `${order?.patient?.firstName ?? ""} ${order?.patient?.lastName ?? ""}`;
+  // const patientName = `${order?.patient?.firstName ?? ""} ${order?.patient?.lastName ?? ""}`;
   const testName = order?.testName || "Lab Test";
   const testNotes = order?.notes || "No additional notes provided.";
   const priority = order?.priority || "normal";
   const status = order?.status || "PENDING";
 
-  const doctorName = `${order?.doctor?.firstName ?? ""} ${order?.doctor?.lastName ?? ""}`;
-  const doctorSpecialty = order?.doctor?.specialty || "N/A";
+  // const doctorName = `${order?.doctor?.firstName ?? ""} ${order?.doctor?.lastName ?? ""}`;
+  // const doctorSpecialty = order?.doctor?.specialty || "N/A";
 
-  const appointmentDate = order?.appointment?.date
-    ? moment(order.appointment.date).format("MMM D, YYYY")
-    : "N/A";
-  const appointmentTime = order?.appointment?.date
-    ? moment(order.appointment.date).format("h:mm A")
-    : "N/A";
+  // const appointmentDate = order?.appointment?.date
+  //   ? moment(order.appointment.date).format("MMM D, YYYY")
+  //   : "N/A";
+  // const appointmentTime = order?.appointment?.date
+  //   ? moment(order.appointment.date).format("h:mm A")
+  //   : "N/A";
 
   const createdAt = moment(order?.createdAt).format("MMM D, YYYY h:mm A");
 
+  const currentStatusIndex = STATUS_STEPS.indexOf(status);
+
   return (
-    <main className="border border-primary p-6 rounded-xl shadow-sm hover:shadow-md transition flex flex-col gap-4 bg-primary text-white">
+    <main className="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white text-black flex flex-col gap-6">
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full">
+     <div>
+       <div className="w-12 h-12 flex items-center justify-center bg-primary rounded-full">
           <PiTestTubeBold className="text-white text-2xl" />
         </div>
+     </div>
         <div>
-          <h3 className="text-lg font-semibold">{testName}</h3>
-          <p className="text-sm text-white/80">Requested on {createdAt}</p>
+          <h3 className="text-lg font-semibold capitalize line-clamp-1">{testName}</h3>
+          <p className="text-sm text-gray-500">Requested on {createdAt}</p>
         </div>
       </div>
 
+      {/* Progress Bar */}
+      <div className="w-full">
+        <h4 className="text-sm font-medium text-gray-600 mb-2">Progress</h4>
+        <div className="flex items-center justify-between relative">
+          {STATUS_STEPS.map((step, index) => {
+            const isCompleted = index <= currentStatusIndex;
+            return (
+              <div key={step} className="flex-1 flex items-center justify-center relative">
+                <div
+                  className={`w-4 h-4 z-10 rounded-full ${
+                    isCompleted ? "bg-primary" : "bg-gray-300"
+                  }`}
+                />
+                {index !== STATUS_STEPS.length - 1 && (
+                  <div
+                    className={`absolute top-1/2 left-1/2 h-1 w-full transform -translate-y-1/2 ${
+                      index < currentStatusIndex ? "bg-primary" : "bg-gray-300"
+                    }`}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <div className="flex justify-between mt-2 text-xs text-gray-600">
+          {STATUS_STEPS.map((step) => (
+            <span key={step}>{step.replace("_", " ")}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <h4 className="text-sm font-medium text-white/80">Patient</h4>
+        {/* <div>
+          <h4 className="text-sm font-medium text-gray-600">Patient</h4>
           <p className="text-base">{patientName}</p>
         </div>
         <div>
-          <h4 className="text-sm font-medium text-white/80">Doctor</h4>
+          <h4 className="text-sm font-medium text-gray-600">Doctor</h4>
           <p className="text-base">
-            {doctorName} <span className="text-sm text-white/60">({doctorSpecialty})</span>
+            {doctorName} <span className="text-sm text-gray-500">({doctorSpecialty})</span>
           </p>
         </div>
         <div>
-          <h4 className="text-sm font-medium text-white/80">Appointment</h4>
+          <h4 className="text-sm font-medium text-gray-600">Appointment</h4>
           <p className="text-base">
             {appointmentDate} at {appointmentTime}
           </p>
-        </div>
+        </div> */}
         <div>
-          <h4 className="text-sm font-medium text-white/80">Priority</h4>
+          <h4 className="text-sm font-medium text-gray-600">Priority</h4>
           <span
             className={`inline-block px-3 py-1 mt-1 rounded-full text-xs font-semibold capitalize ${
               priority === "high"
-                ? "bg-red-600/20 text-red-200"
+                ? "bg-red-100 text-red-600"
                 : priority === "medium"
-                ? "bg-yellow-600/20 text-yellow-200"
-                : "bg-green-600/20 text-green-200"
+                ? "bg-yellow-100 text-yellow-700"
+                : "bg-green-100 text-green-700"
             }`}
           >
             {priority} priority
           </span>
         </div>
         <div className="md:col-span-2">
-          <h4 className="text-sm font-medium text-white/80">Notes</h4>
-          <p className="text-sm text-white/90">{testNotes}</p>
+          <h4 className="text-sm font-medium text-gray-600">Notes</h4>
+          <p className="text-sm text-gray-800">{testNotes}</p>
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      {/* Footer */}
+      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
         <StatusBadge status={status} />
         <button
           onClick={handleNavigate}
-          className="bg-white text-primary px-4 py-2 rounded-md text-sm font-medium hover:bg-white/90"
+          className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90"
         >
           View Test Request
         </button>

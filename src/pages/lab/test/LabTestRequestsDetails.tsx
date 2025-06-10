@@ -53,18 +53,21 @@ function LabTestRequestsDetails() {
 
   useEffect(() => {
     if (labOrder) {
-      if (labOrder?.data?.status !== "PENDING") {
+      if (labOrder?.data?.result) {
         fetchResults();
       }
     }
   }, [labOrder]);
   const handleResult = async (payload: any) => {
     setLoadingResults(true);
+    console.log(labOrder)
     try {
-      if (labOrder?.data?.status !== "PENDING") {
+      if (labOrder?.data?.result) {
+         console.log('update result')
         await LabApi.updateLabOrderResultById(labResultMeta?.id, payload);
         alert("Result updated successfully.");
       } else {
+        console.log('create result')
         await LabApi.createLabOrderResult(id, payload);
         alert("Result submitted successfully.");
       }

@@ -1,10 +1,8 @@
 import { CiTablets1 } from "react-icons/ci";
 import { LiaStethoscopeSolid } from "react-icons/lia";
-import { TbSmartHome } from "react-icons/tb";
-import { BiSolidClinic } from "react-icons/bi";
 import { LiaPillsSolid } from "react-icons/lia";
 import { FiPackage } from "react-icons/fi";
-import { FaRegNewspaper, FaRegCircleUser,FaUserDoctor    } from "react-icons/fa6";
+import {  FaRegCircleUser,FaUserDoctor    } from "react-icons/fa6";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
@@ -12,11 +10,14 @@ import { MdPeople } from "react-icons/md";
 import { GrTest } from "react-icons/gr";
 import { GiTestTubes } from "react-icons/gi";
 import routeLinks from "./routes";
+import { RxDashboard } from "react-icons/rx";
+import { CiViewList } from "react-icons/ci";
+import { ImLab } from "react-icons/im";
 export const navItemsPatient = [
   {
     label: "Dashboard",
     title: "Dashboard",
-    icon: TbSmartHome,
+    icon: RxDashboard,
     to: routeLinks?.patient?.dashboard,
   },
   {
@@ -40,7 +41,7 @@ export const navItemsPatient = [
   {
     label: "Lab/Radiology",
     title: "Lab/Radiology",
-    icon: BiSolidClinic,
+    icon: ImLab,
     to: routeLinks?.patient?.lab,
       subLinks: [
       {
@@ -68,7 +69,7 @@ export const navItemsPatient = [
   {
     label: "MedicalHistory",
     title: "MedicalHistory",
-    icon: FaRegNewspaper,
+    icon: CiViewList,
     to: routeLinks?.patient?.medicalHistory,
   },
 
@@ -84,7 +85,7 @@ export const navItemsDoctor = [
   {
     label: "Dashboard",
     title: "Dashboard",
-    icon: TbSmartHome,
+    icon: RxDashboard,
     to: routeLinks?.doctor?.dashboard,
   },
   {
@@ -155,7 +156,7 @@ export const navItemsLab = [
       {
     label: "Dashboard",
     title: "Dashboard",
-    icon: TbSmartHome,
+    icon: RxDashboard,
     to: routeLinks?.lab?.dashboard,
   },
   {
@@ -184,7 +185,7 @@ export const navItemsAdmin = [
   {  
     label: "Dashboard",
     title: "Dashboard",
-    icon: TbSmartHome,
+    icon: RxDashboard,
     to: routeLinks?.admin?.dashboard,
   },
   {
@@ -208,7 +209,7 @@ export const navItemsAdmin = [
   // {
   //   label: "Reports",
   //   title: "Reports",
-  //   icon: FaRegNewspaper,
+  //   icon: CiViewList,
   //   to: routeLinks?.admin?.lab,
   // },
   // {

@@ -8,7 +8,8 @@ import {
   IPatient,
   IDoctor,
   IAppointment,
-   IResult, IResults
+  IResult,
+  IResults,
 } from "../../types/Interfaces";
 import { BiArrowBack } from "react-icons/bi";
 import DoctrImage from "../../assets/images/doctor/doctor.png";
@@ -25,7 +26,7 @@ interface LabOrderDetailsProps {
   } | null;
   isLoading: boolean;
   error: string | null;
-  handleSubmit?: (e:object | undefined) => void;
+  handleSubmit?: (e: object | undefined) => void;
   type?: "lab" | string;
   handleStatus?: () => void;
   results?: IResults | null;
@@ -134,8 +135,8 @@ const LabOrderDetails = ({
       documents: [],
     };
     if (handleSubmit) {
-    handleSubmit(payload);
-    console.log("Submitting payload:", payload);
+      handleSubmit(payload);
+      console.log("Submitting payload:", payload);
     }
   };
 
@@ -144,7 +145,7 @@ const LabOrderDetails = ({
       <div className="w-full">
         <button
           onClick={handNavigate}
-          className="text-xl text-primary gap-2 font-semibold my-4 flex items-center"
+          className="text-xl  gap-2 font-semibold my-4 flex items-center"
         >
           <BiArrowBack /> Back
         </button>
@@ -299,6 +300,7 @@ const LabOrderDetails = ({
         </div>
       </div>
 
+      {status !== "PENDING" && (
         <section>
           {/* Test Results Section */}
           <div className="mt-6 container-bd">
@@ -402,7 +404,7 @@ const LabOrderDetails = ({
                 <IoChatbubbleOutline /> Result Note
               </p>
               <textarea
-                  className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
                 rows={7}
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
@@ -421,6 +423,7 @@ const LabOrderDetails = ({
             </div>
           </section>
         </section>
+      )}
     </div>
   );
 };

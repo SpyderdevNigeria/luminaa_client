@@ -33,9 +33,9 @@ function DoctorAppointments() {
   }, [page, status, dataFrom, dateTo]);
 
   const calendarAppointments = appointments.map((app: any) => ({
-    id: app.id,
-    title: `${app.patient.firstName} ${app.patient.lastName} - ${app.status}`,
-    scheduledDate: app.scheduledDate,
+    id: app?.id,
+    title: `${app?.patient?.firstName} ${app?.patient?.lastName} - ${app?.status}`,
+    scheduledDate: app?.scheduledDate,
     ...app
   }));
 
