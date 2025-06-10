@@ -63,6 +63,15 @@ function DashboardHome() {
           "Find a Doctor to give you a diagnosis and set you up for treatment",
         link: routeLinks?.patient?.lab,
       },
+            {
+        icon: navItemsPatient.find(
+          (item) => item.label.toLowerCase() === "medicalhistory"
+        )?.icon,
+        name: "View your Medical History",
+        description:
+          "Find a Doctor to give you a diagnosis and set you up for treatment",
+        link: routeLinks?.patient?.medicalHistory,
+      },
     ],
     [navItemsPatient, routeLinks?.patient]
   );
@@ -74,30 +83,34 @@ function DashboardHome() {
       </h1>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        {links?.map((i) => (
-          <Link
-            to={i?.link}
-            className="bg-white rounded-lg p-4 2xl:p-8 shadow-sm "
-            key={i?.name}
-            onClick={() => {
-              if (i?.name.toLowerCase() === "book a consultation") {
-                setIsModalOpen(true);
-              }
-            }}
-          >
-            {i.icon && <i.icon className="text-3xl text-secondary" />}
-            <div className="md:max-w-[230px] 2xl:max-w-sm mt-8">
-              <h3 className="text-base md:text-lg 2xl:text-2xl font-medium mb-1 text-text-primary">
-                {i?.name}
-              </h3>
-              <p className="text-sm md:text-base 2xl:text-lg text-text-secondary">
-                {i?.description}
-              </p>
-            </div>
-          </Link>
-        ))}
+     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+  {links?.map((i) => (
+    <Link
+      to={i?.link}
+      key={i?.name}
+      onClick={() => {
+        if (i?.name.toLowerCase() === "book a consultation") {
+          setIsModalOpen(true);
+        }
+      }}
+      className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col gap-6"
+    >
+      {/* Icon */}
+      {i.icon && (
+        <div className="w-12 h-12 flex items-center justify-center rounded-full bg-secondary/10 text-secondary text-2xl">
+          <i.icon />
+        </div>
+      )}
+
+      {/* Content */}
+      <div className="flex flex-col gap-1">
+        <h3 className="text-lg font-semibold text-gray-900">{i?.name}</h3>
+        <p className="text-sm text-gray-600">{i?.description}</p>
       </div>
+    </Link>
+  ))}
+</div>
+
 
       {/* Appointment Booking Modal */}
       <AppointmentBookModal

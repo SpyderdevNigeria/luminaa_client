@@ -84,9 +84,11 @@ function LabCard({
 
       {/* Header */}
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 flex items-center justify-center bg-primary rounded-full">
+     <div>
+         <div className="w-12 h-12 flex items-center justify-center bg-primary rounded-full">
           <PiTestTubeBold className="text-white text-2xl" />
         </div>
+     </div>
         <div>
           <h3 className="text-lg font-semibold capitalize line-clamp-1">
             {testName}
