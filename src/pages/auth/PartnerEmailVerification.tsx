@@ -1,8 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLayoutEffect, useState } from "react";
 import { usePinInput } from "react-pin-input-hook";
 import { Timer } from "../../components/common/Timer";
-import website from "../../utils/website";
 import AuthApi from "../../api/authApi";
 import usePartnerAuth from "../../hooks/usePartnerAuth";
 import routeLinks from "../../utils/routes";
