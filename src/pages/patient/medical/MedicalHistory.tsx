@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import MedicalReportModal from "../../../components/modal/MedicalReportModal";
-import StatusBadge from "../../../components/common/StatusBadge";
 import useDiagnoses from "../../../hooks/useDiagnoses";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import PatientApi from "../../../api/PatientApi";
 import HeaderTab from "../../../components/common/HeaderTab";
+import DiagnosisCard from "../../../components/common/DiagnosisCard";
 
 function MedicalHistory() {
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<any>(null);
@@ -30,7 +30,7 @@ function MedicalHistory() {
   }, [page, severity]);
 
   return (
-    <div>
+    <div className="container-bd">
       <HeaderTab
         title="Medical History"
          showSearch={false}
@@ -58,41 +58,17 @@ function MedicalHistory() {
         )}
 
         {!loading &&
-          diagnoses.map((diagnosis: any) => (
-            <div
-              className="bg-white rounded-lg flex flex-row items-center justify-between py-4 md:px-8"
-              key={diagnosis._id}
-            >
-              <div className="space-y-1 ">
-                <h3 className="text-sm md:text-base  md:w-[300px] line-clamp-1">
-                  {diagnosis.primaryDiagnosis}
-                </h3>
-                <h4 className="text-xs font-[300]">
-                  on {new Date(diagnosis.createdAt).toLocaleDateString()}
-                </h4>
-              </div>
-
-              <div className="flex items-center space-x-2  md:w-[300px] line-clamp-1">
-                <h4 className="text-xs font-[300]">
-                  {`${diagnosis?.primaryDiagnosis}`}
-                </h4>
-              </div>
-
-              <div>
-                <StatusBadge status={diagnosis.severity || "pending"} />
-              </div>
-
-              <button
-                className="bg-gray-100 p-1 md:px-4 md:py-3 rounded-lg text-xs font-light text-primary"
-                onClick={() => {
-                  setSelectedDiagnosis(diagnosis);
-                  setModalOpen(true);
-                }}
-              >
-                View details
-              </button>
-            </div>
-          ))}
+               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 my-4">
+                       {diagnoses.map((diagnosis) => (
+                         <DiagnosisCard
+                           diagnosis={diagnosis}
+                           onView={() => {
+                             setSelectedDiagnosis(diagnosis);
+                             setModalOpen(true);
+                           }}
+                         />
+                       ))}
+                     </div>}
 
         {/* Modal */}
         <MedicalReportModal

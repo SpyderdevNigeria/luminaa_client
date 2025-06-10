@@ -20,6 +20,41 @@ export const navItemsPatient = [
     icon: RxDashboard,
     to: routeLinks?.patient?.dashboard,
   },
+    {
+    label: "Consultations",
+    title: "Consultations",
+    icon: LiaStethoscopeSolid,
+    to: routeLinks?.patient?.consultations,
+        subLinks: [
+      {
+        label: "Consultations",
+        title: "Consultations / Consultations Details",
+        icon: LiaStethoscopeSolid,
+        to: routeLinks?.patient?.consultationsid,
+      },
+    ],
+  },
+    {
+    label: "Lab/Radiology",
+    title: "Lab/Radiology",
+    icon: ImLab,
+    to: routeLinks?.patient?.lab,
+      subLinks: [
+      {
+        label: "Lab/Radiology",
+        title: "Lab/Radiology",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.patient?.labDetails,
+      },
+    ],
+  },
+
+  {
+    label: "MedicalHistory",
+    title: "MedicalHistory",
+    icon: CiViewList,
+    to: routeLinks?.patient?.medicalHistory,
+  },
   {
     label: "Prescription",
     title: "Prescription",
@@ -38,40 +73,7 @@ export const navItemsPatient = [
     icon: LiaPillsSolid,
     to: routeLinks?.patient?.pharmacy,
   },
-  {
-    label: "Lab/Radiology",
-    title: "Lab/Radiology",
-    icon: ImLab,
-    to: routeLinks?.patient?.lab,
-      subLinks: [
-      {
-        label: "Lab/Radiology",
-        title: "Lab/Radiology",
-        icon: IoCalendarClearOutline,
-        to: routeLinks?.patient?.labDetails,
-      },
-    ],
-  },
-  {
-    label: "Consultations",
-    title: "Consultations",
-    icon: LiaStethoscopeSolid,
-    to: routeLinks?.patient?.consultations,
-        subLinks: [
-      {
-        label: "Consultations",
-        title: "Consultations / Consultations Details",
-        icon: LiaStethoscopeSolid,
-        to: routeLinks?.patient?.consultationsid,
-      },
-    ],
-  },
-  {
-    label: "MedicalHistory",
-    title: "MedicalHistory",
-    icon: CiViewList,
-    to: routeLinks?.patient?.medicalHistory,
-  },
+
 
    {
     label: "profile",

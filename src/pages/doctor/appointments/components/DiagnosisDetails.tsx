@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import moment from "moment";
 import DiagnosisForm from "./medical/DiagnosisForm";
 import doctorApi from "../../../../api/doctorApi";
-import StatusBadge from "../../../../components/common/StatusBadge";
 import MedicalReportModal from "../../../../components/modal/MedicalReportModal";
-// import PaginationComponent from "../../../../components/common/PaginationComponent";
+import DiagnosisCard from "../../../../components/common/DiagnosisCard";
 interface Diagnosis {
   id: string;
   primaryDiagnosis: string;
@@ -22,18 +20,27 @@ interface DiagnosisDetailsProps {
   handleBack: () => void;
 }
 
-const DiagnosisDetails = ({ appointmentId, handleBack }: DiagnosisDetailsProps) => {
+const DiagnosisDetails = ({
+  appointmentId,
+  handleBack,
+}: DiagnosisDetailsProps) => {
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showForm, setShowForm] = useState<boolean>(false);
-  const [editingDiagnosis, setEditingDiagnosis] = useState<Diagnosis | null>(null);
-  const [selectedDiagnosis, setSelectedDiagnosis] = useState<Diagnosis | null>(null);
+  const [editingDiagnosis, setEditingDiagnosis] = useState<Diagnosis | null>(
+    null
+  );
+  const [selectedDiagnosis, setSelectedDiagnosis] = useState<Diagnosis | null>(
+    null
+  );
   const [isModalOpen, setModalOpen] = useState(false);
 
   const fetchDiagnoses = async () => {
     setLoading(true);
     try {
-      const response = await doctorApi.getDiagnosesAppointmentbyId(appointmentId);
+      const response = await doctorApi.getDiagnosesAppointmentbyId(
+        appointmentId
+      );
       setDiagnoses(response?.data || []);
     } catch (error) {
       console.error("Error fetching diagnoses:", error);
@@ -108,59 +115,31 @@ const DiagnosisDetails = ({ appointmentId, handleBack }: DiagnosisDetailsProps) 
           <h4 className="text-xl my-2">Diagnoses</h4>
 
           {loading ? (
-            <p className="text-gray-600 text-center mt-20">Loading diagnoses...</p> 
-            ) : null}
+            <p className="text-gray-600 text-center mt-20">
+              Loading diagnoses...
+            </p>
+          ) : null}
           {!loading && diagnoses.length === 0 ? (
-            <p className="text-gray-600 text-center mt-20">No diagnosis found for this appointment.</p>
+            <p className="text-gray-600 text-center mt-20">
+              No diagnosis found for this appointment.
+            </p>
           ) : (
-            diagnoses.map((diagnosis) => (
-              <div
-                className="bg-white border rounded-lg flex flex-col md:flex-row md:items-center justify-between py-4 px-4 md:px-8 mb-4"
-                key={diagnosis.id}
-              >
-                <div className="space-y-1 mb-2 md:mb-0 md:w-[300px] line-clamp-1">
-                  <h3 className="text-sm md:text-base">{diagnosis.primaryDiagnosis}</h3>
-                  <h4 className="text-xs font-[300]">
-                    {moment(diagnosis.createdAt).format("MMMM D, YYYY")}
-                  </h4>
-                </div>
-
-                <div className="text-xs font-[300] mb-2 md:mb-0  md:w-[300px] line-clamp-1">
-                  {diagnosis.primaryDiagnosis || "Unknown"}
-                </div>
-
-                <div className="mb-2 md:mb-0">
-                  <StatusBadge status={diagnosis.severity || "pending"} />
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    className="text-xs text-primary underline"
-                    onClick={() => {
-                      setSelectedDiagnosis(diagnosis);
-                      setModalOpen(true);
-                    }}
-                  >
-                    View
-                  </button>
-                  <button
-                    className="text-xs text-yellow-600 underline"
-                    onClick={() => {
-                      setEditingDiagnosis(diagnosis);
-                      setShowForm(true);
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="text-xs text-red-600 underline"
-                    onClick={() => handleDelete(diagnosis.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 my-4">
+              {diagnoses.map((diagnosis) => (
+                <DiagnosisCard
+                  diagnosis={diagnosis}
+                  onView={() => {
+                    setSelectedDiagnosis(diagnosis);
+                    setModalOpen(true);
+                  }}
+                  onEdit={() => {
+                    setEditingDiagnosis(diagnosis);
+                    setShowForm(true);
+                  }}
+                  onDelete={() => handleDelete(diagnosis.id)}
+                />
+              ))}
+            </div>
           )}
 
           {/* Modal */}
