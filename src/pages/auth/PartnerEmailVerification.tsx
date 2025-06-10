@@ -104,18 +104,15 @@ function PartnerEmailVerification() {
   // Loading while auth is verifying
   if (authLoading) return <LoadingScreen />;
   return (
-    <div className="min-h-screen  grid grid-cols-1 lg:grid-cols-2 bg-white">
+     <div className="w-full max-w-md 2xl:max-w-lg  mx-auto space-y-6">
       <div className="flex flex-col items-center justify-center px-6 sm:px-16">
-        <div className="rounded-xl w-full max-w-md 2xl:max-w-lg p-8 text-center">
-          <Link to={"/"} className="flex justify-center mb-4">
-             <img src={website?.logo} alt="Logo" className="w-32 2xl:w-50  h-10 2xl:h-15 mb-4" />  
-          </Link>
+        <div className="rounded-xl w-full max-w-md p-8 text-center">
 
-          <h2 className="text-xl md:text-3xl 2xl:text-4xl px-6 md:px-20 text-text-secondary">
+          <h2 className="text-xl md:text-3xl  px-6 md:px-20 text-text-secondary">
             OTP verification
           </h2>
 
-          <p className="mt-4 px-4 text-sm md:text-base 2xl:text-lg text-text-primary leading-5">
+          <p className="mt-4 px-4 text-sm md:text-base  text-text-primary leading-5">
             Please enter the OTP sent to your registered email to complete your
             verification.
           </p>
@@ -124,7 +121,7 @@ function PartnerEmailVerification() {
             {fields.map((fieldProps, index) => (
               <input
                 key={index}
-                className="w-14 h-14 2xl:w-17 2xl:h-17 border border-gray-300 rounded-md text-center text-lg focus:outline-primary"
+                className="w-14 h-14  border border-gray-300 rounded-md text-center text-lg focus:outline-primary"
                 {...fieldProps}
                 maxLength={1}
               />
