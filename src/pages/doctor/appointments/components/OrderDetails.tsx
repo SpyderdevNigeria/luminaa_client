@@ -1,29 +1,37 @@
 import { useEffect, useState } from "react";
-import moment from "moment";
-import LabOrdersForm from "./medical/LabOrdersForm"; 
-import doctorApi from "../../../../api/doctorApi"; 
-import StatusBadge from "../../../../components/common/StatusBadge";
-import LabOrderDetailModal from "../../../../components/modal/LabOrderDetailModal"; 
-import { ILabOrder } from "../../../../types/Interfaces"; 
-
+import LabOrdersForm from "./medical/LabOrdersForm";
+import doctorApi from "../../../../api/doctorApi";
+import LabOrderDetailModal from "../../../../components/modal/LabOrderDetailModal";
+import { ILabOrder } from "../../../../types/Interfaces";
+import LabCard from "../../../../components/common/LabOrderCard";
 interface LabOrdersProps {
   appointmentId: string;
   handleBack: () => void;
   patientId: string;
 }
 
-const LabOrders = ({ appointmentId, patientId, handleBack }: LabOrdersProps) => {
+const LabOrders = ({
+  appointmentId,
+  patientId,
+  handleBack,
+}: LabOrdersProps) => {
   const [labOrders, setLabOrders] = useState<ILabOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [editingLabOrder, setEditingLabOrder] = useState<ILabOrder | null>(null);
-  const [selectedLabOrder, setSelectedLabOrder] = useState<ILabOrder | null>(null);
+  const [editingLabOrder, setEditingLabOrder] = useState<ILabOrder | null>(
+    null
+  );
+  const [selectedLabOrder, setSelectedLabOrder] = useState<ILabOrder | null>(
+    null
+  );
   const [isModalOpen, setModalOpen] = useState(false);
 
   const fetchLabOrders = async () => {
     setLoading(true);
     try {
-      const response = await doctorApi.getLabOrdersAppointmentbyId(appointmentId);
+      const response = await doctorApi.getLabOrdersAppointmentbyId(
+        appointmentId
+      );
       setLabOrders(response?.data || []);
     } catch (error) {
       console.error("Error fetching lab orders:", error);
@@ -105,61 +113,81 @@ const LabOrders = ({ appointmentId, patientId, handleBack }: LabOrdersProps) => 
           <h4 className="text-xl my-2">Lab Orders</h4>
 
           {loading ? (
-            <p className="text-gray-600 text-center mt-20">Loading lab orders...</p>
+            <p className="text-gray-600 text-center mt-20">
+              Loading lab orders...
+            </p>
           ) : null}
           {!loading && labOrders.length === 0 ? (
             <p className="text-gray-600 text-center mt-20">
               No lab orders found for this appointment.
             </p>
           ) : (
-            labOrders.map((order) => (
-              <div
-                className="bg-white border rounded-lg flex flex-col md:flex-row md:items-center justify-between py-4 px-4 md:px-8 mb-4"
-                key={order.id}
-              >
-                <div className="space-y-1 mb-2 md:mb-0 md:w-[300px] line-clamp-1">
-                  <h3 className="text-sm md:text-base">{order.testName}</h3>
-                  <h4 className="text-xs font-light">
-                    {moment(order.createdAt).format("MMMM D, YYYY")}
-                  </h4>
-                </div>
+            // labOrders.map((order) => (
+            //   <div
+            //     className="bg-white border rounded-lg flex flex-col md:flex-row md:items-center justify-between py-4 px-4 md:px-8 mb-4"
+            //     key={order.id}
+            //   >
+            //     <div className="space-y-1 mb-2 md:mb-0 md:w-[300px] line-clamp-1">
+            //       <h3 className="text-sm md:text-base">{order.testName}</h3>
+            //       <h4 className="text-xs font-light">
+            //         {moment(order.createdAt).format("MMMM D, YYYY")}
+            //       </h4>
+            //     </div>
 
-                <div className="text-xs font-light mb-2 md:mb-0 md:w-[300px] line-clamp-1">
-                  {order?.notes || "No notes"}
-                </div>
+            //     <div className="text-xs font-light mb-2 md:mb-0 md:w-[300px] line-clamp-1">
+            //       {order?.notes || "No notes"}
+            //     </div>
 
-                <div className="mb-2 md:mb-0">
-                  <StatusBadge status={order.status || "pending"} />
-                </div>
+            //     <div className="mb-2 md:mb-0">
+            //       <StatusBadge status={order.status || "pending"} />
+            //     </div>
 
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    className="text-xs text-primary underline"
-                    onClick={() => {
-                      setSelectedLabOrder(order);
-                      setModalOpen(true);
-                    }}
-                  >
-                    View
-                  </button>
-                  <button
-                    className="text-xs text-yellow-600 underline"
-                    onClick={() => {
-                      setEditingLabOrder(order);
-                      setShowForm(true);
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="text-xs text-red-600 underline"
-                    onClick={() => handleDelete(order.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))
+            //     <div className="flex flex-wrap gap-2">
+            //       <button
+            //         className="text-xs text-primary underline"
+            //         onClick={() => {
+            //           setSelectedLabOrder(order);
+            //           setModalOpen(true);
+            //         }}
+            //       >
+            //         View
+            //       </button>
+            //       <button
+            //         className="text-xs text-yellow-600 underline"
+            //         onClick={() => {
+            //           setEditingLabOrder(order);
+            //           setShowForm(true);
+            //         }}
+            //       >
+            //         Edit
+            //       </button>
+            //       <button
+            //         className="text-xs text-red-600 underline"
+            //         onClick={() => handleDelete(order.id)}
+            //       >
+            //         Delete
+            //       </button>
+            //     </div>
+            //   </div>
+            // ))
+            <div className="grid gird-col-1 lg:grid-cols-3 2xl:grid-cols-4 gap-4 my-4">
+              {labOrders.map((order) => (
+                <LabCard
+                  key={order?.id}
+                  order={order}
+                  type=""
+                  onView={() => {
+                    setSelectedLabOrder(order);
+                    setModalOpen(true);
+                  }}
+                  onEdit={() => {
+                    setEditingLabOrder(order);
+                    setShowForm(true);
+                  }}
+                  onDelete={() => handleDelete(order.id)}
+                />
+              ))}
+            </div>
           )}
 
           {selectedLabOrder && (

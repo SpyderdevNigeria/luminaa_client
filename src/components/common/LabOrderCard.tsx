@@ -1,12 +1,27 @@
 import { PiTestTubeBold } from "react-icons/pi";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import { FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
 import routeLinks from "../../utils/routes";
 import StatusBadge from "./StatusBadge";
+import Dropdown from "../dropdown/dropdown";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
 const STATUS_STEPS = ["PENDING", "IN_PROGRESS", "COMPLETED"];
 
-function LabCard({ order, type = "lab" }: { order: any; type: string }) {
+function LabCard({
+  order,
+  type = "lab",
+  onEdit,
+  onDelete,
+  onView,
+}: {
+  order: any;
+  type: string;
+  onEdit?: () => void;
+  onView?:() => void;
+  onDelete?: () => void;
+}) {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -22,36 +37,60 @@ function LabCard({ order, type = "lab" }: { order: any; type: string }) {
     }
   };
 
-  // const patientName = `${order?.patient?.firstName ?? ""} ${order?.patient?.lastName ?? ""}`;
   const testName = order?.testName || "Lab Test";
   const testNotes = order?.notes || "No additional notes provided.";
   const priority = order?.priority || "normal";
   const status = order?.status || "PENDING";
-
-  // const doctorName = `${order?.doctor?.firstName ?? ""} ${order?.doctor?.lastName ?? ""}`;
-  // const doctorSpecialty = order?.doctor?.specialty || "N/A";
-
-  // const appointmentDate = order?.appointment?.date
-  //   ? moment(order.appointment.date).format("MMM D, YYYY")
-  //   : "N/A";
-  // const appointmentTime = order?.appointment?.date
-  //   ? moment(order.appointment.date).format("h:mm A")
-  //   : "N/A";
-
   const createdAt = moment(order?.createdAt).format("MMM D, YYYY h:mm A");
-
   const currentStatusIndex = STATUS_STEPS.indexOf(status);
 
   return (
-    <main className="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white text-black flex flex-col gap-6">
+    <main className="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white text-black flex flex-col gap-6 relative">
+      {/* Dropdown */}
+      {(onEdit || onDelete) && (
+        <div className="absolute top-4 right-4">
+          <Dropdown
+            showArrow={false}
+            triggerLabel=""
+            triggerIcon={<HiOutlineDotsVertical />}
+          >
+            <ul className="space-y-2 text-sm">
+              <li
+                onClick={onView}
+                className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
+              >
+                <FiEye /> View
+              </li>
+              {onEdit && (
+                <li
+                  onClick={onEdit}
+                  className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
+                >
+                  <FiEdit /> Edit
+                </li>
+              )}
+              {onDelete && (
+                <li
+                  onClick={onDelete}
+                  className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"
+                >
+                  <FiTrash2 /> Delete
+                </li>
+              )}
+            </ul>
+          </Dropdown>
+        </div>
+      )}
+
+      {/* Header */}
       <div className="flex items-center gap-4">
-     <div>
-       <div className="w-12 h-12 flex items-center justify-center bg-primary rounded-full">
+        <div className="w-12 h-12 flex items-center justify-center bg-primary rounded-full">
           <PiTestTubeBold className="text-white text-2xl" />
         </div>
-     </div>
         <div>
-          <h3 className="text-lg font-semibold capitalize line-clamp-1">{testName}</h3>
+          <h3 className="text-lg font-semibold capitalize line-clamp-1">
+            {testName}
+          </h3>
           <p className="text-sm text-gray-500">Requested on {createdAt}</p>
         </div>
       </div>
@@ -63,7 +102,10 @@ function LabCard({ order, type = "lab" }: { order: any; type: string }) {
           {STATUS_STEPS.map((step, index) => {
             const isCompleted = index <= currentStatusIndex;
             return (
-              <div key={step} className="flex-1 flex items-center justify-center relative">
+              <div
+                key={step}
+                className="flex-1 flex items-center justify-center relative"
+              >
                 <div
                   className={`w-4 h-4 z-10 rounded-full ${
                     isCompleted ? "bg-primary" : "bg-gray-300"
@@ -89,22 +131,6 @@ function LabCard({ order, type = "lab" }: { order: any; type: string }) {
 
       {/* Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* <div>
-          <h4 className="text-sm font-medium text-gray-600">Patient</h4>
-          <p className="text-base">{patientName}</p>
-        </div>
-        <div>
-          <h4 className="text-sm font-medium text-gray-600">Doctor</h4>
-          <p className="text-base">
-            {doctorName} <span className="text-sm text-gray-500">({doctorSpecialty})</span>
-          </p>
-        </div>
-        <div>
-          <h4 className="text-sm font-medium text-gray-600">Appointment</h4>
-          <p className="text-base">
-            {appointmentDate} at {appointmentTime}
-          </p>
-        </div> */}
         <div>
           <h4 className="text-sm font-medium text-gray-600">Priority</h4>
           <span
@@ -126,15 +152,17 @@ function LabCard({ order, type = "lab" }: { order: any; type: string }) {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-        <StatusBadge status={status} />
-        <button
-          onClick={handleNavigate}
-          className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90"
-        >
-          View Test Request
-        </button>
-      </div>
+      {type !== "" && (
+        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+          <StatusBadge status={status} />
+          <button
+            onClick={handleNavigate}
+            className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90"
+          >
+            View Test Request
+          </button>
+        </div>
+      )}
     </main>
   );
 }
