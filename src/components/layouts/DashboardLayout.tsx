@@ -69,7 +69,7 @@ function DashboardLayout({ children, links }: DashboardLayoutProps) {
         />
 
         {/* Page Content */}
-        <main className={`flex-1 px-4 md:px-18 py-6 max-h-[90vh]  overflow-y-scroll `}>
+        <main className={`flex-1 px-4 2xl:px-18 py-6 max-h-[90vh]  overflow-y-scroll `}>
           {children}
         </main>
       </div>
