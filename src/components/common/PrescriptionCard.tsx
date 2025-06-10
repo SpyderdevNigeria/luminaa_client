@@ -4,12 +4,12 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
 import Dropdown from "../dropdown/dropdown";
 interface Prescription {
-  _id: string;
-  medicationName: string;
-  createdAt: string;
-  duration: string;
-  frequency: string;
-  isRefillable:string;
+  _id?: string;
+  medicationName?: string;
+  createdAt?: string;
+  duration?: string;
+  frequency?: string;
+  isRefillable?:string;
 }
 
 interface PrescriptionCardProps {
@@ -60,16 +60,16 @@ const PrescriptionCard: React.FC<PrescriptionCardProps> = ({
         </div>
         <div>
           <h2 className="text-lg font-semibold text-gray-900">
-            {prescription.medicationName}
+            {prescription?.medicationName}
           </h2>
-          <p className="text-sm text-gray-500">
+          {prescription?.createdAt &&   <p className="text-sm text-gray-500">
             Prescribed on{" "}
-            {new Date(prescription.createdAt).toLocaleDateString(undefined, {
+            {new Date(prescription?.createdAt).toLocaleDateString(undefined, {
               year: "numeric",
               month: "short",
               day: "numeric",
             })}
-          </p>
+          </p>}
         </div>
       </div>
 

@@ -7,10 +7,10 @@ import moment from "moment";
 
 interface DiagnosisCardProps {
   diagnosis: {
-    id: string;
+    id?: string;
     primaryDiagnosis: string;
     severity?: string;
-    createdAt: string;
+    createdAt?: string;
   };
   onView?: () => void;
   onEdit?: () => void;
