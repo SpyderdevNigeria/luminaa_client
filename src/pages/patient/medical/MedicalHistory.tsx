@@ -29,11 +29,12 @@ function MedicalHistory() {
     getDiagnoses();
   }, [page, severity]);
 
+  console.log(diagnoses)
   return (
     <div className="container-bd">
       <HeaderTab
         title="Medical History"
-         showSearch={false}
+        showSearch={false}
         dropdowns={[
           {
             label: "Severity",
@@ -57,18 +58,19 @@ function MedicalHistory() {
           </p>
         )}
 
-        {!loading &&
-               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 my-4">
-                       {diagnoses.map((diagnosis) => (
-                         <DiagnosisCard
-                           diagnosis={diagnosis}
-                           onView={() => {
-                             setSelectedDiagnosis(diagnosis);
-                             setModalOpen(true);
-                           }}
-                         />
-                       ))}
-                     </div>}
+        {!loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 my-4">
+            {diagnoses.map((diagnosis) => (
+              <DiagnosisCard
+                diagnosis={diagnosis}
+                onView={() => {
+                  setSelectedDiagnosis(diagnosis);
+                  setModalOpen(true);
+                }}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Modal */}
         <MedicalReportModal

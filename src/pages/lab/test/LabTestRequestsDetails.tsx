@@ -63,8 +63,12 @@ function LabTestRequestsDetails() {
     console.log(labOrder)
     try {
       if (labOrder?.data?.result) {
-         console.log('update result')
-        await LabApi.updateLabOrderResultById(labResultMeta?.id, payload);
+         console.log('update result', labResultMeta?.id, payload)
+        await LabApi.updateLabOrderResultById(labResultMeta?.id, {
+          documents : payload?.documents,
+          notes: payload?.notes,
+          results: payload?.results,
+        });
         alert("Result updated successfully.");
       } else {
         console.log('create result')

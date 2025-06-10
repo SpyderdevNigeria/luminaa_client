@@ -262,7 +262,7 @@ const LabOrderDetails = ({
                 </p>
               </main>
               <h2 className="text-base font-semibold">Patient Information</h2>
-              <InfoLabel label={patient?.id ?? "N/A"} info="Patient ID" />
+              {/* <InfoLabel label={patient?.id ?? "N/A"} info="Patient ID" /> */}
               <InfoLabel label={patient?.email ?? "N/A"} info="Email" />
             </div>
           </section>
@@ -283,7 +283,7 @@ const LabOrderDetails = ({
                 </p>
               </main>
               <h2 className="text-base font-semibold">Doctor Information</h2>
-              <InfoLabel label={doctor?.id ?? "N/A"} info="Doctor ID" />
+              {/* <InfoLabel label={doctor?.id ?? "N/A"} info="Doctor ID" /> */}
               <InfoLabel label={doctor?.specialty ?? "N/A"} info="Specialty" />
             </div>
           </section>
@@ -318,33 +318,48 @@ const LabOrderDetails = ({
                   key={index}
                   className="flex flex-row items-center justify-between gap-4 mt-2"
                 >
-                  <input
-                    value={result.testName}
-                    readOnly
-                    className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
-                  />
-                  <input
-                    value={result.result}
-                    readOnly
-                    className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
-                  />
-                  <input
-                    value={result.unit}
-                    readOnly
-                    className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
-                  />
-                  <input
-                    value={result.referenceRange}
-                    readOnly
-                    className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
-                  />
+                  <div>
+                    <label htmlFor="testName"> Test Name</label>
+                    <input
+                      value={result.testName}
+                      readOnly
+                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="result"> Result</label>
+                    <input
+                      value={result.result}
+                      readOnly
+                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="unit"> Unit</label>
+                    <input
+                      value={result.unit}
+                      readOnly
+                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="referenceRange"> Reference Range</label>
+                    <input
+                      value={result.referenceRange}
+                      readOnly
+                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                    />
+                  </div>
                   {type === "lab" && (
-                    <button
-                      className="text-white bg-primary  p-2 px-4 rounded-lg"
-                      onClick={() => removeResult(index)}
-                    >
-                      x
-                    </button>
+                    <div>
+                      <label htmlFor="referenceRange"> Action</label>
+                      <button
+                        className="text-white bg-red-500  p-2 px-4 rounded-lg"
+                        onClick={() => removeResult(index)}
+                      >
+                        x
+                      </button>
+                    </div>
                   )}
                 </div>
               ))
