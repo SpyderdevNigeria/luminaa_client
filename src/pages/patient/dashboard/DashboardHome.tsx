@@ -97,7 +97,7 @@ function DashboardHome() {
     >
       {/* Icon */}
       {i.icon && (
-        <div className="w-12 h-12 flex items-center justify-center rounded-full bg-secondary/10 text-secondary text-2xl">
+        <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary text-2xl">
           <i.icon />
         </div>
       )}
