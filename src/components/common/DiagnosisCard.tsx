@@ -80,7 +80,9 @@ function DiagnosisCard({ diagnosis, onView, onEdit, onDelete }: DiagnosisCardPro
         <StatusBadge status={severity || "pending"} />
       </div>
        {!hasActions && (
-      <button className="bg-primary text-white p-2 rounded-lg " onClick={onView}>
+      <button
+       className="bg-primary text-white p-2 rounded-lg "
+       onClick={onView}>
         view 
       </button>
        )}

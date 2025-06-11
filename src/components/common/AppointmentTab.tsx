@@ -1,6 +1,12 @@
 import { useState } from "react";
-import AppointmentDetailsModal from "../modal/AppointmentDetailsModal";
 import PaginationComponent from "./PaginationComponent";
+import { FaCalendarAlt } from "react-icons/fa";
+import DoctorImage from '../../assets/images/doctor/doctor.png'
+import { HiOutlineStatusOnline } from "react-icons/hi";
+import { FaHospital } from "react-icons/fa";
+import moment from "moment";
+import { Link } from "react-router-dom";
+import routeLinks from "../../utils/routes";
 
 const colors = [
   { bg: "bg-[#FFEBC6]", border: "border-l-[#F1C87E]" },
@@ -41,14 +47,11 @@ interface appointmentTabProps {
 
 const AppointmentTab = ({ appointmentsData, page,limit, total, totalPages, setPage }: appointmentTabProps) => {
   const [activeTab, setActiveTab] = useState<"all" | "upcoming" | "completed">("all");
-  const [data, setData] = useState<any>(null);
-  const [isModalOpen, setModalOpen] = useState(false);
-
   const transformedAppointments = transformAppointments(appointmentsData || []);
 
   const now = new Date();
   const upcomingAppointments = transformedAppointments.filter(
-    (app) => new Date(app.scheduledDate) > now || app.stauts !== "completed"
+    (app) => new Date(app.scheduledDate) > now || app.status !== "completed"
   );
   const pastAppointments = transformedAppointments.filter(
     (app) => app.status === "completed"
@@ -58,39 +61,70 @@ const AppointmentTab = ({ appointmentsData, page,limit, total, totalPages, setPa
   const renderAppointments = (apps: any[], title: string) => {
     if (!apps.length) return null;
 
+    console.log(apps)
     return (
-      <div className="mb-6">
-        <h2 className="text-xs md:text-sm font-[300] text-[#A39A9A] mb-4">{title}</h2>
-        <div className="space-y-4">
-          {apps.map((app, index) => (
-            <div
-              key={index}
-              className={`rounded-lg p-4 flex items-center justify-between border-l-4 ${app.bg} ${app.border}`}
-            >
-              <div>
-                <h3 className="text-sm font-medium">DR {app?.doctor?.firstName} {app?.doctor?.lastName}</h3>
-                <p className="text-xs text-gray-600 mt-1">
-                  {app.date} | {app.time}
-                </p>
-              </div>
-              <button
-                className="bg-white p-1 md:p-4 rounded-lg text-xs font-medium text-gray-700"
-                onClick={() => {
-                  setData(app);
-                  setModalOpen(true);
-                }}
-              >
-                View details
-              </button>
-            </div>
-          ))}
-          <AppointmentDetailsModal
-            data={data}
-            isModalOpen={isModalOpen}
-            setModalOpen={setModalOpen}
-          />
+   <div className="mb-6">
+  <h2 className="text-xs md:text-sm font-light text-[#A39A9A] mb-4">{title}</h2>
+  <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
+    {apps.map((app, index) => (
+      <div
+        key={index}
+        className="bg-white border border-[#E5E7EB] rounded-xl p-6 shadow-sm"
+      >
+
+        {/* Title & Doctor */}
+        <div className="text-sm text-gray-500 flex items-center gap-2">
+         <div className="w-10 h-10 rounded-full overflow-hidden ">
+          <img src={DoctorImage} alt=""  className="w-full h-full object-cover"/>
+          </div> with Dr. {app?.doctor?.firstName} {app?.doctor?.lastName}
         </div>
+
+        {/* Location */}
+        <div>
+                  <p className="mt-2 text-xs font-medium text-gray-500 uppercase flex items-center gap-2">
+          Meeting Venue  
+        </p>
+           <p className="text-xs text-gray-800 mt-1">
+              <span className="flex items-center text-primary gap-2">{app.location === 'online' ?  <FaHospital /> :  <HiOutlineStatusOnline/> } {app.location}</span>
+            </p>
+        </div>
+
+        {/* Date and Time Box */}
+        <div className="mt-4 bg-[#F9FAFB] rounded-lg p-4 flex items-center space-x-3">
+          <div className="bg-primary/10 text-primary p-2 rounded-full">
+            <FaCalendarAlt />
+          </div>
+          <div>
+            <p className="text-xs font-medium text-gray-500 uppercase">
+              Date & Time
+            </p>
+            <p className="text-xs text-gray-800">
+              {moment(app.date).format('MMMM Do YYYY')} • {moment(app.time, 'HH:mm:ss').format('h:mm A')} 
+            </p>
+          </div>
+        </div>
+      <div className="my-4">
+                <p className="text-xs font-medium text-gray-500 uppercase">
+              Symptons
+            </p>
+            <p className="text-sm text-gray-800 line-clamp-2">
+              {app?.patientNote}
+            </p>
       </div>
+
+     <div className="mt-5">
+         <Link
+        to={routeLinks?.patient?.consultations+'/'+app.id}
+          className="mt-4 px-4 py-2 border border-primary text-primary text-sm rounded-md hover:bg-primary hover:text-white transition"
+        >
+          Reschedule appointment
+        </Link>
+     </div>
+      </div>
+    ))}
+  </div>
+</div>
+
     );
   };
 
@@ -126,7 +160,7 @@ const AppointmentTab = ({ appointmentsData, page,limit, total, totalPages, setPa
       </div>
 
       {/* Tab Content */}
-      <div className="animate-fade-in">
+      <div className="animate-fade-in ">
         {renderAppointments(
           getPaginatedAppointments(),
           `${activeTab === "all"
