@@ -10,7 +10,6 @@ import {
 } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import { IconType } from "react-icons";
-import CardImage from "../../assets/images/card/card-shape.svg";
 
 type DashboardCardProps = {
   title: string;
@@ -47,19 +46,21 @@ function DashboardCard({ title, count }: DashboardCardProps) {
 
   return (
     <div>
-      <main className="bg-primary text-white rounded-lg p-8 flex flex-row justify-between gap-4 items-center relative">
-              <img
+      <main   className="bg-white border border-gray-100 rounded-2xl p-10 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-row justify-between gap-6">
+        {/* <img
                     src={CardImage}
                     alt=""
                     className="absolute left-2 top-bottom-moving"
-                  />
-        <div className="flex flex-col gap-2">
-          <h6 className="text-4xl 2xl:text-5xl  font-semibold">{count}</h6>
-          <h2 className="text-sm 2xl:text-lg ">{title}</h2>
+                  /> */}
+        <div className="flex flex-col gap-1">
+          <h3 className="text-3xl 2xl:text-5xl font-semibold text-gray-900">{count}</h3>
+          <p className="text-base 2xl:text-lg text-gray-600">{title}</p>
         </div>
-        <span className="p-2">
-          <Icon className="text-base lg:text-4xl 2xl:text-5xl text-white" />
-        </span>
+      <div>
+          <div className="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary text-2xl">
+          <Icon />
+        </div>
+      </div>
       </main>
     </div>
   );

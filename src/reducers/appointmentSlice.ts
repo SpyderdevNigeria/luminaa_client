@@ -1,14 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Appointment {
-  id: string;
-  patientId: string;
-  location: string;
-  patientNote: string;
-}
+import { IAppointment } from '../types/Interfaces';
 
 interface AppointmentState {
-  appointments: Appointment[];
+  appointments: IAppointment[];
   error: string | null;
   total: number;
   limit: number;
@@ -27,7 +21,7 @@ const initialState: AppointmentState = {
 
 // Payload type for full appointment response
 interface AppointmentResponsePayload {
-  data: Appointment[];
+  data: IAppointment[];
   total: number;
   limit: number;
   totalPages: number;
@@ -38,10 +32,10 @@ const appointmentSlice = createSlice({
   name: 'appointments',
   initialState,
   reducers: {
-    addAppointment: (state, action: PayloadAction<Appointment>) => {
+    addAppointment: (state, action: PayloadAction<IAppointment>) => {
       state.appointments.push(action.payload);
     },
-    updateAppointment: (state, action: PayloadAction<Appointment>) => {
+    updateAppointment: (state, action: PayloadAction<IAppointment>) => {
       const index = state.appointments.findIndex(a => a.id === action.payload.id);
       if (index !== -1) {
         state.appointments[index] = action.payload;
@@ -56,7 +50,7 @@ const appointmentSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
-    setAppointments: (state, action: PayloadAction<Appointment[]>) => {
+    setAppointments: (state, action: PayloadAction<IAppointment[]>) => {
       state.appointments = action.payload;
     },
     setAllAppointments: (state, action: PayloadAction<AppointmentResponsePayload>) => {

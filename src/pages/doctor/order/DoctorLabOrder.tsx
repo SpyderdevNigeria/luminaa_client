@@ -51,7 +51,7 @@ function LabTestRequests() {
           {ordersLoading ? (
             <p>Loading...</p>
           ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
               {orders.length > 0 ? (
                 orders.map((order) => <LabCard key={order.id} order={order} type="doctor" />)
               ) : (
