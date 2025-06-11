@@ -105,7 +105,7 @@ const AppointmentTab = ({ appointmentsData, page,limit, total, totalPages, setPa
         </div>
       <div className="my-4">
                 <p className="text-xs font-medium text-gray-500 uppercase">
-              Symptons
+              Symptoms
             </p>
             <p className="text-sm text-gray-800 line-clamp-2">
               {app?.patientNote}
