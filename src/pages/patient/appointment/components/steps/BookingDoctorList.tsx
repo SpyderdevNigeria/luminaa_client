@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import CustomCalendar from "../../../../../components/common/CustomCalendar";
 import PatientApi from "../../../../../api/PatientApi";
+import DoctorCard from "../../../../../components/common/DoctorCard";
 import DoctorIcon from "../../../../../assets/images/doctor/doctor.png";
-
 interface Doctor {
   id: string;
   user: {
@@ -13,12 +13,14 @@ interface Doctor {
   };
   specialty: string;
   availability: {
-    data: {
-    allDay:boolean;
-    endTime:string;
-    dayOfWeek:string;
-    startTime:string;
-  }[] | null;
+    data:
+      | {
+          allDay: boolean;
+          endTime: string;
+          dayOfWeek: string;
+          startTime: string;
+        }[]
+      | null;
   } | null;
 }
 
@@ -48,7 +50,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
       try {
         const response = await PatientApi.getDoctors();
         if (response?.status) {
-          // set data 
+          // set data
           setDoctors(response.data.data);
         }
       } catch (error) {
@@ -85,14 +87,15 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
     const date = new Date(dateStr);
     const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
 
-    const slot = selectedDoctor.availability?.data?.find((slot) => slot.dayOfWeek === dayName);
+    const slot = selectedDoctor.availability?.data?.find(
+      (slot) => slot.dayOfWeek === dayName
+    );
     if (!slot) {
-      alert("Doctor is not available on this day")
+      alert("Doctor is not available on this day");
       setAvailableTimes([]);
       return;
     }
 
-      
     const start = parseInt(slot.startTime.split(":")[0], 10);
     const end = parseInt(slot.endTime.split(":")[0], 10);
     const times = [];
@@ -129,76 +132,63 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
     nextStep();
   };
 
-
   return (
     <div>
       {!selectedDoctor ? (
         <section className="mt-4">
           <h5 className="mb-1 text-lg">Available Doctors</h5>
-          {loading ? (
-            <div className="mt-4 text-center text-sm">Loading doctors...</div>
-          ) : (
-            <div className="mt-2  overflow-y-scroll">
-              {doctors.map((doctor) => (
-                <div
-                  key={doctor?.id}
-                  className="flex flex-row items-center justify-between border hover:border-primary p-4 mt-2 rounded-lg cursor-pointer"
-                  onClick={() => handleDoctorSelect(doctor)}
-                >
-                  <div className="flex flex-row items-center gap-2">
-                    <div className="overflow-hidden rounded-full w-18 h-18">
-                      <img
-                        src={
-                          doctor?.user?.profilePicture
-                            ? doctor.user.profilePicture?.url
-                            : DoctorIcon
-                        }
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h5 className="text-sm font-semibold md:text-lg">
-                        Dr {doctor?.user?.firstName} {doctor?.user?.lastName}
-                      </h5>
-                      <h6 className="text-xs md:text-sm text-[#ABABAB]">
-                        {doctor?.specialty}
-                      </h6>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+ {loading ? (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+    {[1, 2, 3, 4].map((_, index) => (
+      <div
+        key={index}
+        className="p-6 bg-white rounded-xl shadow-sm animate-pulse space-y-4"
+      >
+        <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto" />
+        <div className="h-4 bg-gray-300 rounded w-3/4 mx-auto" />
+        <div className="h-3 bg-gray-200 rounded w-1/2 mx-auto" />
+      </div>
+    ))}
+  </div>
+) : (
+<div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6">
+  {doctors.map((doctor) => (
+    <DoctorCard key={doctor.id} doctor={doctor} handleClick={()=>{handleDoctorSelect(doctor)}} />
+  ))}
+</div>
+)}
         </section>
       ) : (
         <main className="mt-4">
           <section className="flex flex-row items-center justify-between mb-4">
-                      <div className="flex items-center gap-4">
-                  <div className="overflow-hidden rounded-full w-18 h-18">
-                      <img
-                        src={
-                          selectedDoctor?.user?.profilePicture
-                            ? selectedDoctor.user.profilePicture?.url
-                            : DoctorIcon
-                        }
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-            <div>
+            <div className="flex items-center gap-4">
+              <div className="overflow-hidden rounded-full w-18 h-18">
+                <img
+                  src={
+                    selectedDoctor?.user?.profilePicture
+                      ? selectedDoctor.user.profilePicture?.url
+                      : DoctorIcon
+                  }
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
                 <h5 className="text-lg font-medium">
-              Dr {selectedDoctor.user.firstName} {selectedDoctor.user.lastName}
-            </h5>
-            <p className="text-sm text-gray-500">{selectedDoctor.specialty}</p>
+                  Dr {selectedDoctor.user.firstName}{" "}
+                  {selectedDoctor.user.lastName}
+                </h5>
+                <p className="text-sm text-gray-500">
+                  {selectedDoctor.specialty}
+                </p>
+              </div>
             </div>
-          </div>
-                      <button
-            className="text-sm text-red-500 underline mb-4"
-            onClick={handleCancelDoctor}
-          >
-            ← Change Doctor
-          </button>
+            <button
+              className="text-sm text-red-500 underline mb-4"
+              onClick={handleCancelDoctor}
+            >
+              ← Change Doctor
+            </button>
           </section>
 
           <div className="mb-6">
@@ -243,12 +233,14 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-500">No available times for selected date.</p>
+              <p className="text-sm text-gray-500">
+                No available times for selected date.
+              </p>
             )}
           </div>
 
           <div className="mt-6">
-             <button
+            <button
               onClick={handleNextStep}
               disabled={!canProceed}
               className={`${
@@ -261,11 +253,10 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
             </button>
             <button
               onClick={prevStep}
-         className="text-primary cursor-pointer w-full"
+              className="text-primary cursor-pointer w-full"
             >
               Back
             </button>
-           
           </div>
         </main>
       )}

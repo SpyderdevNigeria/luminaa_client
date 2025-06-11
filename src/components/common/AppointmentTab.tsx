@@ -40,7 +40,7 @@ interface appointmentTabProps {
 }
 
 const AppointmentTab = ({ appointmentsData, page,limit, total, totalPages, setPage }: appointmentTabProps) => {
-  const [activeTab, setActiveTab] = useState<"all" | "upcoming" | "past">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "upcoming" | "completed">("all");
   const [data, setData] = useState<any>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -108,15 +108,15 @@ const AppointmentTab = ({ appointmentsData, page,limit, total, totalPages, setPa
     <div className="mt-6">
       {/* Tabs Header */}
       <div className="flex gap-8 font-medium mb-3 text-sm md:text-base">
-        {["all", "upcoming", "past"].map((tab) => (
+        {["all", "upcoming", "completed"].map((tab) => (
           <div
             key={tab}
             onClick={() => {
-              setActiveTab(tab as "all" | "upcoming" | "past");
+              setActiveTab(tab as "all" | "upcoming" | "completed");
             }}
             className={`cursor-pointer ${
               activeTab === tab
-                ? "text-secondary border-b-2 border-secondary"
+                ? "text-primary border-b-2 border-primary"
                 : "text-inactive"
             }`}
           >
