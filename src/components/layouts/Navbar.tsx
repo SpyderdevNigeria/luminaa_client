@@ -44,7 +44,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
         {/* Avatar & Dropdown */}
         <div className="relative hidden md:block" ref={dropdownRef}>
           <img
-            src={userProfile?.user?.profilePicture?.url !== null ? userProfile?.user?.profilePicture?.url : userProfile?.role === 'patient' ? UserImage : PartnerImage  }
+            src={userProfile?.user?.profilePicture?.url !== null || userProfile?.user?.profilePicture?.url !== undefined ? userProfile?.user?.profilePicture?.url : userProfile?.role === 'patient' ? UserImage : PartnerImage  }
             alt={userProfile?.user?.firstName + " " + userProfile?.user?.lastName}
             className="w-10 h-10 rounded-full cursor-pointer bg-gray-100"
             onClick={() => setDropdownOpen(!dropdownOpen)}
