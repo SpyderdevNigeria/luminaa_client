@@ -73,6 +73,13 @@ admin: {
   doctors: '/admin/doctors',
   doctorDetails: '/admin/doctors/:id',
   medications:'/admin/medications'
+},
+
+pharmacist: {
+  path:'/pharmacist',
+  dashboard: '/pharmacist/dashboard',
+  medications:'/pharmacist/medications',
+  profile:'/pharmacist/profile'
 }
 }
 

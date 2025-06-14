@@ -236,6 +236,27 @@ export const navItemsAdmin = [
   // },
 ];
 
+export const navItemsPharmacy = [
+    {  
+    label: "Dashboard",
+    title: "Dashboard",
+    icon: RxDashboard,
+    to: routeLinks?.pharmacist?.dashboard,
+  },
+    {
+    label:"Medications",
+    title:"Medications",
+    icon:MdMedication,
+    to:routeLinks?.pharmacist?.medications,
+  },
+    {
+    label: "Profile Management",
+    title: "Profile Management",
+    icon: FaRegCircleUser,
+    to: routeLinks?.pharmacist?.profile,
+  },
+
+]
 export const adminDoctorSpecialties = [
   "Cardiology",
   "Dermatology",
@@ -302,15 +323,15 @@ export const returnPartnerNavigationUrlLogic = (
   }
 
   if (partnerType === "lab_tech") {
-    return "/lab/dashboard";
+    return routeLinks?.lab?.dashboard;
   }
 
   if (partnerType === "hospital") {
     return "/hospital/dashboard";
   }
 
-  if (partnerType === "pharmacy") {
-    return "/pharmacy/dashboard";
+  if (partnerType === "pharmacist") {
+    return routeLinks?.pharmacist?.dashboard;
   }
 
   if (partnerType === "sponsor") {

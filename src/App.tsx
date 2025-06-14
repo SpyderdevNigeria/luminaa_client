@@ -47,6 +47,10 @@ import DoctorLabOrderDetails from "./pages/doctor/order/DoctorLabOrderDetails";
 import LabDetails from "./pages/patient/lab/LabDetails";
 import AdminPharmacists from "./pages/admin/pharmacists/AdminPharmacists";
 import AdminMedications from "./pages/admin/medications/AdminMedications";
+import PharmacyProfile from "./pages/pharmacy/profile/PharmacistProfile";
+import PharmacyDashboard from "./pages/pharmacy/dashboard/PharmacistDashboard";
+import PharmacyMedications from "./pages/pharmacy/medications/PharmacistMedications";
+import PharmacyLayout from "./components/layouts/PharmacistLayout";
 // Route
 const App = createBrowserRouter([
   {
@@ -245,7 +249,29 @@ const App = createBrowserRouter([
     ]
   },
 
-
+// Pharmacy Routes
+  {
+    path: routeLinks?.pharmacist?.path,
+    element: <PharmacyLayout/>,
+    children : [
+        {
+        path:  routeLinks?.pharmacist?.path,
+        element: <Navigate to={routeLinks?.pharmacist?.dashboard} />,
+      },
+            {
+        path:  routeLinks?.pharmacist?.dashboard,
+        element: <PharmacyDashboard/>,
+      },
+      {
+        path:  routeLinks?.pharmacist?.medications,
+        element: <PharmacyMedications/>,
+      },
+        {
+        path: routeLinks?.pharmacist?.profile,
+        element: <PharmacyProfile />,
+      },
+    ]
+  },
   // Admin Routes
   {
     path: routeLinks?.auth?.adminAuth,
