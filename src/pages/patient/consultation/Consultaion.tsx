@@ -3,6 +3,7 @@ import AppointmentTab from "../../../components/common/AppointmentTab";
 import HeaderTab from "../../../components/common/HeaderTab";
 import PatientApi from "../../../api/PatientApi";
 import useAppointments from "../../../hooks/useAppointments";
+import { AppointmentCardSkeleton } from "../../../components/skeleton/SkeletonCards";
 
 function Consultaion() {
   const {
@@ -50,8 +51,10 @@ function Consultaion() {
 
       <section className="bg-white rounded-lg p-4 min-h-[200px]">
         {loadingAppointment ? (
-          <div className="text-center text-gray-500 py-10">
-            Loading appointments...
+          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
+            {[...Array(4)].map((_, idx) => (
+              <AppointmentCardSkeleton key={idx} />
+            ))}
           </div>
         ) : errorAppoint ? (
           <div className="text-center text-red-500 py-10">{errorAppoint}</div>

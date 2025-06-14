@@ -15,7 +15,7 @@ import { BiArrowBack } from "react-icons/bi";
 import DoctrImage from "../../assets/images/doctor/doctor.png";
 import { useEffect, useState } from "react";
 import routeLinks from "../../utils/routes";
-
+import { TestDetailsSkeleton } from "../skeleton/SkeletonCards";
 interface LabOrderDetailsProps {
   data: {
     data: ILabOrder & {
@@ -66,7 +66,7 @@ const LabOrderDetails = ({
 
   const navigate = useNavigate();
 
-  if (isLoading) return <p className="p-4">Loading...</p>;
+  if (isLoading) return <TestDetailsSkeleton/>;
   if (error) return <p className="p-4 text-red-500">{error}</p>;
   if (!data) return null;
 

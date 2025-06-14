@@ -8,6 +8,7 @@ import DiagnosisCard from "../../../components/common/DiagnosisCard";
 import MedicalReportModal from "../../../components/modal/MedicalReportModal";
 import PrescriptionCard from "../../../components/common/PrescriptionCard";
 import PrescriptionDetailsModal from "../../../components/modal/PrescriptionDetailsModal";
+import { getFormattedDateTime } from "../../../utils/dashboardUtils";
 
 interface Diagnosis {
   id?: string;
@@ -73,12 +74,7 @@ const ConsultationView = () => {
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
   if (!appointment) return <p className="text-center mt-10">No appointment found.</p>;
 
-  const dateObj = new Date(appointment.scheduledDate);
-  const formattedDate = dateObj.toLocaleDateString();
-  const formattedTime = dateObj.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+const { formattedDate, formattedTime } = getFormattedDateTime(appointment?.scheduledDate);
 
   const doctor = appointment.doctor;
   const doctorUser = doctor?.user;

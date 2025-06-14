@@ -5,6 +5,7 @@ import PaginationComponent from "../../../components/common/PaginationComponent"
 import { labRequestStatus } from "../../../utils/dashboardUtils";
 import useOrder from "../../../hooks/useOrder";
 import DoctorApi from "../../../api/doctorApi";
+import { LabCardSkeleton } from "../../../components/skeleton/SkeletonCards";
 
 function LabTestRequests() {
   const {
@@ -40,7 +41,7 @@ function LabTestRequests() {
           dropdowns={[
             {
               label: "Status",
-             options: ["All", ...labRequestStatus],
+              options: ["All", ...labRequestStatus],
               value: statusFilter,
               onChange: (value) => setStatusFilter(value),
             },
@@ -49,13 +50,21 @@ function LabTestRequests() {
 
         <section className="min-h-[300px]">
           {ordersLoading ? (
-            <p>Loading...</p>
+            <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+              {[...Array(4)].map((_, idx) => (
+                <LabCardSkeleton key={idx} />
+              ))}
+            </div>
           ) : (
             <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
               {orders.length > 0 ? (
-                orders.map((order) => <LabCard key={order.id} order={order} type="doctor" />)
+                orders.map((order) => (
+                  <LabCard key={order.id} order={order} type="doctor" />
+                ))
               ) : (
-                <p className="col-span-full text-center">No lab test requests found.</p>
+                <p className="col-span-full text-center">
+                  No lab test requests found.
+                </p>
               )}
             </div>
           )}

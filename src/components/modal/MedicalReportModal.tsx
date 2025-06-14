@@ -51,7 +51,7 @@ function MedicalReportModal({
       <Modal
         open={isModalOpen}
         onClose={() => setModalOpen(false)}
-        title="Medical Report Details"
+        title="Diagnosis Report Details"
         hideCancel={false}
         style="!md:max-w-2xl !md:mx-4 !md:mx-0"
         buttonText="Download"
@@ -212,19 +212,8 @@ function MedicalReportModal({
           {diagnosis?.appointment?.doctor?.user?.lastName}
         </p>
         <p>
-          <strong>Email:</strong> {diagnosis?.appointment?.doctor?.user?.email}
-        </p>
-        <p>
           <strong>Specialty:</strong>{" "}
           {diagnosis?.appointment?.doctor?.specialty}
-        </p>
-        <p>
-          <strong>License Number:</strong>{" "}
-          {diagnosis?.appointment?.doctor?.licenseNumber}
-        </p>
-        <p>
-          <strong>Contact:</strong>{" "}
-          {diagnosis?.appointment?.doctor?.contactNumber}
         </p>
 
         <hr style={{ margin: "10px 0" }} />

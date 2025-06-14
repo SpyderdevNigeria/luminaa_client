@@ -13,6 +13,7 @@ import routeLinks from "./routes";
 import { RxDashboard } from "react-icons/rx";
 import { CiViewList } from "react-icons/ci";
 import { ImLab } from "react-icons/im";
+import moment from "moment";
 export const navItemsPatient = [
   {
     label: "Dashboard",
@@ -246,6 +247,10 @@ export const appointmentStatus = [
 export const labRequestStatus = [
   "PENDING", "IN_PROGRESS","COMPLETED", "CANCELLED"
 ]
+
+export const labRequestPriority = [
+  'low', 'medium', 'high'
+]
 export const returnMemberNavigationUrlLogic = (user: any) => {
   if (!user.isEmailVerified) {
     return routeLinks?.auth?.emailVerification;
@@ -302,3 +307,22 @@ export const returnAdminNavigationUrlLogic = (
   }
   return routeLinks?.auth?.adminLogin;
 };
+
+
+export function getFormattedDateTime(isoDateString: string) {
+  const localDateString = isoDateString.replace(/Z$/, "");
+  const dateObj = new Date(localDateString);
+
+  const getDate = dateObj.toLocaleDateString();
+  const formattedTime = dateObj.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  const formattedDate = moment(getDate).format("MMMM Do YYYY");
+
+  return {
+    formattedDate,
+    formattedTime,
+  };
+}

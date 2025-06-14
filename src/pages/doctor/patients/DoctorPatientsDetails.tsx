@@ -33,8 +33,8 @@ function DoctorPatientsDetails() {
   return (
     <div>
       {/* Patient Info */}
-      <main className="border border-dashboard-gray bg-gray-50 rounded-lg ">
-        <div className="flex flex-row items-center px-4 p-6 justify-between border border-dashboard-gray rounded-lg ">
+      <main className=" bg-white rounded-lg ">
+        <div className="flex flex-row items-center px-4 p-6 justify-between  rounded-lg ">
           <div className="flex items-center gap-2 ">
             <div className="w-15 h-15 2xl:w-22 2xl:h-22 overflow-hidden rounded-full">
               <img
@@ -52,13 +52,13 @@ function DoctorPatientsDetails() {
               </h4>
             </div>
           </div>
-          <button className="px-8 py-2 rounded-sm bg-[#00BA8F] text-white text-xs 2xl:text-base flex items-center gap-2">
+          <button className="px-8 py-2 rounded-sm bg-primary text-white text-xs 2xl:text-base flex items-center gap-2">
             <PiNotepadDuotone /> Book an appointment
           </button>
         </div>
       </main>
 
-      <main className="border border-dashboard-gray rounded-lg mt-10 p-4">
+      <main className="container-bd rounded-lg mt-10 p-4">
         <div className="flex items-center gap-8 font-medium  text-sm md:text-base   overflow-x-scroll border-b border-dashboard-gray">
           {tab?.map((t) => (
             <div
@@ -66,8 +66,8 @@ function DoctorPatientsDetails() {
               onClick={() => setActiveTab(t.label)}
               className={`cursor-pointer  whitespace-nowrap rounded-t-md transition-all duration-200 ${
                 activeTab === t.label
-                  ? "text-secondary font-semibold border-b-2 border-secondary bg-white "
-                  : "text-inactive hover:text-secondary"
+                  ? "text-primary font-semibold border-b-2 border-primary bg-white "
+                  : "text-inactive hover:text-primary"
               }`}
             >
               {t.label}

@@ -109,28 +109,51 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
     setAvailableTimes(times);
   };
 
+  // const handleNextStep = () => {
+  //   if (!canProceed || !selectedDoctor) return;
+
+  //   const [time, period] = typeTime.split(" ");
+  //   let [hour, minute] = time.split(":").map(Number);
+
+  //   if (period === "PM" && hour !== 12) hour += 12;
+  //   if (period === "AM" && hour === 12) hour = 0;
+
+  //   const date = new Date(selectedDate);
+  //   date.setHours(hour, minute, 0, 0);
+  //   console.log(date, 'selected date')
+  //   const isoString = date.toISOString();
+  //  console.log(isoString, 'isoString')
+  //   setData({
+  //     ...data,
+  //     doctorId: selectedDoctor?.id,
+  //     scheduledDate: isoString,
+  //   });
+
+   
+  //   nextStep();
+  // };
+
   const handleNextStep = () => {
-    if (!canProceed || !selectedDoctor) return;
+  if (!canProceed || !selectedDoctor) return;
 
-    const [time, period] = typeTime.split(" ");
-    let [hour, minute] = time.split(":").map(Number);
+  const [time, period] = typeTime.split(" ");
+  let [hour, minute] = time.split(":").map(Number);
 
-    if (period === "PM" && hour !== 12) hour += 12;
-    if (period === "AM" && hour === 12) hour = 0;
+  if (period === "PM" && hour !== 12) hour += 12;
+  if (period === "AM" && hour === 12) hour = 0;
 
-    const date = new Date(selectedDate);
-    date.setHours(hour, minute, 0, 0);
+  const date = new Date(selectedDate);
+  date.setHours(hour, minute, 0, 0);
 
-    const isoString = date.toISOString();
+  const localISOString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:00`;
+  setData({
+    ...data,
+    doctorId: selectedDoctor?.id,
+    scheduledDate: localISOString,
+  });
 
-    setData({
-      ...data,
-      doctorId: selectedDoctor?.id,
-      scheduledDate: isoString,
-    });
-
-    nextStep();
-  };
+  nextStep(); 
+};
 
   return (
     <div>

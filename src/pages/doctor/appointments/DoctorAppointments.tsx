@@ -10,6 +10,7 @@ import AppointmentCalendar from "../../../components/common/AppointmentCalendar"
 import { FaCalendarAlt, FaList, FaHospital } from "react-icons/fa";
 import PatientImage from "../../../assets/images/patient/user.png";
 import moment from "moment";
+import {AppointmentCardSkeleton} from "../../../components/skeleton/SkeletonCards";
 function DoctorAppointments() {
   const {
     appointments,
@@ -39,7 +40,7 @@ function DoctorAppointments() {
     id: app?.id,
     title: `${app?.patient?.firstName} ${app?.patient?.lastName} - ${app?.status}`,
     scheduledDate: app?.scheduledDate,
-    ...app
+    ...app,
   }));
 
   // const listAppointments = appointments.filter((app: any) => {
@@ -56,7 +57,7 @@ function DoctorAppointments() {
       {calendarView ? (
         <div className="container-bd">
           <div className="flex gap-2 justify-end">
-             <button
+            <button
               onClick={() => setCalendarView(true)}
               className={`${
                 calendarView ? "text-primary" : "text-black"
@@ -64,7 +65,7 @@ function DoctorAppointments() {
             >
               <FaCalendarAlt />
             </button>
-                        <button
+            <button
               onClick={() => setCalendarView(false)}
               className={`${
                 !calendarView ? "text-primary" : "text-black"
@@ -138,91 +139,105 @@ function DoctorAppointments() {
                   }}
                 />
               </label>
-                  <div className="flex gap-2 justify-end">
-             <button
-              onClick={() => setCalendarView(true)}
-              className={`${
-                calendarView ? "text-primary" : "text-black"
-              } text-xl`}
-            >
-              <FaCalendarAlt />
-            </button>
-                        <button
-              onClick={() => setCalendarView(false)}
-              className={`${
-                !calendarView ? "text-primary" : "text-black"
-              } text-xl`}
-            >
-              <FaList />
-            </button>
-          </div>
+              <div className="flex gap-2 justify-end">
+                <button
+                  onClick={() => setCalendarView(true)}
+                  className={`${
+                    calendarView ? "text-primary" : "text-black"
+                  } text-xl`}
+                >
+                  <FaCalendarAlt />
+                </button>
+                <button
+                  onClick={() => setCalendarView(false)}
+                  className={`${
+                    !calendarView ? "text-primary" : "text-black"
+                  } text-xl`}
+                >
+                  <FaList />
+                </button>
+              </div>
             </div>
-
           </div>
           <div className="grid gap-4 py-4">
             {loadingAppointment ? (
-              <p>Loading...</p>
+               <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
+               {[...Array(4)].map((_, idx) => (
+                  <AppointmentCardSkeleton key={idx} />
+                ))}
+              </div>
             ) : appointments.length === 0 ? (
               <p className="text-center">No appointments for this month.</p>
             ) : (
-         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
-    {appointments.map((app, index) => (
-      <div
-        key={index}
-        className="bg-white border border-[#E5E7EB] rounded-xl p-6 shadow-sm"
-      >
+              <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
+                {appointments.map((app, index) => (
+                  <div
+                    key={index}
+                    className="bg-white border border-[#E5E7EB] rounded-xl p-6 shadow-sm"
+                  >
+                    {/* Title & Doctor */}
+                    <div className="text-sm text-gray-500 flex items-center gap-2">
+                      <div className="w-10 h-10 rounded-full overflow-hidden ">
+                        <img
+                          src={PatientImage}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      </div>{" "}
+                      {app.patient.firstName} {app.patient.lastName}
+                    </div>
 
-        {/* Title & Doctor */}
-        <div className="text-sm text-gray-500 flex items-center gap-2">
-         <div className="w-10 h-10 rounded-full overflow-hidden ">
-          <img src={PatientImage} alt=""  className="w-full h-full object-cover"/>
-          </div> {app.patient.firstName} {app.patient.lastName}
-        </div>
+                    {/* Location */}
+                    <div>
+                      <p className="mt-2 text-xs font-medium text-gray-500 uppercase flex items-center gap-2">
+                        Meeting Venue
+                      </p>
+                      <p className="text-xs text-gray-800 mt-1">
+                        <span className="flex items-center text-primary gap-2">
+                          {app.location === "online" ? (
+                            <FaHospital />
+                          ) : (
+                            <HiOutlineStatusOnline />
+                          )}{" "}
+                          {app.location}
+                        </span>
+                      </p>
+                    </div>
 
-        {/* Location */}
-        <div>
-                  <p className="mt-2 text-xs font-medium text-gray-500 uppercase flex items-center gap-2">
-          Meeting Venue  
-        </p>
-           <p className="text-xs text-gray-800 mt-1">
-              <span className="flex items-center text-primary gap-2">{app.location === 'online' ?  <FaHospital /> :  <HiOutlineStatusOnline/> } {app.location}</span>
-            </p>
-        </div>
+                    {/* Date and Time Box */}
+                    <div className="mt-4 bg-[#F9FAFB] rounded-lg p-4 flex items-center space-x-3">
+                      <div className="bg-primary/10 text-primary p-2 rounded-full">
+                        <FaCalendarAlt />
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-500 uppercase">
+                          Date & Time
+                        </p>
+                        <p className="text-xs text-gray-800">
+                          {moment(app.date).format("MMMM Do YYYY")}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="my-4">
+                      <p className="text-xs font-medium text-gray-500 uppercase">
+                        Symptons
+                      </p>
+                      <p className="text-sm text-gray-800 line-clamp-2">
+                        {app?.patientNote}
+                      </p>
+                    </div>
 
-        {/* Date and Time Box */}
-        <div className="mt-4 bg-[#F9FAFB] rounded-lg p-4 flex items-center space-x-3">
-          <div className="bg-primary/10 text-primary p-2 rounded-full">
-            <FaCalendarAlt />
-          </div>
-          <div>
-            <p className="text-xs font-medium text-gray-500 uppercase">
-              Date & Time
-            </p>
-            <p className="text-xs text-gray-800">
-              {moment(app.date).format('MMMM Do YYYY')} 
-            </p>
-          </div>
-        </div>
-      <div className="my-4">
-                <p className="text-xs font-medium text-gray-500 uppercase">
-              Symptons
-            </p>
-            <p className="text-sm text-gray-800 line-clamp-2">
-              {app?.patientNote}
-            </p>
-      </div>
-
-     <div className="mt-5">
-         <Link
-        to={routeLinks?.doctor?.appointment +'/'+app.id}
-          className="mt-4 px-4 py-2 border border-primary text-primary text-sm rounded-md hover:bg-primary hover:text-white transition"
-        >
-          Reschedule appointment
-        </Link>
-     </div>
-      </div>
-    ))}
-  </div>
+                    <div className="mt-5">
+                      <Link
+                        to={routeLinks?.doctor?.appointment + "/" + app.id}
+                        className="mt-4 px-4 py-2 border border-primary text-primary text-sm rounded-md hover:bg-primary hover:text-white transition"
+                      >
+                        Reschedule appointment
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
 
@@ -238,7 +253,5 @@ function DoctorAppointments() {
     </div>
   );
 }
-
-
 
 export default DoctorAppointments;

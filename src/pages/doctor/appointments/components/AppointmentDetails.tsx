@@ -12,6 +12,7 @@ import routeLinks from "../../../../utils/routes";
 import InfoLabel from "../../../../components/common/InfoLabel";
 import UserProfile from "../../../../assets/images/patient/user.png"
 import moment from "moment";
+import { getFormattedDateTime } from "../../../../utils/dashboardUtils";
 
 interface DoctorAppointmentsViewProps {
   handleNext: (e:string) => void;
@@ -23,7 +24,7 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
 
   const patientName = `${patient?.user?.firstName || ""} ${patient?.user?.lastName || ""}`;
   const patientImage = patient?.user?.profilePicture?.url || UserProfile;
-  const scheduledMoment = moment(scheduledDate);
+    const { formattedDate, formattedTime } = getFormattedDateTime(scheduledDate);
 
   return (
     <section className="flex flex-col gap-4">
@@ -94,12 +95,12 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
             <InfoLabel label={`#${id?.slice(0, 8)}`} info={"Appointment ID"} />
             <InfoLabel
-              label={scheduledMoment.format("MMMM DD, YYYY")}
+              label={formattedDate}
               info={"Date"}
               style="bg-blue-100 text-blue-600 py-1 px-2 rounded-sm"
             />
             <InfoLabel
-              label={scheduledMoment.format("hh:mm A")}
+              label={formattedTime}
               info={"Time"}
               style="bg-green-100 text-green-600 py-1 px-2 rounded-sm"
             />

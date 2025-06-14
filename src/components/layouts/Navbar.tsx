@@ -1,9 +1,13 @@
-import React, { useRef, useEffect } from "react";
-import {  FiMenu, FiX } from "react-icons/fi";
+import React, { useRef, useEffect, useState } from "react";
+import {  FiLogOut, FiMenu, FiUser, FiX } from "react-icons/fi";
 import Notification from "./Notification";
-import { useAppSelector } from "../../hooks/reduxHooks";
+import { useAppSelector, useAppDispatch } from "../../hooks/reduxHooks";
 import UserImage from '../../assets/images/patient/user.png'
 import PartnerImage from '../../assets/images/doctor/doctor.png'
+import { useNavigate } from "react-router-dom";
+import routeLinks from "../../utils/routes";
+import LogoutModal from "../modal/LogoutModal";
+import { logout } from "../../reducers/authSlice";
 type NavbarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
@@ -17,7 +21,9 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
   const userProfile = useAppSelector((state) => state.auth.user);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-
+    const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -32,8 +38,27 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleNavigate = () => {
+    switch (userProfile?.user?.role) {
+      case 'patient':
+          return navigate(routeLinks?.patient?.profile)
+      case 'doctor':
+          return navigate(routeLinks?.doctor?.profile)
+      case 'lab-tech':
+          return navigate(routeLinks?.lab?.profile)
+      default:
+        break;
+    }
+  }
+
+    const handleLogout = () => {
+    dispatch(logout());
+    setIsLogoutOpen(false);
+    navigate(routeLinks.auth.login);
+  };
   return (
-    <header className="  px-4 2xl:px-18 py-6 bg-white  flex items-center justify-between">
+    <div>
+          <header className="  px-4 2xl:px-18 py-6 bg-white  flex items-center justify-between">
       <h1 className="text-base md:text-2xl text-primary-text font-semibold">
         <span className={`${active?.sublink && 'font-light'}`}>{active?.title}</span> {active?.sublink}
       </h1>
@@ -44,27 +69,27 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
         {/* Avatar & Dropdown */}
         <div className="relative hidden md:block" ref={dropdownRef}>
           <img
-            src={userProfile?.user?.profilePicture?.url !== null || userProfile?.user?.profilePicture?.url !== undefined ? userProfile?.user?.profilePicture?.url : userProfile?.role === 'patient' ? UserImage : PartnerImage  }
+            src={userProfile?.user?.profilePicture  ? userProfile?.user?.profilePicture?.url : userProfile?.role === 'patient' ? UserImage : PartnerImage  }
             alt={userProfile?.user?.firstName + " " + userProfile?.user?.lastName}
             className="w-10 h-10 rounded-full cursor-pointer bg-gray-100"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           />
-          {/* {dropdownOpen && (
+          {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
-              <Link
-                to={routeLinks?.patient?.profile}
-                className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+              <button
+                onClick={handleNavigate}
+                className="w-full px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
               >
                 <FiUser /> Profile
-              </Link>
-              <a
-                href="#"
-                className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+              </button>
+              <button
+                 onClick={() => setIsLogoutOpen(true)}
+                className="w-full px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
               >
                 <FiLogOut /> Logout
-              </a>
+              </button>
             </div>
-          )} */}
+          )}
         </div>
 
         {/* Hamburger Menu */}
@@ -73,6 +98,13 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
         </button>
       </div>
     </header>
+         <LogoutModal
+        open={isLogoutOpen}
+        onClose={() => setIsLogoutOpen(false)}
+        handleLogout={handleLogout}
+      />
+    </div>
+
   );
 }
 
