@@ -47,6 +47,50 @@ const AdminApi = {
     const response = await api.delete(`/admin/lab-techs/${id}`,);
     return response.data;
   },
+
+      getPharmacists: async (query:any) => {
+    const response = await api.get(`/admin/pharmacists${query}`);
+    return response.data;
+  },
+
+    createPharmacist: async (body:any) => {
+    const response = await api.post(`/admin/pharmacists`, body);
+    return response.data;
+  },
+     updatePharmacist: async (body:any) => {
+    const response = await api.patch(`/admin/pharmacists`, body);
+    return response.data;
+  },
+    deletePharmacist: async (id:string) => {
+    const response = await api.delete(`/admin/pharmacists/${id}`,);
+    return response.data;
+  },
+
+    getMedications: async (query:any) => {
+    const response = await api.get(`/admin/medications${query}`);
+    return response.data;
+  },
+
+    createMedication: async (body:any) => {
+    const response = await api.post(`/admin/medications`, body);
+    return response.data;
+  },
+     updateMedication: async (id:string, body:any) => {
+    const response = await api.put(`/admin/medications/${id}`, body);
+    return response.data;
+  },
+  updateMedicationVisibility: async (id:string) => {
+    const response = await api.patch(`/admin/medications/${id}/toggle-visibility`);
+    return response.data;
+  },
+    updateMedicationStatus: async (id:string, body:string) => {
+    const response = await api.patch(`/admin/medications/${id}/status`, body);
+    return response.data;
+  },
+    deleteMedication: async (id:string) => {
+    const response = await api.delete(`/admin/medications/${id}`);
+    return response.data;
+  },
 }
 
 export default AdminApi;

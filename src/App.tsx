@@ -45,6 +45,8 @@ import AdminDoctors from "./pages/admin/doctors/AdminDoctors";
 import DoctorOrder from "./pages/doctor/order/DoctorLabOrder";
 import DoctorLabOrderDetails from "./pages/doctor/order/DoctorLabOrderDetails";
 import LabDetails from "./pages/patient/lab/LabDetails";
+import AdminPharmacists from "./pages/admin/pharmacists/AdminPharmacists";
+import AdminMedications from "./pages/admin/medications/AdminMedications";
 // Route
 const App = createBrowserRouter([
   {
@@ -282,6 +284,14 @@ const App = createBrowserRouter([
       {
         path:routeLinks?.admin?.doctors,
         element:<AdminDoctors/>
+      },
+      {
+        path: routeLinks?.admin?.pharmacists,
+        element: <AdminPharmacists/>
+      },
+      {
+        path:routeLinks?.admin?.medications,
+        element:<AdminMedications/>
       }
       ]
 },

@@ -8,9 +8,12 @@ function AdminDashboard() {
     getPatients,
     getDoctors,
     getLabs,
+    getPharmacists,
     patientsTotal,
     doctorsTotal,
     labsTotal,
+      pharmacistsTotal,
+    pharmacistsLoading,
     patientsLoading,
     doctorsLoading,
     labsLoading,
@@ -20,6 +23,7 @@ function AdminDashboard() {
     getPatients();
     getDoctors();
     getLabs();
+    getPharmacists();
   }, []);
 
   return (
@@ -29,7 +33,7 @@ function AdminDashboard() {
           <DashboardCard title="Patients" count={patientsLoading ? 0 : patientsTotal} />
           <DashboardCard title="Doctors" count={doctorsLoading ? 0 : doctorsTotal} />
           <DashboardCard title="Laboratory" count={labsLoading ? 0 : labsTotal} />
-          <DashboardCard title="Pharmacy" count={0} />
+          <DashboardCard title="Pharmacy" count={pharmacistsLoading ? 0 : pharmacistsTotal} />
         </div>
       </section>
     </div>

@@ -61,6 +61,16 @@ const statusStyles: Record<string, { bg: string; dot: string; text: string }> =
       dot: "bg-rose-400",
       text: "text-rose-500",
     },
+    active: {
+      bg: "bg-emerald-50",
+      dot: "bg-emerald-400",
+      text: "text-emerald-600",
+    },
+    inactive: {
+      bg: "bg-rose-50",
+      dot: "bg-rose-400",
+      text: "text-rose-500",
+    },
     error: {
       bg: "bg-red-100",
       dot: "bg-red-500",

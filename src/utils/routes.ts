@@ -66,12 +66,13 @@ admin: {
   reports: '/admin/reports',
   lab: '/admin/lab',
   labDetails: '/admin/lab/:id',
-  pharmacyRequests: '/admin/pharmacy-requests',
-  pharmacyRequestsDetails: '/admin/pharmacy-requests/:id',
+  pharmacists: '/admin/pharmacists',
+  pharmacistsDetails: '/admin/pharmacists/:id',
   consultations: '/admin/consultations',
   consultationsDetails: '/admin/consultations/:id',
   doctors: '/admin/doctors',
   doctorDetails: '/admin/doctors/:id',
+  medications:'/admin/medications'
 }
 }
 

@@ -13,6 +13,7 @@ import routeLinks from "./routes";
 import { RxDashboard } from "react-icons/rx";
 import { CiViewList } from "react-icons/ci";
 import { ImLab } from "react-icons/im";
+import { MdMedication } from "react-icons/md";
 import moment from "moment";
 export const navItemsPatient = [
   {
@@ -209,6 +210,18 @@ export const navItemsAdmin = [
     icon: FaRegCircleUser ,
     to: routeLinks?.admin?.patients,
   },
+  {
+    label: "Pharmacists",
+    title: "Pharmacists",
+    icon: LiaPillsSolid,
+    to: routeLinks?.admin?.pharmacists
+  },
+  {
+    label:"Medications",
+    title:"Medications",
+    icon:MdMedication,
+    to:routeLinks?.admin?.medications,
+  }
   // {
   //   label: "Reports",
   //   title: "Reports",
@@ -239,6 +252,18 @@ export const adminDoctorSpecialties = [
   "Urology",
 ]
 
+export const medicationCategoryOptions = [
+  'antibiotic', 'analgesic', 'antihypertensive', 'antidiabetic', 'antihistamine', 'antiviral', 'antifungal', 'cardiovascular', 'neurological', 'respiratory', 'gastrointestinal', 'dermatological', 'hormonal', 'vitamin_supplement', 'other'
+]
+
+export const medicationDosageFormOptions = [
+   'tablet', 'capsule', 'syrup', 'injection', 'cream', 'ointment', 'drop', 'patch', 'inhaler', 'suspension', 'powder', 'gel'
+]
+export const medicationStatusOptions = [
+  'active', 'inactive', 'discontinued'
+]
+
+export const medicationManufacturerOptions = [ "GSK Pharmaceuticals", "Pfizer", "Novartis"]
 
 export const appointmentStatus = [
   "scheduled", "confirmed", "completed", "cancelled"," no_show"
@@ -247,6 +272,7 @@ export const appointmentStatus = [
 export const labRequestStatus = [
   "PENDING", "IN_PROGRESS","COMPLETED", "CANCELLED"
 ]
+
 
 export const labRequestPriority = [
   'low', 'medium', 'high'

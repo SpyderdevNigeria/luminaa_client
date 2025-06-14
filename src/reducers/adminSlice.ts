@@ -28,6 +28,29 @@ const initialState = {
     loading: false,
     error: null,
   },
+  pharmacists: {
+    data: [],
+    page: 1,
+    limit: 10,
+    search: '',
+    total: 0,
+    loading: false,
+    error: null,
+  },
+  medications: {
+    data: [],
+    page: 1,
+    limit: 10,
+    search: '',
+    category: '',
+    dosageForm: '',
+    status: '',
+    requiresPrescription: '',
+    manufacturer: '',
+    total: 0,
+    loading: false,
+    error: null,
+  },
 };
 
 const adminSlice = createSlice({
@@ -90,6 +113,61 @@ const adminSlice = createSlice({
     setLabsError(state, action) {
       state.labs.error = action.payload;
     },
+
+    // Pharmacists
+    setPharmacistsLoading(state, action) {
+      state.pharmacists.loading = action.payload;
+    },
+    setPharmacists(state, action) {
+      const { data, total } = action.payload;
+      state.pharmacists.data = data;
+      state.pharmacists.total = total;
+    },
+    setPharmacistsPagination(state, action) {
+      state.pharmacists.page = action.payload.page;
+      state.pharmacists.limit = action.payload.limit;
+    },
+    setPharmacistsSearch(state, action) {
+      state.pharmacists.search = action.payload;
+    },
+    setPharmacistsError(state, action) {
+      state.pharmacists.error = action.payload;
+    },
+
+    // Medications
+    setMedicationsLoading(state, action) {
+      state.medications.loading = action.payload;
+    },
+    setMedications(state, action) {
+      const { data, total } = action.payload;
+      state.medications.data = data;
+      state.medications.total = total;
+    },
+    setMedicationsPagination(state, action) {
+      state.medications.page = action.payload.page;
+      state.medications.limit = action.payload.limit;
+    },
+    setMedicationsSearch(state, action) {
+      state.medications.search = action.payload;
+    },
+    setMedicationsCategory(state, action) {
+      state.medications.category = action.payload;
+    },
+    setMedicationsDosageForm(state, action) {
+      state.medications.dosageForm = action.payload;
+    },
+    setMedicationsStatus(state, action) {
+      state.medications.status = action.payload;
+    },
+    setMedicationsRequiresPrescription(state, action) {
+      state.medications.requiresPrescription = action.payload;
+    },
+    setMedicationsManufacturer(state, action) {
+      state.medications.manufacturer = action.payload;
+    },
+    setMedicationsError(state, action) {
+      state.medications.error = action.payload;
+    },
   },
 });
 
@@ -113,6 +191,25 @@ export const {
   setLabsPagination,
   setLabsDepartment,
   setLabsError,
+
+  // Pharmacists
+  setPharmacistsLoading,
+  setPharmacists,
+  setPharmacistsPagination,
+  setPharmacistsSearch,
+  setPharmacistsError,
+
+  // Medications
+  setMedicationsLoading,
+  setMedications,
+  setMedicationsPagination,
+  setMedicationsSearch,
+  setMedicationsCategory,
+  setMedicationsDosageForm,
+  setMedicationsStatus,
+  setMedicationsRequiresPrescription,
+  setMedicationsManufacturer,
+  setMedicationsError,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

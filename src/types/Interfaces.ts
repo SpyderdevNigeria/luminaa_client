@@ -100,6 +100,39 @@ export interface IAppointment {
   createdAt:string;
 }
 
+
+export interface PharmacistUser  {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
+export interface IPharmacist {
+  id: string;
+  user: PharmacistUser;
+  licenseNumber: string;
+  licenseExpiryDate: string;
+  hireDate: string;
+  status:string;
+};
+
+export interface IMedication {
+  id: string;
+  name: string;
+  genericName: string;
+  manufacturer: string;
+  dosageForm: string;
+  strength: string;
+  category: string;
+  description: string;
+  price: number;
+  requiresPrescription: boolean;
+  isHidden: boolean;
+  status: "active" | "inactive";
+  createdAt: string; 
+  updatedAt: string; 
+}
+
 export interface IPayload {
   token: string;
   user: IUser;
