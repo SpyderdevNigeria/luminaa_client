@@ -43,7 +43,6 @@ function Prescriptions() {
       return;
     }
     getPrescriptions();
-    // getAppointments();
   }, [search, appointmentId, status, patientId, isRefillable, page, limit]);
 
   return (
@@ -55,21 +54,21 @@ function Prescriptions() {
         dropdowns={[
           {
             label: "Appointment ID",
-            options: [], // e.g. ['APPT-001', 'APPT-002']
+            options: [],
             value: appointmentId,
             onChange: setAppointmentId,
           },
           {
             label: "Status",
-            options: ["active", "inactive"],
+            options: ["all", "active", "inactive"],
             value: status,
-            onChange: setPrescriptionStatus,
+            onChange: (value) => setPrescriptionStatus(value?.toLowerCase() == "all" ? "" :value?.toLowerCase()),
           },
           {
             label: "Refillable?",
-            options: ["true", "false"],
+            options: ["all", "true", "false"],
             value: isRefillable,
-            onChange: setPrescriptionIsRefillable,
+            onChange: (value) => setPrescriptionIsRefillable(value?.toLowerCase() == "all" ? "" : value?.toLowerCase()),
           },
         ]}
       />

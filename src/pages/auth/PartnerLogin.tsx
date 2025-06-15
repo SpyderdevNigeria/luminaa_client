@@ -48,7 +48,7 @@ function PartnerLogin() {
         token: accessToken,
         user: {...user, user : user},
       };
-      if (user?.role == 'patient') {
+      if (user?.role === 'patient'|| user?.role === 'admin' || user?.role === 'super_admin') {
         return setMessage({
           message: "Unauthorized access",
           type: "error",
