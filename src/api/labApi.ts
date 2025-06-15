@@ -11,7 +11,7 @@ const LabApi = {
     return response.data;
 
   },
-
+ 
     // Lab Orders
     getLabOrders: async (query:any) => {
     const response = await api.get(`/lab-tech/lab-tests/orders${query}`);
@@ -41,8 +41,18 @@ const LabApi = {
     return response.data;
   },
 
-     getLabOrderResultByOrderId: async (id: any) => {
+  getLabOrderResultByOrderId: async (id: any) => {
     const response = await api.get(`/lab-tech/lab-tests/results/order/${id}`);
+    return response.data;
+  },
+
+  createLabOrderDocuments: async (id: any, body:any) => {
+    const response = await api.post(`/lab-tech/lab-tests/results/${id}/documents`, body);
+    return response.data;
+  },
+
+    deleteLabOrderDocumentById: async (resultId: string, documentId:string) => {
+    const response = await api.delete(`/lab-tech/lab-tests/results/${resultId}/documents/${documentId}`);
     return response.data;
   },
    // Lab Order endpoint end

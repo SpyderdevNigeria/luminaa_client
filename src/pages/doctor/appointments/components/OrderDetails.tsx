@@ -4,6 +4,7 @@ import doctorApi from "../../../../api/doctorApi";
 import LabOrderDetailModal from "../../../../components/modal/LabOrderDetailModal";
 import { ILabOrder } from "../../../../types/Interfaces";
 import LabCard from "../../../../components/common/LabOrderCard";
+import { LabCardSkeleton } from "../../../../components/skeleton/SkeletonCards";
 interface LabOrdersProps {
   appointmentId: string;
   handleBack: () => void;
@@ -113,9 +114,11 @@ const LabOrders = ({
           <h4 className="text-xl my-2">Lab Orders</h4>
 
           {loading ? (
-            <p className="text-gray-600 text-center mt-20">
-              Loading lab orders...
-            </p>
+           <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+                      {[...Array(4)].map((_, idx) => (
+                        <LabCardSkeleton key={idx} />
+                      ))}
+                    </div>
           ) : null}
           {!loading && labOrders.length === 0 ? (
             <p className="text-gray-600 text-center mt-20">

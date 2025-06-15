@@ -109,6 +109,7 @@ function LabTestRequestsDetails() {
         results={labResultMeta}
         isLoadingResults={isLoadingResults}
         resultError={resultError}
+        updateDocuments={fetchResults}
       />
     </div>
   );

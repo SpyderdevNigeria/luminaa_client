@@ -6,6 +6,7 @@ import PaginationComponent from "../../../components/common/PaginationComponent"
 import useOrder from "../../../hooks/useOrder";
 import PatientApi from "../../../api/PatientApi";
 import { labRequestStatus } from "../../../utils/dashboardUtils";
+import { LabCardSkeleton } from "../../../components/skeleton/SkeletonCards";
 function Lab() {
   const {
     orders,
@@ -49,7 +50,11 @@ function Lab() {
 
         <section className="min-h-[300px]">
           {ordersLoading ? (
-            <p>Loading...</p>
+               <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+                          {[...Array(4)].map((_, idx) => (
+                            <LabCardSkeleton key={idx} />
+                          ))}
+                        </div>
           ) : (
             <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
               {orders.length > 0 ? (

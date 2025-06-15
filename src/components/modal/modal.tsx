@@ -8,6 +8,7 @@ type ModalProps = {
   style?: string;
   handleSubmit?: () => void;
   buttonText?: string;
+  loading?:boolean
 };
 
 const Modal = ({
@@ -17,6 +18,7 @@ const Modal = ({
   children,
   hideCancel,
   style,
+  loading,
   handleSubmit,
   buttonText,
 }: ModalProps) => {
@@ -48,6 +50,7 @@ const Modal = ({
                 {buttonText && handleSubmit ? (
                   <button
                     onClick={handleSubmit}
+                    disabled={loading}
                     className=" w-full text-center text-sm p-3  px-6 font-medium whitespace-nowrap  border-[1.5px] border-primary bg-primary text-white rounded-lg "
                   >
                     {buttonText}
