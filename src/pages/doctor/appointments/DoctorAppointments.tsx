@@ -9,8 +9,8 @@ import { HiOutlineStatusOnline } from "react-icons/hi";
 import AppointmentCalendar from "../../../components/common/AppointmentCalendar";
 import { FaCalendarAlt, FaList, FaHospital } from "react-icons/fa";
 import PatientImage from "../../../assets/images/patient/user.png";
-import moment from "moment";
 import {AppointmentCardSkeleton} from "../../../components/skeleton/SkeletonCards";
+import { getFormattedDateTime } from "../../../utils/dashboardUtils";
 function DoctorAppointments() {
   const {
     appointments,
@@ -36,20 +36,22 @@ function DoctorAppointments() {
     getAppointments();
   }, [page, status, dataFrom, dateTo]);
 
-  const calendarAppointments = appointments.map((app: any) => ({
+  const calendarAppointments = appointments.map((app: any) => (
+    {
     id: app?.id,
     title: `${app?.patient?.firstName} ${app?.patient?.lastName} - ${app?.status}`,
     scheduledDate: app?.scheduledDate,
     ...app,
   }));
 
-  // const listAppointments = appointments.filter((app: any) => {
-  //   const appDate = new Date(app.scheduledDate);
-  //   return (
-  //     appDate.getFullYear() === selectedDate.getFullYear() &&
-  //     appDate.getMonth() === selectedDate.getMonth()
-  //   );
-  // });
+  const listAppointments = appointments.map((app: any) => {
+    const { formattedDate, formattedTime } = getFormattedDateTime(app.scheduledDate);
+    return {
+      ...app,
+      date : formattedDate,
+      time : formattedTime
+    };
+  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -166,11 +168,11 @@ function DoctorAppointments() {
                   <AppointmentCardSkeleton key={idx} />
                 ))}
               </div>
-            ) : appointments.length === 0 ? (
+            ) : listAppointments.length === 0 ? (
               <p className="text-center">No appointments for this month.</p>
             ) : (
               <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
-                {appointments.map((app, index) => (
+                {listAppointments.map((app, index) => (
                   <div
                     key={index}
                     className="bg-white border border-[#E5E7EB] rounded-xl p-6 shadow-sm"
@@ -214,7 +216,7 @@ function DoctorAppointments() {
                           Date & Time
                         </p>
                         <p className="text-xs text-gray-800">
-                          {moment(app.date).format("MMMM Do YYYY")}
+                          {app.date} •{" "} {app.time}
                         </p>
                       </div>
                     </div>

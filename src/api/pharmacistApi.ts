@@ -11,6 +11,11 @@ getProfile: async () => {
     return response.data;
 
   },
+
+        getMedications: async (query:any) => {
+    const response = await api.get(`/pharmacist/medications${query}`);
+    return response.data;
+  },
 }
 
 export default PharmacistApi;

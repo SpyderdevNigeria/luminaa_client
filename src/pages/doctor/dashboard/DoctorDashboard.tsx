@@ -90,7 +90,7 @@ function DoctorDashboard() {
                 <p>Loading...</p>
               ) : (
                 <Table
-                  data={appointments}
+                  data={appointments?.slice(0, 5)}
                   columns={appointmentColumns}
                   page={page}
                   total={total}

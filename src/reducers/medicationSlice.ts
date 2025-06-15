@@ -1,7 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
-
+import { IMedication } from '../types/Interfaces';
 // Initial State
-const initialState = {
+interface MedicationState {
+  medications: {
+    data: IMedication[],
+    error: string | null;
+  total: number;
+  limit: number;
+  totalPages: number;
+  page: number;
+  search:string;
+  category:string;
+  dosageForm:string;
+  status:string;
+  requiresPrescription:string;
+  manufacturer:string;
+  loading:boolean;
+  }
+}
+const initialState: MedicationState = {
   medications: {
     data: [],
     page: 1,
@@ -13,6 +30,7 @@ const initialState = {
     requiresPrescription: '',
     manufacturer: '',
     total: 0,
+    totalPages: 0,
     loading: false,
     error: null,
   },
@@ -28,9 +46,11 @@ const medicationSlice = createSlice({
       state.medications.loading = action.payload;
     },
     setMedications(state, action) {
-      const { data, total } = action.payload;
-      state.medications.data = data;
-      state.medications.total = total;
+      state.medications.data = action.payload?.data;
+      state.medications.total = action.payload.total;
+      state.medications.limit = action.payload.limit;
+      state.medications.totalPages = action.payload.totalPages;
+      state.medications.page = action.payload.page;
     },
     setMedicationsPagination(state, action) {
       state.medications.page = action.payload.page;

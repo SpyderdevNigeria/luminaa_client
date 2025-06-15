@@ -159,6 +159,12 @@ const DoctorApi = {
   },
 
   // Lab Order endpoint end
+
+
+      getMedications: async (query:any) => {
+    const response = await api.get(`/doctor/medications${query}`);
+    return response.data;
+  },
 }
 
 export default DoctorApi;

@@ -5,6 +5,7 @@ import { IPrescription } from "../../../../../types/Interfaces";
 
 interface PrescriptionsFormProps {
   appointmentId: string;
+  medicationId?:string;
   initialData?: IPrescription | null;
   onSuccess?: () => void;
   setShowForm: () => void;
@@ -12,6 +13,7 @@ interface PrescriptionsFormProps {
 
 const defaultData: IPrescription = {
   medicationName: "",
+  medicationId: "",
   dosage: "",
   frequency: "",
   duration: "",
@@ -26,6 +28,7 @@ const defaultData: IPrescription = {
 const PrescriptionsForm = ({
   appointmentId,
   initialData = null,
+  medicationId,
   onSuccess,
   setShowForm,
 }: PrescriptionsFormProps) => {
@@ -60,7 +63,7 @@ const PrescriptionsForm = ({
       if (initialData?.id) {
         response = await doctorApi.updatePrescriptions(initialData.id, formData);
       } else {
-        response = await doctorApi.createPrescriptions({ ...formData, appointmentId, isRefillable : formData.isRefillable == 'true' ? true : false });
+        response = await doctorApi.createPrescriptions({ ...formData, appointmentId, medicationId, isRefillable : formData.isRefillable == 'true' ? true : false });
       }
       setMessage({ message: response?.data?.message || "Request successful", type: "success" });
       if (onSuccess) onSuccess();

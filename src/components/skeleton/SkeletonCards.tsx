@@ -207,3 +207,39 @@ export function AppointmentCardSkeleton() {
   );
 }
 
+export function MedicationCardSkeleton() {
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col justify-between hover:shadow-md transition relative animate-pulse">
+      {/* Top: Icon + Medication Name */}
+      <div className="flex items-center space-x-3">
+        <div className="bg-gray-200 p-3 rounded-full w-10 h-10" />
+        <div className="flex-1 space-y-2">
+          <div className="h-4 bg-gray-200 rounded w-3/4" />
+          <div className="h-3 bg-gray-100 rounded w-1/2" />
+        </div>
+      </div>
+
+      {/* Middle: Key Info */}
+      <div className="mt-4 space-y-3">
+        {[...Array(6)].map((_, i) => (
+          <div key={i}>
+            <div className="h-3 bg-gray-100 rounded w-1/4 mb-1" />
+            <div className="h-4 bg-gray-200 rounded w-full" />
+          </div>
+        ))}
+
+        {/* Description */}
+        <div>
+          <div className="h-3 bg-gray-100 rounded w-1/4 mb-1" />
+          <div className="h-4 bg-gray-200 rounded w-full mb-1" />
+          <div className="h-4 bg-gray-200 rounded w-5/6" />
+        </div>
+      </div>
+
+      {/* Bottom: Button Skeleton */}
+      <div className="mt-6">
+        <div className="w-full h-10 bg-gray-300 rounded-lg" />
+      </div>
+    </div>
+  );
+}

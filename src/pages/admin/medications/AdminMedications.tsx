@@ -16,6 +16,7 @@ function AdminMedications() {
     medicationsPage,
     medicationsLimit,
     medicationsTotal,
+    medicationsTotalPages,
     medicationsLoading,
     medicationSearch,
     medicationCategory,
@@ -214,6 +215,7 @@ function AdminMedications() {
             page={medicationsPage}
             total={medicationsTotal}
             limit={medicationsLimit}
+            totalPages={medicationsTotalPages}
             setPage={setMedicationsPage}
           />
         )}

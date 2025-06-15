@@ -7,6 +7,7 @@ export interface IPaginationResponse {
 export interface IPrescription {
   _id: string;
   id:string;
+  medicationId:string;
   medicationName: string;
   dosage: string;
   frequency: string;
