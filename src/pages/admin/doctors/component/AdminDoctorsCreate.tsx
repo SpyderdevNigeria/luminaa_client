@@ -3,6 +3,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import CommonFormField from "../../../../components/common/CommonFormField";
+import { adminDoctorSpecialties } from "../../../../utils/dashboardUtils";
 
 type DoctorUser = {
   firstName: string;
@@ -120,6 +121,7 @@ const AdminDoctorsCreate: React.FC<Props> = ({
     setLoading(false);
   };
 
+
   const fields: {
     name: keyof FormData;
     label: string;
@@ -136,7 +138,7 @@ const AdminDoctorsCreate: React.FC<Props> = ({
       type: "text",
       required: !doctor,
     },
-    { name: "specialty", label: "Specialty", required: true },
+    { name: "specialty", label: "Specialty", type:"select", options:adminDoctorSpecialties,  required: true, },
     { name: "licenseNumber", label: "License Number", required: true },
     { name: "contactNumber", label: "Contact Number", required: true },
     {

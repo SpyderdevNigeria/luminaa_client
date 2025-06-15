@@ -53,6 +53,7 @@ import PharmacyMedications from "./pages/pharmacy/medications/PharmacistMedicati
 import PharmacyLayout from "./components/layouts/PharmacistLayout";
 import SuperAdminLayout from "./components/layouts/SuperAdminLayout";
 import SuperAdminAdmins from "./pages/admin/superadmin/admins/SuperAdminAdmins";
+import AdminProfile from "./pages/admin/profile/AdminProfile";
 // Route
 const App = createBrowserRouter([
   {
@@ -320,7 +321,11 @@ const App = createBrowserRouter([
       {
         path:routeLinks?.admin?.medications,
         element:<AdminMedications/>
-      }
+      },
+          {
+        path: routeLinks?.admin?.profile,
+        element: <AdminProfile />,
+      },
       ]
 },
   {
@@ -358,7 +363,11 @@ const App = createBrowserRouter([
       {
         path: routeLinks?.superAdmin?.admins,
         element : <SuperAdminAdmins/>
-      }
+      },
+              {
+        path: routeLinks?.superAdmin?.profile,
+        element: <AdminProfile />,
+      },
       ]
 },
 

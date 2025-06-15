@@ -26,8 +26,11 @@ function AdminDoctors() {
   const [editDoctor, setEditDoctor] = useState<any>(null);
 
   useEffect(() => {
+    if (doctors.length > 0 && doctorSpecialty === "" && doctorsPage === 1) {
+      return 
+    } 
     getDoctors();
-  }, [doctorsPage,doctorSpecialty, doctorsPage,]);
+  }, [doctorsPage,doctorSpecialty,]);
 
   const handleEdit = (doctor: any) => {
     setEditDoctor(doctor);
@@ -135,7 +138,7 @@ function AdminDoctors() {
         dropdowns={[
             {
                 label: "Status",
-                options: ["All", "Active", "Inactive"],
+                options: ["Active", "Inactive"],
                 value: "All",
                 onChange: (value) => {
                 console.log("Status filter changed to:", value);

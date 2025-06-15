@@ -3,6 +3,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import CommonFormField from "../../../../components/common/CommonFormField";
+import { labDepartmentOptions } from "../../../../utils/dashboardUtils";
 
 type LabUser = {
   firstName: string;
@@ -121,6 +122,10 @@ const handleChange = (
     }
   };
 
+  const labDepartment = labDepartmentOptions.map((val) => ({
+    label: val.charAt(0).toUpperCase() + val.slice(1),
+    value: val,
+  }));
   return (
     <main>
       <button
@@ -154,7 +159,7 @@ const handleChange = (
               type: "text",
               required: !lab,
             },
-            { name: "department", label: "Department", required: true, type: "text" },
+            { name: "department", label: "Department", type:"select", options:labDepartment, required: true,},
             { name: "licenseNumber", label: "License Number", required: true, type: "text" },
             {
               name: "licenseExpiryDate",

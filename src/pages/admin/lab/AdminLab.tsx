@@ -25,6 +25,9 @@ function AdminLabs() {
   const [editLab, setEditLab] = useState<any>(null);
 
   useEffect(() => {
+     if (labs.length > 0 && labDepartment === "" && labsPage === 1) {
+      return 
+    }
     getLabs();
   }, [labsPage, labDepartment]);
 

@@ -37,6 +37,9 @@ function AdminMedications() {
   const [editMedication, setEditMedication] = useState<any>(null);
 
   useEffect(() => {
+     if (medications.length > 0 && medicationSearch === "" && medicationSearch === "" && medicationsPage === 1) {
+      return
+    }
     getMedications();
   }, [
     medicationsPage,
@@ -46,6 +49,7 @@ function AdminMedications() {
     medicationStatus,
     medicationRequiresPrescription,
     medicationManufacturer,
+
   ]);
 
   const handleEdit = (medication: any) => {

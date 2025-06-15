@@ -2,10 +2,15 @@ import api from "./apiConfig";
 
 const AdminApi = {
   getProfile: async () => {
-    const response = await api.get("/users/profile");
+    const response = await api.get("/admin/profile");
     return response.data;
   },
 
+    updateProfile: async (data: any | undefined) => {
+    const response = await api.put("/admin/profile", data);
+    return response.data;
+
+  },
   
   updateProfilePicture: async (body: any) => {
     const response = await api.post("/users/update-profile-picture", body);

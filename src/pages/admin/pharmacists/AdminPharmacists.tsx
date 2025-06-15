@@ -24,6 +24,9 @@ function AdminPharmacists() {
   const [editPharmacist, setEditPharmacist] = useState<any>(null);
 
   useEffect(() => {
+    if (pharmacists.length > 0 && pharmacistsPage === 1) {
+      return;
+    }
     getPharmacists();
   }, [pharmacistsPage]);
 
@@ -48,7 +51,9 @@ function AdminPharmacists() {
       key: "name",
       label: "Name",
       render: (pharmacist) => (
-        <span>{pharmacist?.user?.firstName} {pharmacist?.user?.lastName}</span>
+        <span>
+          {pharmacist?.user?.firstName} {pharmacist?.user?.lastName}
+        </span>
       ),
     },
     {
@@ -64,25 +69,35 @@ function AdminPharmacists() {
     {
       key: "hireDate",
       label: "Hire Date",
-      render: (pharmacist) => <span>{new Date(pharmacist?.hireDate).toLocaleDateString()}</span>,
+      render: (pharmacist) => (
+        <span>{new Date(pharmacist?.hireDate).toLocaleDateString()}</span>
+      ),
     },
     {
       key: "licenseExpiryDate",
       label: "License Expiry",
-      render: (pharmacist) => <span>{new Date(pharmacist?.licenseExpiryDate).toLocaleDateString()}</span>,
+      render: (pharmacist) => (
+        <span>
+          {new Date(pharmacist?.licenseExpiryDate).toLocaleDateString()}
+        </span>
+      ),
     },
     {
       key: "status",
       label: "Status",
       render: (pharmacist) => (
-        <StatusBadge status={pharmacist?.isActive ? 'active' : 'inactive'} />
+        <StatusBadge status={pharmacist?.isActive ? "active" : "inactive"} />
       ),
     },
     {
       key: "actions",
       label: "Actions",
       render: (pharmacist) => (
-        <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
+        <Dropdown
+          showArrow={false}
+          triggerLabel=""
+          triggerIcon={<HiOutlineDotsVertical />}
+        >
           <ul className="space-y-2 text-sm">
             <li
               onClick={() => console.log("Viewing", pharmacist)}

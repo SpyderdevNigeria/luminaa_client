@@ -2,11 +2,10 @@ import { CiTablets1 } from "react-icons/ci";
 import { LiaStethoscopeSolid } from "react-icons/lia";
 import { LiaPillsSolid } from "react-icons/lia";
 import { FiPackage } from "react-icons/fi";
-import {  FaRegCircleUser,FaUserDoctor    } from "react-icons/fa6";
+import {  FaRegCircleUser, FaUserDoctor, FaUserInjured     } from "react-icons/fa6";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
-import { MdPeople } from "react-icons/md";
 import { GrTest } from "react-icons/gr";
 import { GiTestTubes } from "react-icons/gi";
 import routeLinks from "./routes";
@@ -138,13 +137,13 @@ export const navItemsDoctor = [
   {
     label: "Patients",
     title: "Patients",
-    icon: MdPeople,
+    icon: FaUserInjured,
     to: routeLinks?.doctor?.patients,
     subLinks: [
       {
         label: "Patients",
         title: "Patients / Patients Details",
-        icon: IoCalendarClearOutline,
+        icon: FaUserInjured,
         to: routeLinks?.doctor?.patientView,
       },
     ],
@@ -208,7 +207,7 @@ export const navItemsAdmin = [
     {
     label: "Patients",
     title: "Patients",
-    icon: FaRegCircleUser ,
+    icon: FaUserInjured ,
     to: routeLinks?.admin?.patients,
   },
   {
@@ -222,7 +221,13 @@ export const navItemsAdmin = [
     title:"Medications",
     icon:MdMedication,
     to:routeLinks?.admin?.medications,
-  }
+  },
+    {
+    label: "Profile Management",
+    title: "Profile Management",
+    icon: FaRegCircleUser,
+    to: routeLinks?.admin?.profile,
+  },
   // {
   //   label: "Reports",
   //   title: "Reports",
@@ -259,7 +264,7 @@ export const navItemsSuperAdmin = [
     {
     label: "Patients",
     title: "Patients",
-    icon: FaRegCircleUser ,
+    icon: FaUserInjured ,
     to: routeLinks?.superAdmin?.patients,
   },
   {
@@ -280,7 +285,13 @@ export const navItemsSuperAdmin = [
     title:"Admins",
     icon:HiMiniUsers,
     to:routeLinks?.superAdmin?.admins,
-  }
+  },
+     {
+    label: "Profile Management",
+    title: "Profile Management",
+    icon: FaRegCircleUser,
+    to: routeLinks?.superAdmin?.profile,
+  },
   // {
   //   label: "Reports",
   //   title: "Reports",
@@ -330,6 +341,15 @@ export const adminDoctorSpecialties = [
   "Psychiatry",
   "Pulmonology",
   "Urology",
+]
+
+export const labDepartmentOptions = [
+  'Hematology',
+"Clinical",
+" Pathology",
+"Biochemistry",
+"Microbiology",
+"Histopathology",
 ]
 
 export const medicationCategoryOptions = [
