@@ -51,6 +51,8 @@ import PharmacyProfile from "./pages/pharmacy/profile/PharmacistProfile";
 import PharmacyDashboard from "./pages/pharmacy/dashboard/PharmacistDashboard";
 import PharmacyMedications from "./pages/pharmacy/medications/PharmacistMedications";
 import PharmacyLayout from "./components/layouts/PharmacistLayout";
+import SuperAdminLayout from "./components/layouts/SuperAdminLayout";
+import SuperAdminAdmins from "./pages/admin/superadmin/admins/SuperAdminAdmins";
 // Route
 const App = createBrowserRouter([
   {
@@ -321,7 +323,44 @@ const App = createBrowserRouter([
       }
       ]
 },
-
+  {
+    path:routeLinks?.superAdmin?.path,
+    element: <SuperAdminLayout />,
+    children: [
+      {
+        path: routeLinks?.superAdmin?.path,
+        element: <Navigate to={routeLinks?.superAdmin?.dashboard} />,
+       },
+      {
+        path: routeLinks?.superAdmin?.dashboard,
+        element: <AdminDashboard />,
+      },
+      {
+        path: routeLinks?.superAdmin?.lab,
+        element:<AdminLab/>
+      },
+      {
+        path:routeLinks?.superAdmin?.patients,
+        element: <AdminPatients/>
+      },
+      {
+        path:routeLinks?.superAdmin?.doctors,
+        element:<AdminDoctors/>
+      },
+      {
+        path: routeLinks?.superAdmin?.pharmacists,
+        element: <AdminPharmacists/>
+      },
+      {
+        path:routeLinks?.superAdmin?.medications,
+        element:<AdminMedications/>
+      },
+      {
+        path: routeLinks?.superAdmin?.admins,
+        element : <SuperAdminAdmins/>
+      }
+      ]
+},
 
 ]);
 

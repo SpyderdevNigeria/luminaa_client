@@ -133,6 +133,21 @@ export interface IMedication {
   updatedAt: string; 
 }
 
+export interface ISuperAdmin {
+  id: string;
+  contactNumber: string;
+  user: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+  };
+  createdAt?: string;
+  isActive?: boolean;
+}
+
+
 export interface IPayload {
   token: string;
   user: IUser;

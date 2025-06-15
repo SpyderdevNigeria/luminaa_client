@@ -10,6 +10,7 @@ import { MdPeople } from "react-icons/md";
 import { GrTest } from "react-icons/gr";
 import { GiTestTubes } from "react-icons/gi";
 import routeLinks from "./routes";
+import { HiMiniUsers } from "react-icons/hi2";
 import { RxDashboard } from "react-icons/rx";
 import { CiViewList } from "react-icons/ci";
 import { ImLab } from "react-icons/im";
@@ -236,6 +237,64 @@ export const navItemsAdmin = [
   // },
 ];
 
+export const navItemsSuperAdmin = [
+  {  
+    label: "Dashboard",
+    title: "Dashboard",
+    icon: RxDashboard,
+    to: routeLinks?.superAdmin?.dashboard,
+  },
+  {
+    label: "Doctors",
+    title: "Doctors",
+    icon:  FaUserDoctor,
+    to: routeLinks?.superAdmin?.doctors,
+  },
+    {
+    label: "Laboratories",
+    title: "Laboratories",
+    icon: GiTestTubes ,
+    to: routeLinks?.superAdmin?.lab,
+  },
+    {
+    label: "Patients",
+    title: "Patients",
+    icon: FaRegCircleUser ,
+    to: routeLinks?.superAdmin?.patients,
+  },
+  {
+    label: "Pharmacists",
+    title: "Pharmacists",
+    icon: LiaPillsSolid,
+    to: routeLinks?.superAdmin?.pharmacists
+  },
+  {
+    label:"Medications",
+    title:"Medications",
+    icon:MdMedication,
+    to:routeLinks?.superAdmin?.medications,
+  },
+
+    {
+    label:"Admins",
+    title:"Admins",
+    icon:HiMiniUsers,
+    to:routeLinks?.superAdmin?.admins,
+  }
+  // {
+  //   label: "Reports",
+  //   title: "Reports",
+  //   icon: CiViewList,
+  //   to: routeLinks?.admin?.lab,
+  // },
+  // {
+  //   label: "Settings",
+  //   title: "Settings",
+  //   icon: FaRegCircleUser,
+  //   to: routeLinks?.admin?.settings,
+  // },
+];
+
 export const navItemsPharmacy = [
     {  
     label: "Dashboard",
@@ -348,8 +407,11 @@ export const returnAdminNavigationUrlLogic = (
   partnerProfile: any
 ) => {
   if (partnerProfile){
-  if (partnerType) {
+  if (partnerType === 'admin') {
     return routeLinks?.admin?.dashboard;
+  }
+    if (partnerType === 'super_admin') {
+    return routeLinks?.superAdmin?.dashboard;
   }
   }
   return routeLinks?.auth?.adminLogin;

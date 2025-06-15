@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import DashboardLayout from "./DashboardLayout";
-import { navItemsAdmin } from "../../utils/dashboardUtils";
+import { navItemsSuperAdmin } from "../../utils/dashboardUtils";
 import { useLayoutEffect } from "react";
 import routeLinks from "../../utils/routes";
 import LoadingScreen from "../loading/LoadingScreen";
@@ -8,7 +8,7 @@ import { logout } from "../../reducers/authSlice";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import useAdminAuth from "../../hooks/useAdminAuth";
 
-function AdminLayout() {
+function SuperAdminLayout() {
   const navigate = useNavigate();
   const { userProfile, authLoading } = useAdminAuth();
   const dispatch = useAppDispatch();
@@ -22,7 +22,7 @@ function AdminLayout() {
     //  if (userProfile && userProfile.user &&  userProfile.user.isEmailVerified !== true) {
     //   navigate(routeLinks?.auth?.partnerEmailVerification);
     // }
-    if (userProfile && userProfile.user && (userProfile.user.role !== "admin" && userProfile.user.role !== "super_admin")) {
+    if (userProfile && userProfile.user && userProfile.user.role !== "super_admin") {
       dispatch(logout());
       navigate(routeLinks?.auth?.login);
     }
@@ -34,11 +34,11 @@ function AdminLayout() {
   if (authLoading) return <LoadingScreen />;
   return (
     <div>
-      <DashboardLayout links={navItemsAdmin} bg={"bg-white"}>
+      <DashboardLayout links={navItemsSuperAdmin} bg={"bg-white"}>
         <Outlet />
       </DashboardLayout>
     </div>
   );
 }
 
-export default AdminLayout;
+export default SuperAdminLayout;

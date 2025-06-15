@@ -33,10 +33,13 @@ const PatientApi = {
   },
   
   getDoctors: async () => {
-    const response = await api.get("/admin/doctors");
+    const response = await api.get("/patient/doctors");
     return response.data;
   },
-
+      getDoctorById: async (id: any) => {
+    const response = await api.get(`/patient/doctors/${id}`);
+    return response.data;
+  },
 
   uploadPhoto: async (file: any) => {
     const formData = new FormData();

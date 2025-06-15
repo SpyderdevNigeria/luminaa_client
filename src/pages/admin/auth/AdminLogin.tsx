@@ -59,12 +59,12 @@ function AdminLogin() {
         type: "success",
       });
       console.log(payload)
-    //   if (user?.role !== "admin") {
-    //     return setMessage({
-    //       message: "Unauthorized access",
-    //       type: "error",
-    //     });
-    //   }
+      if (user?.role !== "admin" && user?.role !== "super_admin") {
+        return setMessage({
+          message: "Unauthorized access",
+          type: "error",
+        });
+      }
       setMessage({
         message: "Login was successful",
         type: "success",
