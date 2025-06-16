@@ -6,6 +6,7 @@ import DoctorApi from "../../../api/doctorApi";
 import HeaderTab from "../../../components/common/HeaderTab";
 import PrescriptionCard from "../../../components/common/PrescriptionCard";
 // import useAppointments from "../../../hooks/useAppointments";
+// import useAppointments from "../../../hooks/useAppointments";
 function DoctorPrescriptions() {
   const [selectedPrescription, setSelectedPrescription] = useState<any>(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -55,7 +56,9 @@ function DoctorPrescriptions() {
         dropdowns={[
           {
             label: "Appointment ID",
-            options: [], // e.g. ['APPT-001', 'APPT-002']
+            options: [
+
+            ], // e.g. ['APPT-001', 'APPT-002']
             value: appointmentId,
             onChange: setAppointmentId,
           },
