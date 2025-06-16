@@ -32,8 +32,8 @@ const PatientApi = {
     return response.data;
   },
   
-  getDoctors: async () => {
-    const response = await api.get("/patient/doctors");
+  getDoctors: async (query:any) => {
+    const response = await api.get(`/patient/doctors${query}`);
     return response.data;
   },
       getDoctorById: async (id: any) => {

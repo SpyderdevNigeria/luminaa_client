@@ -72,7 +72,8 @@ admin: {
   consultationsDetails: '/admin/consultations/:id',
   doctors: '/admin/doctors',
   doctorDetails: '/admin/doctors/:id',
-  medications:'/admin/medications'
+  medications:'/admin/medications',
+  medicationsDetails:'/super-admin/medications/:id',
 },
 superAdmin: {
   path:'/super-admin',
@@ -94,6 +95,7 @@ superAdmin: {
   doctors: '/super-admin/doctors',
   doctorDetails: '/super-admin/doctors/:id',
   medications:'/super-admin/medications',
+  medicationsDetails:'/super-admin/medications/:id',
   admins: '/super-admin/admins',
   adminsDetails: '/super-admin/admins/:id',
 },

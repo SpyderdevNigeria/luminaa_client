@@ -1,4 +1,8 @@
-import DoctorIcon from '../../assets/images/doctor/doctor.png';
+import { useState } from "react";
+import DoctorIcon from "../../assets/images/doctor/doctor.png";
+import {   FaCalendarAlt } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa6";
+import Modal from "../modal/modal";
 
 interface Doctor {
   id: string;
@@ -8,6 +12,7 @@ interface Doctor {
     firstName: string;
     lastName: string;
   };
+  isActive: boolean;
   specialty: string;
   availability: {
     data:
@@ -26,51 +31,100 @@ interface DoctorCardProps {
   doctor: Doctor;
 }
 
-const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => (
-  <div
-    className="relative group bg-white p-4 rounded-lg shadow-sm transition-transform duration-300 transform hover:-translate-y-1 cursor-pointer"
-  >
-    {/* Border animation container */}
-    <div className="absolute inset-0 rounded-lg border-2 border-transparent group-hover:border-primary transition-all duration-500 ease-in-out pointer-events-none z-0"></div>
+const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
+  const [showAvailability, setShowAvailability] = useState(false);
 
-    {/* Card content */}
-    <div className="relative z-10">
-      {/* Avatar & Header */}
-      <div className="w-full h-48 overflow-hidden bg-gray-50 rounded-lg">
-        <img
-          className="w-full h-full object-contain"
-          src={DoctorIcon}
-          alt="Doctor"
-        />
-      </div>
-      <h3 className="mt-4 text-base font-semibold">
-        Dr {doctor.user.firstName} {doctor.user.lastName}
-      </h3>
-      <p className="text-sm text-gray-600">{doctor.specialty}</p>
+  const fullName = `Dr. ${doctor.user.firstName} ${doctor.user.lastName}`;
+  const imageUrl = doctor.user.profilePicture?.url || DoctorIcon;
 
-      {/* Availability Section */}
-      <div>
-        <h4 className="text-sm font-medium text-gray-700 my-2">Availability</h4>
-        <div className="flex flex-wrap mb-4 gap-2">
-          {doctor?.availability?.data?.map((slot, idx) => (
-            <div
-              key={idx}
-              className="flex items-center text-sm text-gray-800 gap-1 bg-gray-50 px-2 py-1 rounded-full"
-            >
-              {slot.dayOfWeek}
-            </div>
-          ))}
+  return (
+    <>
+      <div className="bg-white p-4 rounded-xl shadow-md relative hover:shadow-lg transition cursor-pointer">
+
+        {/* Image */}
+        <div className="w-24 h-24 mx-auto rounded-full overflow-hidden  shadow-md">
+          <img
+            src={imageUrl}
+            alt={fullName}
+            className="w-full h-full object-cover"
+          />
         </div>
 
-        <button
-          className="p-3 bg-primary text-white w-full rounded-lg mt-4"
-          onClick={() => handleClick?.()}
-        >
-          Book
-        </button>
-      </div>
-    </div>
+        {/* Name & Specialty */}
+        <div className="text-center mt-3">
+          <h3 className="text-base font-semibold">{fullName}</h3>
+
+          <div className="mt-2">
+            <p className="text-xs text-gray-500">specialty</p>
+            <span className="inline-block text-primary text-base font-medium px-3 py-1 rounded-full">
+              {doctor.specialty}
+            </span>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex items-center gap-2 mt-1 border-gray-50  pt-3">
+         <div className="relative group inline-block">
+  <button
+    onClick={() => setShowAvailability(true)}
+    className="text-primary border border-primary p-2 rounded-md"
+  >
+    <FaCalendarAlt className="text-sm" />
+  </button>
+
+  {/* Tooltip */}
+  <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 whitespace-nowrap">
+    View Availability
   </div>
-);
+</div>
+
+          <button
+            onClick={() => {
+              doctor?.availability?.data && doctor.availability.data.length > 0 ?
+              handleClick?.()
+              : alert("Sorry this doctor is currently unavailable")
+            }}
+            className="flex-1 w-full text-xs flex items-center justify-center gap-1 bg-primary text-white rounded-md py-2"
+          >
+            <FaBookmark className="text-sm" /> Book an Appointment
+          </button>
+        </div>
+      </div>
+
+      {/* Availability Modal */}
+      {showAvailability && (
+        <Modal
+          open={showAvailability}
+          onClose={() => setShowAvailability(false)}
+          title={`${fullName}'s Availability`}
+        >
+          <div className="space-y-3 my-8">
+            {doctor?.availability?.data?.length ? (
+              doctor.availability.data.map((slot, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-2 bg-gray-100 rounded-md text-sm"
+                >
+                  <span className="capitalize font-medium">
+                    {slot.dayOfWeek}
+                  </span>
+                  <span>
+                    {slot.allDay
+                      ? "All Day"
+                      : `${slot.startTime} - ${slot.endTime}`}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <p className="text-center text-gray-500 text-sm">
+               No availability info provided.
+              </p>
+            )}
+          </div>
+        </Modal>
+      )}
+    </>
+  );
+};
 
 export default DoctorCard;

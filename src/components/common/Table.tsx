@@ -25,6 +25,8 @@ const Table = <T extends object>({
   showPaginate = true,
 }: Props<T>) => {
 
+  const gettotalPages = Math.ceil((    total ?? 0) / limit);
+
   return (
     <div className="">
       <div className="overflow-x-auto">
@@ -107,7 +109,7 @@ const Table = <T extends object>({
               page={page}
               total={total ?? 0}
               limit={limit}
-              totalPages={totalPages ?? 1}
+              totalPages={totalPages ? totalPages : gettotalPages ? gettotalPages : 1}
               onPageChange={(e: number) => { if (setPage) setPage(e); }}
             />
            </div>

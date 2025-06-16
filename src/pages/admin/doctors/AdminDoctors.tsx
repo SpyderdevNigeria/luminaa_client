@@ -19,18 +19,19 @@ function AdminDoctors() {
     setDoctorsPage,
     getDoctors,
     setDoctorSpecialty,
+    setDoctorsStatus,
+    doctorsStatus,
     doctorSpecialty,
   } = useAdmin(AdminApi);
 
   const [showForm, setShowForm] = useState(false);
   const [editDoctor, setEditDoctor] = useState<any>(null);
-
   useEffect(() => {
     if (doctors.length > 0 && doctorSpecialty === "" && doctorsPage === 1) {
       return 
     } 
     getDoctors();
-  }, [doctorsPage,doctorSpecialty,]);
+  }, [doctorsPage,doctorSpecialty, doctorsStatus]);
 
   const handleEdit = (doctor: any) => {
     setEditDoctor(doctor);
@@ -139,9 +140,9 @@ function AdminDoctors() {
             {
                 label: "Status",
                 options: ["Active", "Inactive"],
-                value: "All",
+                value: doctorsStatus,
                 onChange: (value) => {
-                console.log("Status filter changed to:", value);
+                setDoctorsStatus(value);
                 },
             },
             {

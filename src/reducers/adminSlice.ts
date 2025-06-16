@@ -15,6 +15,7 @@ const initialState = {
     page: 1,
     limit: 10,
     specialty: '',
+    status:"",
     total: 0,
     loading: false,
     error: null,
@@ -89,6 +90,9 @@ const adminSlice = createSlice({
     },
     setDoctorsSpecialty(state, action) {
       state.doctors.specialty = action.payload;
+    },
+       setDoctorsStatus(state, action) {
+      state.doctors.status = action.payload;
     },
     setDoctorsError(state, action) {
       state.doctors.error = action.payload;
@@ -184,6 +188,7 @@ export const {
   setDoctorsPagination,
   setDoctorsSpecialty,
   setDoctorsError,
+  setDoctorsStatus,
 
   // Labs
   setLabsLoading,

@@ -5,25 +5,22 @@ import {
   setPatientsLoading,
   setPatientsError,
   setPatientsPagination,
-
   setDoctors,
   setDoctorsLoading,
   setDoctorsError,
   setDoctorsPagination,
   setDoctorsSpecialty,
-
+  setDoctorsStatus,
   setLabs,
   setLabsLoading,
   setLabsError,
   setLabsPagination,
   setLabsDepartment,
-
   setPharmacists,
   setPharmacistsLoading,
   setPharmacistsError,
   setPharmacistsPagination,
   setPharmacistsSearch,
-
   setMedications,
   setMedicationsLoading,
   setMedicationsError,
@@ -36,16 +33,28 @@ import {
   setMedicationsManufacturer,
 } from "../reducers/adminSlice";
 interface AdminApiInterface {
-  getPatients: (query: string) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
-  getDoctors: (query: string) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
-  getLabs: (query: string) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
-  getPharmacists: (query: string) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
-    getMedications: (query: string) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
+  getPatients: (
+    query: string
+  ) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
+  getDoctors: (
+    query: string
+  ) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
+  getLabs: (
+    query: string
+  ) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
+  getPharmacists: (
+    query: string
+  ) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
+  getMedications: (
+    query: string
+  ) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
 }
 
 function useAdmin(api: AdminApiInterface) {
   const dispatch = useDispatch<AppDispatch>();
-  const { patients, doctors, labs, pharmacists, medications  } = useSelector((state: RootState) => state.admin);
+  const { patients, doctors, labs, pharmacists, medications } = useSelector(
+    (state: RootState) => state.admin
+  );
 
   // Fetch Patients
   const getPatients = async () => {
@@ -57,10 +66,12 @@ function useAdmin(api: AdminApiInterface) {
       params.append("limit", patients.limit.toString());
 
       const res = await api.getPatients(`?${params.toString()}`);
-      dispatch(setPatients({
-        data: res.data.data,
-        total: res.data.total ?? 0,
-      }));
+      dispatch(
+        setPatients({
+          data: res.data.data,
+          total: res.data.total ?? 0,
+        })
+      );
     } catch (err) {
       dispatch(setPatientsError("Failed to fetch patients"));
     } finally {
@@ -77,12 +88,14 @@ function useAdmin(api: AdminApiInterface) {
       params.append("page", doctors.page.toString());
       params.append("limit", doctors.limit.toString());
       if (doctors.specialty) params.append("specialty", doctors.specialty);
-
+      if (doctors.status) params.append("status", doctors.status);
       const res = await api.getDoctors(`?${params.toString()}`);
-      dispatch(setDoctors({
-        data: res.data.data,
-        total: res.data.total ?? 0,
-      }));
+      dispatch(
+        setDoctors({
+          data: res.data.data,
+          total: res.data.total ?? 0,
+        })
+      );
     } catch (err) {
       dispatch(setDoctorsError("Failed to fetch doctors"));
     } finally {
@@ -101,10 +114,12 @@ function useAdmin(api: AdminApiInterface) {
       if (labs.department) params.append("department", labs.department);
 
       const res = await api.getLabs(`?${params.toString()}`);
-      dispatch(setLabs({
-        data: res.data.data,
-        total: res.data.total ?? 0,
-      }));
+      dispatch(
+        setLabs({
+          data: res.data.data,
+          total: res.data.total ?? 0,
+        })
+      );
     } catch (err) {
       dispatch(setLabsError("Failed to fetch labs"));
     } finally {
@@ -123,17 +138,19 @@ function useAdmin(api: AdminApiInterface) {
       if (pharmacists.search) params.append("search", pharmacists.search);
 
       const res = await api.getPharmacists(`?${params.toString()}`);
-      dispatch(setPharmacists({
-        data: res.data.data,
-        total: res.data.total ?? 0,
-      }));
+      dispatch(
+        setPharmacists({
+          data: res.data.data,
+          total: res.data.total ?? 0,
+        })
+      );
     } catch (err) {
       dispatch(setPharmacistsError("Failed to fetch pharmacists"));
     } finally {
       dispatch(setPharmacistsLoading(false));
     }
   };
- const getMedications = async () => {
+  const getMedications = async () => {
     dispatch(setMedicationsLoading(true));
     dispatch(setMedicationsError(null));
     try {
@@ -142,11 +159,13 @@ function useAdmin(api: AdminApiInterface) {
       params.append("limit", medications.limit.toString());
       if (medications.search) params.append("search", medications.search);
       if (medications.category) params.append("category", medications.category);
-      if (medications.dosageForm) params.append("dosageForm", medications.dosageForm);
+      if (medications.dosageForm)
+        params.append("dosageForm", medications.dosageForm);
       if (medications.status) params.append("status", medications.status);
       if (medications.requiresPrescription)
         params.append("requiresPrescription", medications.requiresPrescription);
-      if (medications.manufacturer) params.append("manufacturer", medications.manufacturer);
+      if (medications.manufacturer)
+        params.append("manufacturer", medications.manufacturer);
 
       const res = await api.getMedications(`?${params.toString()}`);
       dispatch(
@@ -178,6 +197,7 @@ function useAdmin(api: AdminApiInterface) {
 
     // Doctors
     doctors: doctors.data,
+    doctorsStatus: doctors.status,
     doctorsPage: doctors.page,
     doctorsLimit: doctors.limit,
     doctorsTotal: doctors.total,
@@ -189,6 +209,7 @@ function useAdmin(api: AdminApiInterface) {
     setDoctorsLimit: (val: number) =>
       dispatch(setDoctorsPagination({ page: doctors.page, limit: val })),
     setDoctorSpecialty: (val: string) => dispatch(setDoctorsSpecialty(val)),
+    setDoctorsStatus:(val:string) => dispatch(setDoctorsStatus(val)),
     getDoctors,
 
     // Labs
@@ -215,12 +236,15 @@ function useAdmin(api: AdminApiInterface) {
     pharmacistsError: pharmacists.error,
     pharmacistSearch: pharmacists.search,
     setPharmacistsPage: (val: number) =>
-      dispatch(setPharmacistsPagination({ page: val, limit: pharmacists.limit })),
+      dispatch(
+        setPharmacistsPagination({ page: val, limit: pharmacists.limit })
+      ),
     setPharmacistsLimit: (val: number) =>
-      dispatch(setPharmacistsPagination({ page: pharmacists.page, limit: val })),
+      dispatch(
+        setPharmacistsPagination({ page: pharmacists.page, limit: val })
+      ),
     setPharmacistSearch: (val: string) => dispatch(setPharmacistsSearch(val)),
     getPharmacists,
-
 
     // Medications
     medications: medications.data,
@@ -237,16 +261,23 @@ function useAdmin(api: AdminApiInterface) {
     medicationManufacturer: medications.manufacturer,
 
     setMedicationsPage: (val: number) =>
-      dispatch(setMedicationsPagination({ page: val, limit: medications.limit })),
+      dispatch(
+        setMedicationsPagination({ page: val, limit: medications.limit })
+      ),
     setMedicationsLimit: (val: number) =>
-      dispatch(setMedicationsPagination({ page: medications.page, limit: val })),
+      dispatch(
+        setMedicationsPagination({ page: medications.page, limit: val })
+      ),
     setMedicationSearch: (val: string) => dispatch(setMedicationsSearch(val)),
-    setMedicationCategory: (val: string) => dispatch(setMedicationsCategory(val)),
-    setMedicationDosageForm: (val: string) => dispatch(setMedicationsDosageForm(val)),
+    setMedicationCategory: (val: string) =>
+      dispatch(setMedicationsCategory(val)),
+    setMedicationDosageForm: (val: string) =>
+      dispatch(setMedicationsDosageForm(val)),
     setMedicationStatus: (val: string) => dispatch(setMedicationsStatus(val)),
     setMedicationRequiresPrescription: (val: string) =>
       dispatch(setMedicationsRequiresPrescription(val)),
-    setMedicationManufacturer: (val: string) => dispatch(setMedicationsManufacturer(val)),
+    setMedicationManufacturer: (val: string) =>
+      dispatch(setMedicationsManufacturer(val)),
 
     getMedications,
   };

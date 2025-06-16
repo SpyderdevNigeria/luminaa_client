@@ -44,7 +44,7 @@ const steps = useMemo(() =>  [
   };
 
   return (
-    <div className={`${currentStep === 2  ? 'max-w-2xl' : 'max-w-2xl'} w-full mx-auto p-2 md:p-4 rounded-lg `}>
+    <div className={`${currentStep === 2  ? 'max-w-7xl ' : 'max-w-2xl'} w-full mx-auto p-2 md:p-4 rounded-lg `}>
       <h5 className={`text-center  text-secondary-text text-xl md:text-2xl`}>
         Appointment Booking
      </h5>

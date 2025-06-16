@@ -221,6 +221,14 @@ export const navItemsAdmin = [
     title:"Medications",
     icon:MdMedication,
     to:routeLinks?.admin?.medications,
+      subLinks: [
+      {
+        label: "Medications",
+        title: "Medications / Medications Details",
+        icon: FaUserInjured,
+        to: routeLinks?.admin?.medicationsDetails,
+      },
+    ],
   },
     {
     label: "Profile Management",
@@ -278,6 +286,14 @@ export const navItemsSuperAdmin = [
     title:"Medications",
     icon:MdMedication,
     to:routeLinks?.superAdmin?.medications,
+    subLinks: [
+      {
+        label: "Medications",
+        title: "Medications / Medications Details",
+        icon: FaUserInjured,
+        to: routeLinks?.superAdmin?.medicationsDetails,
+      },
+    ],
   },
 
     {
