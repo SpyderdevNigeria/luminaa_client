@@ -8,15 +8,15 @@ interface PaginationState {
 }
 
 interface OrderFilters extends PaginationState {
-  status?: string;
-  priority?: string;
+  status?: string | null | undefined;
+  priority?: string | null | undefined;
   patientId?: string;
   appointmentId?: string;
 }
 
 interface ResultFilters extends PaginationState {
-  startDate?: string;
-  endDate?: string;
+  startDate?: string | null | undefined;
+  endDate?: string  | null | undefined;
 }
 
 interface OrderState {

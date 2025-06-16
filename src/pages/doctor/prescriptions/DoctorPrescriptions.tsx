@@ -62,14 +62,14 @@ function DoctorPrescriptions() {
           {
             label: "Status",
             options: ["active", "inactive"],
-            value: status,
-            onChange: setPrescriptionStatus,
+            value: status || "",
+           onChange: (value) => setPrescriptionStatus(value?.toLowerCase() == "all" ? null : value?.toLowerCase()),
           },
           {
             label: "Refillable?",
             options: ["true", "false"],
-            value: isRefillable,
-            onChange: setPrescriptionIsRefillable,
+            value: isRefillable || "",
+             onChange: (value) => setPrescriptionIsRefillable(value?.toLowerCase() == "all" ? null : value?.toLowerCase()),
           },
         ]}
       />

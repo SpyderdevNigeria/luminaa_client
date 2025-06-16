@@ -12,8 +12,8 @@ interface PrescriptionState {
   error: string;
   appointmentId: string;
   patientId: string;
-  status: string;
-  isRefillable: string;
+  status: string | null | undefined;
+  isRefillable: string | null | undefined;
   search: string;
 }
 
@@ -60,10 +60,10 @@ const prescriptionSlice = createSlice({
     setPrescriptionAppointmentId(state, action: PayloadAction<string>) {
       state.appointmentId = action.payload;
     },
-        setPrescriptionIsRefillable(state, action: PayloadAction<string>) {
+        setPrescriptionIsRefillable(state, action: PayloadAction<string | null>) {
       state.isRefillable = action.payload;
     },
-        setPrescriptionStatus(state, action: PayloadAction<string>) {
+        setPrescriptionStatus(state, action: PayloadAction<string | null>) {
       state.status = action.payload;
     },
            setPrescriptionPatientId(state, action: PayloadAction<string>) {

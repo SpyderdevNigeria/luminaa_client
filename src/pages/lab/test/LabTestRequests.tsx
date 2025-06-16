@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import HeaderTab from "../../../components/common/HeaderTab";
 import LabCard from "../../../components/common/LabOrderCard";
 import PaginationComponent from "../../../components/common/PaginationComponent";
@@ -15,23 +15,15 @@ function LabTestRequests() {
     ordersLoading,
     setOrdersFilters,
     getOrders,
+    status,
+    priority,
   } = useOrder(LabApi);
 
-  const [statusFilter, setStatusFilter] = useState("All");
-  const [priorityFilter, setPriorityFilter] = useState("All");
   const totalPages = Math.ceil((ordersTotal ?? 0) / ordersLimit);
 
-  useEffect(() => {
-    getOrders();
-  }, [ordersPage, statusFilter, priorityFilter]);
-
-  useEffect(() => {
-    setOrdersFilters({
-      page: 1,
-      status: statusFilter === "All" ? undefined : statusFilter.toLowerCase(),
-       priority: priorityFilter === "All" ? undefined : priorityFilter.toLowerCase(),
-    });
-  }, [statusFilter, priorityFilter]);
+ useEffect(() => {
+  getOrders();
+}, [ordersPage, status, priority]);
 
   return (
     <div className="flex flex-col gap-4 bg-white">
@@ -40,17 +32,19 @@ function LabTestRequests() {
           title="lab "
           showSearch={false}
           dropdowns={[
-            {
+                 {
               label: "Status",
-              options: [ ...labRequestStatus],
-              value: statusFilter,
-              onChange: (value) => setStatusFilter(value),
+              options: ["All", ...labRequestStatus],
+              value: status || "",
+              onChange: (value) =>  setOrdersFilters({
+              status: value === "All" ? null : value.toLowerCase(),
+            })
             },
             {
               label: "priority",
-              options: [ ...labRequestPriority],
-              value: priorityFilter,
-              onChange: (value) => setPriorityFilter(value),
+              options: ["all", ...labRequestPriority],
+              value: priority || "",
+              onChange: (value) => setOrdersFilters({ priority: value === "All" ? undefined : value.toLowerCase()}),
             },
           ]}
         />

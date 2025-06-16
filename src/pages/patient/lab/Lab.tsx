@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import HeaderTab from "../../../components/common/HeaderTab";
 import LabCard from "../../../components/common/LabOrderCard";
 import PaginationComponent from "../../../components/common/PaginationComponent";
@@ -14,23 +14,16 @@ function Lab() {
     ordersLimit,
     ordersTotal,
     ordersLoading,
+    status,
     setOrdersFilters,
     getOrders,
   } = useOrder(PatientApi);
 
-  const [statusFilter, setStatusFilter] = useState("All");
   const totalPages = Math.ceil((ordersTotal ?? 0) / ordersLimit);
 
-  useEffect(() => {
-    getOrders();
-  }, [ordersPage, statusFilter]);
-
-  useEffect(() => {
-    setOrdersFilters({
-      page: 1,
-      status: statusFilter === "All" ? undefined : statusFilter.toLowerCase(),
-    });
-  }, [statusFilter]);
+useEffect(() => {
+  getOrders();
+}, [ordersPage, status]);
 
   return (
     <div className="flex flex-col gap-4 bg-white">
@@ -42,8 +35,10 @@ function Lab() {
             {
               label: "Status",
               options: ["All", ...labRequestStatus],
-              value: statusFilter,
-              onChange: (value) => setStatusFilter(value),
+              value: status || "",
+              onChange: (value) =>  setOrdersFilters({
+              status: value === "All" ? null : value.toLowerCase(),
+            })
             },
           ]}
         />

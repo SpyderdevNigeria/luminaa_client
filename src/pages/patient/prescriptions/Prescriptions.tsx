@@ -61,14 +61,14 @@ function Prescriptions() {
           {
             label: "Status",
             options: ["all", "active", "inactive"],
-            value: status,
-            onChange: (value) => setPrescriptionStatus(value?.toLowerCase() == "all" ? "" :value?.toLowerCase()),
+            value: status || "",
+            onChange: (value) => setPrescriptionStatus(value?.toLowerCase() == "all" ? null : value?.toLowerCase()),
           },
           {
             label: "Refillable?",
             options: ["all", "true", "false"],
-            value: isRefillable,
-            onChange: (value) => setPrescriptionIsRefillable(value?.toLowerCase() == "all" ? "" : value?.toLowerCase()),
+            value: isRefillable || "",
+            onChange: (value) => setPrescriptionIsRefillable(value?.toLowerCase() == "all" ? null : value?.toLowerCase()),
           },
         ]}
       />

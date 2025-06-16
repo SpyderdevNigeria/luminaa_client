@@ -94,9 +94,9 @@ function usePrescriptions(api: ApiInterface) {
     setPage: (val: number) => dispatch(setPrescriptionPage(val)),
     setLimit: (val: number) => dispatch(setPrescriptionLimit(val)),
     setAppointmentId: (val: string) => dispatch(setPrescriptionAppointmentId(val)),
-    setPrescriptionIsRefillable: (val: string) => dispatch(setPrescriptionIsRefillable(val)),
+    setPrescriptionIsRefillable: (val: string | null ) => dispatch(setPrescriptionIsRefillable(val)),
     setPrescriptionPatientId: (val: string) => dispatch(setPrescriptionPatientId(val)),
-    setPrescriptionStatus: (val: string) => dispatch(setPrescriptionStatus(val)),
+    setPrescriptionStatus: (val: string | null) => dispatch(setPrescriptionStatus(val)),
     setSearch: (val: string) => dispatch(setPrescriptionSearch(val)),
 
     getPrescriptions,
