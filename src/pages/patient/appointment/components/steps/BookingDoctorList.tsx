@@ -54,7 +54,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
   const [totalPages, setTotalPages] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [specialty, setSpecialty] = useState<string>("");
-    const [showSpecialtyList, setShowSpecialtyList] = useState(false);
+  const [showSpecialtyList, setShowSpecialtyList] = useState(false);
   useEffect(() => {
     const fetchDoctors = async () => {
       setLoading(true);
@@ -131,7 +131,12 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
   };
 
   const handleNextStep = () => {
-    if (!canProceed || !selectedDoctor) return;
+    if (!canProceed || !selectedDoctor) {
+      alert(
+        "A date and time must be selected to continue with the appointment."
+      );
+      return;
+    }
 
     const [time, period] = typeTime.split(" ");
     let [hour, minute] = time.split(":").map(Number);
@@ -156,152 +161,156 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
     nextStep();
   };
 
-    const handleSpecialtySelect = (value: string) => {
+  const handleSpecialtySelect = (value: string) => {
     setSpecialty(value);
     setPage(1);
     if (window.innerWidth < 768) setShowSpecialtyList(false); // Hide sidebar on mobile
   };
+
+
   return (
     <div>
       {!selectedDoctor ? (
-      <section className="mt-4">
-      <h5 className="mb-4 text-lg">Available Doctors</h5>
+        <section className="mt-4">
+          <h5 className="mb-4 text-lg">Available Doctors</h5>
 
-      {/* Search and Filter Controls */}
-      {data?.type === "A Specialist" && (
-        <div className="flex flex-col md:flex-row-reverse md:items-center md:justify-between gap-4 mb-4">
-          <div className="relative w-full md:w-1/2">
-            <FiSearch className="absolute left-3 top-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search by name..."
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-              className="border border-gray-300 rounded-md px-10 py-3 w-full focus:outline-primary"
-            />
-          </div>
-
-          <button
-            onClick={() => setShowSpecialtyList(!showSpecialtyList)}
-            className="md:hidden flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-md"
-          >
-            <HiOutlineFilter /> Filter Specialties
-          </button>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Specialties Sidebar */}
-        {data?.type === "A Specialist" && (
-          <div
-            className={`${
-              showSpecialtyList ? "block" : "hidden"
-            } md:block flex-col gap-4 mb-4`}
-          >
-            <div className="flex flex-col gap-2 w-full items-start">
-              <div className="w-full p-4  rounded-md bg-gray-100 md:bg-white">
-                <h5 className="text-xl font-bold">Specialties</h5>
-              </div>
-
-              <div
-                className={`w-full p-2 hover:bg-primary rounded-md hover:text-white cursor-pointer ${
-                  specialty === "" && "bg-primary text-white"
-                }`}
-                onClick={() => handleSpecialtySelect("")}
-              >
-                <h1 className="mx-2">All</h1>
-              </div>
-
-              {adminDoctorSpecialties.map((spec) => (
-                <div
-                  key={spec}
-                  className={`w-full p-2 hover:bg-primary rounded-md hover:text-white cursor-pointer ${
-                    specialty.toLowerCase() === spec.toLowerCase() &&
-                    "bg-primary text-white"
-                  }`}
-                  onClick={() => handleSpecialtySelect(spec)}
-                >
-                  <h1 className="mx-2">{spec}</h1>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Doctors Grid */}
-        <div
-          className={`${
-            data?.type === "A Specialist" ? "md:col-span-3" : "md:col-span-4"
-          }`}
-        >
-          {loading ? (
-            <div
-              className={`grid grid-cols-1 md:grid-cols-3 ${
-                data?.type === "A Specialist"
-                  ? "lg:grid-cols-3 mt-8"
-                  : "lg:grid-cols-4"
-              } gap-6 mt-4`}
-            >
-              {[1, 2, 3, 4].map((_, index) => (
-                <div
-                  key={index}
-                  className="p-6 bg-white rounded-xl shadow-sm animate-pulse space-y-4"
-                >
-                  <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto" />
-                  <div className="h-4 bg-gray-100 rounded w-3/4 mx-auto" />
-                  <div className="h-3 bg-gray-100 rounded w-1/2 mx-auto" />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div>
-              <div
-                className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 ${
-                  data?.type === "A Specialist"
-                    ? "lg:grid-cols-3 mt-8"
-                    : "lg:grid-cols-4"
-                } gap-6`}
-              >
-                {doctors.length === 0 ? (
-                  <div
-                    className={`h-[500px] flex flex-col items-center justify-center ${
-                      data?.type === "A Specialist"
-                        ? "lg:col-span-3 mt-8"
-                        : "lg:col-span-4"
-                    }`}
-                  >
-                    <p>No Available doctor</p>
-                  </div>
-                ) : (
-                  doctors.map((doctor) => (
-                    <DoctorCard
-                      key={doctor.id}
-                      doctor={doctor}
-                      handleClick={() => {
-                        handleDoctorSelect(doctor);
-                      }}
-                    />
-                  ))
-                )}
-              </div>
-
-              {totalPages > 1 && (
-                <PaginationComponent
-                  page={page}
-                  total={total}
-                  limit={limit}
-                  totalPages={totalPages}
-                  onPageChange={(newPage: number) => setPage(newPage)}
+          {/* Search and Filter Controls */}
+          {data?.type === "A Specialist" && (
+            <div className="flex flex-col md:flex-row-reverse md:items-center md:justify-between gap-4 mb-4">
+              <div className="relative w-full md:w-1/2">
+                <FiSearch className="absolute left-3 top-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search by name..."
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setPage(1);
+                  }}
+                  className="border border-gray-300 rounded-md px-10 py-3 w-full focus:outline-primary"
                 />
-              )}
+              </div>
+
+              <button
+                onClick={() => setShowSpecialtyList(!showSpecialtyList)}
+                className="md:hidden flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-md"
+              >
+                <HiOutlineFilter /> Filter Specialties
+              </button>
             </div>
           )}
-        </div>
-      </div>
-    </section>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Specialties Sidebar */}
+            {data?.type === "A Specialist" && (
+              <div
+                className={`${
+                  showSpecialtyList ? "block" : "hidden"
+                } md:block flex-col gap-4 mb-4`}
+              >
+                <div className="flex flex-col gap-2 w-full items-start">
+                  <div className="w-full p-4  rounded-md bg-gray-100 md:bg-white">
+                    <h5 className="text-xl font-bold">Specialties</h5>
+                  </div>
+
+                  <div
+                    className={`w-full p-2 hover:bg-primary rounded-md hover:text-white cursor-pointer ${
+                      specialty === "" && "bg-primary text-white"
+                    }`}
+                    onClick={() => handleSpecialtySelect("")}
+                  >
+                    <h1 className="mx-2">All</h1>
+                  </div>
+
+                  {adminDoctorSpecialties.map((spec) => (
+                    <div
+                      key={spec}
+                      className={`w-full p-2 hover:bg-primary rounded-md hover:text-white cursor-pointer ${
+                        specialty.toLowerCase() === spec.toLowerCase() &&
+                        "bg-primary text-white"
+                      }`}
+                      onClick={() => handleSpecialtySelect(spec)}
+                    >
+                      <h1 className="mx-2">{spec}</h1>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Doctors Grid */}
+            <div
+              className={`${
+                data?.type === "A Specialist"
+                  ? "md:col-span-3"
+                  : "md:col-span-4"
+              }`}
+            >
+              {loading ? (
+                <div
+                  className={`grid grid-cols-1 md:grid-cols-3 ${
+                    data?.type === "A Specialist"
+                      ? "lg:grid-cols-3 mt-8"
+                      : "lg:grid-cols-4"
+                  } gap-6 mt-4`}
+                >
+                  {[1, 2, 3, 4].map((_, index) => (
+                    <div
+                      key={index}
+                      className="p-6 bg-white rounded-xl shadow-sm animate-pulse space-y-4"
+                    >
+                      <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto" />
+                      <div className="h-4 bg-gray-100 rounded w-3/4 mx-auto" />
+                      <div className="h-3 bg-gray-100 rounded w-1/2 mx-auto" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div>
+                  <div
+                    className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 ${
+                      data?.type === "A Specialist"
+                        ? "lg:grid-cols-3 mt-8"
+                        : "lg:grid-cols-4"
+                    } gap-6`}
+                  >
+                    {doctors.length === 0 ? (
+                      <div
+                        className={`h-[500px] flex flex-col items-center justify-center ${
+                          data?.type === "A Specialist"
+                            ? "lg:col-span-3 mt-8"
+                            : "lg:col-span-4"
+                        }`}
+                      >
+                        <p>No Available doctor</p>
+                      </div>
+                    ) : (
+                      doctors.map((doctor) => (
+                        <DoctorCard
+                          key={doctor.id}
+                          doctor={doctor}
+                          handleClick={() => {
+                            handleDoctorSelect(doctor);
+                          }}
+                        />
+                      ))
+                    )}
+                  </div>
+
+                  {totalPages > 1 && (
+                    <PaginationComponent
+                      page={page}
+                      total={total}
+                      limit={limit}
+                      totalPages={totalPages}
+                      onPageChange={(newPage: number) => setPage(newPage)}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
       ) : (
         <main className="mt-4 max-w-2xl mx-auto">
           <section className="flex flex-row items-center justify-between mb-4">
@@ -398,11 +407,8 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
           <div className="mt-6">
             <button
               onClick={handleNextStep}
-              disabled={!canProceed}
               className={`form-primary-button my-4 ${
-                canProceed
-                  ? "bg-primary"
-                  : "bg-gray-300  cursor-not-allowed"
+                canProceed ? "bg-primary" : "bg-primary cursor-not-allowed"
               }`}
             >
               Continue
