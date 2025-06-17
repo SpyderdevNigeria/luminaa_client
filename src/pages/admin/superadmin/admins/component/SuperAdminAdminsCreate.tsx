@@ -148,9 +148,12 @@ const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose
           </div>
         </form>
 
-        {/* Role update form */}
+
+      </div>
+
+              {/* Role update form */}
         {admin && (
-          <form onSubmit={handleRoleSubmit} className="mt-8 pt-6">
+          <form onSubmit={handleRoleSubmit} className="mt-8 pt-6 bg-white p-6 rounded-lg max-w-4xl mx-auto">
             <h3 className="text-lg font-medium mb-3">Update Role</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
@@ -160,7 +163,7 @@ const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose
                   name="role"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="w-full border-gray-300 rounded-md"
+                  className="w-full border-gray-300 rounded-md border"
                 >
                   <option value="admin">Admin</option>
                   <option value="super_admin">Super Admin</option>
@@ -179,7 +182,6 @@ const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose
             </div>
           </form>
         )}
-      </div>
     </main>
   );
 };

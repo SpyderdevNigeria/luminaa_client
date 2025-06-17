@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import routeLinks from "../../utils/routes";
@@ -36,6 +36,14 @@ function PartnerLogin() {
     }));
   };
 
+
+
+  useEffect(() => {
+    setMessage({
+      message: "",
+      type: "",
+    });
+  }, [formData]);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);

@@ -74,7 +74,7 @@ const AppointmentTab = ({
         <h2 className="text-xs md:text-sm font-light text-[#A39A9A] mb-4">
           {title}
         </h2>
-        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4 w-full">
           {apps.map((app, index) => (
             <div
               key={index}

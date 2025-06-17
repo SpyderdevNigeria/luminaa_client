@@ -52,8 +52,8 @@ export const navItemsPatient = [
   },
 
   {
-    label: "MedicalHistory",
-    title: "MedicalHistory",
+    label: "Diagnoses",
+    title: "Diagnoses",
     icon: CiViewList,
     to: routeLinks?.patient?.medicalHistory,
   },

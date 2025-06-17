@@ -166,7 +166,6 @@ const PrescriptionsForm = ({
           value={formData.instructions}
           onChange={handleChange}
           rows={3}
-          required
           className="form-input focus:outline-primary text-gray-light resize-none"
         />
       </div>

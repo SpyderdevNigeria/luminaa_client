@@ -41,7 +41,7 @@ const CommonFormField: React.FC<CommonFormFieldProps> = ({
           value={value}
           onChange={onChange}
           required={required}
-          className="form-input focus:outline-primary text-gray-light w-full"
+          className="form-input border-gray-300 focus:outline-primary text-gray-light w-full"
         >
           <option value="">Select {label}</option>
           {options.map((opt) => (
@@ -58,7 +58,7 @@ const CommonFormField: React.FC<CommonFormFieldProps> = ({
           onChange={onChange}
           required={required}
           rows={4}
-          className="form-input focus:outline-primary text-gray-light w-full resize-none"
+          className="form-input border-gray-300 focus:outline-primary text-gray-light w-full resize-none"
         />
       ) : type === "checkbox" ? (
         <div className="flex items-center gap-2">
@@ -68,7 +68,7 @@ const CommonFormField: React.FC<CommonFormFieldProps> = ({
             name={name}
             checked={!!value}
             onChange={onChange}
-            className="form-checkbox text-primary focus:ring-primary"
+            className="form-checkbox border-gray-300  text-primary focus:ring-primary"
           />
           <label htmlFor={name} className="text-sm text-gray-700">
             {label}
@@ -82,7 +82,7 @@ const CommonFormField: React.FC<CommonFormFieldProps> = ({
           value={value}
           onChange={onChange}
           required={required}
-          className="form-input focus:outline-primary text-gray-light w-full"
+          className="form-input border-gray-300 focus:outline-primary text-gray-light w-full"
         />
       )}
     </div>

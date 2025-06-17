@@ -28,7 +28,7 @@ const routeLinks = {
     consultations: '/patient/consultations',
      consultationsid: '/patient/consultations/:id',
     prescription:'/patient/prescription',
-    medicalHistory:'/patient/medical-history'
+    medicalHistory:'/patient/diagnosis'
 
   },
   doctor: {

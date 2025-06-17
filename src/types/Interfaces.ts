@@ -100,7 +100,9 @@ export interface IPatient {
   updatedAt: string; 
   totalAppointments: number;
   lastAppointmentDate: string; 
-  profilePicture:string;
+  profilePicture: {
+    url:string;
+  };
 }
 
 export interface ILabOrder {

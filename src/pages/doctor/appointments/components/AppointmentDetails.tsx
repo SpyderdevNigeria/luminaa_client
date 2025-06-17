@@ -142,13 +142,13 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
           className="py-3 flex flex-row items-center justify-center text-[#4976F4] border-2 border-dashed border-[#4976F4] bg-blue-50 rounded-lg"
           onClick={ () => {handleNext("DiagnosisDetails")}}
         >
-          <PiNotepadDuotone className="text-2xl mx-2" /> Add Medical Records
+          <PiNotepadDuotone className="text-2xl mx-2" /> Diagnosis
         </button>
         <button
           onClick={ () => {handleNext("PrescriptionDetails")}}
           className="py-3 flex flex-row items-center justify-center text-[#0091FF] border-2 border-[#0091FF1A] bg-[#0091FF1A] rounded-lg"
         >
-          Add Prescriptions <IoExitOutline className="text-2xl mx-2" />
+           Prescriptions <IoExitOutline className="text-2xl mx-2" />
         </button>
              <button className="py-3 flex flex-row items-center justify-center text-white border-2 bg-primary rounded-lg col-span-2"
               onClick={ () => {handleNext("OrderDetails")}}

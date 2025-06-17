@@ -45,13 +45,13 @@ useEffect(() => {
 
         <section className="min-h-[300px]">
           {ordersLoading ? (
-               <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+               <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
                           {[...Array(4)].map((_, idx) => (
                             <LabCardSkeleton key={idx} />
                           ))}
                         </div>
           ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
               {orders.length > 0 ? (
                 orders.map((order) => <LabCard key={order.id} order={order} type="patient" />)
               ) : (

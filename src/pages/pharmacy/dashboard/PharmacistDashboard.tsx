@@ -61,13 +61,13 @@ function PharmacistDashboard() {
 
           <div className="my-4">
             {medicationsLoading ? (
-              <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
                 {[...Array(4)].map((_, idx) => (
                   <MedicationCardSkeleton key={idx} />
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
                 {medications.length > 0 ? (
                   medications.slice(0, 4).map((med) => (
                     <MedicationCard key={med.id} medication={med} />

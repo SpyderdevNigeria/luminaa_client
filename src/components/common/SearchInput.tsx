@@ -21,7 +21,7 @@ export default function SearchInput({
     placeholder={placeholder}
     value={value}
     onChange={onChange}
-    className="w-full text-xs py-3 pl-8 pr-3 bg-white rounded-sm"
+    className="w-full text-xs py-3 pl-8 pr-3 bg-white border border-gray-300 rounded-sm"
   />
 </div>
   );

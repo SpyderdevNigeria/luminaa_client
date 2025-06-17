@@ -119,7 +119,12 @@ const AdminDoctorsCreate: React.FC<Props> = ({
     }
     setLoading(false);
   };
-
+  useEffect(() => {
+    setMessage({
+      message: "",
+      type: "",
+    });
+  }, [formData])
 
   const fields: {
     name: keyof FormData;

@@ -24,9 +24,6 @@ function AdminPharmacists() {
   const [editPharmacist, setEditPharmacist] = useState<any>(null);
 
   useEffect(() => {
-    if (pharmacists.length > 0 && pharmacistsPage === 1) {
-      return;
-    }
     getPharmacists();
   }, [pharmacistsPage]);
 

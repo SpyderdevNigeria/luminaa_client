@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -75,6 +75,13 @@ function Register() {
       });
   };
 
+  useEffect(() => {
+    setMessage({
+      message: "",
+      type: "",
+    });
+  }, [data]);
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };

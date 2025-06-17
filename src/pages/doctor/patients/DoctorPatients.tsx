@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
-// import DashboardCard from "../../../components/common/DashboardCard";
 import HeaderTab from "../../../components/common/HeaderTab";
 import Table, { Column } from "../../../components/common/Table";
 import routeLinks from "../../../utils/routes";
-import { IUser } from "../../../types/Interfaces";
 import useUsers from "../../../hooks/useUsers";
 import DoctorApi from "../../../api/doctorApi";
+import { IPatient } from "../../../types/Interfaces";
+import UserImage from "../../../assets/images/patient/user.png"
+import moment from "moment";
 
 function DoctorPatients() {
   const {
@@ -25,11 +25,11 @@ function DoctorPatients() {
 
   useEffect(() => {
     getUsers();
-     return () => {
-  };
+    // Cleanup if needed
+    return () => {};
   }, [page, status]);
 
-  const columns: Column<IUser>[] = [
+  const columns: Column<IPatient>[] = [
     {
       key: "id",
       label: "ID",
@@ -42,11 +42,11 @@ function DoctorPatients() {
       render: (user) => (
         <div className="flex items-center gap-2">
           <img
-            src={user?.user?.profilePicture || "https://via.placeholder.com/20"}
-            alt={`${user?.user?.firstName} ${user?.user?.lastName}`}
+            src={user?.profilePicture?.url || UserImage}
+            alt={`${user?.firstName} ${user?.lastName}`}
             className="w-5 h-5 rounded-full"
           />
-          <h5 className="text-sm capitalize">{`${user?.user?.firstName} ${user?.user?.lastName}`}</h5>
+          <h5 className="text-sm capitalize">{`${user?.firstName} ${user?.lastName}`}</h5>
         </div>
       ),
     },
@@ -54,35 +54,36 @@ function DoctorPatients() {
       key: "email",
       label: "Email",
       render: (user) => (
-        <a href={`mailto:${user?.user?.email}`} className="text-sm underline">
-          {user?.user?.email}
+        <a href={`mailto:${user?.email}`} className="text-sm underline">
+          {user?.email}
         </a>
       ),
-    },
-    {
-      key: "phoneNumber",
-      label: "Phone",
-      render: (user) => <p className="text-sm">{user?.user?.phoneNumber}</p>,
     },
     {
       key: "age",
       label: "Age",
       render: (user) => (
-        <span className="text-sm">{user?.dateOfBirth ?? "N/A"}</span>
+        <span className="text-sm">
+          {user?.dateOfBirth ? moment().diff(user.dateOfBirth, "years").toString() : "N/A"}
+        </span>
       ),
     },
     {
-      key: "gender",
-      label: "Gender",
+      key: "bioData",
+      label: "Bio Data",
       render: (user) => (
-        <span className="capitalize text-sm">{user?.gender}</span>
+        <span className="capitalize text-sm">
+          {user?.isBioDataCompleted ? "Completed" : "Not Completed"}
+        </span>
       ),
     },
     {
-      key: "address",
-      label: "Location",
+      key: "medicalHistory",
+      label: "Medical History",
       render: (user) => (
-        <p className="text-sm">{user?.address || "Not Provided"}</p>
+        <p className="text-sm">
+          {user?.isMedicalHistoryCompleted ? "YES" : "NO"}
+        </p>
       ),
     },
     {
@@ -101,16 +102,6 @@ function DoctorPatients() {
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Dashboard Metrics */}
-      {/* <main>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <DashboardCard title="Appointments" count={100} />
-          <DashboardCard title="Patients" count={50} />
-          <DashboardCard title="Upcoming" count={30} />
-          <DashboardCard title="Cancelled" count={20} />
-        </div>
-      </main> */}
-
       {/* Table Section */}
       <section className="container-bd">
         <HeaderTab
@@ -121,7 +112,7 @@ function DoctorPatients() {
               label: "Status",
               options: ["All", "Active", "Inactive"],
               value: status || "",
-              onChange: (value) =>
+              onChange: (value: string) =>
                 setStatus(value === "All" ? "" : value.toLowerCase()),
             },
           ]}
@@ -130,7 +121,7 @@ function DoctorPatients() {
           <p>Loading...</p>
         ) : (
           <div>
-            <Table
+            <Table<IPatient>
               data={users}
               columns={columns}
               page={page}

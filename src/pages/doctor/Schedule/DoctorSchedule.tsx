@@ -33,7 +33,7 @@ const DoctorSchedule = () => {
     from: string;
     to: string;
   }
-
+const [loading, setLoading] = useState(false)
   const [workingDays, setWorkingDays] = useState<Record<string, WorkingDay>>(
     daysOfWeek.reduce((acc, day) => {
       acc[day] = {
@@ -92,6 +92,7 @@ const DoctorSchedule = () => {
   };
 
   const handleSave = async () => {
+    setLoading(true)
     const payload = daysOfWeek
       .filter((day) => workingDays[day].active)
       .map((day) => ({
@@ -104,6 +105,7 @@ const DoctorSchedule = () => {
     try {
       await DoctorApi.updateAvailability({ data: payload });
       alert('Schedule updated successfully!');
+       setLoading(false)
     } catch (error) {
       console.error('Failed to update availability:', error);
       alert('Something went wrong while saving schedule.');
@@ -167,8 +169,9 @@ const DoctorSchedule = () => {
         <button
           onClick={handleSave}
           className="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary transition"
+          disabled={loading}
         >
-          Save Schedule
+          {loading ? "Saving Schedule..." : 'Save Schedule'}
         </button>
       </div>
     </div>

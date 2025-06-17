@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import PatientApi from "../../../../api/PatientApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
@@ -72,6 +72,14 @@ function BookingCondition({userProfile}: { userProfile: any }) {
       setIsSubmitting(false);
     }
   };
+
+  
+      useEffect(() => {
+        setMessage({
+          message: "",
+          type: "",
+        });
+      }, [formData])
 
   return (
     <div className="w-full">

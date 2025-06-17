@@ -1,6 +1,5 @@
 import UserImage from "../../assets/images/patient/user.png";
 import InfoLabel from "../../components/common/InfoLabel";
-import { IoChatbubbleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
@@ -18,6 +17,8 @@ import routeLinks from "../../utils/routes";
 import { TestDetailsSkeleton } from "../skeleton/SkeletonCards";
 import LabOrderDocuments from "./LabOrderDocuments";
 import LabRequestReportModal from "../modal/LabRequestReportModal";
+import { IoMdCloseCircle } from "react-icons/io";
+import { MdAddBox } from "react-icons/md";
 interface LabOrderDetailsProps {
   data: {
     data: ILabOrder & {
@@ -58,8 +59,9 @@ const LabOrderDetails = ({
   });
   const [isModalOpen, setModalOpen] = useState(false);
   const [note, setNote] = useState<string>("");
-  const [activeTab, setActiveTab] = useState("overview");
-
+  const [activeTab, setActiveTab] = useState("Test");
+ const [startLoading, setStartLoading] = useState(false)
+  const [submitResultLoading, setSubmitResultLoading] = useState(false)
   useEffect(() => {
     console.log(results?.id);
     if (results?.results) {
@@ -134,6 +136,7 @@ const LabOrderDetails = ({
   };
 
   const handleSubmitResults = () => {
+    setSubmitResultLoading(true)
     const payload = {
       labTestOrderId: data.data.id,
       results: resultList,
@@ -144,9 +147,16 @@ const LabOrderDetails = ({
       handleSubmit(payload);
       console.log("Submitting payload:", payload);
     }
+      setSubmitResultLoading(false)
   };
 
-
+  const handleStatusChange = () => {
+    setStartLoading(true)
+    if (confirm("Do you want to change the status to 'IN_PROGRESS'?")) {
+      handleStatus?.();
+    }
+    setStartLoading(false)
+  };
 
   return (
     <div className="container-bd max-w-6xl mx-auto">
@@ -161,38 +171,28 @@ const LabOrderDetails = ({
       <div className="flex  mb-4">
         <button
           className={`px-4 py-2 ${
-            activeTab === "overview"
+            activeTab === "Test"
               ? "border-b-2 border-primary font-semibold"
               : ""
           }`}
-          onClick={() => setActiveTab("overview")}
+          onClick={() => setActiveTab("Test")}
         >
-          Overview
+          Test
         </button>
         <button
           className={`px-4 py-2 ${
-            activeTab === "results"
+            activeTab === "Results"
               ? "border-b-2 border-primary font-semibold"
               : ""
           }`}
-          onClick={() => setActiveTab("results")}
+          onClick={() => setActiveTab("Results")}
         >
-          Test Results
-        </button>
-        <button
-          className={`px-4 py-2 ${
-            activeTab === "notes"
-              ? "border-b-2 border-primary font-semibold"
-              : ""
-          }`}
-          onClick={() => setActiveTab("notes")}
-        >
-          Notes
+        Results
         </button>
       </div>
 
       {/* Tab Content */}
-      {activeTab === "overview" && (
+      {activeTab === "Test" && (
         <div className="grid grid-cols-1 lg:grid-cols-7 gap-4">
           {/* Test Overview Section */}
           <section className="lg:col-span-4 lg:row-span-2">
@@ -270,15 +270,8 @@ const LabOrderDetails = ({
                     <div className="flex justify-end gap-3 pt-4">
                       <button
                         className="bg-primary hover:bg-primary/50 text-white text-sm px-4 py-3 rounded-md"
-                        onClick={() => {
-                          if (
-                            confirm(
-                              "Do you want to change the status to 'IN_PROGRESS'?"
-                            )
-                          ) {
-                            handleStatus?.();
-                          }
-                        }}
+                        onClick={()=> {handleStatusChange()}}
+                        disabled={startLoading}
                       >
                         Start Test
                       </button>
@@ -334,46 +327,48 @@ const LabOrderDetails = ({
           {/* Doctor Note */}
           <section className="lg:col-span-7">
             <div className="w-full space-y-4 rounded-lg p-4">
-              <p className="text-lg flex items-center gap-2">
-                <IoChatbubbleOutline /> Doctor's Note
+              <p className="text-lg flex items-center gap-2 ">
+               Doctor's Note
               </p>
-              <article className="text-base text-gray-700">{notes}</article>
+              <article className="text-base text-gray-700 form-input">{notes}</article>
             </div>
           </section>
 
           <section className="md:col-span-2">
             <button
               className="mb-4 bg-primary text-white px-4 py-2 rounded"
-              onClick={() => {setModalOpen(!isModalOpen)}}
+              onClick={() => {
+                setModalOpen(!isModalOpen);
+              }}
             >
               View Download PDF
             </button>
           </section>
           <div>
-   <LabRequestReportModal
-                results={{
-                  testName,
-                  notes : notes ? notes : "" ,
-                  priority : priority ? priority : "" ,
-                  status  : status ? status : "" ,
-                  collectedSample : collectedSample ? collectedSample : false ,
-                  patient,
-                  doctor,
-                  createdAt,
-                }}
-                isModalOpen={isModalOpen}
-                setModalOpen={setModalOpen}
-              />
+            <LabRequestReportModal
+              results={{
+                testName,
+                notes: notes ? notes : "",
+                priority: priority ? priority : "",
+                status: status ? status : "",
+                collectedSample: collectedSample ? collectedSample : false,
+                patient,
+                doctor,
+                createdAt,
+              }}
+              isModalOpen={isModalOpen}
+              setModalOpen={setModalOpen}
+            />
           </div>
         </div>
       )}
 
-      {activeTab === "results" && (
+      {activeTab === "Results" && (
         <div>
           {/* Test Results Section */}
           <div className="mt-6 ">
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Test Results
+             Results
             </h2>
 
             {isLoadingResults ? (
@@ -384,50 +379,47 @@ const LabOrderDetails = ({
               resultList.map((result, index) => (
                 <div
                   key={index}
-                  className="flex flex-row items-center justify-between gap-4 mt-2"
+                  className="flex flex-col md:flex-row items-center justify-between gap-4 mt-2"
                 >
-                  <div>
+                  <div className="w-full">
                     <label htmlFor="testName"> Test Name</label>
                     <input
                       value={result.testName}
                       readOnly
-                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
                     />
                   </div>
-                  <div>
+                  <div className="w-full">
                     <label htmlFor="result"> Result</label>
                     <input
                       value={result.result}
                       readOnly
-                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
                     />
                   </div>
-                  <div>
+               <div className="w-full">
                     <label htmlFor="unit"> Unit</label>
                     <input
                       value={result.unit}
                       readOnly
-                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
                     />
                   </div>
-                  <div>
+              <div className="w-full">
                     <label htmlFor="referenceRange"> Reference Range</label>
                     <input
                       value={result.referenceRange}
                       readOnly
-                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
                     />
                   </div>
                   {type === "lab" && (
-                    <div>
-                      <label htmlFor="referenceRange"> Action</label>
                       <button
-                        className="text-white bg-red-500  p-2 px-4 rounded-lg"
+                        className="text-red-500 "
                         onClick={() => removeResult(index)}
                       >
-                        x
+                       <IoMdCloseCircle className="text-3xl md:mt-8" />
                       </button>
-                    </div>
                   )}
                 </div>
               ))
@@ -436,66 +428,61 @@ const LabOrderDetails = ({
             {/* Add New Result */}
             {type === "lab" && (
               <section>
-                <div className="flex flex-row items-center justify-between gap-4 mt-4">
-                  <div>
-                    <label htmlFor="testName"> Test Name</label>
+                <div  className="flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
+
+             
                     <input
                       type="text"
                       name="testName"
                       placeholder="Test Name"
-                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                    className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
                       value={newResult.testName}
                       onChange={handleNewResultChange}
                     />
-                  </div>
-                  <div>
-                    <label htmlFor="result"> Result</label>
+
+           
                     <input
                       type="text"
                       name="result"
                       placeholder="Result"
-                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
                       value={newResult.result}
                       onChange={handleNewResultChange}
                     />
-                  </div>
-                  <div>
-                    <label htmlFor="unit"> Unit</label>
+
+        
                     <input
                       type="text"
                       name="unit"
                       placeholder="Unit"
-                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
                       value={newResult.unit}
                       onChange={handleNewResultChange}
                     />
-                  </div>
-                  <div>
-                    <label htmlFor="referenceRange"> Reference Range</label>
+
+        
                     <input
                       type="text"
                       name="referenceRange"
                       placeholder="Reference Range"
-                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      className="w-full p-3 form-input   focus:outline-primary text-sm rounded-sm"
                       value={newResult.referenceRange}
                       onChange={handleNewResultChange}
                     />
-                  </div>
-                  <div>
-                    <label htmlFor="action"> Action</label>
+
+         
                     <button
-                      className="text-white bg-primary p-2 px-4 rounded-lg"
+                      className=""
                       onClick={addNewResult}
                     >
-                      +
+                    <MdAddBox className="text-3xl text-primary" />
                     </button>
-                  </div>
                 </div>
               </section>
             )}
           </div>
           {results?.id && !isLoadingResults && (
-            <section className="mt-6">
+            <section className="mt-12">
               <LabOrderDocuments
                 resultId={results?.id}
                 documents={results?.documents}
@@ -504,19 +491,16 @@ const LabOrderDetails = ({
               />
             </section>
           )}
-        </div>
-      )}
 
-      {activeTab === "notes" && (
-        <div>
+                  <div>
           {/* Result Note */}
           <section className="lg:col-span-7">
-            <div className="w-full space-y-4 rounded-lg p-4">
-              <p className="text-lg flex items-center gap-2">
-                <IoChatbubbleOutline /> Result Note
+            <div className="w-full mt-8 space-y-4 rounded-lg p-4">
+              <p className="text-base flex items-center gap-2">
+               Result Note
               </p>
               <textarea
-                className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                className="w-full p-3 form-input form-input focus:outline-primary text-sm rounded-sm"
                 rows={7}
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
@@ -527,15 +511,18 @@ const LabOrderDetails = ({
                   <button
                     onClick={handleSubmitResults}
                     className="bg-primary text-white py-2 px-4 rounded-lg"
+                    disabled={submitResultLoading}
                   >
-                    Save Note & Results
+                   {submitResultLoading ? "Save Results..." : "Save Note & Results" } 
                   </button>
                 </div>
               )}
             </div>
           </section>
         </div>
+        </div>
       )}
+
     </div>
   );
 };

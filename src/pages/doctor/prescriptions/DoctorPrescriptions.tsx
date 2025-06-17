@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import PrescriptionReportModal from "../../../components/modal/PrescriptionReportModal";
-import PaginationComponent from "../../../components/common/PaginationComponent";
 import usePrescriptions from "../../../hooks/usePrescriptions";
 import DoctorApi from "../../../api/doctorApi";
 import HeaderTab from "../../../components/common/HeaderTab";
-import PrescriptionCard from "../../../components/common/PrescriptionCard";
-// import useAppointments from "../../../hooks/useAppointments";
-// import useAppointments from "../../../hooks/useAppointments";
+import Table from "../../../components/common/Table"; // Ensure this is your reusable Table component
+
 function DoctorPrescriptions() {
   const [selectedPrescription, setSelectedPrescription] = useState<any>(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -29,36 +27,87 @@ function DoctorPrescriptions() {
     setPage,
     getPrescriptions,
   } = usePrescriptions(DoctorApi);
-  //  const {
-  //   appointments,
-  //   getAppointments
-  // } = useAppointments(DoctorApi);
+
   useEffect(() => {
-    if (
-      prescriptions.length > 0 &&
-      status === "" &&
-      isRefillable === "" &&
-      appointmentId === "" &&
-      page === 1
-    ) {
-      return;
-    }
     getPrescriptions();
-    // getAppointments();
   }, [search, appointmentId, status, patientId, isRefillable, page, limit]);
+
+  const columns = [
+    {
+      label: "Patient Name",
+      key: "patient",
+      render: (row: any) => `${row.patient?.firstName || ""} ${row.patient?.lastName || ""}`,
+    },
+    {
+      label: "Medication",
+      key: "medicationName",
+      render: (row: any) =>
+        row.medicationName || row.medication?.name || "N/A",
+    },
+    {
+      label: "Price",
+      key: "price",
+      render: (row: any) =>
+        row.medication?.price ? `₦${parseFloat(row.medication.price).toLocaleString()}` : "N/A",
+    },
+    {
+      label: "Dosage",
+      key: "dosage",
+    },
+    {
+      label: "Frequency",
+      key: "frequency",
+    },
+    {
+      label: "Duration",
+      key: "duration",
+    },
+    {
+      label: "Refillable",
+      key: "isRefillable",
+      render: (row: any) => (row.isRefillable ? "Yes" : "No"),
+    },
+    {
+      label: "Status",
+      key: "status",
+      render: (row: any) => (
+        <span
+          className={`text-sm px-2 py-1 rounded-full ${
+            row.status === "active"
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
+          }`}
+        >
+          {row.status}
+        </span>
+      ),
+    },
+    {
+      label: "Actions",
+      key: "actions",
+      render: (row: any) => (
+        <button
+          onClick={() => {
+            setSelectedPrescription(row);
+            setModalOpen(true);
+          }}
+          className="text-primary whitespace-nowrap underline"
+        >
+          View Details
+        </button>
+      ),
+    },
+  ];
 
   return (
     <div className="space-y-6 container-bd">
-      {/* Filter Controls */}
       <HeaderTab
         title="Prescriptions"
         showSearch={false}
         dropdowns={[
           {
             label: "Appointment ID",
-            options: [
-
-            ], // e.g. ['APPT-001', 'APPT-002']
+            options: [],
             value: appointmentId,
             onChange: setAppointmentId,
           },
@@ -66,49 +115,35 @@ function DoctorPrescriptions() {
             label: "Status",
             options: ["active", "inactive"],
             value: status || "",
-           onChange: (value) => setPrescriptionStatus(value?.toLowerCase() == "all" ? null : value?.toLowerCase()),
+            onChange: (value) =>
+              setPrescriptionStatus(value?.toLowerCase() === "all" ? null : value?.toLowerCase()),
           },
           {
             label: "Refillable?",
             options: ["true", "false"],
             value: isRefillable || "",
-             onChange: (value) => setPrescriptionIsRefillable(value?.toLowerCase() == "all" ? null : value?.toLowerCase()),
+            onChange: (value) =>
+              setPrescriptionIsRefillable(value?.toLowerCase() === "all" ? null : value?.toLowerCase()),
           },
         ]}
       />
 
-      {/* Prescription List */}
       {loading ? (
         <div className="text-center py-10">Loading prescriptions...</div>
       ) : prescriptions.length === 0 ? (
         <div className="text-center py-10">No prescriptions found.</div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 my-4">
-          {prescriptions.map((prescription) => (
-            <PrescriptionCard
-              key={prescription.id}
-              prescription={prescription}
-              onView={() => {
-                setSelectedPrescription(prescription);
-                setModalOpen(true);
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <PaginationComponent
+        <Table
+          data={prescriptions}
+          columns={columns}
           page={page}
-          total={total ?? 0}
+          total={total}
           limit={limit}
-          totalPages={totalPages ?? 1}
-          onPageChange={(newPage: number) => setPage(newPage)}
+          totalPages={totalPages}
+          setPage={setPage}
         />
       )}
 
-      {/* Details Modal */}
       {selectedPrescription && (
         <PrescriptionReportModal
           data={selectedPrescription}

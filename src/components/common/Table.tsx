@@ -37,7 +37,7 @@ const Table = <T extends object>({
                 <th key={index} className="p-3 font-light">
                   <div
                     className={`${
-                      col.arrows ? "flex flex-row items-center gap-2" : ""
+                      col.arrows ? "flex flex-row items-center gap-2 whitespace-nowrap" : ""
                     }`}
                   >
                     {col.label}

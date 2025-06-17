@@ -114,7 +114,7 @@ const LabOrders = ({
           <h4 className="text-xl my-2">Lab Orders</h4>
 
           {loading ? (
-           <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+           <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
                       {[...Array(4)].map((_, idx) => (
                         <LabCardSkeleton key={idx} />
                       ))}

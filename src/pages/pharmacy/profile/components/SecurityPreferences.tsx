@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import AuthApi from "../../../../api/authApi";
@@ -75,6 +75,13 @@ const NotificationSettingsForm = ({ handleClose }: NotificationSettingsFormProps
   const toggleVisibility = (field: "current" | "new" | "retype") => {
     setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
   };
+
+      useEffect(() => {
+          setFeedback({
+            message: "",
+            type: "",
+          });
+        }, [form])
 
   return (
     <form onSubmit={handleSubmit} className="max-w-6xl mx-auto">

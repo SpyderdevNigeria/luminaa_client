@@ -27,9 +27,6 @@ function AdminDoctors() {
   const [showForm, setShowForm] = useState(false);
   const [editDoctor, setEditDoctor] = useState<any>(null);
   useEffect(() => {
-    if (doctors.length > 0 && doctorSpecialty === "" && doctorsPage === 1) {
-      return 
-    } 
     getDoctors();
   }, [doctorsPage,doctorSpecialty, doctorsStatus]);
 

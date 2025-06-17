@@ -1,4 +1,4 @@
-import { PiNotepadDuotone } from "react-icons/pi";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DoctorApi from "../../../api/doctorApi";
@@ -8,7 +8,7 @@ import AppointmentHistory from "./components/PatientAppointmentHistory";
 import PatientPrescription from "./components/PatientPrescription";
 import PatientDiagnosis from "./components/PatientDiagnosis";
 import { IPatient } from "../../../types/Interfaces";
-
+import UserImage from "../../../assets/images/patient/user.png"
 function DoctorPatientsDetails() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("Patient Information");
@@ -62,7 +62,7 @@ function DoctorPatientsDetails() {
           <div className="flex items-center gap-2">
             <div className="w-15 h-15 2xl:w-22 2xl:h-22 overflow-hidden rounded-full">
               <img
-                src={user?.profilePicture || "https://i.pravatar.cc/40"}
+                src={user?.profilePicture?.url || UserImage}
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
@@ -76,9 +76,9 @@ function DoctorPatientsDetails() {
               </h4>
             </div>
           </div>
-          <button className="px-8 py-2 rounded-sm bg-primary text-white text-xs 2xl:text-base flex items-center gap-2">
+          {/* <button className="px-8 py-2 rounded-sm bg-primary text-white text-xs 2xl:text-base flex items-center gap-2">
             <PiNotepadDuotone /> Book an appointment
-          </button>
+          </button> */}
         </div>
       </main>
 

@@ -42,7 +42,7 @@ const HeaderTab = ({
           <div key={index} className="flex flex-col text-sm">
             {/* <label className="font-medium">{dropdown.label}</label> */}
             <select
-              className="px-2 py-1 border rounded"
+              className="px-2 py-1 border border-gray-300 rounded"
               value={dropdown.value}
               onChange={(e) => dropdown.onChange(e.target.value)}
             >

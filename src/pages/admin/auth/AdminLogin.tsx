@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 // import routeLinks from "../../../utils/routes";
@@ -83,6 +83,12 @@ function AdminLogin() {
     }
   };
 
+  useEffect(() => {
+    setMessage({
+      message: "",
+      type: "",
+    });
+  }, [formData]);
   return (
     <div className="w-full max-w-md 2xl:max-w-lg  mx-auto space-y-6">
       <div className="text-center">

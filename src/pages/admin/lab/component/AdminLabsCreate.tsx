@@ -85,7 +85,13 @@ const handleChange = (
   }
 };
 
-
+  useEffect(() => {
+    setMessage({
+      message: "",
+      type: "",
+    });
+  }, [formData])
+  
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const payload = { ...formData };

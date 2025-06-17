@@ -50,6 +50,13 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
     }
   }, [pharmacist]);
 
+    useEffect(() => {
+      setMessage({
+        message: "",
+        type: "",
+      });
+    }, [formData])
+    
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {

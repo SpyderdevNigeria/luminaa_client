@@ -163,7 +163,7 @@ function DoctorAppointments() {
           </div>
           <div className="grid gap-4 py-4">
             {loadingAppointment ? (
-               <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
+               <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4 w-full">
                {[...Array(4)].map((_, idx) => (
                   <AppointmentCardSkeleton key={idx} />
                 ))}
@@ -171,7 +171,7 @@ function DoctorAppointments() {
             ) : listAppointments.length === 0 ? (
               <p className="text-center">No appointments for this month.</p>
             ) : (
-              <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
+              <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4 w-full">
                 {listAppointments.map((app, index) => (
                   <div
                     key={index}

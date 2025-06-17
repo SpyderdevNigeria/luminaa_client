@@ -66,9 +66,9 @@ function DashboardHome() {
       },
       {
         icon: navItemsPatient.find(
-          (item) => item.label.toLowerCase() === "medicalhistory"
+          (item) => item.label.toLowerCase() === "diagnoses"
         )?.icon,
-        name: "View your Medical History",
+        name: "View your Diagnoses",
         description:
           "Find a Doctor to give you a diagnosis and set you up for treatment",
         link: routeLinks?.patient?.medicalHistory,
@@ -123,7 +123,7 @@ function DashboardHome() {
         {/* Appointments List */}
         <section className="bg-white rounded-lg p-4">
           {loadingAppointment ? (
-            <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 w-full">
+            <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4 w-full">
               {[...Array(4)].map((_, idx) => (
                 <AppointmentCardSkeleton key={idx} />
               ))}

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../types/Interfaces';
+import { IPatient } from '../types/Interfaces';
 
 interface UserState {
-  users: IUser[];
+  users: IPatient[];
   error: string | null;
   total: number;
   limit: number;
@@ -21,7 +21,7 @@ const initialState: UserState = {
 
 // Payload type for full user response
 interface UserResponsePayload {
-  data: IUser[];
+  data: IPatient[];
   total: number;
   limit: number;
   totalPages: number;
@@ -32,10 +32,10 @@ const userSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<IUser>) => {
+    addUser: (state, action: PayloadAction<IPatient>) => {
       state.users.push(action.payload);
     },
-    updateUser: (state, action: PayloadAction<IUser>) => {
+    updateUser: (state, action: PayloadAction<IPatient>) => {
       const index = state.users.findIndex(u => u.id === action.payload.id);
       if (index !== -1) {
         state.users[index] = action.payload;
@@ -50,7 +50,7 @@ const userSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
-    setUsers: (state, action: PayloadAction<IUser[]>) => {
+    setUsers: (state, action: PayloadAction<IPatient[]>) => {
       state.users = action.payload;
     },
     setAllUsers: (state, action: PayloadAction<UserResponsePayload>) => {
