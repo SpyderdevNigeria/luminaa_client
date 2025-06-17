@@ -25,6 +25,8 @@ function DoctorPatients() {
 
   useEffect(() => {
     getUsers();
+     return () => {
+  };
   }, [page, status]);
 
   const columns: Column<IUser>[] = [

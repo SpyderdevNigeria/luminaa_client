@@ -243,7 +243,7 @@ const ProfilePage = () => {
               Notification Sound
             </div>
           )}
-          {modalContent && 
+          {modalContent && activeTab === "My Profile" ? 
           <div className="bg-white rounded-lg p-6 text-sm">
             <button className="text-base mb-3 flex items-center gap-2"
             onClick={()=>{setModalContent(null )}}
@@ -253,7 +253,7 @@ const ProfilePage = () => {
               {modalContent}  
             </div>
             </div>
-          }
+          : ""}
           {activeTab === "Security" && <Security />}
         </div>
         

@@ -86,7 +86,7 @@ const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
             }}
             className="flex-1 w-full text-xs flex items-center justify-center gap-1 bg-primary text-white rounded-md py-2"
           >
-            <FaBookmark className="text-sm" /> Book an Appointment
+            <FaBookmark className="text-sm" /> Book An Appointment
           </button>
         </div>
       </div>
