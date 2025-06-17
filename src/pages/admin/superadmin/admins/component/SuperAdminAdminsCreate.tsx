@@ -21,6 +21,7 @@ type Props = {
 const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose }) => {
   const [message, setMessage] = useState({ message: "", type: "" });
   const [loading, setLoading] = useState(false);
+  const [roleLoading, setRoleLoading] = useState(false);
   const [role, setRole] = useState(admin?.user?.role || "admin");
 
   const [formData, setFormData] = useState<FormData>({
@@ -61,19 +62,14 @@ const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose
           message: response?.data?.message || "Admin updated successfully",
           type: "success",
         });
-
-        // Update role separately if changed
-        if (admin.user.role !== role) {
-          await SuperAdminApi.updateAdminRole(admin.user.id, { role });
-        }
       } else {
         const response = await SuperAdminApi.createAdmin(formData);
         setMessage({
           message: response?.data?.message || "Admin created successfully",
           type: "success",
         });
+        onClose();
       }
-      onClose();
     } catch (error) {
       setMessage({
         message: "An error occurred",
@@ -85,11 +81,36 @@ const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose
     }
   };
 
+  const handleRoleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!admin) return;
+
+    setRoleLoading(true);
+    setMessage({ message: "", type: "" });
+
+    try {
+      const response = await SuperAdminApi.updateAdminRole(admin.id, { role });
+      setMessage({
+        message: response?.data?.message || "Role updated successfully",
+        type: "success",
+      });
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+    } catch (error) {
+      setMessage({ message: "Failed to update role", type: "error" });
+      console.error(error);
+    } finally {
+      setRoleLoading(false);
+    }
+  };
+
   return (
     <main>
       <button onClick={onBack} className="flex items-center gap-2 text-primary mb-4">
         <FiArrowLeft /> Back to List
       </button>
+
       <div className="bg-white p-6 rounded-lg max-w-4xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">
           {admin ? "Edit Admin" : "Add Admin"}
@@ -116,21 +137,6 @@ const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose
             />
           ))}
 
-          {admin && (
-            <div className="col-span-1">
-              <label className="block mb-1 font-medium text-sm">Role</label>
-              <select
-                name="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="w-full border-gray-300 rounded-md"
-              >
-                <option value="admin">Admin</option>
-                <option value="super_admin">Super Admin</option>
-              </select>
-            </div>
-          )}
-
           <div className="col-span-1 md:col-span-2 flex justify-end">
             <button
               type="submit"
@@ -141,6 +147,38 @@ const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose
             </button>
           </div>
         </form>
+
+        {/* Role update form */}
+        {admin && (
+          <form onSubmit={handleRoleSubmit} className="mt-8 pt-6">
+            <h3 className="text-lg font-medium mb-3">Update Role</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+              <div>
+                <label className="block mb-1 font-medium text-sm">Role</label>
+                <select
+                  name="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-full border-gray-300 rounded-md"
+                >
+                  <option value="admin">Admin</option>
+                  <option value="super_admin">Super Admin</option>
+                </select>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="bg-primary text-white px-6 py-2 rounded-md"
+                  disabled={roleLoading}
+                >
+                  {roleLoading ? "Updating..." : "Update Role"}
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
       </div>
     </main>
   );

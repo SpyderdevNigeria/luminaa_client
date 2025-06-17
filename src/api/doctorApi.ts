@@ -63,8 +63,8 @@ const DoctorApi = {
 
 
   // Diagnoses endpoints 
-  getDiagnoses: async () => {
-    const response = await api.get("/doctor/diagnoses");
+  getDiagnoses: async (query: any) => {
+    const response = await api.get(`/doctor/diagnoses${query}`);
     return response.data;
   },
    getDiagnosesById: async (id: any) => {
@@ -163,6 +163,16 @@ const DoctorApi = {
 
       getMedications: async (query:any) => {
     const response = await api.get(`/doctor/medications${query}`);
+    return response.data;
+  },
+
+    getUsers: async (query: any) => {
+    const response = await api.get(`/doctor/appointments/patients${query}`);
+    return response.data;
+  },
+
+    getUsersById: async (id: any) => {
+    const response = await api.get(`/doctor/appointments/patients/${id}`);
     return response.data;
   },
 }

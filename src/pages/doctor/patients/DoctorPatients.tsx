@@ -1,97 +1,94 @@
-import Dropdown from "../../../components/dropdown/dropdown";
-import { IoCalendarClearOutline } from "react-icons/io5";
-import { PiExport } from "react-icons/pi";
-import { FiPlus } from "react-icons/fi";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import DashboardCard from "../../../components/common/DashboardCard";
 import HeaderTab from "../../../components/common/HeaderTab";
 import Table, { Column } from "../../../components/common/Table";
-
-import { Link } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
+import { IUser } from "../../../types/Interfaces";
+import useUsers from "../../../hooks/useUsers";
+import DoctorApi from "../../../api/doctorApi";
+
 function DoctorPatients() {
-  const allAppointment = new Array(40).fill(null).map((_, i) => ({
-    id: `12${500 + i}`,
-    patientName: "Chukwuemeka Enyinnia",
-    email: "emekaenyinnia@gmail.com",
-    phone: "8107401049",
-    Age: "34",
-    location: "Ago palace way isolo",
-    gender: "male",
-    action: "",
-  }));
+  const {
+    users,
+    page,
+    total,
+    limit,
+    totalPages,
+    status,
+    setStatus,
+    getUsers,
+    handleSetPage,
+    loadingUsers,
+  } = useUsers(DoctorApi);
 
+  useEffect(() => {
+    getUsers();
+  }, [page, status]);
 
-
-  interface appointmentType {
-    id: string;
-    patientName: string;
-    email: string;
-    phone: string;
-    Age: string;
-    location: string;
-    gender: string;
-    action: string;
-  }
-
-  const appointmentColumns: Column<appointmentType>[] = [
+  const columns: Column<IUser>[] = [
     {
       key: "id",
       label: "ID",
       arrows: true,
-      render: (pgAppoint) => <h5 className="text-sm">#{pgAppoint?.id}</h5>,
+      render: (user) => <h5 className="text-sm">#{user?.id}</h5>,
     },
     {
-      key: "patientName",
+      key: "fullName",
       label: "Patient Name",
-      render: (pgAppoint) => (
+      render: (user) => (
         <div className="flex items-center gap-2">
           <img
-            src="https://via.placeholder.com/20"
-            alt={pgAppoint.patientName}
+            src={user?.user?.profilePicture || "https://via.placeholder.com/20"}
+            alt={`${user?.user?.firstName} ${user?.user?.lastName}`}
             className="w-5 h-5 rounded-full"
           />
-          <h5 className="text-sm">{pgAppoint?.patientName}</h5>
+          <h5 className="text-sm capitalize">{`${user?.user?.firstName} ${user?.user?.lastName}`}</h5>
         </div>
       ),
-      arrows: true,
     },
     {
       key: "email",
       label: "Email",
-      render: (pgAppoint) => (
-        <a href="mailto:" className="text-sm underline">
-          {pgAppoint.email}
+      render: (user) => (
+        <a href={`mailto:${user?.user?.email}`} className="text-sm underline">
+          {user?.user?.email}
         </a>
       ),
     },
     {
-      key: "phone",
+      key: "phoneNumber",
       label: "Phone",
-      render: (pgAppoint) => <p className="text-sm">{pgAppoint.phone}</p>,
+      render: (user) => <p className="text-sm">{user?.user?.phoneNumber}</p>,
     },
     {
-      key: "Age",
+      key: "age",
       label: "Age",
-      render: (pgAppoint) => <span className="text-sm">{pgAppoint.Age}</span>,
+      render: (user) => (
+        <span className="text-sm">{user?.dateOfBirth ?? "N/A"}</span>
+      ),
     },
     {
       key: "gender",
       label: "Gender",
-      render: (pgAppoint) => (
-        <span className="capitalize text-sm">{pgAppoint.gender}</span>
+      render: (user) => (
+        <span className="capitalize text-sm">{user?.gender}</span>
       ),
     },
     {
-      key: "location",
+      key: "address",
       label: "Location",
-      render: (pgAppoint) => <p className="text-sm">{pgAppoint.location}</p>,
+      render: (user) => (
+        <p className="text-sm">{user?.address || "Not Provided"}</p>
+      ),
     },
     {
       key: "action",
       label: "Action",
-      render: (pgAppoint) => (
+      render: (user) => (
         <Link
-          to={routeLinks?.doctor?.patients + "/" + pgAppoint?.id}
+          to={`${routeLinks?.doctor?.patients}/${user?.id}`}
           className="text-primary underline text-xs"
         >
           View
@@ -102,38 +99,9 @@ function DoctorPatients() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-row items-center justify-between my-2">
-        <Dropdown
-          triggerLabel="Date range : This Week"
-          showArrow
-          triggerIcon={<IoCalendarClearOutline />}
-        >
-          <ul className="space-y-2 text-sm">
-            <li className="cursor-pointer hover:bg-gray-100 p-1 rounded">
-              Day
-            </li>
-            <li className="cursor-pointer hover:bg-gray-100 p-1 rounded">
-              Week
-            </li>
-            <li className="cursor-pointer hover:bg-gray-100 p-1 rounded">
-              Month
-            </li>
-          </ul>
-        </Dropdown>
-        <div className="flex flex-row items-center gap-3">
-          <button className="cursor-pointer inline-flex items-center gap-2 text-sm py-2 px-3 border border-dashboard-gray rounded-sm">
-            <PiExport />
-            Export Csv
-          </button>
-
-          <button className="bg-primary text-white px-6 py-2  text-sm rounded-md flex items-center gap-2">
-            <FiPlus />
-            Add Doctor
-          </button>
-        </div>
-      </div>
+      {/* Dashboard Metrics */}
       <main>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <DashboardCard title="Total Appointments" count={100} />
           <DashboardCard title="Patients" count={50} />
           <DashboardCard title="Upcoming" count={30} />
@@ -141,22 +109,36 @@ function DoctorPatients() {
         </div>
       </main>
 
-      <section className="border border-dashboard-gray p-2 rounded-lg">
-        <HeaderTab title="Appointment" showSearch={false}  />
-        <div className="">
-          <Table
-            data={allAppointment}
-            columns={appointmentColumns}
-            page={1}
-            total={10}
-            limit={10}
-            totalPages={10}
-            setPage={(e) => {
-              console.log(e);
-            }}
-            showPaginate={false}
-          />
-        </div>
+      {/* Table Section */}
+      <section className="container-bd">
+        <HeaderTab
+          title="Patients"
+          showSearch={false}
+          dropdowns={[
+            {
+              label: "Status",
+              options: ["All", "Active", "Inactive"],
+              value: status || "",
+              onChange: (value) =>
+                setStatus(value === "All" ? "" : value.toLowerCase()),
+            },
+          ]}
+        />
+        {loadingUsers ? (
+          <p>Loading...</p>
+        ) : (
+          <div>
+            <Table
+              data={users}
+              columns={columns}
+              page={page}
+              total={total}
+              limit={limit}
+              totalPages={totalPages}
+              setPage={handleSetPage}
+            />
+          </div>
+        )}
       </section>
     </div>
   );
