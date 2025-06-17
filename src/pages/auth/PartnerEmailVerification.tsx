@@ -149,7 +149,7 @@ function PartnerEmailVerification() {
         <div className="w-full max-w-lg">
           <div className="w-full max-w-sm   mx-auto space-y-6">
             <div className="text-center">
-              <h2 className="text-xl md:text-2xl 2xl:text-4xl px-6 md:px-20 text-text-secondary">
+              <h2 className="text-xl md:text-2xl 2xl:text-3xl px-6 md:px-20 text-text-secondary">
                 OTP verification
               </h2>
 
