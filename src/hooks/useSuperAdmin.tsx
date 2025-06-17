@@ -25,8 +25,10 @@ function useSuperAdmin(api: any) {
       const res = await api.getAdmins(`?${params.toString()}`);
       dispatch(
         setAdmins({
-          data: res.data,
-          total: res.total ?? 0,
+          data: res?.data?.data,
+          total: res.data?.total ?? 0,
+          limit: res?.data?.limit,
+          page: res?.data?.page,
         })
       );
     } catch (err) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiPlus, FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiPlus, FiEye, FiEdit } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import useAdmin from "../../../hooks/useAdmin";
 import AdminApi from "../../../api/adminApi";
@@ -35,16 +35,16 @@ function AdminPharmacists() {
     setShowForm(true);
   };
 
-  const handleDelete = async (pharmacistId: string) => {
-    try {
-      await AdminApi.deletePharmacist(pharmacistId);
-      alert(`Pharmacist ${pharmacistId} deleted successfully`);
-      getPharmacists();
-    } catch (error) {
-      console.error("Deleting pharmacist with ID:", pharmacistId);
-      alert(`Deleting pharmacist with ID: ${pharmacistId} failed`);
-    }
-  };
+  // const handleDelete = async (pharmacistId: string) => {
+  //   try {
+  //     await AdminApi.deletePharmacist(pharmacistId);
+  //     alert(`Pharmacist ${pharmacistId} deleted successfully`);
+  //     getPharmacists();
+  //   } catch (error) {
+  //     console.error("Deleting pharmacist with ID:", pharmacistId);
+  //     alert(`Deleting pharmacist with ID: ${pharmacistId} failed`);
+  //   }
+  // };
 
   const columns: Column<any>[] = [
     {
@@ -111,12 +111,12 @@ function AdminPharmacists() {
             >
               <FiEdit /> Edit
             </li>
-            <li
+            {/* <li
               onClick={() => handleDelete(pharmacist.id)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"
             >
               <FiTrash2 /> Delete
-            </li>
+            </li> */}
           </ul>
         </Dropdown>
       ),

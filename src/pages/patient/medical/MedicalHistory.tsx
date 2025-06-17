@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MedicalReportModal from "../../../components/modal/MedicalReportModal";
+import MedicalReportModal from "../../../components/modal/DiagnosisReportModal";
 import useDiagnoses from "../../../hooks/useDiagnoses";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import PatientApi from "../../../api/PatientApi";

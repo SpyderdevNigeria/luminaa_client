@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DiagnosisForm from "./medical/DiagnosisForm";
 import doctorApi from "../../../../api/doctorApi";
-import MedicalReportModal from "../../../../components/modal/MedicalReportModal";
+import MedicalReportModal from "../../../../components/modal/DiagnosisReportModal";
 import DiagnosisCard from "../../../../components/common/DiagnosisCard";
 interface Diagnosis {
   id: string;

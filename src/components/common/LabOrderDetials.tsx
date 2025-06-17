@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import routeLinks from "../../utils/routes";
 import { TestDetailsSkeleton } from "../skeleton/SkeletonCards";
 import LabOrderDocuments from "./LabOrderDocuments";
-
+import LabRequestReportModal from "../modal/LabRequestReportModal";
 interface LabOrderDetailsProps {
   data: {
     data: ILabOrder & {
@@ -34,7 +34,7 @@ interface LabOrderDetailsProps {
   results?: IResults | null;
   resultError?: string | null;
   isLoadingResults?: boolean;
-  updateDocuments?:() => void;
+  updateDocuments?: () => void;
 }
 
 const LabOrderDetails = ({
@@ -56,8 +56,9 @@ const LabOrderDetails = ({
     unit: "",
     referenceRange: "",
   });
+  const [isModalOpen, setModalOpen] = useState(false);
   const [note, setNote] = useState<string>("");
-  const [activeTab, setActiveTab] = useState("overview"); 
+  const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
     console.log(results?.id);
@@ -145,20 +146,24 @@ const LabOrderDetails = ({
     }
   };
 
+
+
   return (
     <div className="container-bd max-w-6xl mx-auto">
-             <button
-          onClick={handNavigate}
-          className="text-xl  gap-2 font-semibold mb-4 flex items-center"
-        >
-          <BiArrowBack /> Back
-        </button>
+      <button
+        onClick={handNavigate}
+        className="text-xl  gap-2 font-semibold mb-4 flex items-center"
+      >
+        <BiArrowBack /> Back
+      </button>
 
       {/* Tabs Header */}
       <div className="flex  mb-4">
         <button
           className={`px-4 py-2 ${
-            activeTab === "overview" ? "border-b-2 border-primary font-semibold" : ""
+            activeTab === "overview"
+              ? "border-b-2 border-primary font-semibold"
+              : ""
           }`}
           onClick={() => setActiveTab("overview")}
         >
@@ -166,7 +171,9 @@ const LabOrderDetails = ({
         </button>
         <button
           className={`px-4 py-2 ${
-            activeTab === "results" ? "border-b-2 border-primary font-semibold" : ""
+            activeTab === "results"
+              ? "border-b-2 border-primary font-semibold"
+              : ""
           }`}
           onClick={() => setActiveTab("results")}
         >
@@ -174,7 +181,9 @@ const LabOrderDetails = ({
         </button>
         <button
           className={`px-4 py-2 ${
-            activeTab === "notes" ? "border-b-2 border-primary font-semibold" : ""
+            activeTab === "notes"
+              ? "border-b-2 border-primary font-semibold"
+              : ""
           }`}
           onClick={() => setActiveTab("notes")}
         >
@@ -331,6 +340,31 @@ const LabOrderDetails = ({
               <article className="text-base text-gray-700">{notes}</article>
             </div>
           </section>
+
+          <section className="md:col-span-2">
+            <button
+              className="mb-4 bg-primary text-white px-4 py-2 rounded"
+              onClick={() => {setModalOpen(!isModalOpen)}}
+            >
+              View Download PDF
+            </button>
+          </section>
+          <div>
+   <LabRequestReportModal
+                results={{
+                  testName,
+                  notes : notes ? notes : "" ,
+                  priority : priority ? priority : "" ,
+                  status  : status ? status : "" ,
+                  collectedSample : collectedSample ? collectedSample : false ,
+                  patient,
+                  doctor,
+                  createdAt,
+                }}
+                isModalOpen={isModalOpen}
+                setModalOpen={setModalOpen}
+              />
+          </div>
         </div>
       )}
 
@@ -403,59 +437,59 @@ const LabOrderDetails = ({
             {type === "lab" && (
               <section>
                 <div className="flex flex-row items-center justify-between gap-4 mt-4">
-                    <div>
+                  <div>
                     <label htmlFor="testName"> Test Name</label>
-                  <input
-                    type="text"
-                    name="testName"
-                    placeholder="Test Name"
-                    className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
-                    value={newResult.testName}
-                    onChange={handleNewResultChange}
-                  />
+                    <input
+                      type="text"
+                      name="testName"
+                      placeholder="Test Name"
+                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      value={newResult.testName}
+                      onChange={handleNewResultChange}
+                    />
                   </div>
-                     <div>
+                  <div>
                     <label htmlFor="result"> Result</label>
-                  <input
-                    type="text"
-                    name="result"
-                    placeholder="Result"
-                    className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
-                    value={newResult.result}
-                    onChange={handleNewResultChange}
-                  />
-                   </div>
-                     <div>
+                    <input
+                      type="text"
+                      name="result"
+                      placeholder="Result"
+                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      value={newResult.result}
+                      onChange={handleNewResultChange}
+                    />
+                  </div>
+                  <div>
                     <label htmlFor="unit"> Unit</label>
-                  <input
-                    type="text"
-                    name="unit"
-                    placeholder="Unit"
-                    className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
-                    value={newResult.unit}
-                    onChange={handleNewResultChange}
-                  />
-                    </div>
-                      <div>
+                    <input
+                      type="text"
+                      name="unit"
+                      placeholder="Unit"
+                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      value={newResult.unit}
+                      onChange={handleNewResultChange}
+                    />
+                  </div>
+                  <div>
                     <label htmlFor="referenceRange"> Reference Range</label>
-                  <input
-                    type="text"
-                    name="referenceRange"
-                    placeholder="Reference Range"
-                    className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
-                    value={newResult.referenceRange}
-                    onChange={handleNewResultChange}
-                  />
-                   </div>
-                         <div>
+                    <input
+                      type="text"
+                      name="referenceRange"
+                      placeholder="Reference Range"
+                      className="w-full p-3 bg-text-gray-500  focus:outline-primary text-sm rounded-sm"
+                      value={newResult.referenceRange}
+                      onChange={handleNewResultChange}
+                    />
+                  </div>
+                  <div>
                     <label htmlFor="action"> Action</label>
-                  <button
-                    className="text-white bg-primary p-2 px-4 rounded-lg"
-                    onClick={addNewResult}
-                  >
-                    +
-                  </button>
-                   </div>
+                    <button
+                      className="text-white bg-primary p-2 px-4 rounded-lg"
+                      onClick={addNewResult}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </section>
             )}

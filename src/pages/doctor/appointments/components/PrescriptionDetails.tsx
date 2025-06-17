@@ -28,7 +28,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
   const [selectedPrescription, setSelectedPrescription] = useState<IPrescription | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"prescriptions" | "medications">("prescriptions");
-  const [selectedMedicationId, setSelectedMedicationId] = useState<string | null>(null);
+  const [selectedMedication, setSelectedMedication] = useState<IMedication | null>(null);
 
   const {
     medications,
@@ -105,7 +105,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
     const confirm = window.confirm(`Do you want to add ${med.name} as a prescription for the patient?`);
     if (!confirm) return;
 
-    setSelectedMedicationId(med.id);
+    setSelectedMedication(med);
     setShowForm(true);
     setActiveTab("prescriptions");
   };
@@ -138,7 +138,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
             }`}
             onClick={() => {
               setActiveTab("prescriptions");
-              setSelectedMedicationId(null);
+              setSelectedMedication(null);
             }}
           >
             Prescriptions
@@ -151,7 +151,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
               setActiveTab("medications");
               setShowForm(false);
               setEditingPrescription(null);
-              setSelectedMedicationId(null);
+              setSelectedMedication(null);
             }}
           >
             Add From Medications
@@ -169,19 +169,31 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
                     ...editingPrescription,
                     isRefillable: (editingPrescription as any).isRefillable ?? false,
                   }
-                : undefined
+                : {
+                  medicationName: selectedMedication?.name ?? "",
+                    medicationId: "",
+                      dosage: "",
+                      frequency: "",
+                      duration: "",
+                      instructions: "",
+                      isRefillable: false,
+                      status: "active",
+                      _id:'',
+                      id:'',
+                      createdAt:''
+                }
             }
-            medicationId={!editingPrescription ? selectedMedicationId ?? undefined : undefined}
+            medicationId={!editingPrescription ? selectedMedication?.id ?? undefined : undefined}
             onSuccess={() => {
               fetchPrescriptions();
               setShowForm(false);
               setEditingPrescription(null);
-              setSelectedMedicationId(null);
+              setSelectedMedication(null);
             }}
             setShowForm={() => {
               setShowForm(false);
               setEditingPrescription(null);
-              setSelectedMedicationId(null);
+              setSelectedMedication(null);
             }}
           />
         ) : (
@@ -248,6 +260,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
                     key={med?.id}
                     medication={med}
                     onAddPrescription={() => handleSelectMedication(med)}
+                    prescriptions={prescriptions}
                   />
                 ))}
               </div>

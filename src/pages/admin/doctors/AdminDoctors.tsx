@@ -1,5 +1,5 @@
 import  { useState, useEffect } from "react";
-import { FiPlus, FiEdit, FiTrash2, FiEye } from "react-icons/fi";
+import { FiPlus, FiEdit, FiEye } from "react-icons/fi";
 import  useAdmin  from "../../../hooks/useAdmin"; 
 import AdminApi from "../../../api/adminApi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
@@ -38,10 +38,10 @@ function AdminDoctors() {
     setShowForm(true);
   };
 
-  const handleDelete = (doctorId: string) => {
+  // const handleDelete = (doctorId: string) => {
 
-    console.log("Deleting doctor with ID:", doctorId);
-  };
+  //   console.log("Deleting doctor with ID:", doctorId);
+  // };
 
   const columns: Column<any>[] = [
     {
@@ -91,12 +91,12 @@ function AdminDoctors() {
           >
             <FiEdit /> Edit
           </li>
-          <li
+          {/* <li
             onClick={() => handleDelete(doctor.id)}
             className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"
           >
             <FiTrash2 /> Delete
-          </li>
+          </li> */}
         </ul>
       </Dropdown>
     ),

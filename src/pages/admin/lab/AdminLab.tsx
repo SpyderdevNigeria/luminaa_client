@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiPlus, FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiPlus, FiEye, FiEdit, } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import useAdmin from "../../../hooks/useAdmin";
 import AdminApi from "../../../api/adminApi";
@@ -36,16 +36,16 @@ function AdminLabs() {
     setShowForm(true);
   };
 
-  const handleDelete = async (labId: string) => {
-    try {
-        await AdminApi.deleteLabs(labId); 
-        alert(`Lab ${labId} deleted successfully`)  
-          getLabs();  
-    } catch (error) {
-        console.error("Deleting lab with ID:", labId);   
-        alert(`Deleting lab with ID: ${labId} failed")`)    
-    }
-  };
+  // const handleDelete = async (labId: string) => {
+  //   try {
+  //       await AdminApi.deleteLabs(labId); 
+  //       alert(`Lab ${labId} deleted successfully`)  
+  //         getLabs();  
+  //   } catch (error) {
+  //       console.error("Deleting lab with ID:", labId);   
+  //       alert(`Deleting lab with ID: ${labId} failed")`)    
+  //   }
+  // };
 
   const columns: Column<any>[] = [
     {
@@ -95,12 +95,12 @@ function AdminLabs() {
             >
               <FiEdit /> Edit
             </li>
-            <li
+            {/* <li
               onClick={() => handleDelete(lab.id)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"
             >
               <FiTrash2 /> Delete
-            </li>
+            </li> */}
           </ul>
         </Dropdown>
       ),

@@ -45,13 +45,6 @@ function AdminMedications() {
   const [viewMedication, setViewMedication] = useState<any>(null);
 
   useEffect(() => {
-    if (
-      medications.length > 0 &&
-      medicationSearch === "" &&
-      medicationsPage === 1
-    ) {
-      return;
-    }
     getMedications();
   }, [
     medicationsPage,
@@ -68,8 +61,11 @@ function AdminMedications() {
     setShowForm(true);
   };
 
-  const handleDelete = async (medicationId: string) => {
+  const handleDelete = async (medicationId: string, medication:any) => {
     try {
+       const confirmed = window.confirm(`Are you sure you want to delete this medication ${medication?.name}`);
+
+  if (!confirmed) return;
       await AdminApi.deleteMedication(medicationId);
       alert(`Medication ${medicationId} deleted successfully`);
       getMedications();
@@ -79,14 +75,20 @@ function AdminMedications() {
     }
   };
 
-  const toggleVisibility = async (id: string) => {
-    try {
-      await AdminApi.updateMedicationVisibility(id);
-      getMedications();
-    } catch (err) {
-      console.error("Error toggling visibility:", err);
-    }
-  };
+const toggleVisibility = async (id: string, medication:any) => {
+  const action = medication?.isHidden ? "make this medication visible" : "hide this medication";
+  const confirmed = window.confirm(`Are you sure you want to ${action}?`);
+
+  if (!confirmed) return;
+
+  try {
+    await AdminApi.updateMedicationVisibility(id);
+    getMedications();
+    alert(`Medication ${medication?.name} updated successfully`);
+  } catch (err) {
+    console.error("Error toggling visibility:", err);
+  }
+};
 
   const columns: Column<any>[] = [
     { key: "name", label: "Name" },
@@ -122,7 +124,7 @@ function AdminMedications() {
         >
           <ul className="space-y-2 text-sm">
             <li
-              onClick={() => toggleVisibility(medication.id)}
+              onClick={() => toggleVisibility(medication.id, medication)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
             >
               <FiEye /> {medication.isHidden ? "Make Visible" : "Hide"}
@@ -140,7 +142,7 @@ function AdminMedications() {
               <FiEdit /> Edit
             </li>
             <li
-              onClick={() => handleDelete(medication.id)}
+              onClick={() => handleDelete(medication.id, medication)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"
             >
               <FiTrash2 /> Delete

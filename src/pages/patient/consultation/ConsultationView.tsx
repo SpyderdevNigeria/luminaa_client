@@ -5,7 +5,7 @@ import { SiGooglemeet } from "react-icons/si";
 import PatientApi from "../../../api/PatientApi";
 import DoctorImage from "../../../assets/images/doctor/doctor.png";
 import DiagnosisCard from "../../../components/common/DiagnosisCard";
-import MedicalReportModal from "../../../components/modal/MedicalReportModal";
+import MedicalReportModal from "../../../components/modal/DiagnosisReportModal";
 import PrescriptionCard from "../../../components/common/PrescriptionCard";
 import PrescriptionDetailsModal from "../../../components/modal/PrescriptionDetailsModal";
 import { getFormattedDateTime } from "../../../utils/dashboardUtils";
