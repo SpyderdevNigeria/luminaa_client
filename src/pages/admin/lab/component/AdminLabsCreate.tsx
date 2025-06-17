@@ -58,7 +58,6 @@ const AdminLabsCreate: React.FC<Props> = ({ lab = null, onBack, onClose }) => {
         firstName: lab.user.firstName || "",
         lastName: lab.user.lastName || "",
         email: lab.user.email || "",
-        password: "",
         department: lab.department || "",
         licenseNumber: lab.licenseNumber || "",
         licenseExpiryDate: lab.licenseExpiryDate?.slice(0, 10) || "",
@@ -153,12 +152,6 @@ const handleChange = (
             { name: "firstName", label: "First Name", required: true, type: "text" },
             { name: "lastName", label: "Last Name", required: true, type: "text" },
             { name: "email", label: "Email", type: "email", required: true },
-            {
-              name: "password",
-              label: "Password",
-              type: "text",
-              required: !lab,
-            },
             { name: "department", label: "Department", type:"select", options:labDepartment, required: true,},
             { name: "licenseNumber", label: "License Number", required: true, type: "text" },
             {

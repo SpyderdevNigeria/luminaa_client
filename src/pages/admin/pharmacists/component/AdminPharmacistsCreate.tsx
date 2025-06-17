@@ -30,7 +30,6 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
     licenseNumber: "",
     licenseExpiryDate: "",
     hireDate: "",
@@ -43,7 +42,6 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
         firstName: pharmacist.user.firstName || "",
         lastName: pharmacist.user.lastName || "",
         email: pharmacist.user.email || "",
-        password: "",
         licenseNumber: pharmacist.licenseNumber || "",
         licenseExpiryDate: pharmacist.licenseExpiryDate?.slice(0, 10) || "",
         hireDate: pharmacist.hireDate?.slice(0, 10) || "",
@@ -121,17 +119,20 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
             { name: "firstName", label: "First Name", required: true, type: "text" },
             { name: "lastName", label: "Last Name", required: true, type: "text" },
             { name: "email", label: "Email", type: "email", required: true },
-            { name: "password", label: "Password", type: "text", required: !pharmacist },
             { name: "licenseNumber", label: "License Number", required: true, type: "text" },
             { name: "licenseExpiryDate", label: "License Expiry Date", type: "date", required: true },
             { name: "hireDate", label: "Hire Date", type: "date", required: true },
-            { name: "Status", label: "Status", type: "text", required: true },
+            { name: "Status", label: "Status", type: "select", required: true, options: ['active', 'inactive'] },
           ].map((field) => (
             <CommonFormField
               key={field.name}
               {...field}
               value={formData[field.name as keyof FormData]}
               onChange={handleChange}
+              options={
+                field.options?.map((opt) => ({ value: opt, label: opt })) || []
+              }
+
             />
           ))}
 
