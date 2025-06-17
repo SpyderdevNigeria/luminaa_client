@@ -64,14 +64,45 @@ export interface IDoctor {
     id?:string;
 
 }
+export interface IMedicalHistory {
+  Asthma: string;
+  Diabetes: string;
+  Epilepsy: string;
+  Genotype: string;
+  BloodGroup: string;
+  Hypertension: string;
+  LiverDisease: string;
+  PastDelivery: string;
+  KidneyDisease: string;
+  SickleCellDisease: string;
+  PastBloodTransfusion: string;
+  PastHospitalAdmission: string;
+}
 
 export interface IPatient {
-    firstName?:string;
-    lastName?:string;
-    email?:string;
-    id:string;
-
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  dateOfBirth: string; 
+  gender: string;
+  phoneNumber: string;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  emergencyContactName: string;
+  emergencyContactPhone: string;
+  medicalHistory: IMedicalHistory;
+  isBioDataCompleted: boolean;
+  isMedicalHistoryCompleted: boolean;
+  createdAt: string; 
+  updatedAt: string; 
+  totalAppointments: number;
+  lastAppointmentDate: string; 
+  profilePicture:string;
 }
+
 export interface ILabOrder {
   id: string;
   testName: string;

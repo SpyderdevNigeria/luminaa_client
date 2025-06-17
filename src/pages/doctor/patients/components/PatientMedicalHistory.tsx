@@ -1,20 +1,24 @@
-import InfoLabel from "../../../../components/common/InfoLabel"
+import InfoLabel from "../../../../components/common/InfoLabel";
+import { IPatient } from "../../../../types/Interfaces";
+type Props = {
+  user: IPatient;
+};
 
-function PatientMedicalHistory() {
+
+function PatientMedicalHistory({ user }: Props) {
   return (
     <div>
-      <h4 className="text-inactive text-base">An on overview of the Patient's information</h4>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4 ">
-            <InfoLabel label={"Chukwuemeka"} info={"First Name"}  />
-            <InfoLabel label={"Last Name"} info={"Last Name"} />
-            <InfoLabel label={"Gender"} info={"Male"} />
-            <InfoLabel label={"Location"} info={"86 niyi onilari street"} />
-            <InfoLabel label={"09012345678"} info={"Phone Number"} />
-            <InfoLabel label={"ajayiraymond@lumina.com"} info={"Email"}  />
-            <InfoLabel label={"10-05-2002"} info={"Date Of Birth"}  />
-          </div>
+      <h4 className="text-inactive text-base mb-4">
+        An overview of the Patient's Medical History
+      </h4>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
+        {Object.entries(user?.medicalHistory).map(([key, value]) => (
+          <InfoLabel key={key} label={value} info={key.replace(/([A-Z])/g, " $1")} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
-export default PatientMedicalHistory
+export default PatientMedicalHistory;

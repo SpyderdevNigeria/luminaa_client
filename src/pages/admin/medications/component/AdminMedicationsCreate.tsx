@@ -51,7 +51,7 @@ const AdminMedicationsCreate: React.FC<Props> = ({ medication = null, onBack, on
         strength: medication.strength || "",
         category: medication.category || "",
         description: medication.description || "",
-        price: medication.price || 0,
+        price: parseInt(medication.price.toString()) || 0,
         requiresPrescription: medication.requiresPrescription || false,
         status: medication.status || "active",
       });

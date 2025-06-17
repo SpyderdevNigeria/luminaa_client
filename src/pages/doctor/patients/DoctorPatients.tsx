@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import DashboardCard from "../../../components/common/DashboardCard";
+// import DashboardCard from "../../../components/common/DashboardCard";
 import HeaderTab from "../../../components/common/HeaderTab";
 import Table, { Column } from "../../../components/common/Table";
 import routeLinks from "../../../utils/routes";
@@ -100,14 +100,14 @@ function DoctorPatients() {
   return (
     <div className="flex flex-col gap-4">
       {/* Dashboard Metrics */}
-      <main>
+      {/* <main>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <DashboardCard title="Total Appointments" count={100} />
+          <DashboardCard title="Appointments" count={100} />
           <DashboardCard title="Patients" count={50} />
           <DashboardCard title="Upcoming" count={30} />
           <DashboardCard title="Cancelled" count={20} />
         </div>
-      </main>
+      </main> */}
 
       {/* Table Section */}
       <section className="container-bd">

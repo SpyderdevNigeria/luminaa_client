@@ -14,7 +14,7 @@ export default function PaginationComponent({
   onPageChange,
 }: PaginationComponentProps) {
   return (
-    <div className="flex justify-between items-center mt-6">
+    <div className="flex flex-col md:flex-row gap-4 justify-between items-center mt-6">
       <p className="text-sm">
         Showing {(page - 1) * limit + 1}–{Math.min(page * limit, total)} of {total}
       </p>
