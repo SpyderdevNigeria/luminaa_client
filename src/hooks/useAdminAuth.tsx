@@ -63,9 +63,9 @@ useEffect(() => {
   }
 
   // If the user is patient, log them out
-  if (userProfile?.user?.role !== "admin") {
+  if (userProfile?.user?.role !== "admin" && userProfile?.user?.role !== "super_admin") {
     dispatch(logout());
-    navigate(routeLinks.auth.login);
+    navigate(routeLinks.auth.adminLogin);
     return;
   }
 

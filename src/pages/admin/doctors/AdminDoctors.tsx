@@ -9,6 +9,7 @@ import AdminDoctorsCreate from "./component/AdminDoctorsCreate";
 import Dropdown from "../../../components/dropdown/dropdown";
 import StatusBadge from "../../../components/common/StatusBadge";
 import { adminDoctorSpecialties } from "../../../utils/dashboardUtils"
+import AdminNavigate from "../../../components/common/AdminNavigate";
 function AdminDoctors() {
   const {
     doctors,
@@ -76,12 +77,9 @@ function AdminDoctors() {
   render: (doctor) => (
       <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
         <ul className="space-y-2 text-sm">
-          <li
-            onClick={() => console.log("Viewing", doctor)}
-            className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
-          >
-            <FiEye /> View
-          </li>
+           <AdminNavigate role={'doctor'} id={doctor?.user?.id}> 
+                 <FiEye /> View
+              </AdminNavigate>
           <li
             onClick={() => handleEdit(doctor)}
             className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"

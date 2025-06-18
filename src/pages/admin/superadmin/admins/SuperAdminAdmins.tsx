@@ -8,6 +8,7 @@ import Dropdown from "../../../../components/dropdown/dropdown";
 import StatusBadge from "../../../../components/common/StatusBadge";
 import Table, { Column }  from "../../../../components/common/Table";
 import SuperAdminAdminsCreate from "./component/SuperAdminAdminsCreate";
+import AdminNavigate from "../../../../components/common/AdminNavigate";
 function SuperAdminAdmins() {
   const {
     admins,
@@ -93,12 +94,9 @@ const handleDelete = async (adminId: string) => {
       render: (admin) => (
         <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
           <ul className="space-y-2 text-sm">
-            <li
-              onClick={() => console.log("Viewing", admin)}
-              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
-            >
-              <FiEye /> View
-            </li>
+              <AdminNavigate role={'admin'} id={admin?.user?.id}> 
+                 <FiEye /> View
+              </AdminNavigate>
             <li
               onClick={() => handleEdit(admin)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"

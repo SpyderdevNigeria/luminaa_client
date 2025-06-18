@@ -17,8 +17,18 @@ const AdminApi = {
     return response.data;
   },
 
-    getPatients: async (query:any) => {
-    const response = await api.get(`/admin/patient${query}`);
+    getUserById: async (id:any) => {
+    const response = await api.get(`/admin/users/${id}`);
+    return response.data;
+  },
+
+    toggleUserStatus: async (id:any, body:any) => {
+    const response = await api.patch(`/admin/users/${id}/toggle-status`, body);
+    return response.data;
+  },
+
+      getPatients: async (query:any) => {
+    const response = await api.get(`/admin/users${query}`);
     return response.data;
   },
 

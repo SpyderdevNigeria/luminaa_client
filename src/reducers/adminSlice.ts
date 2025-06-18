@@ -4,6 +4,10 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   patients: {
     data: [],
+    search:'',
+    isdisabled: "",
+    isactive: "",
+    role:"",
     page: 1,
     limit: 10,
     total: 0,
@@ -73,6 +77,19 @@ const adminSlice = createSlice({
     },
     setPatientsError(state, action) {
       state.patients.error = action.payload;
+    },
+    setPatientsSearch(state, action) {
+      state.patients.search = action.payload;
+    },
+      setPatientsIsDisabled(state, action) {
+      state.patients.isdisabled = action.payload;
+    },
+
+      setPatientsIsActive(state, action) {
+      state.patients.isactive = action.payload;
+    },
+       setPatientsRole(state, action) {
+      state.patients.role = action.payload;
     },
 
     // Doctors
@@ -181,7 +198,10 @@ export const {
   setPatients,
   setPatientsPagination,
   setPatientsError,
-
+  setPatientsSearch,
+  setPatientsIsDisabled,
+  setPatientsRole,
+  setPatientsIsActive,
   // Doctors
   setDoctorsLoading,
   setDoctors,

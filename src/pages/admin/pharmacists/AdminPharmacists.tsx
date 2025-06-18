@@ -8,6 +8,7 @@ import HeaderTab from "../../../components/common/HeaderTab";
 import Dropdown from "../../../components/dropdown/dropdown";
 import StatusBadge from "../../../components/common/StatusBadge";
 import AdminPharmacistsCreate from "./component/AdminPharmacistsCreate";
+import AdminNavigate from "../../../components/common/AdminNavigate";
 
 function AdminPharmacists() {
   const {
@@ -96,12 +97,9 @@ function AdminPharmacists() {
           triggerIcon={<HiOutlineDotsVertical />}
         >
           <ul className="space-y-2 text-sm">
-            <li
-              onClick={() => console.log("Viewing", pharmacist)}
-              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
-            >
-              <FiEye /> View
-            </li>
+             <AdminNavigate role={'pharmacist'} id={pharmacist?.user?.id}> 
+                 <FiEye /> View
+              </AdminNavigate>
             <li
               onClick={() => handleEdit(pharmacist)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"

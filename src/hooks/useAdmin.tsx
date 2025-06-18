@@ -31,11 +31,17 @@ import {
   setMedicationsStatus,
   setMedicationsRequiresPrescription,
   setMedicationsManufacturer,
+  setPatientsIsActive,
+  setPatientsSearch,
+  setPatientsIsDisabled,
+  setPatientsRole,
 } from "../reducers/adminSlice";
 interface AdminApiInterface {
   getPatients: (
     query: string
-  ) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
+  ) => Promise<{
+    total: number; data: { data: any[]; total?: number; page?: number } 
+}>;
   getDoctors: (
     query: string
   ) => Promise<{ data: { data: any[]; total?: number; page?: number } }>;
@@ -64,12 +70,15 @@ function useAdmin(api: AdminApiInterface) {
       const params = new URLSearchParams();
       params.append("page", patients.page.toString());
       params.append("limit", patients.limit.toString());
-
+      if (patients.role) params.append("role", patients.role.toString());
+      if (patients.isactive) params.append("isActive", patients.isactive.toString());
+      if (patients.isdisabled) params.append("isDisabled", patients.isdisabled.toString());
+      if (patients.search) params.append("search", patients.search);
       const res = await api.getPatients(`?${params.toString()}`);
       dispatch(
         setPatients({
-          data: res.data.data,
-          total: res.data.total ?? 0,
+          data: res.data,
+          total: res.total ?? 0,
         })
       );
     } catch (err) {
@@ -189,12 +198,20 @@ function useAdmin(api: AdminApiInterface) {
     patientsTotal: patients.total,
     patientsLoading: patients.loading,
     patientsError: patients.error,
+    patientsSearch: patients.search,
+    patientsRole : patients.role,
+    patientsIsDisabled: patients.isdisabled,
+    patientsIsActive: patients.isactive,
     setPatientsPage: (val: number) =>
       dispatch(setPatientsPagination({ page: val, limit: patients.limit })),
     setPatientsLimit: (val: number) =>
       dispatch(setPatientsPagination({ page: patients.page, limit: val })),
     getPatients,
-
+    setPatientsSearch: (val: string) => dispatch(setPatientsSearch(val)),
+    setPatientsIsDisabled: (val: boolean) =>
+      dispatch(setPatientsIsDisabled(val)),
+    setPatientsIsActive: (val: boolean) => dispatch(setPatientsIsActive(val)),
+    setPatientsRole: (val: string) => dispatch(setPatientsRole(val)),
     // Doctors
     doctors: doctors.data,
     doctorsStatus: doctors.status,
@@ -209,7 +226,7 @@ function useAdmin(api: AdminApiInterface) {
     setDoctorsLimit: (val: number) =>
       dispatch(setDoctorsPagination({ page: doctors.page, limit: val })),
     setDoctorSpecialty: (val: string) => dispatch(setDoctorsSpecialty(val)),
-    setDoctorsStatus:(val:string) => dispatch(setDoctorsStatus(val)),
+    setDoctorsStatus: (val: string) => dispatch(setDoctorsStatus(val)),
     getDoctors,
 
     // Labs

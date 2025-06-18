@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import AdminApi from "../../../api/adminApi"; 
+import AdminApi from "../../../../api/adminApi"; 
 import { format } from "date-fns";
-import StatusBadge from "../../../components/common/StatusBadge";
-
-
+import StatusBadge from "../../../../components/common/StatusBadge";
 type User = {
   id: string;
   firstName: string;
@@ -21,8 +19,8 @@ type User = {
   updatedAt: string;
 };
 
-function AdminDoctorsDetails() {
-  const { id } = useParams();
+function SuperAdminAdminsDetails() {
+ const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
   const [statusLoading, setStatusLoading] = useState(false);
@@ -117,4 +115,4 @@ function AdminDoctorsDetails() {
   );
 }
 
-export default AdminDoctorsDetails;
+export default SuperAdminAdminsDetails;
