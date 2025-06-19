@@ -3,6 +3,7 @@ import { FiTrash2, FiUpload, FiX } from "react-icons/fi";
 import { FaFileAlt } from "react-icons/fa";
 import Modal from "../modal/modal";
 import labApi from "../../api/labApi";
+import ConfirmModal from "../modal/ConfirmModal";
 
 const LabOrderDocuments = ({
   resultId,
@@ -26,7 +27,10 @@ const LabOrderDocuments = ({
     { name: string; file: File | null; description: string }[]
   >([{ name: "", file: null, description: "" }]);
   const [uploading, setUploading] = useState(false);
-
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [confrimLoading, setConfrimLoading] = useState(false);
+  const [documentDelete, setDocumentDelete] = useState<{ name: string; id: string } | null>(null);
   const handleAddField = () => {
     setNewDocs([...newDocs, { name: "", file: null, description: "" }]);
   };
@@ -75,17 +79,25 @@ const LabOrderDocuments = ({
     }
   };
 
-  const handleDelete = async (docId: string) => {
-    if (!window.confirm("Are you sure you want to delete this document?"))
-      return;
+  const handleDelete = (doc:any) => {
+   setConfirmMessage(`Are you sure you want to delete this document? ${doc?.name}`);
+   setDocumentDelete(doc)
+    setConfirmOpen(true);
+  };
+
+  const onConfirm = async () => {
+    setConfrimLoading(true);
     try {
-      if (resultId) await labApi.deleteLabOrderDocumentById(resultId, docId);
+      if (resultId && documentDelete?.id) {
+        await labApi.deleteLabOrderDocumentById(resultId, documentDelete.id);
+      }
       if (refreshDocuments) {
         refreshDocuments();
       }
     } catch (err) {
       console.error("Delete failed", err);
     }
+    setConfirmOpen(false);
   };
   console.log(documents);
   return (
@@ -128,7 +140,7 @@ const LabOrderDocuments = ({
               </div>
               {type === "lab" && (
                 <button
-                  onClick={() => handleDelete(doc.id)}
+                  onClick={() => handleDelete(doc)}
                   className="text-red-600 hover:text-red-800"
                 >
                   <FiTrash2 />
@@ -140,6 +152,13 @@ const LabOrderDocuments = ({
       ) : (
         <p className="text-sm text-gray-500">No documents added.</p>
       )}
+      <ConfirmModal
+        open={confirmOpen}
+        description={confirmMessage}
+        onConfirm={onConfirm}
+        onClose={() => setConfirmOpen(false)}
+        loading={confrimLoading}
+      />
 
       <Modal
         open={isModalOpen}

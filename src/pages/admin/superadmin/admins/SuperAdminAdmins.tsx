@@ -6,10 +6,12 @@ import SuperAdminApi from "../../../../api/superAdminApi";
 import HeaderTab from "../../../../components/common/HeaderTab";
 import Dropdown from "../../../../components/dropdown/dropdown";
 import StatusBadge from "../../../../components/common/StatusBadge";
-import Table, { Column }  from "../../../../components/common/Table";
+import Table, { Column } from "../../../../components/common/Table";
 import SuperAdminAdminsCreate from "./component/SuperAdminAdminsCreate";
 import AdminNavigate from "../../../../components/common/AdminNavigate";
 import { useToaster } from "../../../../components/common/ToasterContext";
+import ConfirmModal from "../../../../components/modal/ConfirmModal";
+
 function SuperAdminAdmins() {
   const {
     admins,
@@ -25,7 +27,14 @@ function SuperAdminAdmins() {
 
   const [editAdmin, setEditAdmin] = useState<any>(null);
   const [showForm, setShowForm] = useState(false);
-const { showToast } = useToaster();
+  const { showToast } = useToaster();
+
+  // Confirm modal states
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [onConfirm, setOnConfirm] = useState<() => void>(() => {});
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
   useEffect(() => {
     getAdmins();
   }, [adminsPage, adminsSearch]);
@@ -35,22 +44,28 @@ const { showToast } = useToaster();
     setShowForm(true);
   };
 
-const handleDelete = async (adminId: string) => {
-  const confirmed = window.confirm(
-    "Are you sure you want to deactivate this admin?\n\nThis action is permanent and cannot be undone. You won't be able to reactivate this admin again."
-  );
+  const handleDelete = (adminId: string) => {
+    setConfirmMessage(
+      "Are you sure you want to deactivate this admin?\n\nThis action is permanent and cannot be undone. You won't be able to reactivate this admin again."
+    );
 
-  if (!confirmed) return;
+    setOnConfirm(() => async () => {
+      setConfirmLoading(true);
+      try {
+        await SuperAdminApi.deleteAdmin(adminId);
+        showToast(`Admin ${adminId} has been permanently deactivated.`, "success");
+        getAdmins();
+      } catch (error) {
+        console.error("Error deleting admin with ID:", adminId);
+        showToast(`Failed to deactivate admin with ID: ${adminId}`, "error");
+      } finally {
+        setConfirmLoading(false);
+        setConfirmOpen(false);
+      }
+    });
 
-  try {
-    await SuperAdminApi.deleteAdmin(adminId);
-    showToast(`Admin ${adminId} has been permanently deactivated.`, 'success');
-    getAdmins();
-  } catch (error) {
-    console.error("Error deleting admin with ID:", adminId);
-    showToast(`Failed to deactivate admin with ID: ${adminId}`, 'error');
-  }
-};
+    setConfirmOpen(true);
+  };
 
   const columns: Column<any>[] = [
     {
@@ -65,12 +80,10 @@ const handleDelete = async (adminId: string) => {
       label: "Email",
       render: (admin) => <span>{admin?.user?.email}</span>,
     },
-        {
+    {
       key: "role",
       label: "Role",
-      render: (admin) => (
-        <p>{admin?.user?.role}</p>
-      ),
+      render: (admin) => <p>{admin?.user?.role}</p>,
     },
     {
       key: "contactNumber",
@@ -86,7 +99,7 @@ const handleDelete = async (adminId: string) => {
       key: "status",
       label: "Status",
       render: (admin) => (
-        <StatusBadge status={admin?.isActive ? 'active' : 'inactive'} />
+        <StatusBadge status={admin?.isActive ? "active" : "inactive"} />
       ),
     },
     {
@@ -95,9 +108,9 @@ const handleDelete = async (adminId: string) => {
       render: (admin) => (
         <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
           <ul className="space-y-2 text-sm">
-              <AdminNavigate role={'admin'} id={admin?.user?.id}> 
-                 <FiEye /> View
-              </AdminNavigate>
+            <AdminNavigate role={"admin"} id={admin?.user?.id}>
+              <FiEye /> View
+            </AdminNavigate>
             <li
               onClick={() => handleEdit(admin)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
@@ -117,21 +130,21 @@ const handleDelete = async (adminId: string) => {
   ];
 
   if (showForm) {
-  return (
-    <SuperAdminAdminsCreate
-      admin={editAdmin}
-      onBack={() => {
-        setShowForm(false);
-        setEditAdmin(null);
-      }}
-      onClose={() => {
-        setShowForm(false);
-        setEditAdmin(null);
-        getAdmins();
-      }}
-    />
-  );
-}
+    return (
+      <SuperAdminAdminsCreate
+        admin={editAdmin}
+        onBack={() => {
+          setShowForm(false);
+          setEditAdmin(null);
+        }}
+        onClose={() => {
+          setShowForm(false);
+          setEditAdmin(null);
+          getAdmins();
+        }}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -141,13 +154,15 @@ const handleDelete = async (adminId: string) => {
           className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
           onClick={() => setShowForm(true)}
         >
-          <FiPlus />
-          Add Admin
+          <FiPlus /> Add Admin
         </button>
       </div>
 
-      <HeaderTab title=""  showSearch={true}
-        onSearchChange={setAdminsSearch} />
+      <HeaderTab
+        title=""
+        showSearch={true}
+        onSearchChange={setAdminsSearch}
+      />
 
       <div>
         {adminsLoading ? (
@@ -163,6 +178,15 @@ const handleDelete = async (adminId: string) => {
           />
         )}
       </div>
+
+      <ConfirmModal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        description={confirmMessage}
+        confirmText="Yes, Deactivate"
+        onConfirm={onConfirm}
+        loading={confirmLoading}
+      />
     </div>
   );
 }

@@ -5,6 +5,8 @@ import LabOrderDetailModal from "../../../../components/modal/LabOrderDetailModa
 import { ILabOrder } from "../../../../types/Interfaces";
 import LabCard from "../../../../components/common/LabOrderCard";
 import { LabCardSkeleton } from "../../../../components/skeleton/SkeletonCards";
+import ConfirmModal from "../../../../components/modal/ConfirmModal";
+
 interface LabOrdersProps {
   appointmentId: string;
   handleBack: () => void;
@@ -19,20 +21,19 @@ const LabOrders = ({
   const [labOrders, setLabOrders] = useState<ILabOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [editingLabOrder, setEditingLabOrder] = useState<ILabOrder | null>(
-    null
-  );
-  const [selectedLabOrder, setSelectedLabOrder] = useState<ILabOrder | null>(
-    null
-  );
+  const [editingLabOrder, setEditingLabOrder] = useState<ILabOrder | null>(null);
+  const [selectedLabOrder, setSelectedLabOrder] = useState<ILabOrder | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [onConfirm, setOnConfirm] = useState<() => void>(() => {});
+  const [confirmLoading, setConfirmLoading] = useState(false);
 
   const fetchLabOrders = async () => {
     setLoading(true);
     try {
-      const response = await doctorApi.getLabOrdersAppointmentbyId(
-        appointmentId
-      );
+      const response = await doctorApi.getLabOrdersAppointmentbyId(appointmentId);
       setLabOrders(response?.data || []);
     } catch (error) {
       console.error("Error fetching lab orders:", error);
@@ -42,9 +43,10 @@ const LabOrders = ({
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!id) return;
-    if (window.confirm("Are you sure you want to delete this lab order?")) {
+  const handleDelete = (id: string) => {
+    setConfirmMessage("Are you sure you want to delete this lab order?");
+    setOnConfirm(() => async () => {
+      setConfirmLoading(true);
       try {
         await doctorApi.deleteLabOrder(id);
         await fetchLabOrders();
@@ -52,8 +54,12 @@ const LabOrders = ({
         setSelectedLabOrder(null);
       } catch (error) {
         console.error("Error deleting lab order:", error);
+      } finally {
+        setConfirmLoading(false);
+        setConfirmOpen(false);
       }
-    }
+    });
+    setConfirmOpen(true);
   };
 
   useEffect(() => {
@@ -61,7 +67,6 @@ const LabOrders = ({
     else setLoading(false);
   }, [appointmentId]);
 
-  // Normalize editingLabOrder to ensure patientId and appointmentId are strings (not undefined)
   const normalizedEditingLabOrder = editingLabOrder
     ? {
         ...editingLabOrder,
@@ -111,68 +116,22 @@ const LabOrders = ({
               Add Lab Order
             </button>
           </div>
+
           <h4 className="text-xl my-2">Lab Orders</h4>
 
           {loading ? (
-           <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
-                      {[...Array(4)].map((_, idx) => (
-                        <LabCardSkeleton key={idx} />
-                      ))}
-                    </div>
+            <div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
+              {[...Array(4)].map((_, idx) => (
+                <LabCardSkeleton key={idx} />
+              ))}
+            </div>
           ) : null}
+
           {!loading && labOrders.length === 0 ? (
             <p className="text-gray-600 text-center mt-20">
               No lab orders found for this appointment.
             </p>
           ) : (
-            // labOrders.map((order) => (
-            //   <div
-            //     className="bg-white border rounded-lg flex flex-col md:flex-row md:items-center justify-between py-4 px-4 md:px-8 mb-4"
-            //     key={order.id}
-            //   >
-            //     <div className="space-y-1 mb-2 md:mb-0 md:w-[300px] line-clamp-1">
-            //       <h3 className="text-sm md:text-base">{order.testName}</h3>
-            //       <h4 className="text-xs font-light">
-            //         {moment(order.createdAt).format("MMMM D, YYYY")}
-            //       </h4>
-            //     </div>
-
-            //     <div className="text-xs font-light mb-2 md:mb-0 md:w-[300px] line-clamp-1">
-            //       {order?.notes || "No notes"}
-            //     </div>
-
-            //     <div className="mb-2 md:mb-0">
-            //       <StatusBadge status={order.status || "pending"} />
-            //     </div>
-
-            //     <div className="flex flex-wrap gap-2">
-            //       <button
-            //         className="text-xs text-primary underline"
-            //         onClick={() => {
-            //           setSelectedLabOrder(order);
-            //           setModalOpen(true);
-            //         }}
-            //       >
-            //         View
-            //       </button>
-            //       <button
-            //         className="text-xs text-yellow-600 underline"
-            //         onClick={() => {
-            //           setEditingLabOrder(order);
-            //           setShowForm(true);
-            //         }}
-            //       >
-            //         Edit
-            //       </button>
-            //       <button
-            //         className="text-xs text-red-600 underline"
-            //         onClick={() => handleDelete(order.id)}
-            //       >
-            //         Delete
-            //       </button>
-            //     </div>
-            //   </div>
-            // ))
             <div className="grid gird-col-1 lg:grid-cols-3 2xl:grid-cols-4 gap-4 my-4">
               {labOrders.map((order) => (
                 <LabCard
@@ -200,6 +159,15 @@ const LabOrders = ({
               setModalOpen={setModalOpen}
             />
           )}
+
+          <ConfirmModal
+            open={confirmOpen}
+            onClose={() => setConfirmOpen(false)}
+            description={confirmMessage}
+            onConfirm={onConfirm}
+            loading={confirmLoading}
+            confirmText="Yes, Delete"
+          />
         </>
       )}
     </div>

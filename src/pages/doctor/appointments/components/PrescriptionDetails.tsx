@@ -14,6 +14,7 @@ import {
   medicationStatusOptions,
 } from "../../../../utils/dashboardUtils";
 import PaginationComponent from "../../../../components/common/PaginationComponent";
+import ConfirmModal from "../../../../components/modal/ConfirmModal";
 
 interface PrescriptionDetailsProps {
   appointmentId: string;
@@ -26,9 +27,14 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
   const [showForm, setShowForm] = useState<boolean>(false);
   const [editingPrescription, setEditingPrescription] = useState<IPrescription | null>(null);
   const [selectedPrescription, setSelectedPrescription] = useState<IPrescription | null>(null);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"prescriptions" | "medications">("prescriptions");
   const [selectedMedication, setSelectedMedication] = useState<IMedication | null>(null);
+  const [activeTab, setActiveTab] = useState<"prescriptions" | "medications">("prescriptions");
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [onConfirm, setOnConfirm] = useState<() => void>(() => {});
 
   const {
     medications,
@@ -51,28 +57,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
     setMedicationRequiresPrescription,
     setMedicationManufacturer,
     getMedications,
-  } = useMedications(doctorApi) as {
-    medications: IMedication[];
-    medicationsTotalPages: number;
-    medicationsPage: number;
-    medicationsLimit: number;
-    medicationsTotal: number;
-    medicationsLoading: boolean;
-    medicationSearch: string;
-    medicationCategory: string;
-    medicationDosageForm: string;
-    medicationStatus: string;
-    medicationRequiresPrescription: string;
-    medicationManufacturer: string;
-    setMedicationsPage: (page: number) => void;
-    setMedicationSearch: (search: string) => void;
-    setMedicationCategory: (category: string) => void;
-    setMedicationDosageForm: (dosageForm: string) => void;
-    setMedicationStatus: (status: string) => void;
-    setMedicationRequiresPrescription: (requires: string) => void;
-    setMedicationManufacturer: (manufacturer: string) => void;
-    getMedications: () => void;
-  };
+  } = useMedications(doctorApi);
 
   const fetchPrescriptions = async () => {
     setLoading(true);
@@ -87,9 +72,10 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!id) return;
-    if (window.confirm("Are you sure you want to delete this prescription?")) {
+  const confirmDelete = (id: string) => {
+    setConfirmMessage("Are you sure you want to delete this prescription?");
+    setOnConfirm(() => async () => {
+      setConfirmLoading(true);
       try {
         await doctorApi.deletePrescriptions(id);
         await fetchPrescriptions();
@@ -97,17 +83,23 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
         setSelectedPrescription(null);
       } catch (error) {
         console.error("Error deleting prescription:", error);
+      } finally {
+        setConfirmOpen(false);
+        setConfirmLoading(false);
       }
-    }
+    });
+    setConfirmOpen(true);
   };
 
-  const handleSelectMedication = async (med: IMedication) => {
-    const confirm = window.confirm(`Do you want to add ${med.name} as a prescription for the patient?`);
-    if (!confirm) return;
-
-    setSelectedMedication(med);
-    setShowForm(true);
-    setActiveTab("prescriptions");
+  const handleSelectMedication = (med: IMedication) => {
+    setConfirmMessage(`Do you want to add ${med.name} as a prescription for the patient?`);
+    setOnConfirm(() => async () => {
+      setSelectedMedication(med);
+      setShowForm(true);
+      setActiveTab("prescriptions");
+      setConfirmOpen(false);
+    });
+    setConfirmOpen(true);
   };
 
   useEffect(() => {
@@ -133,9 +125,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
         </button>
         <div className="flex gap-2">
           <button
-            className={`px-4 py-2 rounded-md text-sm ${
-              activeTab === "prescriptions" ? "bg-primary text-white" : "bg-gray-100"
-            }`}
+            className={`px-4 py-2 rounded-md text-sm ${activeTab === "prescriptions" ? "bg-primary text-white" : "bg-gray-100"}`}
             onClick={() => {
               setActiveTab("prescriptions");
               setSelectedMedication(null);
@@ -144,9 +134,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
             Prescriptions
           </button>
           <button
-            className={`px-4 py-2 rounded-md text-sm ${
-              activeTab === "medications" ? "bg-primary text-white" : "bg-gray-100"
-            }`}
+            className={`px-4 py-2 rounded-md text-sm ${activeTab === "medications" ? "bg-primary text-white" : "bg-gray-100"}`}
             onClick={() => {
               setActiveTab("medications");
               setShowForm(false);
@@ -170,18 +158,18 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
                     isRefillable: (editingPrescription as any).isRefillable ?? false,
                   }
                 : {
-                  medicationName: selectedMedication?.name ?? "",
+                    medicationName: selectedMedication?.name ?? "",
                     medicationId: "",
-                      dosage: "",
-                      frequency: "",
-                      duration: "",
-                      instructions: "",
-                      isRefillable: false,
-                      status: "active",
-                      _id:'',
-                      id:'',
-                      createdAt:''
-                }
+                    dosage: "",
+                    frequency: "",
+                    duration: "",
+                    instructions: "",
+                    isRefillable: false,
+                    status: "active",
+                    _id: "",
+                    id: "",
+                    createdAt: "",
+                  }
             }
             medicationId={!editingPrescription ? selectedMedication?.id ?? undefined : undefined}
             onSuccess={() => {
@@ -198,10 +186,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
           />
         ) : (
           <>
-            <div className="flex justify-between items-center mb-4">
-              <h4 className="text-xl">Prescriptions</h4>
-            </div>
-
+            <h4 className="text-xl mb-4">Prescriptions</h4>
             {loading ? (
               <p className="text-center text-gray-600 mt-20">Loading prescriptions...</p>
             ) : prescriptions.length === 0 ? (
@@ -220,12 +205,11 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
                       setEditingPrescription(prescription);
                       setShowForm(true);
                     }}
-                    onDelete={() => handleDelete(prescription.id)}
+                    onDelete={() => confirmDelete(prescription.id)}
                   />
                 ))}
               </div>
             )}
-
             {selectedPrescription && (
               <PrescriptionReportModal
                 data={selectedPrescription}
@@ -236,45 +220,52 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
           </>
         )
       ) : (
-        <>
-          <section>
-            <HeaderTab
-              title=""
-              showSearch={true}
-              onSearchChange={setMedicationSearch}
-              dropdowns={[
-                { label: "Status", options: medicationStatusOptions, value: medicationStatus, onChange: setMedicationStatus },
-                { label: "Category", options: medicationCategoryOptions, value: medicationCategory, onChange: setMedicationCategory },
-                { label: "Dosage Form", options: medicationDosageFormOptions, value: medicationDosageForm, onChange: setMedicationDosageForm },
-                { label: "Requires Rx", options: ["true", "false"], value: medicationRequiresPrescription, onChange: setMedicationRequiresPrescription },
-                { label: "Manufacturer", options: medicationManufacturerOptions, value: medicationManufacturer, onChange: setMedicationManufacturer },
-              ]}
-            />
+        <section>
+          <HeaderTab
+            title=""
+            showSearch={true}
+            onSearchChange={setMedicationSearch}
+            dropdowns={[
+              { label: "Status", options: medicationStatusOptions, value: medicationStatus, onChange: setMedicationStatus },
+              { label: "Category", options: medicationCategoryOptions, value: medicationCategory, onChange: setMedicationCategory },
+              { label: "Dosage Form", options: medicationDosageFormOptions, value: medicationDosageForm, onChange: setMedicationDosageForm },
+              { label: "Requires Rx", options: ["true", "false"], value: medicationRequiresPrescription, onChange: setMedicationRequiresPrescription },
+              { label: "Manufacturer", options: medicationManufacturerOptions, value: medicationManufacturer, onChange: setMedicationManufacturer },
+            ]}
+          />
 
-            {medicationsLoading ? (
-              <p className="text-center mt-10 text-gray-500">Loading medications...</p>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
-                {medications.map((med) => (
-                  <MedicationCard
-                    key={med?.id}
-                    medication={med}
-                    onAddPrescription={() => handleSelectMedication(med)}
-                    prescriptions={prescriptions}
-                  />
-                ))}
-              </div>
-            )}
-            <PaginationComponent
-              page={medicationsPage}
-              total={medicationsTotal}
-              limit={medicationsLimit}
-              totalPages={medicationsTotalPages ?? 1}
-              onPageChange={setMedicationsPage}
-            />
-          </section>
-        </>
+          {medicationsLoading ? (
+            <p className="text-center mt-10 text-gray-500">Loading medications...</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
+              {medications.map((med) => (
+                <MedicationCard
+                  key={med?.id}
+                  medication={med}
+                  onAddPrescription={() => handleSelectMedication(med)}
+                  prescriptions={prescriptions}
+                />
+              ))}
+            </div>
+          )}
+          <PaginationComponent
+            page={medicationsPage}
+            total={medicationsTotal}
+            limit={medicationsLimit}
+            totalPages={medicationsTotalPages ?? 1}
+            onPageChange={setMedicationsPage}
+          />
+        </section>
       )}
+
+      <ConfirmModal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        description={confirmMessage}
+        onConfirm={onConfirm}
+        loading={confirmLoading}
+        confirmText="Yes, Continue"
+      />
     </div>
   );
 };

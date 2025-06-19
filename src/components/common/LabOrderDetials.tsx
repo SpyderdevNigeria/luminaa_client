@@ -20,6 +20,7 @@ import LabRequestReportModal from "../modal/LabRequestReportModal";
 import { IoMdCloseCircle } from "react-icons/io";
 import { MdAddBox } from "react-icons/md";
 import { useToaster } from "./ToasterContext";
+import ConfirmModal from "../modal/ConfirmModal";
 interface LabOrderDetailsProps {
   data: {
     data: ILabOrder & {
@@ -61,9 +62,13 @@ const LabOrderDetails = ({
   const [isModalOpen, setModalOpen] = useState(false);
   const [note, setNote] = useState<string>("");
   const [activeTab, setActiveTab] = useState("Test");
- const [startLoading, setStartLoading] = useState(false)
-  const [submitResultLoading, setSubmitResultLoading] = useState(false)
-   const { showToast } = useToaster();
+  const [startLoading, setStartLoading] = useState(false);
+  const [submitResultLoading, setSubmitResultLoading] = useState(false);
+  const { showToast } = useToaster();
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [confrimLoading, setConfrimLoading] = useState(false);
   useEffect(() => {
     console.log(results?.id);
     if (results?.results) {
@@ -97,7 +102,7 @@ const LabOrderDetails = ({
     patient?.lastName ?? ""
   }`;
   const fullDoctorName = `${doctor?.firstName ?? ""} ${doctor?.lastName ?? ""}`;
- 
+
   const handNavigate = () => {
     if (type === "lab") {
       navigate(routeLinks?.lab?.labRequests);
@@ -138,7 +143,7 @@ const LabOrderDetails = ({
   };
 
   const handleSubmitResults = () => {
-    setSubmitResultLoading(true)
+    setSubmitResultLoading(true);
     const payload = {
       labTestOrderId: data.data.id,
       results: resultList,
@@ -149,15 +154,21 @@ const LabOrderDetails = ({
       handleSubmit(payload);
       console.log("Submitting payload:", payload);
     }
-      setSubmitResultLoading(false)
+    setSubmitResultLoading(false);
   };
 
   const handleStatusChange = () => {
-    setStartLoading(true)
-    if (confirm("Do you want to change the status to 'IN_PROGRESS'?")) {
-      handleStatus?.();
+    setStartLoading(true);
+    setConfirmMessage("Do you want to change the status to 'IN_PROGRESS'?");
+    setConfirmOpen(true);
+  };
+
+  const onConfirm = async () => {
+    setConfrimLoading(true);
+    if (handleStatus?.()) {
+      setConfirmOpen(false);
+      setStartLoading(false);
     }
-    setStartLoading(false)
   };
 
   return (
@@ -189,178 +200,188 @@ const LabOrderDetails = ({
           }`}
           onClick={() => setActiveTab("Results")}
         >
-        Results
+          Results
         </button>
       </div>
 
       {/* Tab Content */}
-   {activeTab === "Test" && (
-  <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
-    {/* Test Overview Section */}
-    <section className="lg:col-span-4">
-      <div className="bg-white rounded-lg  p-6 space-y-6">
-        <h2 className="text-2xl font-semibold text-primary">Test Overview</h2>
-        <div className="grid grid-cols-2 gap-4">
-          <InfoLabel label={testName} info="Test Name" />
-          <InfoLabel
-            label={status || "pending"}
-            info="Test Status"
-            style="bg-blue-100 text-blue-700 py-1 px-2 rounded-sm"
-          />
-          <InfoLabel
-            label={priority}
-            info="Test Priority"
-            style={`py-1 px-2 rounded-sm ${
-              priority === "high"
-                ? "bg-red-100 text-red-600"
-                : priority === "medium"
-                ? "bg-yellow-100 text-yellow-600"
-                : "bg-green-100 text-green-700"
-            }`}
-          />
-          <InfoLabel
-            label={
-              appointment?.date
-                ? `${moment(appointment.date).format("MMM D, YYYY")} at ${moment(
-                    appointment.date
-                  ).format("h:mm A")}`
-                : "N/A"
-            }
-            info="Appointment Date"
-          />
-          <InfoLabel label={appointment?.status} info="Appointment Status" />
-          <InfoLabel
-            label={moment(createdAt).format("MMM D, YYYY h:mm A")}
-            info="Requested On"
-          />
-          <InfoLabel
-            label={collectedSample ? "Yes" : "No"}
-            info="Sample Collected"
-          />
-        </div>
+      {activeTab === "Test" && (
+        <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
+          {/* Test Overview Section */}
+          <section className="lg:col-span-4">
+            <div className="bg-white rounded-lg  p-6 space-y-6">
+              <h2 className="text-2xl font-semibold text-primary">
+                Test Overview
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <InfoLabel label={testName} info="Test Name" />
+                <InfoLabel
+                  label={status || "pending"}
+                  info="Test Status"
+                  style="bg-blue-100 text-blue-700 py-1 px-2 rounded-sm"
+                />
+                <InfoLabel
+                  label={priority}
+                  info="Test Priority"
+                  style={`py-1 px-2 rounded-sm ${
+                    priority === "high"
+                      ? "bg-red-100 text-red-600"
+                      : priority === "medium"
+                      ? "bg-yellow-100 text-yellow-600"
+                      : "bg-green-100 text-green-700"
+                  }`}
+                />
+                <InfoLabel
+                  label={
+                    appointment?.date
+                      ? `${moment(appointment.date).format(
+                          "MMM D, YYYY"
+                        )} at ${moment(appointment.date).format("h:mm A")}`
+                      : "N/A"
+                  }
+                  info="Appointment Date"
+                />
+                <InfoLabel
+                  label={appointment?.status}
+                  info="Appointment Status"
+                />
+                <InfoLabel
+                  label={moment(createdAt).format("MMM D, YYYY h:mm A")}
+                  info="Requested On"
+                />
+                <InfoLabel
+                  label={collectedSample ? "Yes" : "No"}
+                  info="Sample Collected"
+                />
+              </div>
 
-        <div>
-          <h3 className="text-lg font-medium text-gray-800 mb-4">
-            Status History
-          </h3>
-          <ol className="relative border-l-2 border-gray-300 ml-4">
-            {statusHistory?.map((entry, index) => (
-              <li key={index} className="mb-8 ml-6">
-                <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full ring-8 ring-white">
-                  <span className="w-2.5 h-2.5 bg-primary rounded-full" />
-                </span>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-sm font-semibold text-gray-800">
-                    {entry.status}
-                  </span>
-                  <span className="px-2 py-0.5 text-xs rounded-full bg-blue-50 text-blue-700 border border-blue-200">
-                    {moment(entry.updatedAt).format("MMM D, YYYY")}
-                  </span>
-                </div>
-                <p className="text-xs text-gray-500">
-                  {moment(entry.updatedAt).format("h:mm A")} by{" "}
-                  <span className="font-medium text-gray-700">
-                    {entry.updatedBy}
-                  </span>
-                </p>
-              </li>
-            ))}
-          </ol>
+              <div>
+                <h3 className="text-lg font-medium text-gray-800 mb-4">
+                  Status History
+                </h3>
+                <ol className="relative border-l-2 border-gray-300 ml-4">
+                  {statusHistory?.map((entry, index) => (
+                    <li key={index} className="mb-8 ml-6">
+                      <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full ring-8 ring-white">
+                        <span className="w-2.5 h-2.5 bg-primary rounded-full" />
+                      </span>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm font-semibold text-gray-800">
+                          {entry.status}
+                        </span>
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                          {moment(entry.updatedAt).format("MMM D, YYYY")}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-500">
+                        {moment(entry.updatedAt).format("h:mm A")} by{" "}
+                        <span className="font-medium text-gray-700">
+                          {entry.updatedBy}
+                        </span>
+                      </p>
+                    </li>
+                  ))}
+                </ol>
 
-          {type === "lab" && !collectedSample && (
-            <div className="flex justify-end pt-4">
-              <button
-                className="bg-primary hover:bg-primary/90 text-white text-sm px-6 py-2 rounded-lg transition duration-200"
-                onClick={handleStatusChange}
-                disabled={startLoading}
-              >
-                Start Test
-              </button>
+                {type === "lab" && !collectedSample && (
+                  <div className="flex justify-end pt-4">
+                    <button
+                      className="bg-primary hover:bg-primary/90 text-white text-sm px-6 py-2 rounded-lg transition duration-200"
+                      onClick={handleStatusChange}
+                      disabled={startLoading}
+                    >
+                      Start Test
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-        </div>
-      </div>
-    </section>
+          </section>
 
-    {/* Patient Info */}
-    <section className="lg:col-span-3 space-y-6">
-      <div className="bg-white rounded-lg  p-6">
-        <h2 className="text-xl font-semibold mb-4 text-primary">Patient Info</h2>
-        <div className="flex items-center gap-4 mb-4">
-          <img
-            src={UserImage}
-            alt="avatar"
-            className="w-16 h-16 rounded-full border"
+          {/* Patient Info */}
+          <section className="lg:col-span-3 space-y-6">
+            <div className="bg-white rounded-lg  p-6">
+              <h2 className="text-xl font-semibold mb-4 text-primary">
+                Patient Info
+              </h2>
+              <div className="flex items-center gap-4 mb-4">
+                <img
+                  src={UserImage}
+                  alt="avatar"
+                  className="w-16 h-16 rounded-full border"
+                />
+                <p className="font-semibold text-base capitalize">
+                  {fullPatientName}
+                </p>
+              </div>
+              <InfoLabel label={patient?.email ?? "N/A"} info="Email" />
+            </div>
+
+            {/* Doctor Info */}
+            <div className="bg-white rounded-lg  p-6">
+              <h2 className="text-xl font-semibold mb-4 text-primary">
+                Doctor Info
+              </h2>
+              <div className="flex items-center gap-4 mb-4">
+                <img
+                  src={DoctrImage}
+                  alt="avatar"
+                  className="w-16 h-16 rounded-full border"
+                />
+                <p className="font-semibold text-base capitalize">
+                  {fullDoctorName}
+                </p>
+              </div>
+              <InfoLabel label={doctor?.specialty ?? "N/A"} info="Specialty" />
+            </div>
+          </section>
+
+          {/* Doctor Note */}
+          <section className="lg:col-span-7">
+            <div className="bg-white rounded-lg  p-6">
+              <h3 className="text-xl font-semibold text-primary mb-2">
+                Doctor's Note
+              </h3>
+              <article className="text-base text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-md border border-gray-100">
+                {notes || "No note provided."}
+              </article>
+            </div>
+          </section>
+
+          {/* PDF Button */}
+          <section className="lg:col-span-7 flex justify-end">
+            <button
+              className=" bg-primary text-white text-sm py-3 px-4 rounded-lg shadow hover:bg-primary/90 transition"
+              onClick={() => setModalOpen(!isModalOpen)}
+            >
+              View & Download PDF
+            </button>
+          </section>
+
+          {/* Modal */}
+          <LabRequestReportModal
+            results={{
+              testName,
+              notes: notes ?? "",
+              priority: priority ?? "",
+              status: status ?? "",
+              collectedSample: collectedSample ?? false,
+              patient,
+              doctor,
+              createdAt,
+            }}
+            isModalOpen={isModalOpen}
+            setModalOpen={setModalOpen}
           />
-          <p className="font-semibold text-base capitalize">
-            {fullPatientName}
-          </p>
         </div>
-        <InfoLabel label={patient?.email ?? "N/A"} info="Email" />
-      </div>
-
-      {/* Doctor Info */}
-      <div className="bg-white rounded-lg  p-6">
-        <h2 className="text-xl font-semibold mb-4 text-primary">Doctor Info</h2>
-        <div className="flex items-center gap-4 mb-4">
-          <img
-            src={DoctrImage}
-            alt="avatar"
-            className="w-16 h-16 rounded-full border"
-          />
-          <p className="font-semibold text-base capitalize">
-            {fullDoctorName}
-          </p>
-        </div>
-        <InfoLabel label={doctor?.specialty ?? "N/A"} info="Specialty" />
-      </div>
-    </section>
-
-    {/* Doctor Note */}
-    <section className="lg:col-span-7">
-      <div className="bg-white rounded-lg  p-6">
-        <h3 className="text-xl font-semibold text-primary mb-2">Doctor's Note</h3>
-        <article className="text-base text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-md border border-gray-100">
-          {notes || "No note provided."}
-        </article>
-      </div>
-    </section>
-
-    {/* PDF Button */}
-    <section className="lg:col-span-2">
-      <button
-        className=" bg-primary text-white text-sm py-3 px-4 rounded-lg shadow hover:bg-primary/90 transition"
-        onClick={() => setModalOpen(!isModalOpen)}
-      >
-        View & Download PDF
-      </button>
-    </section>
-
-    {/* Modal */}
-    <LabRequestReportModal
-      results={{
-        testName,
-        notes: notes ?? "",
-        priority: priority ?? "",
-        status: status ?? "",
-        collectedSample: collectedSample ?? false,
-        patient,
-        doctor,
-        createdAt,
-      }}
-      isModalOpen={isModalOpen}
-      setModalOpen={setModalOpen}
-    />
-  </div>
-)}
-
+      )}
 
       {activeTab === "Results" && (
         <div>
           {/* Test Results Section */}
           <div className="mt-6 ">
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
-             Results
+              Results
             </h2>
 
             {isLoadingResults ? (
@@ -389,7 +410,7 @@ const LabOrderDetails = ({
                       className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
                     />
                   </div>
-               <div className="w-full">
+                  <div className="w-full">
                     <label htmlFor="unit"> Unit</label>
                     <input
                       value={result.unit}
@@ -397,7 +418,7 @@ const LabOrderDetails = ({
                       className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
                     />
                   </div>
-              <div className="w-full">
+                  <div className="w-full">
                     <label htmlFor="referenceRange"> Reference Range</label>
                     <input
                       value={result.referenceRange}
@@ -406,12 +427,12 @@ const LabOrderDetails = ({
                     />
                   </div>
                   {type === "lab" && (
-                      <button
-                        className="text-red-500 "
-                        onClick={() => removeResult(index)}
-                      >
-                       <IoMdCloseCircle className="text-3xl md:mt-8" />
-                      </button>
+                    <button
+                      className="text-red-500 "
+                      onClick={() => removeResult(index)}
+                    >
+                      <IoMdCloseCircle className="text-3xl md:mt-8" />
+                    </button>
                   )}
                 </div>
               ))
@@ -420,55 +441,46 @@ const LabOrderDetails = ({
             {/* Add New Result */}
             {type === "lab" && (
               <section>
-                <div  className="flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
-
-             
-                    <input
-                      type="text"
-                      name="testName"
-                      placeholder="Test Name"
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
+                  <input
+                    type="text"
+                    name="testName"
+                    placeholder="Test Name"
                     className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
-                      value={newResult.testName}
-                      onChange={handleNewResultChange}
-                    />
+                    value={newResult.testName}
+                    onChange={handleNewResultChange}
+                  />
 
-           
-                    <input
-                      type="text"
-                      name="result"
-                      placeholder="Result"
-                      className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
-                      value={newResult.result}
-                      onChange={handleNewResultChange}
-                    />
+                  <input
+                    type="text"
+                    name="result"
+                    placeholder="Result"
+                    className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
+                    value={newResult.result}
+                    onChange={handleNewResultChange}
+                  />
 
-        
-                    <input
-                      type="text"
-                      name="unit"
-                      placeholder="Unit"
-                      className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
-                      value={newResult.unit}
-                      onChange={handleNewResultChange}
-                    />
+                  <input
+                    type="text"
+                    name="unit"
+                    placeholder="Unit"
+                    className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
+                    value={newResult.unit}
+                    onChange={handleNewResultChange}
+                  />
 
-        
-                    <input
-                      type="text"
-                      name="referenceRange"
-                      placeholder="Reference Range"
-                      className="w-full p-3 form-input   focus:outline-primary text-sm rounded-sm"
-                      value={newResult.referenceRange}
-                      onChange={handleNewResultChange}
-                    />
+                  <input
+                    type="text"
+                    name="referenceRange"
+                    placeholder="Reference Range"
+                    className="w-full p-3 form-input   focus:outline-primary text-sm rounded-sm"
+                    value={newResult.referenceRange}
+                    onChange={handleNewResultChange}
+                  />
 
-         
-                    <button
-                      className=""
-                      onClick={addNewResult}
-                    >
+                  <button className="" onClick={addNewResult}>
                     <MdAddBox className="text-3xl text-primary" />
-                    </button>
+                  </button>
                 </div>
               </section>
             )}
@@ -484,37 +496,44 @@ const LabOrderDetails = ({
             </section>
           )}
 
-                  <div>
-          {/* Result Note */}
-          <section className="lg:col-span-7">
-            <div className="w-full mt-8 space-y-4 rounded-lg p-4">
-              <p className="text-base flex items-center gap-2">
-               Result Note
-              </p>
-              <textarea
-                className="w-full p-3 form-input form-input focus:outline-primary text-sm rounded-sm"
-                rows={7}
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                disabled={type !== "lab"}
-              />
-              {type === "lab" && (
-                <div className="flex justify-end">
-                  <button
-                    onClick={handleSubmitResults}
-                    className="bg-primary text-white py-2 px-4 rounded-lg"
-                    disabled={submitResultLoading}
-                  >
-                   {submitResultLoading ? "Save Results..." : "Save Note & Results" } 
-                  </button>
-                </div>
-              )}
-            </div>
-          </section>
-        </div>
+          <div>
+            {/* Result Note */}
+            <section className="lg:col-span-7">
+              <div className="w-full mt-8 space-y-4 rounded-lg p-4">
+                <p className="text-base flex items-center gap-2">Result Note</p>
+                <textarea
+                  className="w-full p-3 form-input form-input focus:outline-primary text-sm rounded-sm"
+                  rows={7}
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  disabled={type !== "lab"}
+                />
+                {type === "lab" && (
+                  <div className="flex justify-end">
+                    <button
+                      onClick={handleSubmitResults}
+                      className="bg-primary text-white py-2 px-4 rounded-lg"
+                      disabled={submitResultLoading}
+                    >
+                      {submitResultLoading
+                        ? "Save Results..."
+                        : "Save Note & Results"}
+                    </button>
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
         </div>
       )}
 
+      <ConfirmModal
+        open={confirmOpen}
+        description={confirmMessage}
+        onConfirm={onConfirm}
+        onClose={() => setConfirmOpen(false)}
+        loading={confrimLoading}
+      />
     </div>
   );
 };

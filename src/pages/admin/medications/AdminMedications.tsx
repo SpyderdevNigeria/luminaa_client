@@ -16,6 +16,7 @@ import {
   medicationManufacturerOptions,
 } from "../../../utils/dashboardUtils";
 import { useToaster } from "../../../components/common/ToasterContext";
+import ConfirmModal from "../../../components/modal/ConfirmModal";
 
 function AdminMedications() {
   const {
@@ -45,6 +46,13 @@ function AdminMedications() {
   const [editMedication, setEditMedication] = useState<any>(null);
   const [viewMedication, setViewMedication] = useState<any>(null);
   const { showToast } = useToaster();
+
+  // ConfirmModal states
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [onConfirm, setOnConfirm] = useState<() => void>(() => {});
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
   useEffect(() => {
     getMedications();
   }, [
@@ -62,34 +70,44 @@ function AdminMedications() {
     setShowForm(true);
   };
 
-  const handleDelete = async (medicationId: string, medication:any) => {
-    try {
-       const confirmed = window.confirm(`Are you sure you want to delete this medication ${medication?.name}`);
-
-  if (!confirmed) return;
-      await AdminApi.deleteMedication(medicationId);
-      showToast(`Medication ${medicationId} deleted successfully`, 'success');
-      getMedications();
-    } catch (error) {
-      console.error("Deleting medication with ID:", medicationId);
-      showToast(`Deleting medication with ID: ${medicationId} failed`, "error");
-    }
+  const handleDelete = (medicationId: string, medication: any) => {
+    setConfirmMessage(`Are you sure you want to delete the medication "${medication?.name}"?`);
+    setOnConfirm(() => async () => {
+      setConfirmLoading(true);
+      try {
+        await AdminApi.deleteMedication(medicationId);
+        showToast(`Medication "${medication?.name}" deleted successfully`, "success");
+        getMedications();
+      } catch (error) {
+        console.error("Error deleting medication:", error);
+        showToast(`Failed to delete "${medication?.name}"`, "error");
+      } finally {
+        setConfirmLoading(false);
+        setConfirmOpen(false);
+      }
+    });
+    setConfirmOpen(true);
   };
 
-const toggleVisibility = async (id: string, medication:any) => {
-  const action = medication?.isHidden ? "make this medication visible" : "hide this medication";
-  const confirmed = window.confirm(`Are you sure you want to ${action}?`);
-
-  if (!confirmed) return;
-
-  try {
-    await AdminApi.updateMedicationVisibility(id);
-    getMedications();
-    showToast(`Medication ${medication?.name} updated successfully`, 'success');
-  } catch (err) {
-    console.error("Error toggling visibility:", err);
-  }
-};
+  const toggleVisibility = (id: string, medication: any) => {
+    const action = medication?.isHidden ? "make this medication visible" : "hide this medication";
+    setConfirmMessage(`Are you sure you want to ${action}?`);
+    setOnConfirm(() => async () => {
+      setConfirmLoading(true);
+      try {
+        await AdminApi.updateMedicationVisibility(id);
+        showToast(`Medication "${medication.name}" updated successfully`, "success");
+        getMedications();
+      } catch (err) {
+        console.error("Error toggling visibility:", err);
+        showToast(`Failed to update visibility`, "error");
+      } finally {
+        setConfirmLoading(false);
+        setConfirmOpen(false);
+      }
+    });
+    setConfirmOpen(true);
+  };
 
   const columns: Column<any>[] = [
     { key: "name", label: "Name" },
@@ -112,17 +130,13 @@ const toggleVisibility = async (id: string, medication:any) => {
     {
       key: "isHidden",
       label: "Hidden",
-      render: (m) => <p>{m.isHidden ? "hidden" : "visible"}</p>,
+      render: (m) => <p>{m.isHidden ? "Hidden" : "Visible"}</p>,
     },
     {
       key: "actions",
       label: "Actions",
       render: (medication) => (
-        <Dropdown
-          showArrow={false}
-          triggerLabel=""
-          triggerIcon={<HiOutlineDotsVertical />}
-        >
+        <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
           <ul className="space-y-2 text-sm">
             <li
               onClick={() => toggleVisibility(medication.id, medication)}
@@ -154,7 +168,6 @@ const toggleVisibility = async (id: string, medication:any) => {
     },
   ];
 
-  // Show Create/Edit form
   if (showForm) {
     return (
       <AdminMedicationsCreate
@@ -172,36 +185,32 @@ const toggleVisibility = async (id: string, medication:any) => {
     );
   }
 
-  // Show View Details
   if (viewMedication) {
     return (
       <div>
-            <button
+        <button
           onClick={() => setViewMedication(null)}
           className="text-sm px-4 py-2 rounded text-primary"
         >
           ← Back to Medications
         </button>
-
-              <div className="space-y-4 container-bd">
-        <div className="mt-4 space-y-2">
-          <h2 className="text-xl font-semibold">{viewMedication.name}</h2>
-          <p><strong>Generic Name:</strong> {viewMedication.genericName}</p>
-          <p><strong>Manufacturer:</strong> {viewMedication.manufacturer}</p>
-          <p><strong>Dosage Form:</strong> {viewMedication.dosageForm}</p>
-          <p><strong>Strength:</strong> {viewMedication.strength}</p>
-          <p><strong>Category:</strong> {viewMedication.category}</p>
-          <p><strong>Price:</strong> ₦{viewMedication.price}</p>
-          <p><strong>Prescription Required:</strong> {viewMedication.requiresPrescription ? "Yes" : "No"}</p>
-          <div><strong>Status:</strong> <StatusBadge status={viewMedication.status} /></div>
-          <p><strong>Visibility:</strong> {viewMedication.isHidden ? "Hidden" : "Visible"}</p>
+        <div className="space-y-4 container-bd">
+          <div className="mt-4 space-y-2">
+            <h2 className="text-xl font-semibold">{viewMedication.name}</h2>
+            <p><strong>Generic Name:</strong> {viewMedication.genericName}</p>
+            <p><strong>Manufacturer:</strong> {viewMedication.manufacturer}</p>
+            <p><strong>Dosage Form:</strong> {viewMedication.dosageForm}</p>
+            <p><strong>Strength:</strong> {viewMedication.strength}</p>
+            <p><strong>Category:</strong> {viewMedication.category}</p>
+            <p><strong>Price:</strong> ₦{viewMedication.price}</p>
+            <p><strong>Prescription Required:</strong> {viewMedication.requiresPrescription ? "Yes" : "No"}</p>
+            <div><strong>Status:</strong> <StatusBadge status={viewMedication.status} /></div>
+            <p><strong>Visibility:</strong> {viewMedication.isHidden ? "Hidden" : "Visible"}</p>
+          </div>
         </div>
       </div>
-      </div>
-
     );
   }
-
 
   return (
     <div className="space-y-4">
@@ -269,6 +278,15 @@ const toggleVisibility = async (id: string, medication:any) => {
             />
           )}
         </div>
+
+        <ConfirmModal
+          open={confirmOpen}
+          onClose={() => setConfirmOpen(false)}
+          description={confirmMessage}
+          confirmText="Yes, Confirm"
+          onConfirm={onConfirm}
+          loading={confirmLoading}
+        />
       </section>
     </div>
   );
