@@ -505,7 +505,7 @@ const LabOrderDetails = ({
                 <section className="lg:col-span-7">
                   <div className="w-full mt-8 space-y-4 rounded-lg">
                     <p className="text-base flex items-center gap-2">
-                      Result Note
+                      Interpretation
                     </p>
                     <textarea
                       className="w-full p-3 form-input form-input focus:outline-primary text-sm rounded-sm"
