@@ -18,7 +18,7 @@ const defaultData: IPrescription = {
   frequency: "",
   duration: "",
   instructions: "",
-  isRefillable: 'false',
+  isRefillable: false,
   status: "active",
   _id:'',
   id:'',
@@ -61,9 +61,9 @@ const PrescriptionsForm = ({
     try {
       let response;
       if (initialData?.id) {
-        response = await doctorApi.updatePrescriptions(initialData.id, formData);
+        response = await doctorApi.updatePrescriptions(initialData.id, {...formData, isRefillable : formData.isRefillable == true ? true : false });
       } else {
-        response = await doctorApi.createPrescriptions({ ...formData, appointmentId, medicationId, isRefillable : formData.isRefillable == 'true' ? true : false });
+        response = await doctorApi.createPrescriptions({ ...formData, appointmentId, medicationId, isRefillable : formData.isRefillable === true ? true : false });
       }
       setMessage({ message: response?.data?.message || "Request successful", type: "success" });
       if (onSuccess) onSuccess();
@@ -79,7 +79,7 @@ const PrescriptionsForm = ({
     }
   };
 
-  function stringToBoolean(value: string) {
+  function stringToBoolean(value: string | boolean) {
   if (value === "true") return true;
   if (value === "false") return false;
 }

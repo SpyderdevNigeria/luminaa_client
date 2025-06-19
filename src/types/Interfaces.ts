@@ -16,7 +16,7 @@ export interface IPrescription {
   status:string;
   instructions:string;
   createdAt: string;
-  isRefillable:string;
+  isRefillable:string | boolean;
 }
 
 export interface IUser {

@@ -11,6 +11,7 @@ type StatusBadgeProps = {
     | "success"
     | "failed"
     | "error"
+    | "scheduled"
     | string;
 };
 
@@ -37,6 +38,11 @@ const statusStyles: Record<string, { bg: string; dot: string; text: string }> =
       text: "text-red-400",
     },
     inprogress: {
+      bg: "bg-yellow-50",
+      dot: "bg-yellow-400",
+      text: "text-yellow-500",
+    },
+       scheduled: {
       bg: "bg-yellow-50",
       dot: "bg-yellow-400",
       text: "text-yellow-500",

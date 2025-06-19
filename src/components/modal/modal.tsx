@@ -24,9 +24,9 @@ const Modal = ({
 }: ModalProps) => {
   return (
     <AlertDialog.Root open={open} onOpenChange={onClose}>
-      <AlertDialog.Overlay className="modal_overlay z-70" />
+      <AlertDialog.Overlay className="modal_overlay z-70 " />
 
-      <AlertDialog.Content className={`modal_content z-80 ${style}`}>
+      <AlertDialog.Content className={`modal_content z-80  ${style}`}>
         <div className="bg-white p-6 rounded-lg">
           {!hideCancel && (
             <div className="flex justify-between items-center">
@@ -35,7 +35,7 @@ const Modal = ({
               </AlertDialog.Title>
             </div>
           )}
-          <div className="w-full py-2">{children}</div>
+          <div className="w-full py-2 max-h-[500px] overflow-y-scroll">{children}</div>
           <AlertDialog.Description></AlertDialog.Description>
 
           {!hideCancel && (

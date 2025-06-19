@@ -9,7 +9,7 @@ import MedicalReportModal from "../../../components/modal/DiagnosisReportModal";
 import PrescriptionCard from "../../../components/common/PrescriptionCard";
 import PrescriptionDetailsModal from "../../../components/modal/PrescriptionDetailsModal";
 import { getFormattedDateTime } from "../../../utils/dashboardUtils";
-
+import { IPrescription } from "../../../types/Interfaces";
 interface Diagnosis {
   id?: string;
   primaryDiagnosis: string;
@@ -22,29 +22,18 @@ interface Diagnosis {
   createdAt: string;
 }
 
-interface Prescription {
-  id: string;
-  medicationName: string;
-  dosage: string;
-  frequency: string;
-  duration: string;
-  instructions: string;
-  createdAt: string;
-  _id?: string;
-  isRefillable: string;
-}
 
 const ConsultationView = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<"general" | "diagnosis" | "prescription">("general");
   const [appointment, setAppointment] = useState<any>(null);
   const [diagnosis, setDiagnosis] = useState<Diagnosis[]>([]);
-  const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
+  const [prescriptions, setPrescriptions] = useState<IPrescription[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<Diagnosis | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedPrescription, setSelectedPrescription] = useState<Prescription | null>(null);
+  const [selectedPrescription, setSelectedPrescription] = useState<IPrescription | null>(null);
   const [isModalOpenPrescription, setModalOpenPrescription] = useState(false);
 
   useEffect(() => {

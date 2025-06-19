@@ -192,6 +192,12 @@ export const navItemsAdmin = [
     icon: RxDashboard,
     to: routeLinks?.admin?.dashboard,
   },
+      {
+    label: "Patients",
+    title: "Patients",
+    icon: FaUserInjured ,
+    to: routeLinks?.admin?.patients,
+  },
   {
     label: "Doctors",
     title: "Doctors",
@@ -204,12 +210,7 @@ export const navItemsAdmin = [
     icon: GiTestTubes ,
     to: routeLinks?.admin?.lab,
   },
-    {
-    label: "Patients",
-    title: "Patients",
-    icon: FaUserInjured ,
-    to: routeLinks?.admin?.patients,
-  },
+
   {
     label: "Pharmacists",
     title: "Pharmacists",
@@ -257,6 +258,12 @@ export const navItemsSuperAdmin = [
     icon: RxDashboard,
     to: routeLinks?.superAdmin?.dashboard,
   },
+      {
+    label: "Patients",
+    title: "Patients",
+    icon: FaUserInjured ,
+    to: routeLinks?.superAdmin?.patients,
+  },
   {
     label: "Doctors",
     title: "Doctors",
@@ -269,12 +276,7 @@ export const navItemsSuperAdmin = [
     icon: GiTestTubes ,
     to: routeLinks?.superAdmin?.lab,
   },
-    {
-    label: "Patients",
-    title: "Patients",
-    icon: FaUserInjured ,
-    to: routeLinks?.superAdmin?.patients,
-  },
+
   {
     label: "Pharmacists",
     title: "Pharmacists",

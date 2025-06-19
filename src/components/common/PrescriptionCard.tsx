@@ -3,17 +3,11 @@ import { PiPillDuotone } from "react-icons/pi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
 import Dropdown from "../dropdown/dropdown";
-interface Prescription {
-  _id?: string;
-  medicationName?: string;
-  createdAt?: string;
-  duration?: string;
-  frequency?: string;
-  isRefillable?:string;
-}
+import { IPrescription } from "../../types/Interfaces";
+
 
 interface PrescriptionCardProps {
-  prescription: Prescription;
+  prescription: IPrescription;
   onView?: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
