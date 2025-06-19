@@ -179,7 +179,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
               onClick={prevStep}
               className="text-primary cursor-pointer"
             >
-              Back
+             ← Back
             </button>
           <h5 className="mb-4 text-lg">Available Doctors</h5>
 
