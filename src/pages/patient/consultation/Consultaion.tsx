@@ -4,6 +4,8 @@ import HeaderTab from "../../../components/common/HeaderTab";
 import PatientApi from "../../../api/PatientApi";
 import useAppointments from "../../../hooks/useAppointments";
 import { AppointmentCardSkeleton } from "../../../components/skeleton/SkeletonCards";
+import { Link } from "react-router-dom";
+import routeLinks from "../../../utils/routes";
 
 function Consultaion() {
   const {
@@ -40,8 +42,18 @@ function Consultaion() {
 
   return (
     <div>
+      <div className="flex justify-between items-center mb-8">
+              <h1 className="text-2xl font-semibold">Consultations</h1>
+              <Link
+                className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
+                to={routeLinks?.patient?.appointment}
+              >
+
+                Book An Appointment
+              </Link>
+            </div>
       <HeaderTab
-        title="Appointment"
+        title=""
         showSearch={false}
         dateFrom={dataFrom}
         onDateFromChange={setDataFrom}

@@ -174,6 +174,13 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
     <div>
       {!selectedDoctor ? (
         <section className="mt-4">
+
+         <button
+              onClick={prevStep}
+              className="text-primary cursor-pointer"
+            >
+              Back
+            </button>
           <h5 className="mb-4 text-lg">Available Doctors</h5>
 
           {/* Search and Filter Controls */}
