@@ -13,6 +13,7 @@ function LabTestRequestsDetails() {
   const [isLoadingResults, setLoadingResults] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
   const [resultError, setResultError] = useState<string | null>(null);
+  const [loadingStatus, setLoadingStatus] = useState(false)
   const { showToast } = useToaster();
   const fetchOrder = async () => {
     try {
@@ -86,6 +87,7 @@ function LabTestRequestsDetails() {
   };
 
   const handleStatus = async () => {
+    setLoadingStatus(true)
     try {
       const data = await LabApi.updateLabOrderStatus(id);
       if (data) {
@@ -96,6 +98,7 @@ function LabTestRequestsDetails() {
       console.error(err);
       setOrderError("Failed to update lab order status.");
     }
+    setLoadingStatus(false)
   };
 
   return (
@@ -111,6 +114,7 @@ function LabTestRequestsDetails() {
         isLoadingResults={isLoadingResults}
         resultError={resultError}
         updateDocuments={fetchResults}
+        loadingStatus={loadingStatus}
       />
     </div>
   );

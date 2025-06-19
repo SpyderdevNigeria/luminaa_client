@@ -10,6 +10,7 @@ import {
   IResult,
   IResults,
 } from "../../types/Interfaces";
+import { FaTrashCan } from "react-icons/fa6";
 import { BiArrowBack } from "react-icons/bi";
 import DoctrImage from "../../assets/images/doctor/doctor.png";
 import { useEffect, useState } from "react";
@@ -17,7 +18,6 @@ import routeLinks from "../../utils/routes";
 import { TestDetailsSkeleton } from "../skeleton/SkeletonCards";
 import LabOrderDocuments from "./LabOrderDocuments";
 import LabRequestReportModal from "../modal/LabRequestReportModal";
-import { IoMdCloseCircle } from "react-icons/io";
 import { MdAddBox } from "react-icons/md";
 import { useToaster } from "./ToasterContext";
 import ConfirmModal from "../modal/ConfirmModal";
@@ -38,6 +38,7 @@ interface LabOrderDetailsProps {
   resultError?: string | null;
   isLoadingResults?: boolean;
   updateDocuments?: () => void;
+  loadingStatus?:boolean
 }
 
 const LabOrderDetails = ({
@@ -51,6 +52,7 @@ const LabOrderDetails = ({
   resultError,
   isLoadingResults,
   updateDocuments,
+  loadingStatus,
 }: LabOrderDetailsProps) => {
   const [resultList, setResultList] = useState<IResult[]>([]);
   const [newResult, setNewResult] = useState<IResult>({
@@ -159,16 +161,14 @@ const LabOrderDetails = ({
 
   const handleStatusChange = () => {
     setStartLoading(true);
-    setConfirmMessage("Do you want to change the status to 'IN_PROGRESS'?");
+    setConfirmMessage("Do you want to begin this Test?");
     setConfirmOpen(true);
   };
 
   const onConfirm = async () => {
-    setConfrimLoading(true);
-    if (handleStatus?.()) {
-      setConfirmOpen(false);
-      setStartLoading(false);
-    }
+    setConfrimLoading(loadingStatus ?? true);
+     handleStatus?.()
+      setConfirmOpen(loadingStatus ?? false);
   };
 
   return (
@@ -337,18 +337,18 @@ const LabOrderDetails = ({
           </section>
 
           {/* Doctor Note */}
-             {type !== "patient" && 
-          <section className="lg:col-span-7">
-            <div className="bg-white rounded-lg  p-6">
-              <h3 className="text-xl font-semibold text-primary mb-2">
-                Doctor's Note
-              </h3>
-              <article className="text-base text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-md border border-gray-100">
-                {notes || "No note provided."}
-              </article>
-            </div>
-          </section>
-}
+          {type !== "patient" && (
+            <section className="lg:col-span-7">
+              <div className="bg-white rounded-lg  p-6">
+                <h3 className="text-xl font-semibold text-primary mb-2">
+                  Doctor's Note
+                </h3>
+                <article className="text-base text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-md border border-gray-100">
+                  {notes || "No note provided."}
+                </article>
+              </div>
+            </section>
+          )}
 
           {/* PDF Button */}
           <section className="lg:col-span-7 flex justify-end">
@@ -380,152 +380,177 @@ const LabOrderDetails = ({
 
       {activeTab === "Results" && (
         <div>
-          {/* Test Results Section */}
-          <div className="mt-6 ">
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">
-              Results
-            </h2>
+          {collectedSample ? (
+            <div>
+              {/* Test Results Section */}
+              <div className="mt-6 ">
+                <h2 className="text-xl font-semibold text-gray-700 mb-2">
+                  Results
+                </h2>
 
-            {isLoadingResults ? (
-              <p>Loading results...</p>
-            ) : resultError ? (
-              <div>{resultError}</div>
-            ) : (
-              resultList.map((result, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col md:flex-row items-center justify-between gap-4 mt-2"
-                >
-                  <div className="w-full">
-                    <label htmlFor="testName"> Test Name</label>
-                    <input
-                      value={result.testName}
-                      readOnly
-                      className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
-                    />
-                  </div>
-                  <div className="w-full">
-                    <label htmlFor="result"> Result</label>
-                    <input
-                      value={result.result}
-                      readOnly
-                      className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
-                    />
-                  </div>
-                  <div className="w-full">
-                    <label htmlFor="unit"> Unit</label>
-                    <input
-                      value={result.unit}
-                      readOnly
-                      className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
-                    />
-                  </div>
-                  <div className="w-full">
-                    <label htmlFor="referenceRange"> Reference Range</label>
-                    <input
-                      value={result.referenceRange}
-                      readOnly
-                      className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
-                    />
-                  </div>
-                  {type === "lab" && (
-                    <button
-                      className="text-red-500 "
-                      onClick={() => removeResult(index)}
+                {isLoadingResults ? (
+                  <p>Loading results...</p>
+                ) : resultError ? (
+                  <div>{resultError}</div>
+                ) : (
+                  resultList.map((result, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col md:flex-row items-center justify-between gap-4 mt-2"
                     >
-                      <IoMdCloseCircle className="text-3xl md:mt-8" />
-                    </button>
-                  )}
-                </div>
-              ))
-            )}
+                      <div className="w-full">
+                        <label htmlFor="testName"> Test Name</label>
+                        <input
+                          value={result.testName}
+                          readOnly
+                          className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
+                        />
+                      </div>
+                      <div className="w-full">
+                        <label htmlFor="result"> Result</label>
+                        <input
+                          value={result.result}
+                          readOnly
+                          className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
+                        />
+                      </div>
+                      <div className="w-full">
+                        <label htmlFor="unit"> Unit</label>
+                        <input
+                          value={result.unit}
+                          readOnly
+                          className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
+                        />
+                      </div>
+                      <div className="w-full">
+                        <label htmlFor="referenceRange"> Reference Range</label>
+                        <input
+                          value={result.referenceRange}
+                          readOnly
+                          className="w-full p-3 form-input mt-2 focus:outline-primary text-sm rounded-sm"
+                        />
+                      </div>
+                      {type === "lab" && (
+                        <button
+                          className="text-red-500 "
+                          onClick={() => removeResult(index)}
+                        >
+                          <FaTrashCan className="text-xl md:mt-8" />
+                        </button>
+                      )}
+                    </div>
+                  ))
+                )}
 
-            {/* Add New Result */}
-            {type === "lab" && (
-              <section>
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
-                  <input
-                    type="text"
-                    name="testName"
-                    placeholder="Test Name"
-                    className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
-                    value={newResult.testName}
-                    onChange={handleNewResultChange}
-                  />
-
-                  <input
-                    type="text"
-                    name="result"
-                    placeholder="Result"
-                    className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
-                    value={newResult.result}
-                    onChange={handleNewResultChange}
-                  />
-
-                  <input
-                    type="text"
-                    name="unit"
-                    placeholder="Unit"
-                    className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
-                    value={newResult.unit}
-                    onChange={handleNewResultChange}
-                  />
-
-                  <input
-                    type="text"
-                    name="referenceRange"
-                    placeholder="Reference Range"
-                    className="w-full p-3 form-input   focus:outline-primary text-sm rounded-sm"
-                    value={newResult.referenceRange}
-                    onChange={handleNewResultChange}
-                  />
-
-                  <button className="" onClick={addNewResult}>
-                    <MdAddBox className="text-3xl text-primary" />
-                  </button>
-                </div>
-              </section>
-            )}
-          </div>
-          {results?.id && !isLoadingResults && (
-            <section className="mt-12">
-              <LabOrderDocuments
-                resultId={results?.id}
-                documents={results?.documents}
-                refreshDocuments={updateDocuments}
-                type={type}
-              />
-            </section>
-          )}
-
-          <div>
-            {/* Result Note */}
-            <section className="lg:col-span-7">
-              <div className="w-full mt-8 space-y-4 rounded-lg p-4">
-                <p className="text-base flex items-center gap-2">Result Note</p>
-                <textarea
-                  className="w-full p-3 form-input form-input focus:outline-primary text-sm rounded-sm"
-                  rows={7}
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  disabled={type !== "lab"}
-                />
+                {/* Add New Result */}
                 {type === "lab" && (
-                  <div className="flex justify-end">
-                    <button
-                      onClick={handleSubmitResults}
-                      className="bg-primary text-white py-2 px-4 rounded-lg"
-                      disabled={submitResultLoading}
-                    >
-                      {submitResultLoading
-                        ? "Save Results..."
-                        : "Save Note & Results"}
-                    </button>
-                  </div>
+                  <section>
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
+                      <input
+                        type="text"
+                        name="testName"
+                        placeholder="Test Name"
+                        className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
+                        value={newResult.testName}
+                        onChange={handleNewResultChange}
+                      />
+
+                      <input
+                        type="text"
+                        name="result"
+                        placeholder="Result"
+                        className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
+                        value={newResult.result}
+                        onChange={handleNewResultChange}
+                      />
+
+                      <input
+                        type="text"
+                        name="unit"
+                        placeholder="Unit"
+                        className="w-full p-3 form-input  focus:outline-primary text-sm rounded-sm"
+                        value={newResult.unit}
+                        onChange={handleNewResultChange}
+                      />
+
+                      <input
+                        type="text"
+                        name="referenceRange"
+                        placeholder="Reference Range"
+                        className="w-full p-3 form-input   focus:outline-primary text-sm rounded-sm"
+                        value={newResult.referenceRange}
+                        onChange={handleNewResultChange}
+                      />
+
+                      <button className="" onClick={addNewResult}>
+                        <MdAddBox className="text-3xl text-primary" />
+                      </button>
+                    </div>
+                  </section>
                 )}
               </div>
-            </section>
-          </div>
+              {results?.id && !isLoadingResults && (
+                <section className="mt-12">
+                  <LabOrderDocuments
+                    resultId={results?.id}
+                    documents={results?.documents}
+                    refreshDocuments={updateDocuments}
+                    type={type}
+                  />
+                </section>
+              )}
+
+              <div>
+                {/* Result Note */}
+                <section className="lg:col-span-7">
+                  <div className="w-full mt-8 space-y-4 rounded-lg">
+                    <p className="text-base flex items-center gap-2">
+                      Result Note
+                    </p>
+                    <textarea
+                      className="w-full p-3 form-input form-input focus:outline-primary text-sm rounded-sm"
+                      rows={7}
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                      disabled={type !== "lab"}
+                    />
+                    {type === "lab" && (
+                      <div className="flex justify-end">
+                        <button
+                          onClick={handleSubmitResults}
+                          className="bg-primary text-white py-2 px-4 rounded-lg"
+                          disabled={submitResultLoading}
+                        >
+                          {submitResultLoading
+                            ? "Save Results..."
+                            : "Save Note & Results"}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </section>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center gap-4 h-70 ">
+              <h1>
+                {" "}
+                You dont have any Result here, if you want to upload result you
+                need to start the test{" "}
+              </h1>
+              {type === "lab" && !collectedSample && (
+                <div className="flex justify-end pt-4">
+                  <button
+                    className="bg-primary hover:bg-primary/90 text-white text-sm px-6 py-2 rounded-lg transition duration-200"
+                    onClick={handleStatusChange}
+                    disabled={startLoading}
+                  >
+                    Start Test
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
