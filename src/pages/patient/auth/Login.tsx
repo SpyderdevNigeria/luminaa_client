@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
@@ -80,6 +80,13 @@ function Login() {
     }
   };
 
+    useEffect(() => {
+      setMessage({
+        message: "",
+        type: "",
+      });
+    }, [formData]);
+    
   return (
     <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 2xl:mt-24">
       <div className="text-center my-8">
