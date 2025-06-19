@@ -3,21 +3,39 @@ import DashboardCard from "../../../components/common/DashboardCard";
 import useAdmin from "../../../hooks/useAdmin"; 
 import AdminApi from "../../../api/adminApi";
 
+type Patient = {
+  role?: string;
+};
+
 function AdminDashboard() {
   const {
     getPatients,
     getDoctors,
     getLabs,
     getPharmacists,
-    patientsTotal,
     doctorsTotal,
     labsTotal,
-      pharmacistsTotal,
+    pharmacistsTotal,
     pharmacistsLoading,
     patientsLoading,
     doctorsLoading,
     labsLoading,
-  } = useAdmin(AdminApi);
+    patients,
+  } = useAdmin(AdminApi) as {
+    getPatients: () => void;
+    getDoctors: () => void;
+    getLabs: () => void;
+    getPharmacists: () => void;
+    patientsTotal: number;
+    doctorsTotal: number;
+    labsTotal: number;
+    pharmacistsTotal: number;
+    pharmacistsLoading: boolean;
+    patientsLoading: boolean;
+    doctorsLoading: boolean;
+    labsLoading: boolean;
+    patients: Patient[];
+  };
 
   useEffect(() => {
     getPatients();
@@ -26,11 +44,12 @@ function AdminDashboard() {
     getPharmacists();
   }, []);
 
+  const getPatient = patients?.filter((i) => i?.role === "patient")
   return (
     <div className="flex flex-col gap-4">
       <section className="flex flex-col gap-4">
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <DashboardCard title="Patients" count={patientsLoading ? 0 : patientsTotal} />
+          <DashboardCard title="Patients" count={patientsLoading ? 0 : getPatient?.length} />
           <DashboardCard title="Doctors" count={doctorsLoading ? 0 : doctorsTotal} />
           <DashboardCard title="Laboratory" count={labsLoading ? 0 : labsTotal} />
           <DashboardCard title="Pharmacy" count={pharmacistsLoading ? 0 : pharmacistsTotal} />

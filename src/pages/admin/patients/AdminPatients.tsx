@@ -41,6 +41,9 @@ function AdminPatients() {
     patientsIsActive,
   ]);
 
+  useEffect(()=> {
+    setPatientsRole("patient")
+  }, [])
   const columns: Column<any>[] = [
     {
       key: "name",

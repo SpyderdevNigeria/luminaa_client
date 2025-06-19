@@ -171,6 +171,7 @@ const LabOrderDetails = ({
       setConfirmOpen(loadingStatus ?? false);
   };
 
+
   return (
     <div className="container-bd max-w-6xl mx-auto">
       <button
@@ -205,178 +206,160 @@ const LabOrderDetails = ({
       </div>
 
       {/* Tab Content */}
-      {activeTab === "Test" && (
-        <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
-          {/* Test Overview Section */}
-          <section className="lg:col-span-4">
-            <div className="bg-white rounded-lg  p-6 space-y-6">
-              <h2 className="text-2xl font-semibold text-primary">
-                Test Overview
-              </h2>
-              <div className="grid grid-cols-2 gap-4">
-                <InfoLabel label={testName} info="Test Name" />
-                <InfoLabel
-                  label={status || "pending"}
-                  info="Test Status"
-                  style="bg-blue-100 text-blue-700 py-1 px-2 rounded-sm"
-                />
-                <InfoLabel
-                  label={priority}
-                  info="Test Priority"
-                  style={`py-1 px-2 rounded-sm ${
-                    priority === "high"
-                      ? "bg-red-100 text-red-600"
-                      : priority === "medium"
-                      ? "bg-yellow-100 text-yellow-600"
-                      : "bg-green-100 text-green-700"
-                  }`}
-                />
-                <InfoLabel
-                  label={
-                    appointment?.date
-                      ? `${moment(appointment.date).format(
-                          "MMM D, YYYY"
-                        )} at ${moment(appointment.date).format("h:mm A")}`
-                      : "N/A"
-                  }
-                  info="Appointment Date"
-                />
-                <InfoLabel
-                  label={appointment?.status}
-                  info="Appointment Status"
-                />
-                <InfoLabel
-                  label={moment(createdAt).format("MMM D, YYYY h:mm A")}
-                  info="Requested On"
-                />
-                <InfoLabel
-                  label={collectedSample ? "Yes" : "No"}
-                  info="Sample Collected"
-                />
-              </div>
+{activeTab === "Test" && (
+  <div className="space-y-6">
+    {/* Test Overview Section */}
+    <section className="bg-white rounded-xl space-y-4">
+      <h2 className="text-2xl font-semibold text-primary mb-2">Test Overview</h2>
 
-              <div>
-                <h3 className="text-lg font-medium text-gray-800 mb-4">
-                  Status History
-                </h3>
-                <ol className="relative border-l-2 border-gray-300 ml-4">
-                  {statusHistory?.map((entry, index) => (
-                    <li key={index} className="mb-8 ml-6">
-                      <span className="absolute -left-3 flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full ring-8 ring-white">
-                        <span className="w-2.5 h-2.5 bg-primary rounded-full" />
-                      </span>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-semibold text-gray-800">
-                          {entry.status}
-                        </span>
-                        <span className="px-2 py-0.5 text-xs rounded-full bg-blue-50 text-blue-700 border border-blue-200">
-                          {moment(entry.updatedAt).format("MMM D, YYYY")}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-500">
-                        {moment(entry.updatedAt).format("h:mm A")} by{" "}
-                        <span className="font-medium text-gray-700">
-                          {entry.updatedBy}
-                        </span>
-                      </p>
-                    </li>
-                  ))}
-                </ol>
+      <div className="flex flex-wrap gap-4 justify-between">
+        <InfoLabel label={testName} info="Test Name" />
+        <InfoLabel
+          label={status || "pending"}
+          info="Test Status"
+          style="bg-blue-100 text-blue-700 py-1 px-2 rounded-md"
+        />
+        <InfoLabel
+          label={priority}
+          info="Test Priority"
+          style={`py-1 px-2 rounded-md ${
+            priority === "high"
+              ? "bg-red-100 text-red-600"
+              : priority === "medium"
+              ? "bg-yellow-100 text-yellow-600"
+              : "bg-green-100 text-green-700"
+          }`}
+        />
+        <InfoLabel
+          label={
+            appointment?.date
+              ? `${moment(appointment.date).format("MMM D, YYYY")} at ${moment(
+                  appointment.date
+                ).format("h:mm A")}`
+              : "N/A"
+          }
+          info="Appointment Date"
+        />
+        <InfoLabel label={appointment?.status} info="Appointment Status" />
+        <InfoLabel
+          label={moment(createdAt).format("MMM D, YYYY h:mm A")}
+          info="Requested On"
+        />
+        <InfoLabel
+          label={collectedSample ? "Yes" : "No"}
+          info="Sample Collected"
+        />
+      </div>
 
-                {type === "lab" && !collectedSample && (
-                  <div className="flex justify-end pt-4">
-                    <button
-                      className="bg-primary hover:bg-primary/90 text-white text-sm px-6 py-2 rounded-lg transition duration-200"
-                      onClick={handleStatusChange}
-                      disabled={startLoading}
-                    >
-                      Start Test
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </section>
+      {/* Status History */}
+      <div className="pt-4">
+        <h3 className="text-lg font-semibold text-gray-800 mb-3">Status History</h3>
+<ol className="relative mx-4">
+  {statusHistory?.map((entry, index) => (
+    <li
+      key={index}
+      className={`relative pb-10 ${
+        index !== statusHistory.length - 1 ? "before:absolute before:top-5 before:start-[2px] before:h-full before:w-[2px] before:bg-primary" : ""
+      }`}
+    >
+      {/* Dot */}
+      <div className="absolute w-4 h-4 bg-primary rounded-full -start-[5px] top-1.5 border-2 border-white shadow-sm z-10 " />
 
-          {/* Patient Info */}
-          <section className="lg:col-span-3 space-y-6">
-            <div className="bg-white rounded-lg  p-6">
-              <h2 className="text-xl font-semibold mb-4 text-primary">
-                Patient Info
-              </h2>
-              <div className="flex items-center gap-4 mb-4">
-                <img
-                  src={UserImage}
-                  alt="avatar"
-                  className="w-16 h-16 rounded-full border"
-                />
-                <p className="font-semibold text-base capitalize">
-                  {fullPatientName}
-                </p>
-              </div>
-              <InfoLabel label={patient?.email ?? "N/A"} info="Email" />
-            </div>
+      {/* Status Content */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4">
+        <h3 className="text-sm md:text-base font-semibold text-gray-800">
+          {entry.status}
+        </h3>
+        <time className="text-xs md:text-sm text-gray-500">
+          {moment(entry.updatedAt).format("MMM D, YYYY • h:mm A")} by{" "}
+          <span className="font-medium text-gray-700">{entry.updatedBy}</span>
+        </time>
+      </div>
+    </li>
+  ))}
+</ol>
 
-            {/* Doctor Info */}
-            <div className="bg-white rounded-lg  p-6">
-              <h2 className="text-xl font-semibold mb-4 text-primary">
-                Doctor Info
-              </h2>
-              <div className="flex items-center gap-4 mb-4">
-                <img
-                  src={DoctrImage}
-                  alt="avatar"
-                  className="w-16 h-16 rounded-full border"
-                />
-                <p className="font-semibold text-base capitalize">
-                  {fullDoctorName}
-                </p>
-              </div>
-              <InfoLabel label={doctor?.specialty ?? "N/A"} info="Specialty" />
-            </div>
-          </section>
 
-          {/* Doctor Note */}
-          {type !== "patient" && (
-            <section className="lg:col-span-7">
-              <div className="bg-white rounded-lg  p-6">
-                <h3 className="text-xl font-semibold text-primary mb-2">
-                  Doctor's Note
-                </h3>
-                <article className="text-base text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-md border border-gray-100">
-                  {notes || "No note provided."}
-                </article>
-              </div>
-            </section>
-          )}
 
-          {/* PDF Button */}
-          <section className="lg:col-span-7 flex justify-end">
+
+
+
+
+        {type === "lab" && !collectedSample && (
+          <div className="flex justify-end pt-4">
             <button
-              className=" bg-primary text-white text-sm py-3 px-4 rounded-lg shadow hover:bg-primary/90 transition"
-              onClick={() => setModalOpen(!isModalOpen)}
+              className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
+              onClick={handleStatusChange}
+              disabled={startLoading}
             >
-              View & Download PDF
+              Start Test
             </button>
-          </section>
+          </div>
+        )}
+      </div>
+    </section>
 
-          {/* Modal */}
-          <LabRequestReportModal
-            results={{
-              testName,
-              notes: notes ?? "",
-              priority: priority ?? "",
-              status: status ?? "",
-              collectedSample: collectedSample ?? false,
-              patient,
-              doctor,
-              createdAt,
-            }}
-            isModalOpen={isModalOpen}
-            setModalOpen={setModalOpen}
-          />
+    {/* Patient & Doctor Info */}
+    <div className="flex flex-col lg:flex-row gap-6">
+      {/* Patient Info */}
+      <div className="flex-1 bg-white rounded-xl">
+        <h2 className="text-xl font-semibold mb-2 text-primary">Patient Info</h2>
+        <div className="flex items-center gap-4 mb-2">
+          <img src={UserImage} alt="avatar" className="w-16 h-16 rounded-full border" />
+          <p className="font-semibold text-base capitalize">{fullPatientName}</p>
         </div>
-      )}
+        <InfoLabel label={patient?.email ?? "N/A"} info="Email" />
+      </div>
+
+      {/* Doctor Info */}
+      <div className="flex-1 bg-white rounded-xl">
+        <h2 className="text-xl font-semibold mb-2 text-primary">Doctor Info</h2>
+        <div className="flex items-center gap-4 mb-2">
+          <img src={DoctrImage} alt="avatar" className="w-16 h-16 rounded-full border" />
+          <p className="font-semibold text-base capitalize">{fullDoctorName}</p>
+        </div>
+        <InfoLabel label={doctor?.specialty ?? "N/A"} info="Specialty" />
+      </div>
+    </div>
+
+    {/* Doctor's Note */}
+    {type !== "patient" && (
+      <div className="bg-white rounded-xl">
+        <h3 className="text-xl font-semibold text-primary mb-2">Doctor's Note</h3>
+        <article className="text-base text-gray-700 whitespace-pre-line bg-gray-50 p-4 rounded-md border border-gray-100">
+          {notes || "No note provided."}
+        </article>
+      </div>
+    )}
+
+    {/* PDF Download Button */}
+    <div className="flex justify-end">
+      <button
+        className="bg-primary text-white text-sm font-medium py-3 px-4 rounded-lg hover:bg-primary/90 transition"
+        onClick={() => setModalOpen(!isModalOpen)}
+      >
+        View & Download PDF
+      </button>
+    </div>
+
+    {/* PDF Modal */}
+    <LabRequestReportModal
+      results={{
+        testName,
+        notes: notes ?? "",
+        priority: priority ?? "",
+        status: status ?? "",
+        collectedSample: collectedSample ?? false,
+        patient,
+        doctor,
+        createdAt,
+      }}
+      isModalOpen={isModalOpen}
+      setModalOpen={setModalOpen}
+    />
+  </div>
+)}
+
 
       {activeTab === "Results" && (
         <div>
@@ -384,8 +367,8 @@ const LabOrderDetails = ({
             <div>
               {/* Test Results Section */}
               <div className="mt-6 ">
-                <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                  Results
+                <h2 className="text-2xl font-semibold text-primary mb-2">
+                  Results Overview
                 </h2>
 
                 {isLoadingResults ? (

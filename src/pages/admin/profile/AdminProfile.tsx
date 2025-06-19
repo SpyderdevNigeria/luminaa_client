@@ -52,8 +52,8 @@ const AdminProfile = () => {
 
 const Settings = ({ onMedicalClick }: { onMedicalClick: (e: any) => void }) => {
   return (
-    <div className="max-w-3xl md:max-w-6xl mx-auto p-4">
-      <div className="flex items-center justify-between py-4 border-b border-dashboard-gray"
+    <div className="max-w-3xl md:max-w-6xl mx-auto p-4 ">
+      <div className="flex items-center justify-between py-4 border-b  cursor-pointer border-dashboard-gray"
          onClick={()=> {onMedicalClick('security')}}
       >
         <div className="flex items-center gap-3">
@@ -69,13 +69,13 @@ const Settings = ({ onMedicalClick }: { onMedicalClick: (e: any) => void }) => {
       </div>
 
       <div
-        className="flex items-center justify-between py-4 border-b border-dashboard-gray cursor-pointer"
+        className="flex items-center justify-between py-4 border-b  border-dashboard-gray cursor-pointer"
         onClick={()=> {onMedicalClick('update')}}
       >
         <div className="flex items-center gap-3">
           <FaUserMd className="text-xl" />
           <div>
-            <h3 className="text-lg ">Medical Information</h3>
+            <h3 className="text-lg ">Admin Information</h3>
             <p className="text-xs text-gray-500">
               Update your account and preferences
             </p>

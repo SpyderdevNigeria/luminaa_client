@@ -59,7 +59,7 @@ const LabProfile = () => {
 const Settings = ({ onMedicalClick }: { onMedicalClick: (e: any) => void }) => {
   return (
     <div className="max-w-3xl md:max-w-6xl mx-auto p-4">
-      <div className="flex items-center justify-between py-4 border-b border-dashboard-gray"
+      <div className="flex items-center justify-between py-4 border-b border-dashboard-gray cursor-pointer"
          onClick={()=> {onMedicalClick('security')}}
       >
         <div className="flex items-center gap-3">
