@@ -133,7 +133,7 @@ const fields = [
     name: "additionalRecommendations",
     label: "Additional Recommendations",
     type: "textarea",
-    required: true,
+
   },
 ];
 

@@ -337,6 +337,7 @@ const LabOrderDetails = ({
           </section>
 
           {/* Doctor Note */}
+             {type !== "patient" && 
           <section className="lg:col-span-7">
             <div className="bg-white rounded-lg  p-6">
               <h3 className="text-xl font-semibold text-primary mb-2">
@@ -347,6 +348,7 @@ const LabOrderDetails = ({
               </article>
             </div>
           </section>
+}
 
           {/* PDF Button */}
           <section className="lg:col-span-7 flex justify-end">

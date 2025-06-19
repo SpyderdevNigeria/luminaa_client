@@ -147,10 +147,12 @@ function LabCard({
             {priority} priority
           </span>
         </div>
-        <div className="md:col-span-2">
+        {type !== "patient" && 
+                  <div className="md:col-span-2">
           <h4 className="text-sm font-medium text-gray-600">Notes</h4>
           <p className="text-sm text-gray-800">{testNotes}</p>
         </div>
+        }
       </div>
 
       {/* Footer */}
