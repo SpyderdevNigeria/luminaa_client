@@ -10,6 +10,7 @@ import moment from "moment";
 import useAppointments from "../../../hooks/useAppointments";
 import routeLinks from "../../../utils/routes";
 import { Link } from "react-router-dom";
+import useUsers from "../../../hooks/useUsers";
 
 function DoctorDashboard() {
   const {
@@ -27,12 +28,18 @@ function DoctorDashboard() {
     getAppointments,
     handleSetPage,
   } = useAppointments(doctorApi);
+
+    const {
+    users,
+    getUsers,
+  } = useUsers(doctorApi);
  
     useEffect(() => {
        if (appointments.length > 0 && status === "" && dataFrom === "" && dateTo === "" && page === 1 ) {
       setLoadingAppointment(false);
       return 
     }
+    getUsers();
     getAppointments();
   }, [page, status, dataFrom, dateTo]);
 
@@ -69,15 +76,24 @@ function DoctorDashboard() {
     },
   ];
 
+  const now = new Date();
+
+    const upcomingAppointments = appointments.filter(
+    (app) => new Date(app.scheduledDate) > now || app.status !== "completed"
+  );
+  const pastAppointments = appointments.filter(
+    (app) => app.status === "completed"
+  );
+
     if (errorAppoint) return <p className="text-center mt-10 text-red-500">{errorAppoint}</p>;
   return (
     <div className="flex flex-col gap-4">
       <section className="flex flex-col gap-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <DashboardCard title="Appointments" count={appointments.length} />
-          <DashboardCard title="Patients" count={50} />
-          <DashboardCard title="Upcoming" count={30} />
-          <DashboardCard title="Cancelled" count={20} />
+          <DashboardCard title="Patients" count={users?.length || 0} />
+          <DashboardCard title="Upcoming" count={upcomingAppointments?.length} />
+          <DashboardCard title="Completed" count={pastAppointments?.length} />
         </div>
       </section>
 
@@ -88,7 +104,7 @@ function DoctorDashboard() {
             <div>
               {loadingAppointment ? (
                 <p>Loading...</p>
-              ) : (
+              ) : appointments.length > 0 ? (
                 <Table
                   data={appointments?.slice(0, 5)}
                   columns={appointmentColumns}
@@ -99,7 +115,11 @@ function DoctorDashboard() {
                   setPage={(e) => {return  handleSetPage(e)}}
                   showPaginate={false}
                 />
-              )}
+              ) :  
+              <p className="text-center my-24">
+                  you dont have any appointment
+              </p>
+              }
             </div>
           </div>
           <CustomCalendar />

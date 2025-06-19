@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import LabApi from "../../../api/labApi";
 import LabOrderDetials from "../../../components/common/LabOrderDetials";
 import { IResults } from "../../../types/Interfaces";
+import { useToaster } from "../../../components/common/ToasterContext";
 
 function LabTestRequestsDetails() {
   const { id } = useParams<{ id: string }>();
@@ -12,7 +13,7 @@ function LabTestRequestsDetails() {
   const [isLoadingResults, setLoadingResults] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
   const [resultError, setResultError] = useState<string | null>(null);
-
+  const { showToast } = useToaster();
   const fetchOrder = async () => {
     try {
       const orderData = await LabApi.getLabOrderById(id);
@@ -69,16 +70,16 @@ function LabTestRequestsDetails() {
           notes: payload?.notes,
           results: payload?.results,
         });
-        alert("Result updated successfully.");
+        showToast("Result updated successfully.", "success");
       } else {
         console.log('create result')
         await LabApi.createLabOrderResult(id, payload);
-        alert("Result submitted successfully.");
+        showToast("Result submitted successfully.", 'success');
       }
       fetchResults();
     } catch (err) {
       console.error("Error submitting result:", err);
-      alert("Failed to submit result.");
+      showToast("Failed to submit result.", 'error');
     } finally {
       setLoadingResults(false);
     }
@@ -88,7 +89,7 @@ function LabTestRequestsDetails() {
     try {
       const data = await LabApi.updateLabOrderStatus(id);
       if (data) {
-        alert("Status updated successfully.");
+        showToast("Status updated successfully.", "success");
       }
       fetchOrder();
     } catch (err) {

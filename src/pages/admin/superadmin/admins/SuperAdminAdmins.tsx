@@ -9,6 +9,7 @@ import StatusBadge from "../../../../components/common/StatusBadge";
 import Table, { Column }  from "../../../../components/common/Table";
 import SuperAdminAdminsCreate from "./component/SuperAdminAdminsCreate";
 import AdminNavigate from "../../../../components/common/AdminNavigate";
+import { useToaster } from "../../../../components/common/ToasterContext";
 function SuperAdminAdmins() {
   const {
     admins,
@@ -24,7 +25,7 @@ function SuperAdminAdmins() {
 
   const [editAdmin, setEditAdmin] = useState<any>(null);
   const [showForm, setShowForm] = useState(false);
-
+const { showToast } = useToaster();
   useEffect(() => {
     getAdmins();
   }, [adminsPage, adminsSearch]);
@@ -43,11 +44,11 @@ const handleDelete = async (adminId: string) => {
 
   try {
     await SuperAdminApi.deleteAdmin(adminId);
-    alert(`Admin ${adminId} has been permanently deactivated.`);
+    showToast(`Admin ${adminId} has been permanently deactivated.`, 'success');
     getAdmins();
   } catch (error) {
     console.error("Error deleting admin with ID:", adminId);
-    alert(`Failed to deactivate admin with ID: ${adminId}`);
+    showToast(`Failed to deactivate admin with ID: ${adminId}`, 'error');
   }
 };
 

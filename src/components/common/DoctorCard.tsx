@@ -3,6 +3,7 @@ import DoctorIcon from "../../assets/images/doctor/doctor.png";
 import {   FaCalendarAlt } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
 import Modal from "../modal/modal";
+import { useToaster } from "./ToasterContext";
 
 interface Doctor {
   id: string;
@@ -33,7 +34,7 @@ interface DoctorCardProps {
 
 const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
   const [showAvailability, setShowAvailability] = useState(false);
-
+  const { showToast } = useToaster();
   const fullName = `Dr. ${doctor.user.firstName} ${doctor.user.lastName}`;
   const imageUrl = doctor.user.profilePicture?.url || DoctorIcon;
 
@@ -82,7 +83,7 @@ const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
             onClick={() => {
               doctor?.availability?.data && doctor.availability.data.length > 0 ?
               handleClick?.()
-              : alert("Sorry this doctor is currently unavailable")
+              : showToast("Sorry this doctor is currently unavailable", "error");
             }}
             className="flex-1 w-full text-xs flex items-center justify-center gap-1 bg-primary text-white rounded-md py-2"
           >

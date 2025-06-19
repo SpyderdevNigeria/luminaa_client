@@ -5,6 +5,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
 import website from "../../utils/website";
+import { useToaster } from "../common/ToasterContext";
 
 // Types
 type Person = {
@@ -67,7 +68,7 @@ function LabRequestReportModal({
   } = results;
 
   const printRef = useRef<HTMLDivElement>(null);
-
+const { showToast } = useToaster();
   const handleDownloadPDF = async () => {
     if (!printRef.current) return;
 
@@ -88,7 +89,7 @@ function LabRequestReportModal({
       pdf.save("Lab_Request_Report.pdf");
     } catch (error) {
       console.error("PDF generation failed:", error);
-      alert("Something went wrong while generating the PDF. Please try again.");
+      showToast("Something went wrong while generating the PDF. Please try again.", "error");
     }
   };
 

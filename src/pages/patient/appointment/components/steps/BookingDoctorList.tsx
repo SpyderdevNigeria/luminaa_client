@@ -7,6 +7,7 @@ import PaginationComponent from "../../../../../components/common/PaginationComp
 import { adminDoctorSpecialties } from "../../../../../utils/dashboardUtils";
 import { FiSearch } from "react-icons/fi";
 import { HiOutlineFilter } from "react-icons/hi";
+import { useToaster } from "../../../../../components/common/ToasterContext";
 interface Doctor {
   id: string;
   user: {
@@ -55,6 +56,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
   const [search, setSearch] = useState<string>("");
   const [specialty, setSpecialty] = useState<string>("");
   const [showSpecialtyList, setShowSpecialtyList] = useState(false);
+  const { showToast } = useToaster();
   useEffect(() => {
     const fetchDoctors = async () => {
       setLoading(true);
@@ -112,7 +114,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
       (slot) => slot.dayOfWeek === dayName
     );
     if (!slot) {
-      alert("Doctor is not available on this day");
+      showToast("Doctor is not available on this day", "info");
       setAvailableTimes([]);
       return;
     }
@@ -132,8 +134,8 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
 
   const handleNextStep = () => {
     if (!canProceed || !selectedDoctor) {
-      alert(
-        "A date and time must be selected to continue with the appointment."
+      showToast(
+        "A date and time must be selected to continue with the appointment.", "info"
       );
       return;
     }

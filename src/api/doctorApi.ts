@@ -14,6 +14,11 @@ const DoctorApi = {
     return response.data;
   },
 
+    updateProfile: async (body: any) => {
+    const response = await api.put("/doctors/profile", body);
+    return response.data;
+  },
+
 
   // Avaliablility Endpoints 
 

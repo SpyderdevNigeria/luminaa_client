@@ -1,5 +1,5 @@
 import { FaShieldAlt, FaUserMd } from "react-icons/fa";
-import { SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import MedicalInfoForm from "./components/MedicalInfoForm";
 import SecurityPreferences from "./components/SecurityPreferences";
 import { useAppSelector } from "../../../hooks/reduxHooks";
@@ -14,15 +14,12 @@ const DoctorProfile = () => {
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
-    name: "",
-    annualLicense: "",
-    phoneNumber: "",
-    registrationLicence: "",
+    email:"",
+    dateOfBirth:"",
     specialty: "",
-    graduationCertificate: "",
-    additionalCertificates: "",
-    experience: "",
-    contactInfo: "",
+    licenseNumber: "",
+    contactNumber: "",
+    gender:"",
   });
 
   useEffect(() => {
@@ -30,26 +27,25 @@ const DoctorProfile = () => {
     setData({
     firstName: userProfile?.user?.firstName,
     lastName: userProfile?.user?.lastName,
-    name: "",
-    annualLicense: "",
-    phoneNumber: userProfile?.user?.phoneNumber,
-    registrationLicence: "",
-    specialty: "",
-    graduationCertificate: "",
-    additionalCertificates: "",
-    experience: "",
-    contactInfo: "",
+    email: userProfile?.user?.email,
+    licenseNumber: userProfile?.licenseNumber,
+    contactNumber: userProfile?.contactNumber,
+    gender: userProfile?.gender,
+    specialty: userProfile?.specialty,
+    dateOfBirth:userProfile?.dateOfBirth,
   });
     }
   }, [userProfile]);
-  const handleChange = (e: any) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+   const handleChange = (
+     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+   ) => {
+     const { name, value } = e.target;
+     setData((prev) => ({
+       ...prev,
+       [name]: value,
+     }));
+   };
 
-  const handleSubmit = () => {
-    console.log("Submitted Data:", data);
-    // Add logic to send data to API or update state
-  };
 
   const handleClose = () => {
     setShowMedicalForm('');
@@ -61,15 +57,10 @@ const DoctorProfile = () => {
       {showMedicalForm === '' && (
         <Settings onMedicalClick={(e)=> {handleShowForm(e)}} />
       )} {showMedicalForm === 'update' && <MedicalInfoForm
-          data={data}
-          userProfile={userProfile}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          handleImageUpload={function (_file: File): void {
-            throw new Error("Function not implemented.");
-          }}
-          handleClose={handleClose}
-        />}
+        data={data}
+        userProfile={userProfile}
+        handleChange={handleChange}
+        handleClose={handleClose}        />}
 
     </div>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import DoctorApi from '../../../api/doctorApi';
+import { useToaster } from '../../../components/common/ToasterContext';
 const defaultTime = { from: '09:00', to: '17:00' };
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -34,6 +35,7 @@ const DoctorSchedule = () => {
     to: string;
   }
 const [loading, setLoading] = useState(false)
+const { showToast } = useToaster();
   const [workingDays, setWorkingDays] = useState<Record<string, WorkingDay>>(
     daysOfWeek.reduce((acc, day) => {
       acc[day] = {
@@ -104,11 +106,11 @@ const [loading, setLoading] = useState(false)
 
     try {
       await DoctorApi.updateAvailability({ data: payload });
-      alert('Schedule updated successfully!');
+      showToast('Schedule updated successfully!', 'success');
        setLoading(false)
     } catch (error) {
       console.error('Failed to update availability:', error);
-      alert('Something went wrong while saving schedule.');
+      showToast('Something went wrong while saving schedule.', "error");
     }
   };
 

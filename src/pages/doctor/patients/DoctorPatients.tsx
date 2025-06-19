@@ -25,7 +25,6 @@ function DoctorPatients() {
 
   useEffect(() => {
     getUsers();
-    // Cleanup if needed
     return () => {};
   }, [page, status]);
 

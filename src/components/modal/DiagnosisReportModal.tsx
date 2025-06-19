@@ -6,6 +6,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
 import website from "../../utils/website";
+import { useToaster } from "../common/ToasterContext";
 
 type MedicalReportModalProps = {
   isModalOpen: boolean;
@@ -20,7 +21,7 @@ function MedicalReportModal({
 }: MedicalReportModalProps) {
   const diagnosis = data;
   const printRef = useRef<HTMLDivElement>(null);
-
+  const { showToast } = useToaster();
   const handleDownloadPDF = async () => {
     if (!printRef.current) return;
 
@@ -42,7 +43,7 @@ function MedicalReportModal({
       pdf.save("diagnosis_report.pdf");
     } catch (error) {
       console.error("PDF generation failed:", error);
-      alert("Something went wrong while generating the PDF. Please try again.");
+      showToast("Something went wrong while generating the PDF. Please try again.", "error");
     }
   };
 

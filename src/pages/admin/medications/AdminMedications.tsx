@@ -15,6 +15,7 @@ import {
   medicationDosageFormOptions,
   medicationManufacturerOptions,
 } from "../../../utils/dashboardUtils";
+import { useToaster } from "../../../components/common/ToasterContext";
 
 function AdminMedications() {
   const {
@@ -43,7 +44,7 @@ function AdminMedications() {
   const [showForm, setShowForm] = useState(false);
   const [editMedication, setEditMedication] = useState<any>(null);
   const [viewMedication, setViewMedication] = useState<any>(null);
-
+  const { showToast } = useToaster();
   useEffect(() => {
     getMedications();
   }, [
@@ -67,11 +68,11 @@ function AdminMedications() {
 
   if (!confirmed) return;
       await AdminApi.deleteMedication(medicationId);
-      alert(`Medication ${medicationId} deleted successfully`);
+      showToast(`Medication ${medicationId} deleted successfully`, 'success');
       getMedications();
     } catch (error) {
       console.error("Deleting medication with ID:", medicationId);
-      alert(`Deleting medication with ID: ${medicationId} failed`);
+      showToast(`Deleting medication with ID: ${medicationId} failed`, "error");
     }
   };
 
@@ -84,7 +85,7 @@ const toggleVisibility = async (id: string, medication:any) => {
   try {
     await AdminApi.updateMedicationVisibility(id);
     getMedications();
-    alert(`Medication ${medication?.name} updated successfully`);
+    showToast(`Medication ${medication?.name} updated successfully`, 'success');
   } catch (err) {
     console.error("Error toggling visibility:", err);
   }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BookingDetails from "../BookingDetails";
 import PatientApi from "../../../../../api/PatientApi";
 import FeedbackMessage from "../../../../../components/common/FeedbackMessage";
+import { useToaster } from "../../../../../components/common/ToasterContext";
 interface BookingSymptomsProps {
   prevStep: () => void;
   data: any;
@@ -16,6 +17,7 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
   const [message, setMessage] = useState({ message: "", type: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const { showToast } = useToaster();
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     setForm((prev) => ({
@@ -49,7 +51,7 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
           ...payload,
         }));
       } else {
-        alert("Appointment creation failed. Please try again.");
+        showToast("Appointment creation failed. Please try again.", 'error');
       }
     } catch (error) {
       let response: any;
