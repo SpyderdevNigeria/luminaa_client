@@ -27,19 +27,19 @@ const Modal = ({
       <AlertDialog.Overlay className="modal_overlay z-70 " />
 
       <AlertDialog.Content className={`modal_content z-80  ${style}`}>
-        <div className="bg-white p-6 rounded-lg">
+        <div className="bg-white p-8 rounded-lg">
           {!hideCancel && (
-            <div className="flex justify-between items-center">
+            <div className="flex justify-center items-center">
               <AlertDialog.Title className="text-xl font-medium mb-2">
                 {title}
               </AlertDialog.Title>
             </div>
           )}
-          <div className="w-full py-2 max-h-[500px] overflow-y-scroll">{children}</div>
-          <AlertDialog.Description></AlertDialog.Description>
+          <div className="w-full  max-h-[500px] overflow-y-scroll">{children}</div>
+
 
           {!hideCancel && (
-            <div className="w-full flex items-center justify-end">
+            <div className="w-full flex items-center justify-center mt-2">
               <div className=" flex items-center gap-2 ">
                 <button
                   onClick={onClose}
