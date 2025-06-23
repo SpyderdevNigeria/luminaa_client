@@ -5,13 +5,26 @@ import html2canvas from "html2canvas";
 import { useRef } from "react";
 import website from "../../utils/website";
 import { useToaster } from "../common/ToasterContext";
-import { IPrescription, } from "../../types/Interfaces";
+import { IPrescription } from "../../types/Interfaces";
 
 // Props
 type PrescriptionDownloadModalProps = {
   isModalOpen: boolean;
   setModalOpen: (open: boolean) => void;
   prescriptions: IPrescription[];
+};
+
+const thStyle = {
+  border: "1px solid #ccc",
+  padding: "8px",
+  backgroundColor: "#f5f5f5",
+  textAlign: "left" as const,
+};
+
+const tdStyle = {
+  border: "1px solid #ccc",
+  padding: "8px",
+  verticalAlign: "top",
 };
 
 function PrescriptionDownloadModal({
@@ -73,9 +86,9 @@ function PrescriptionDownloadModal({
       >
         <main className=" flex flex-col gap-4 py-4">
           <div className="flex flex-col items-center justify-center h-[50px]">
-                      <p className="text-sm text-text-secondary">
-            Click “Download” to export all prescriptions into a PDF document.
-          </p> 
+            <p className="text-sm text-text-secondary">
+              Click “Download” to export all prescriptions into a PDF document.
+            </p>
           </div>
         </main>
       </Modal>
@@ -89,43 +102,80 @@ function PrescriptionDownloadModal({
           top: "0px",
           padding: "20px",
           backgroundColor: "#ffffff",
-          width: "800px",
+          width: "1000px",
           fontFamily: "Arial, sans-serif",
           color: "#111",
         }}
       >
-        <h2 style={{ marginBottom: "20px" }}>Prescription Report</h2>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h2 className="text-2xl text-primary">{website?.name}</h2>
+          <img src={website?.logo} alt="" style={{ width: "300px", height: "80px" }} />
+        </div>
+
+        <h2 style={{ marginBottom: "20px", marginTop: "10px" }}>Prescription{prescriptions.length > 1 ? "s":''}</h2>
 
         {prescriptions.length > 0 ? (
-          prescriptions.map((prescription, index) => (
-            <div
-              key={prescription.id}
+          <>
+            <table
               style={{
-                marginBottom: "30px",
-                borderBottom: "1px solid #ccc",
-                paddingBottom: "20px",
+                width: "100%",
+                borderCollapse: "collapse",
+                fontSize: "14px",
+                marginBottom: "40px",
               }}
             >
-              <h3>Prescription {index + 1}</h3>
-              <p><strong>Hospital:</strong> {website?.name}</p>
-              <p><strong>Medication Name:</strong> {prescription.medicationName || "N/A"}</p>
-              <p><strong>Dosage:</strong> {prescription.dosage}</p>
-              <p><strong>Frequency:</strong> {prescription.frequency}</p>
-              <p><strong>Duration:</strong> {prescription.duration}</p>
-              <p><strong>Instructions:</strong> {prescription.instructions}</p>
-              <p><strong>Refillable:</strong> {prescription.isRefillable ? "Yes" : "No"}</p>
-              <p><strong>Status:</strong> {prescription.status}</p>
-              <p><strong>Created At:</strong> {moment(prescription.createdAt).format("MMMM D, YYYY h:mm A")}</p>
+              <thead>
+                <tr>
+                  <th style={thStyle}>#</th>
+                  <th style={thStyle}>Medication</th>
+                  <th style={thStyle}>Dosage</th>
+                  <th style={thStyle}>Frequency</th>
+                  <th style={thStyle}>Duration</th>
+                  <th style={thStyle}>Instructions</th>
+                  <th style={thStyle}>Prescription Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {prescriptions.map((prescription, index) => (
+                  <tr key={prescription.id}>
+                    <td style={tdStyle}>{index + 1}</td>
+                    <td style={tdStyle}>{prescription.medicationName || "N/A"}</td>
+                    <td style={tdStyle}>{prescription.dosage}</td>
+                    <td style={tdStyle}>{prescription.frequency}</td>
+                    <td style={tdStyle}>{prescription.duration}</td>
+                    <td style={tdStyle}>{prescription.instructions}</td>
+                    <td style={tdStyle}>
+                      {moment(prescription.createdAt).format("MMM D, YYYY h:mm A")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-              <h4 style={{ marginTop: "10px" }}>Doctor Information</h4>
-              <p><strong>Name:</strong> {`${prescription?.doctor?.firstName ?? ""} ${prescription.doctor?.lastName ?? ""}`}</p>
-              <p><strong>Specialty:</strong> {prescription?.doctor?.specialty ?? "N/A"}</p>
-
-              <h4 style={{ marginTop: "10px" }}>Appointment Information</h4>
-              <p><strong>Scheduled Date:</strong> {moment(prescription?.appointment?.scheduledDate).format("MMMM D, YYYY h:mm A")}</p>
-              <p><strong>Status:</strong> {prescription?.appointment?.status}</p>
+            {/* Doctor Info - Only show the last prescribing doctor (assuming same for all) */}
+            <div>
+              <h4 style={{ marginBottom: "8px" }}>Prescribing Doctor</h4>
+              <p style={{ fontWeight: "bold" }}>
+                {`${prescriptions[prescriptions.length - 1]?.doctor?.firstName ?? ""} ${
+                  prescriptions[prescriptions.length - 1]?.doctor?.lastName ?? ""
+                }`}
+              </p>
+              <p>
+                <strong>Specialty:</strong>{" "}
+                {prescriptions[prescriptions.length - 1]?.doctor?.specialty ?? "N/A"}
+              </p>
             </div>
-          ))
+
+            {/* Signature Area */}
+            <div style={{ marginTop: "60px", textAlign: "right" }}>
+              <p style={{ borderTop: "1px solid #000", display: "inline-block", paddingTop: "4px" }}>
+                {`${prescriptions[prescriptions.length - 1]?.doctor?.firstName ?? ""} ${
+                  prescriptions[prescriptions.length - 1]?.doctor?.lastName ?? ""
+                }`}
+              </p>
+              <p style={{ fontSize: "12px" }}>Signature</p>
+            </div>
+          </>
         ) : (
           <p>No prescriptions available.</p>
         )}
