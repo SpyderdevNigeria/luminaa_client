@@ -5,13 +5,20 @@ import moment from "moment";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
-import website from "../../utils/website";
 import { useToaster } from "../common/ToasterContext";
+import SheetHeader from "../common/SheetHeader";
 
 type MedicalReportModalProps = {
   isModalOpen: boolean;
   setModalOpen: (e: any) => void;
   data: any;
+};
+const sectionTitle = {
+  fontSize: "16px",
+  fontWeight: "bold",
+  marginBottom: "10px",
+  borderBottom: "1px solid #ccc",
+  paddingBottom: "4px",
 };
 
 function MedicalReportModal({
@@ -131,116 +138,122 @@ function MedicalReportModal({
         </main>
       </Modal>
 
-      <div
-        ref={printRef}
-        style={{
-          position: "absolute",
-          left: "-9999px",
-          top: "0px",
-          padding: "20px",
-          backgroundColor: "#ffffff",
-          width: "600px",
-          fontFamily: "Arial, sans-serif",
-          color: "#111",
-        }}
-      >
-        <h2 style={{ fontSize: "18px", marginBottom: "10px" }}>
-          Diagnosis Report
-        </h2>
-        <p>
-          <strong>Hospital:</strong> {website?.name}
-        </p>
-        <p>
-          <strong>Date Diagnosed:</strong>{" "}
-          {moment(diagnosis?.createdAt).format("MMMM D, YYYY")}
-        </p>
+<div
+  ref={printRef}
+  style={{
+    position: "absolute",
+    left: "-9999px",
+    top: "0px",
+    padding: "40px",
+    backgroundColor: "#ffffff",
+    width: "900px",
+    fontFamily: "Arial, sans-serif",
+    color: "#111",
+    lineHeight: 1.6,
+    fontSize: "14px",
+  }}
+>
+  <SheetHeader />
 
-        <hr style={{ margin: "10px 0" }} />
+  <h2
+    style={{ marginBottom: "40px", marginTop: "10px" }}
+    className="text-2xl text-primary text-center"
+  >
+    Diagnosis Report
+  </h2>
 
-        <h3 style={{ marginTop: "10px", fontSize: "16px" }}>Patient Details</h3>
-        <p>
-          <strong>Name:</strong>{" "}
+  {/* Patient & Appointment Details */}
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      gap: "2rem",
+      flexWrap: "wrap",
+    }}
+  >
+    <div style={{ flex: 1, minWidth: "300px" }}>
+      <h3 style={sectionTitle}>Patient Details</h3>
+      <p>
+        Name:{" "}
+        <u>
           {diagnosis?.appointment?.patient?.user?.firstName}{" "}
           {diagnosis?.appointment?.patient?.user?.lastName}
-        </p>
-        <p>
-          <strong>Date of Birth:</strong>{" "}
+        </u>
+      </p>
+      <p>
+        Date of Birth:{" "}
+        <u>
           {moment(diagnosis?.appointment?.patient?.dateOfBirth).format(
             "MMMM D, YYYY"
           )}
-        </p>
-        <p>
-          <strong>Gender:</strong> {diagnosis?.appointment?.patient?.gender}
-        </p>
-        <p>
-          <strong>Phone:</strong> {diagnosis?.appointment?.patient?.phoneNumber}
-        </p>
-        <p>
-          <strong>Address:</strong> {diagnosis?.appointment?.patient?.address},{" "}
+        </u>
+      </p>
+      <p>
+        Gender: <u>{diagnosis?.appointment?.patient?.gender}</u>
+      </p>
+      <p>
+        Phone: <u>{diagnosis?.appointment?.patient?.phoneNumber}</u>
+      </p>
+      <p>
+        Address:{" "}
+        <u>
+          {diagnosis?.appointment?.patient?.address},{" "}
           {diagnosis?.appointment?.patient?.city},{" "}
           {diagnosis?.appointment?.patient?.state},{" "}
           {diagnosis?.appointment?.patient?.country} -{" "}
           {diagnosis?.appointment?.patient?.zipCode}
-        </p>
+        </u>
+      </p>
+    </div>
 
-        <hr style={{ margin: "10px 0" }} />
+    <div style={{ flex: 1, minWidth: "300px" }}>
+      <h3 style={sectionTitle}>Appointment Details</h3>
+      <p>
+        Date & Time:{" "}
+        {moment(diagnosis?.appointment?.scheduledDate).format(
+          "MMMM D, YYYY [at] h:mm A"
+        )}
+      </p>
+      <p>Status: {diagnosis?.appointment?.status}</p>
+      <p>Patient Note: {diagnosis?.appointment?.patientNote}</p>
+      <p>Location: {diagnosis?.appointment?.location}</p>
+    </div>
+  </div>
 
-        <h3 style={{ marginTop: "10px", fontSize: "16px" }}>
-          Appointment Details
-        </h3>
-        <p>
-          <strong>Date & Time:</strong>{" "}
-          {moment(diagnosis?.appointment?.scheduledDate).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )}
-        </p>
-        <p>
-          <strong>Status:</strong> {diagnosis?.appointment?.status}
-        </p>
-        <p>
-          <strong>Patient Note:</strong> {diagnosis?.appointment?.patientNote}
-        </p>
-        <p>
-          <strong>Location:</strong> {diagnosis?.appointment?.location}
-        </p>
+  {/* Date Diagnosed */}
+  <p style={{ marginTop: "30px" }}>
+    <strong>Date Diagnosed:</strong>{" "}
+    {moment(diagnosis?.createdAt).format("MMMM D, YYYY")}
+  </p>
 
-        <hr style={{ margin: "10px 0" }} />
+  {/* Diagnosis Section */}
+  <div style={{ marginTop: "30px" }}>
+    <h3 style={sectionTitle}>Diagnosis</h3>
+    <p>Diagnosis: {diagnosis?.primaryDiagnosis}</p>
+    <p>Severity: {diagnosis?.severity}</p>
+    <p>Symptoms: {diagnosis?.symptoms}</p>
+    <p>Doctor's Note: {diagnosis?.notes || "No note available."}</p>
+    <p>
+      Additional Recommendations:{" "}
+      {diagnosis?.additionalRecommendations || "None"}
+    </p>
+  </div>
 
-        <h3 style={{ marginTop: "10px", fontSize: "16px" }}>Doctor Details</h3>
-        <p>
-          <strong>Name:</strong> Dr.{" "}
-          {diagnosis?.appointment?.doctor?.user?.firstName}{" "}
-          {diagnosis?.appointment?.doctor?.user?.lastName}
-        </p>
-        <p>
-          <strong>Specialty:</strong>{" "}
-          {diagnosis?.appointment?.doctor?.specialty}
-        </p>
+  {/* Doctor at Bottom */}
+  <div style={{ marginTop: "40px" }}>
+    <h4 style={{ marginBottom: "8px" }}>Prescribing Doctor</h4>
+    <p style={{ fontWeight: "bold" }}>
+      Dr. {diagnosis?.appointment?.doctor?.user?.firstName}{" "}
+      {diagnosis?.appointment?.doctor?.user?.lastName}
+    </p>
+    <p>
+      Specialty: {diagnosis?.appointment?.doctor?.specialty ?? "N/A"}
+    </p>
+  </div>
+</div>
 
-        <hr style={{ margin: "10px 0" }} />
 
-        <h3 style={{ marginTop: "10px", fontSize: "16px" }}>Diagnosis</h3>
-        <p>
-          <strong>Diagnosis:</strong> {diagnosis?.primaryDiagnosis}
-        </p>
-        <p>
-          <strong>Diagnosis Code:</strong> {diagnosis?.diagnosisCode || "N/A"}
-        </p>
-        <p>
-          <strong>Severity:</strong> {diagnosis?.severity}
-        </p>
-        <p>
-          <strong>Symptoms:</strong> {diagnosis?.symptoms}
-        </p>
-        <p>
-          <strong>Doctor's Note:</strong>{" "}
-          {diagnosis?.notes || "No note available."}
-        </p>
-        <p>
-          <strong>Additional Recommendations:</strong>{" "}
-          {diagnosis?.additionalRecommendations || "None"}
-        </p>
-      </div>
+
     </>
   );
 }

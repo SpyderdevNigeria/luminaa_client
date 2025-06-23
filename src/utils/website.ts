@@ -5,7 +5,8 @@ const website = {
     email: 'email@mail.com',
     phone1: '+1 234 567 890',
     phone2: '+1 234 567 891',
-  }
+  },
+  address:'47 W 13th St, New York, NY 10011, USA'
 }
 
 export default website

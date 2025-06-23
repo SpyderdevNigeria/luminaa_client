@@ -3,9 +3,9 @@ import moment from "moment";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
-import website from "../../utils/website";
 import { useToaster } from "../common/ToasterContext";
 import { IPrescription } from "../../types/Interfaces";
+import SheetHeader from "../common/SheetHeader";
 
 // Props
 type PrescriptionDownloadModalProps = {
@@ -107,12 +107,9 @@ function PrescriptionDownloadModal({
           color: "#111",
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h2 className="text-2xl text-primary">{website?.name}</h2>
-          <img src={website?.logo} alt="" style={{ width: "300px", height: "80px" }} />
-        </div>
+        <SheetHeader/>
 
-        <h2 style={{ marginBottom: "20px", marginTop: "10px" }}>Prescription{prescriptions.length > 1 ? "s":''}</h2>
+        <h2 style={{ marginBottom: "40px", marginTop: "10px" }} className="text-2xl text-primary text-center underline " >Prescription Form</h2>
 
         {prescriptions.length > 0 ? (
           <>

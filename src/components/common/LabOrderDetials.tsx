@@ -350,6 +350,8 @@ const LabOrderDetails = ({
         priority: priority ?? "",
         status: status ?? "",
         collectedSample: collectedSample ?? false,
+        resultList: results?.results,
+        documents: results?.documents,
         patient,
         doctor,
         createdAt,

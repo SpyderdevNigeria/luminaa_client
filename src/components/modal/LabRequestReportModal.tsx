@@ -4,8 +4,22 @@ import moment from "moment";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useRef } from "react";
-import website from "../../utils/website";
 import { useToaster } from "../common/ToasterContext";
+import SheetHeader from "../common/SheetHeader";
+import { IResult } from "../../types/Interfaces";
+
+const th = {
+  padding: "10px",
+  border: "1px solid #ccc",
+  fontWeight: "bold",
+  fontSize: "13px",
+};
+
+const td = {
+  padding: "10px",
+  border: "1px solid #ccc",
+  fontSize: "13px",
+};
 
 // Types
 type Person = {
@@ -15,12 +29,12 @@ type Person = {
   specialty?: string;
 };
 
-type LabResult = {
-  testName: string;
-  result: string;
-  unit: string;
-  referenceRange: string;
-};
+// type LabResult = {
+//   testName: string;
+//   result: string;
+//   unit: string;
+//   referenceRange: string;
+// };
 
 type DocumentFile = {
   url: string;
@@ -44,7 +58,7 @@ type LabRequestReportModalProps = {
     patient?: Person;
     notes?: string;
     doctor?: Person;
-    resultList?: LabResult[];
+    resultList?: IResult[] | undefined | null;
     documents?: LabDocument[];
   };
 };
@@ -66,9 +80,8 @@ function LabRequestReportModal({
     resultList = [],
     documents = [],
   } = results;
-
   const printRef = useRef<HTMLDivElement>(null);
-const { showToast } = useToaster();
+  const { showToast } = useToaster();
   const handleDownloadPDF = async () => {
     if (!printRef.current) return;
 
@@ -89,7 +102,10 @@ const { showToast } = useToaster();
       pdf.save("Lab_Request_Report.pdf");
     } catch (error) {
       console.error("PDF generation failed:", error);
-      showToast("Something went wrong while generating the PDF. Please try again.", "error");
+      showToast(
+        "Something went wrong while generating the PDF. Please try again.",
+        "error"
+      );
     }
   };
 
@@ -106,7 +122,9 @@ const { showToast } = useToaster();
       >
         <main className="min-h-[200px] flex flex-col gap-4 py-4">
           <div className="space-y-1">
-            <h4 className="text-sm text-text-secondary font-light">Test Name</h4>
+            <h4 className="text-sm text-text-secondary font-light">
+              Test Name
+            </h4>
             <h3 className="text-sm text-text-primary">{testName}</h3>
           </div>
 
@@ -121,13 +139,21 @@ const { showToast } = useToaster();
           </div>
 
           <div className="space-y-1">
-            <h4 className="text-sm text-text-secondary font-light">Sample Collected</h4>
-            <h3 className="text-sm text-text-primary">{collectedSample ? "Yes" : "No"}</h3>
+            <h4 className="text-sm text-text-secondary font-light">
+              Sample Collected
+            </h4>
+            <h3 className="text-sm text-text-primary">
+              {collectedSample ? "Yes" : "No"}
+            </h3>
           </div>
 
           <div className="space-y-1">
-            <h4 className="text-sm text-text-secondary font-light">Requested On</h4>
-            <h3 className="text-sm text-text-primary">{moment(createdAt).format("MMMM D, YYYY h:mm A")}</h3>
+            <h4 className="text-sm text-text-secondary font-light">
+              Requested On
+            </h4>
+            <h3 className="text-sm text-text-primary">
+              {moment(createdAt).format("MMMM D, YYYY h:mm A")}
+            </h3>
           </div>
         </main>
       </Modal>
@@ -139,61 +165,154 @@ const { showToast } = useToaster();
           position: "absolute",
           left: "-9999px",
           top: "0px",
-          padding: "20px",
+          padding: "40px",
           backgroundColor: "#ffffff",
-          width: "600px",
+          width: "800px",
           fontFamily: "Arial, sans-serif",
           color: "#111",
+          fontSize: "14px",
+          lineHeight: 1.6,
         }}
       >
-        <h2>Lab Request Details</h2>
-        <p><strong>Hospital:</strong> {website?.name}</p>
-        <p><strong>Test Name:</strong> {testName}</p>
-        <p><strong>Status:</strong> {status}</p>
-        <p><strong>Priority:</strong> {priority}</p>
-        <p><strong>Collected Sample:</strong> {collectedSample ? "Yes" : "No"}</p>
-        <p><strong>Requested On:</strong> {moment(createdAt).format("MMM D, YYYY h:mm A")}</p>
-        <p><strong>Notes:</strong> {notes}</p>
-        <h3>Patient Information</h3>
-        <p><strong>Name:</strong> {`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</p>
-        <p><strong>Email:</strong> {patient?.email ?? "N/A"}</p>
+        <SheetHeader />
 
-        <h3>Doctor Information</h3>
-        <p><strong>Name:</strong> {`${doctor?.firstName ?? ""} ${doctor?.lastName ?? ""}`}</p>
-        <p><strong>Specialty:</strong> {doctor?.specialty ?? "N/A"}</p>
+        <h2
+          style={{ marginBottom: "40px", marginTop: "10px" }}
+          className="text-2xl text-primary text-center underline"
+        >
+          Lab Test Results
+        </h2>
 
-        <h3>Test Results</h3>
-        {resultList.length > 0 ? (
-          resultList.map((result, index) => (
-            <div key={index} style={{ marginBottom: "10px" }}>
-              <p><strong>Test Name:</strong> {result.testName}</p>
-              <p><strong>Result:</strong> {result.result}</p>
-              <p><strong>Unit:</strong> {result.unit}</p>
-              <p><strong>Reference Range:</strong> {result.referenceRange}</p>
-            </div>
-          ))
-        ) : (
-          <p>No results available.</p>
-        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: "2rem",
+            flexWrap: "wrap",
+            marginTop: "30px",
+          }}
+        >
+          {/* Patient Info */}
+          <div style={{ flex: 1, minWidth: "300px" }}>
+            <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+              Patient Information
+            </h3>
+            <p>
+              Name:{" "}
+              <u>{`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</u>
+            </p>
+            <p>
+              Email: <u>{patient?.email ?? "N/A"}</u>
+            </p>
+          </div>
+        </div>
 
-        <h3>Documents</h3>
-        {documents.length > 0 ? (
-          documents.map((doc, index) => (
-            <div key={index} style={{ marginBottom: "10px" }}>
-              <p><strong>Name:</strong> {doc.name}</p>
-              <p><strong>Description:</strong> {doc.description}</p>
-              <p>
-                <strong>URL:</strong>{" "}
-                <a href={doc.file.url} target="_blank" rel="noopener noreferrer">
-                  {doc.file.url}
-                </a>
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>No documents available.</p>
-        )}
+        {/* Test Results */}
+        <div style={{ marginTop: "30px" }}>
+          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+            Test Results
+          </h3>
+          {(resultList ?? []).length > 0 ? (
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                border: "1px solid #ccc",
+              }}
+            >
+              <thead>
+                <tr style={{ backgroundColor: "#f4f4f4", textAlign: "left" }}>
+                  <th style={th}>Test Name</th>
+                  <th style={th}>Result</th>
+                  <th style={th}>Unit</th>
+                  <th style={th}>Reference Range</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(resultList ?? []).map((result, index) => (
+                  <tr key={index}>
+                    <td style={td}>{result.testName}</td>
+                    <td style={td}>{result.result}</td>
+                    <td style={td}>{result.unit}</td>
+                    <td style={td}>{result.referenceRange}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No results available.</p>
+          )}
+        </div>
+
+        {/* Documents */}
+        <div style={{ marginTop: "30px" }}>
+          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+            Attachment Documents
+          </h3>
+          {documents.length > 0 ? (
+            <table
+              style={{
+                width: "100%",
+                borderCollapse: "collapse",
+                border: "1px solid #ccc",
+              }}
+            >
+              <thead>
+                <tr style={{ backgroundColor: "#f4f4f4", textAlign: "left" }}>
+                  <th style={th}>Name</th>
+                  <th style={th}>Description</th>
+                  <th style={th}>View</th>
+                </tr>
+              </thead>
+              <tbody>
+                {documents.map((doc, index) => (
+                  <tr key={index}>
+                    <td style={td}>{doc.name}</td>
+                    <td style={td}>{doc.description}</td>
+                    <td style={td}>
+                      <a
+                        href={doc.file.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          color: "#007BFF",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        View
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No documents available.</p>
+          )}
+        </div>
+
+        <div style={{ marginTop: "30px" }}>
+          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+            Interpretation
+          </h3>
+          <p>{notes !== "" ? notes : "No not available "}</p>
+        </div>
+
+        {/* Doctor Info */}
+        <div style={{ marginTop: "50px", minWidth: "300px" }}>
+          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+            Prescribing Doctor
+          </h3>
+          <p>
+            <strong>Name:</strong> Dr. {doctor?.firstName} {doctor?.lastName}
+          </p>
+          <p>
+            <strong>Specialty:</strong> {doctor?.specialty ?? "N/A"}
+          </p>
+        </div>
       </div>
+
+      {/* Inline Styles for Reuse */}
     </>
   );
 }
