@@ -11,8 +11,8 @@
 }
 /* Custom scrollbar styles for Firefox */
 .scrollable {
-  scrollbar-width: thin; /* or 'auto' or 'none' */
-  scrollbar-color: #888 #f1f1f1; /* Scrollbar thumb color and track color */
+  scrollbar-width: thin; 
+  scrollbar-color: #888 #f1f1f1;
 }
 
 .animated {
@@ -125,6 +125,7 @@ button {
   @apply fixed px-4 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full md:max-w-[600px];
 }
 
+
 .modal {
   background-color: white;
   padding: 1rem;
@@ -140,4 +141,20 @@ button {
   display: none;
 }
 
+
+
+.scrollbar-visible {
+  scrollbar-width: auto !important;          
+  -ms-overflow-style: auto !important;      
+}
+
+.scrollbar-visible::-webkit-scrollbar {
+  display: block !important;                  
+  width: 4px;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.322);
+  border-radius: 4px;
+}
 

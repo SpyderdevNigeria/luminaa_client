@@ -35,7 +35,7 @@ const Modal = ({
               </AlertDialog.Title>
             </div>
           )}
-          <div className="w-full  max-h-[400px] 2xl:max-h-[500px] overflow-y-scroll">{children}</div>
+          <div className="w-full  max-h-[400px] 2xl:max-h-[500px] overflow-y-scroll scrollbar-visible ">{children}</div>
 
 
           {!hideCancel && (
