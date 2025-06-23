@@ -353,6 +353,7 @@ const LabOrderDetails = ({
         resultList: results?.results,
         documents: results?.documents,
         patient,
+        statusHistory : statusHistory,
         doctor,
         createdAt,
       }}

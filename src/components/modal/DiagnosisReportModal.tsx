@@ -241,7 +241,7 @@ function MedicalReportModal({
 
   {/* Doctor at Bottom */}
   <div style={{ marginTop: "40px" }}>
-    <h4 style={{ marginBottom: "8px" }}>Prescribing Doctor</h4>
+    <h4 style={{ marginBottom: "8px" }}>Attending Doctor</h4>
     <p style={{ fontWeight: "bold" }}>
       Dr. {diagnosis?.appointment?.doctor?.user?.firstName}{" "}
       {diagnosis?.appointment?.doctor?.user?.lastName}

@@ -29,13 +29,6 @@ type Person = {
   specialty?: string;
 };
 
-// type LabResult = {
-//   testName: string;
-//   result: string;
-//   unit: string;
-//   referenceRange: string;
-// };
-
 type DocumentFile = {
   url: string;
 };
@@ -58,6 +51,7 @@ type LabRequestReportModalProps = {
     patient?: Person;
     notes?: string;
     doctor?: Person;
+    statusHistory?: any[];
     resultList?: IResult[] | undefined | null;
     documents?: LabDocument[];
   };
@@ -78,10 +72,18 @@ function LabRequestReportModal({
     doctor,
     notes,
     resultList = [],
-    documents = [],
+    statusHistory = [],
   } = results;
+
   const printRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToaster();
+
+  // Get lab personnel from status history
+  const labPersonnel =
+    status !== "PENDING"
+      ? [...statusHistory].reverse().find((entry) => entry.status !== "PENDING")?.updatedBy ?? null
+      : null;
+
   const handleDownloadPDF = async () => {
     if (!printRef.current) return;
 
@@ -122,9 +124,7 @@ function LabRequestReportModal({
       >
         <main className="min-h-[200px] flex flex-col gap-4 py-4">
           <div className="space-y-1">
-            <h4 className="text-sm text-text-secondary font-light">
-              Test Name
-            </h4>
+            <h4 className="text-sm text-text-secondary font-light">Test Name</h4>
             <h3 className="text-sm text-text-primary">{testName}</h3>
           </div>
 
@@ -139,18 +139,12 @@ function LabRequestReportModal({
           </div>
 
           <div className="space-y-1">
-            <h4 className="text-sm text-text-secondary font-light">
-              Sample Collected
-            </h4>
-            <h3 className="text-sm text-text-primary">
-              {collectedSample ? "Yes" : "No"}
-            </h3>
+            <h4 className="text-sm text-text-secondary font-light">Sample Collected</h4>
+            <h3 className="text-sm text-text-primary">{collectedSample ? "Yes" : "No"}</h3>
           </div>
 
           <div className="space-y-1">
-            <h4 className="text-sm text-text-secondary font-light">
-              Requested On
-            </h4>
+            <h4 className="text-sm text-text-secondary font-light">Requested On</h4>
             <h3 className="text-sm text-text-primary">
               {moment(createdAt).format("MMMM D, YYYY h:mm A")}
             </h3>
@@ -183,35 +177,38 @@ function LabRequestReportModal({
           Lab Test Results
         </h2>
 
+        {/* Patient Info */}
         <div
           style={{
             display: "flex",
+            alignItems:'start',
             justifyContent: "space-between",
             gap: "2rem",
             flexWrap: "wrap",
             marginTop: "30px",
           }}
         >
-          {/* Patient Info */}
           <div style={{ flex: 1, minWidth: "300px" }}>
-            <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
-              Patient Information
-            </h3>
+            <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Patient Information</h3>
             <p>
               Name:{" "}
               <u>{`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</u>
             </p>
-            <p>
-              Email: <u>{patient?.email ?? "N/A"}</u>
-            </p>
+            <p>Email: <u>{patient?.email ?? "N/A"}</u></p>
           </div>
+
+                  {/* Lab Personnel */}
+        {labPersonnel && (
+          <div style={{ minWidth: "300px" }}>
+            <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Laboratory Personnel</h3>
+            <p><strong>Performed by:</strong> {labPersonnel}</p>
+          </div>
+        )}
         </div>
 
         {/* Test Results */}
         <div style={{ marginTop: "30px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
-            Test Results
-          </h3>
+          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Test Results</h3>
           {(resultList ?? []).length > 0 ? (
             <table
               style={{
@@ -244,75 +241,21 @@ function LabRequestReportModal({
           )}
         </div>
 
-        {/* Documents */}
+        {/* Interpretation */}
         <div style={{ marginTop: "30px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
-            Attachment Documents
-          </h3>
-          {documents.length > 0 ? (
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                border: "1px solid #ccc",
-              }}
-            >
-              <thead>
-                <tr style={{ backgroundColor: "#f4f4f4", textAlign: "left" }}>
-                  <th style={th}>Name</th>
-                  <th style={th}>Description</th>
-                  <th style={th}>View</th>
-                </tr>
-              </thead>
-              <tbody>
-                {documents.map((doc, index) => (
-                  <tr key={index}>
-                    <td style={td}>{doc.name}</td>
-                    <td style={td}>{doc.description}</td>
-                    <td style={td}>
-                      <a
-                        href={doc.file.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: "#007BFF",
-                          textDecoration: "underline",
-                        }}
-                      >
-                        View
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No documents available.</p>
-          )}
-        </div>
-
-        <div style={{ marginTop: "30px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
-            Interpretation
-          </h3>
-          <p>{notes !== "" ? notes : "No not available "}</p>
+          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Interpretation</h3>
+          <p>{notes && notes.trim() !== "" ? notes : "No notes available"}</p>
         </div>
 
         {/* Doctor Info */}
         <div style={{ marginTop: "50px", minWidth: "300px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
-            Prescribing Doctor
-          </h3>
-          <p>
-            <strong>Name:</strong> Dr. {doctor?.firstName} {doctor?.lastName}
-          </p>
-          <p>
-            <strong>Specialty:</strong> {doctor?.specialty ?? "N/A"}
-          </p>
+          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Attending Doctor</h3>
+          <p><strong>Name:</strong> Dr. {doctor?.firstName} {doctor?.lastName}</p>
+          <p><strong>Specialty:</strong> {doctor?.specialty ?? "N/A"}</p>
         </div>
-      </div>
 
-      {/* Inline Styles for Reuse */}
+
+      </div>
     </>
   );
 }
