@@ -10,6 +10,7 @@ import PrescriptionCard from "../../../components/common/PrescriptionCard";
 import PrescriptionDetailsModal from "../../../components/modal/PrescriptionDetailsModal";
 import { getFormattedDateTime } from "../../../utils/dashboardUtils";
 import { IPrescription } from "../../../types/Interfaces";
+import PrescriptionDownloadModal from "../../../components/modal/PrescriptionDownloadModal";
 interface Diagnosis {
   id?: string;
   primaryDiagnosis: string;
@@ -35,7 +36,7 @@ const ConsultationView = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedPrescription, setSelectedPrescription] = useState<IPrescription | null>(null);
   const [isModalOpenPrescription, setModalOpenPrescription] = useState(false);
-
+  const [isModalOpenPrescriptionDownload, setModalOpenPrescriptionDownload] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -183,6 +184,11 @@ const { formattedDate, formattedTime } = getFormattedDateTime(appointment?.sched
             <>
               {prescriptions.length > 0 ? (
                 <div>
+                  <div className="flex justify-end">
+                    <button className="px-6 py-2 rounded bg-primary text-white text-xs hover:bg-primary-dark"
+                    onClick={()=>{setModalOpenPrescriptionDownload(true)}}
+                    >Download Prescription</button>
+                  </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-6 my-4">
                     {prescriptions.map((prescription) => (
                       <PrescriptionCard
@@ -199,6 +205,11 @@ const { formattedDate, formattedTime } = getFormattedDateTime(appointment?.sched
                     data={selectedPrescription}
                     isModalOpen={isModalOpenPrescription}
                     setModalOpen={setModalOpenPrescription}
+                  />
+                  <PrescriptionDownloadModal
+                    isModalOpen={isModalOpenPrescriptionDownload}
+                    setModalOpen={setModalOpenPrescriptionDownload}
+                    prescriptions={prescriptions}
                   />
                 </div>
               ) : (

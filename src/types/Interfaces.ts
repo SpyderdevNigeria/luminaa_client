@@ -17,6 +17,8 @@ export interface IPrescription {
   instructions:string;
   createdAt: string;
   isRefillable:string | boolean;
+   appointment?:IAppointment,
+   doctor?: IDoctor
 }
 
 export interface IUser {
