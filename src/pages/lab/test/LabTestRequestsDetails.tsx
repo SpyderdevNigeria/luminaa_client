@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LabApi from "../../../api/labApi";
-import LabOrderDetials from "../../../components/common/LabOrderDetials";
+import LabOrderDetials from "../../../components/common/LabOrderDetails";
 import { IResults } from "../../../types/Interfaces";
 import { useToaster } from "../../../components/common/ToasterContext";
 

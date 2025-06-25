@@ -161,6 +161,7 @@ export interface IMedication {
   strength: string;
   category: string;
   description: string;
+  notes: string;
   price: number;
   requiresPrescription: boolean;
   isHidden: boolean;
@@ -203,4 +204,48 @@ export interface IResults {
   documents: Array<any>;
   status?:string;
   notes?:string;
+}
+
+export interface IInventoryItem {
+  id: string;
+  medication?:IMedication;
+  medicationId: string;
+  medicationName: string;
+  medicationGenericName: string;
+  batchNumber: string;
+  notes?:string;
+  quantity: number;
+  expiryDate: string; 
+  status: string;
+  barcode: string;
+  location: string;
+  reference: string;
+  supplier: string;
+  createdAt: string;
+  updatedAt: string;
+  isExpired: boolean;
+  isLowStock: boolean;
+}
+
+export interface IInventorySummary {
+  medication:IMedication;
+  totalQuantity: number;
+}
+
+
+export interface IInventoryLog {
+  id: string;
+  medicationId: string;
+  medicationName: string;
+  inventoryId: string;
+  batchNumber: string;
+  action: string; 
+  quantity: number;
+  previousQuantity: number;
+  newQuantity: number;
+  performedBy: string;
+  performedByName: string;
+  notes: string;
+  reference: string;
+  timestamp: string; 
 }

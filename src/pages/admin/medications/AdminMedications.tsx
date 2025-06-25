@@ -17,6 +17,10 @@ import {
 } from "../../../utils/dashboardUtils";
 import { useToaster } from "../../../components/common/ToasterContext";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
+import { MdInventory } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import routeLinks from "../../../utils/routes";
+import useAdminAuth from "../../../hooks/useAdminAuth";
 
 function AdminMedications() {
   const {
@@ -52,7 +56,8 @@ function AdminMedications() {
   const [confirmMessage, setConfirmMessage] = useState("");
   const [onConfirm, setOnConfirm] = useState<() => void>(() => {});
   const [confirmLoading, setConfirmLoading] = useState(false);
-
+  const navigate = useNavigate();
+  const { userProfile } = useAdminAuth();
   useEffect(() => {
     getMedications();
   }, [
@@ -71,12 +76,17 @@ function AdminMedications() {
   };
 
   const handleDelete = (medicationId: string, medication: any) => {
-    setConfirmMessage(`Are you sure you want to delete the medication "${medication?.name}"?`);
+    setConfirmMessage(
+      `Are you sure you want to delete the medication "${medication?.name}"?`
+    );
     setOnConfirm(() => async () => {
       setConfirmLoading(true);
       try {
         await AdminApi.deleteMedication(medicationId);
-        showToast(`Medication "${medication?.name}" deleted successfully`, "success");
+        showToast(
+          `Medication "${medication?.name}" deleted successfully`,
+          "success"
+        );
         getMedications();
       } catch (error) {
         console.error("Error deleting medication:", error);
@@ -90,13 +100,18 @@ function AdminMedications() {
   };
 
   const toggleVisibility = (id: string, medication: any) => {
-    const action = medication?.isHidden ? "make this medication visible" : "hide this medication";
+    const action = medication?.isHidden
+      ? "make this medication visible"
+      : "hide this medication";
     setConfirmMessage(`Are you sure you want to ${action}?`);
     setOnConfirm(() => async () => {
       setConfirmLoading(true);
       try {
         await AdminApi.updateMedicationVisibility(id);
-        showToast(`Medication "${medication.name}" updated successfully`, "success");
+        showToast(
+          `Medication "${medication.name}" updated successfully`,
+          "success"
+        );
         getMedications();
       } catch (err) {
         console.error("Error toggling visibility:", err);
@@ -109,6 +124,13 @@ function AdminMedications() {
     setConfirmOpen(true);
   };
 
+  const handleNavigate = (id:string) => {
+    if (userProfile?.user?.role === "admin") {
+      navigate(routeLinks?.admin?.adminInventory+'/medication/'+ id)
+    }else{
+      navigate(routeLinks?.superAdmin?.adminInventory+'/medication/'+ id)   
+    }
+  };
   const columns: Column<any>[] = [
     { key: "name", label: "Name" },
     { key: "genericName", label: "Generic Name" },
@@ -136,13 +158,23 @@ function AdminMedications() {
       key: "actions",
       label: "Actions",
       render: (medication) => (
-        <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
+        <Dropdown
+          showArrow={false}
+          triggerLabel=""
+          triggerIcon={<HiOutlineDotsVertical />}
+        >
           <ul className="space-y-2 text-sm">
             <li
               onClick={() => toggleVisibility(medication.id, medication)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
             >
               <FiEye /> {medication.isHidden ? "Make Visible" : "Hide"}
+            </li>
+            <li
+              onClick={() => handleNavigate(medication.id)}
+              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
+            >
+              <MdInventory /> Inventory
             </li>
             <li
               onClick={() => setViewMedication(medication)}
@@ -197,15 +229,36 @@ function AdminMedications() {
         <div className="space-y-4 container-bd">
           <div className="mt-4 space-y-2">
             <h2 className="text-xl font-semibold">{viewMedication.name}</h2>
-            <p><strong>Generic Name:</strong> {viewMedication.genericName}</p>
-            <p><strong>Manufacturer:</strong> {viewMedication.manufacturer}</p>
-            <p><strong>Dosage Form:</strong> {viewMedication.dosageForm}</p>
-            <p><strong>Strength:</strong> {viewMedication.strength}</p>
-            <p><strong>Category:</strong> {viewMedication.category}</p>
-            <p><strong>Price:</strong> ₦{viewMedication.price}</p>
-            <p><strong>Prescription Required:</strong> {viewMedication.requiresPrescription ? "Yes" : "No"}</p>
-            <div><strong>Status:</strong> <StatusBadge status={viewMedication.status} /></div>
-            <p><strong>Visibility:</strong> {viewMedication.isHidden ? "Hidden" : "Visible"}</p>
+            <p>
+              <strong>Generic Name:</strong> {viewMedication.genericName}
+            </p>
+            <p>
+              <strong>Manufacturer:</strong> {viewMedication.manufacturer}
+            </p>
+            <p>
+              <strong>Dosage Form:</strong> {viewMedication.dosageForm}
+            </p>
+            <p>
+              <strong>Strength:</strong> {viewMedication.strength}
+            </p>
+            <p>
+              <strong>Category:</strong> {viewMedication.category}
+            </p>
+            <p>
+              <strong>Price:</strong> ₦{viewMedication.price}
+            </p>
+            <p>
+              <strong>Prescription Required:</strong>{" "}
+              {viewMedication.requiresPrescription ? "Yes" : "No"}
+            </p>
+            <div>
+              <strong>Status:</strong>{" "}
+              <StatusBadge status={viewMedication.status} />
+            </div>
+            <p>
+              <strong>Visibility:</strong>{" "}
+              {viewMedication.isHidden ? "Hidden" : "Visible"}
+            </p>
           </div>
         </div>
       </div>

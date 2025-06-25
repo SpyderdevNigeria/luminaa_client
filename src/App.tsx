@@ -59,6 +59,11 @@ import AdminPatientDetails from "./pages/admin/patients/AdminPatientDetails";
 import AdminDoctorsDetails from "./pages/admin/doctors/AdminDoctorsDetails";
 import AdminPharmacistsDetails from "./pages/admin/pharmacists/AdminPharmacistsDetails";
 import SuperAdminAdminsDetails from "./pages/admin/superadmin/admins/SuperAdminAdminsDetails";
+import AdminInventory from "./pages/admin/inventories/AdminInventory";
+import AdminInventoryLogs from "./pages/admin/inventories/AdminInventoryLogs";
+import AdminInventorySummary from "./pages/admin/inventories/AdminInventorySummary";
+import AdminInventoryDetails from "./pages/admin/inventories/AdminInventoryDetails";
+import AdminInventoryMedication from "./pages/admin/inventories/AdminInventoryMedication";
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
 const App = createBrowserRouter([
@@ -344,10 +349,28 @@ const App = createBrowserRouter([
         path:routeLinks?.admin?.medications,
         element:<AdminMedications/>
       },
-      //     {
-      //   path:routeLinks?.admin?.medicationsDetails,
-      //   element:<AdminMedicationsDetails/>
-      // },
+      {
+        path:routeLinks?.admin?.adminInventory,
+        element:<AdminInventory/>
+      },
+         {
+        path:routeLinks?.admin?.adminInventoryLogs,
+        element:<AdminInventoryLogs/>
+      },
+    {
+        path:routeLinks?.admin?.adminInventorySummary,
+        element:<AdminInventorySummary/>
+      },
+
+      {
+        path:routeLinks?.admin?.adminInventoryDetails,
+        element:<AdminInventoryDetails/>
+      },
+       {
+        path:routeLinks?.admin?.adminInventoryMedication,
+        element:<AdminInventoryMedication/>
+      },
+
          {
         path: routeLinks?.admin?.adminsDetails,
         element : <SuperAdminAdminsDetails/>
@@ -406,10 +429,28 @@ const App = createBrowserRouter([
         path:routeLinks?.superAdmin?.medications,
         element:<AdminMedications/>
       },
-      //    {
-      //   path:routeLinks?.superAdmin?.medicationsDetails,
-      //   element:<AdminMedicationsDetails/>
-      // },
+    {
+        path:routeLinks?.superAdmin?.adminInventory,
+        element:<AdminInventory/>
+      },
+         {
+        path:routeLinks?.superAdmin?.adminInventoryLogs,
+        element:<AdminInventoryLogs/>
+      },
+    {
+        path:routeLinks?.superAdmin?.adminInventorySummary,
+        element:<AdminInventorySummary/>
+      },
+
+      {
+        path:routeLinks?.superAdmin?.adminInventoryDetails,
+        element:<AdminInventoryDetails/>
+      },
+       {
+        path:routeLinks?.superAdmin?.adminInventoryMedication,
+        element:<AdminInventoryMedication/>
+      },
+
       {
         path: routeLinks?.superAdmin?.admins,
         element : <SuperAdminAdmins/>

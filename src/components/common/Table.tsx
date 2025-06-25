@@ -21,11 +21,14 @@ type Props<T> = {
 const Table = <T extends object>({
   data,
   columns,
-  page,limit, total, totalPages, setPage,
+  page,
+  limit,
+  total,
+  totalPages,
+  setPage,
   showPaginate = true,
 }: Props<T>) => {
-
-  const gettotalPages = Math.ceil((    total ?? 0) / limit);
+  const gettotalPages = Math.ceil((total ?? 0) / limit);
 
   return (
     <div className="">
@@ -33,6 +36,7 @@ const Table = <T extends object>({
         <table className="w-full text-left text-sm border-separate border-spacing-y-2">
           <thead className="bg-primary text-white">
             <tr>
+              <th className="p-3 font-light">S/N</th>
               {columns.map((col, index) => (
                 <th key={index} className="p-3 font-light">
                   <div
@@ -90,6 +94,9 @@ const Table = <T extends object>({
                 key={rowIndex}
                 className="bg-white border-gray-100 hover:bg-gray-50"
               >
+                <td className="p-3">
+                  {(page - 1) * limit + rowIndex + 1}
+                </td>
                 {columns.map((col, colIndex) => (
                   <td key={colIndex} className="p-3">
                     {col.render
@@ -102,20 +109,24 @@ const Table = <T extends object>({
           </tbody>
         </table>
       </div>
+
       {/* Pagination */}
       {showPaginate && (
-         <div>
-            <PaginationComponent
-              page={page}
-              total={total ?? 0}
-              limit={limit}
-              totalPages={totalPages ? totalPages : gettotalPages ? gettotalPages : 1}
-              onPageChange={(e: number) => { if (setPage) setPage(e); }}
-            />
-           </div>
+        <div>
+          <PaginationComponent
+            page={page}
+            total={total ?? 0}
+            limit={limit}
+            totalPages={totalPages ? totalPages : gettotalPages || 1}
+            onPageChange={(e: number) => {
+              if (setPage) setPage(e);
+            }}
+          />
+        </div>
       )}
     </div>
   );
 };
+
 
 export default Table;

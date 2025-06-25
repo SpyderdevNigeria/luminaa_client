@@ -10,6 +10,7 @@ interface MedicationCardProps {
   prescriptions?: any;
   onView?: () => void;
   onAddPrescription?: () => void;
+  buttonText?:string;
 }
 
 const MedicationCard: React.FC<MedicationCardProps> = ({
@@ -17,6 +18,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
   prescriptions,
   onView,
   onAddPrescription,
+  buttonText = 'Add as Prescription',
 }) => {
   const findMedicationInPrescription = (id: string) => {
     return prescriptions?.find(
@@ -130,7 +132,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
             onClick={onAddPrescription}
             className="w-full text-sm font-medium bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition"
           >
-            Add as Prescription
+            {buttonText}
           </button>
         </div>
       ) : (
@@ -147,7 +149,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
                 onClick={onAddPrescription}
                 className="w-full text-sm font-medium bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary/90 transition"
               >
-                Add as Prescription
+                {buttonText}
               </button>
             </div>
           )}

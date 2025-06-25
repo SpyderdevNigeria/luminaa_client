@@ -92,7 +92,7 @@ function SuperAdminAdmins() {
     },
     {
       key: "createdAt",
-      label: "Created At",
+      label: "Created On",
       render: (admin) => <span>{new Date(admin?.createdAt).toLocaleDateString()}</span>,
     },
     {

@@ -41,8 +41,8 @@ function Consultaion() {
   }, [page, status, dataFrom, dateTo]);
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-8">
+    <div className="container-bd">
+      <div className="flex justify-between items-center mb-8 ">
               <h1 className="text-2xl font-semibold">Consultations</h1>
               <Link
                 className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
@@ -61,7 +61,7 @@ function Consultaion() {
         onDateToChange={setDateTo}
       />
 
-      <section className="bg-white rounded-lg p-4 min-h-[200px]">
+      <section className="min-h-[200px]">
         {loadingAppointment ? (
           <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4 w-full">
             {[...Array(4)].map((_, idx) => (

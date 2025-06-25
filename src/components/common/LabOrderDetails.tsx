@@ -1,5 +1,5 @@
 import UserImage from "../../assets/images/patient/user.png";
-import InfoLabel from "../../components/common/InfoLabel";
+import InfoLabel from "./InfoLabel";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
@@ -65,7 +65,6 @@ const LabOrderDetails = ({
   const [note, setNote] = useState<string>("");
   const [activeTab, setActiveTab] = useState("Test");
   const [startLoading, setStartLoading] = useState(false);
-  const [submitResultLoading, setSubmitResultLoading] = useState(false);
   const { showToast } = useToaster();
 
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -145,24 +144,20 @@ const LabOrderDetails = ({
   };
 
   const handleSubmitResults = () => {
-    setSubmitResultLoading(true);
     const payload = {
       labTestOrderId: data.data.id,
       results: resultList,
       notes: note,
       documents: [],
     };
-    if (handleSubmit) {
-      handleSubmit(payload);
+      handleSubmit?.(payload);
       console.log("Submitting payload:", payload);
-    }
-    setSubmitResultLoading(false);
   };
 
   const handleStatusChange = () => {
-    setStartLoading(true);
+    setStartLoading(!startLoading);
     setConfirmMessage("Do you want to begin this Test?");
-    setConfirmOpen(true);
+    setConfirmOpen(!confirmOpen);
   };
 
   const onConfirm = async () => {
@@ -230,7 +225,7 @@ const LabOrderDetails = ({
               : "bg-green-100 text-green-700"
           }`}
         />
-        <InfoLabel
+        {appointment && <InfoLabel
           label={
             appointment?.date
               ? `${moment(appointment.date).format("MMM D, YYYY")} at ${moment(
@@ -239,8 +234,8 @@ const LabOrderDetails = ({
               : "N/A"
           }
           info="Appointment Date"
-        />
-        <InfoLabel label={appointment?.status} info="Appointment Status" />
+        />}
+       {appointment &&  <InfoLabel label={appointment?.status} info="Appointment Status" />}
         <InfoLabel
           label={moment(createdAt).format("MMM D, YYYY h:mm A")}
           info="Requested On"
@@ -292,7 +287,7 @@ const LabOrderDetails = ({
               onClick={handleStatusChange}
               disabled={startLoading}
             >
-              Start Test
+               {startLoading ? 'Starting...' : 'Start Test'}
             </button>
           </div>
         )}
@@ -312,14 +307,14 @@ const LabOrderDetails = ({
       </div>
 
       {/* Doctor Info */}
-      <div className="flex-1 bg-white rounded-xl">
+    {doctor &&   <div className="flex-1 bg-white rounded-xl">
         <h2 className="text-xl font-semibold mb-2 text-primary">Doctor Info</h2>
         <div className="flex items-center gap-4 mb-2">
           <img src={DoctrImage} alt="avatar" className="w-16 h-16 rounded-full border" />
           <p className="font-semibold text-base capitalize">{fullDoctorName}</p>
         </div>
         <InfoLabel label={doctor?.specialty ?? "N/A"} info="Specialty" />
-      </div>
+      </div>}
     </div>
 
     {/* Doctor's Note */}
@@ -505,9 +500,9 @@ const LabOrderDetails = ({
                         <button
                           onClick={handleSubmitResults}
                           className="bg-primary text-white py-2 px-4 rounded-lg"
-                          disabled={submitResultLoading}
+                          disabled={isLoadingResults}
                         >
-                          {submitResultLoading
+                          {isLoadingResults
                             ? "Save Results..."
                             : "Save Note & Results"}
                         </button>
@@ -531,7 +526,7 @@ const LabOrderDetails = ({
                     onClick={handleStatusChange}
                     disabled={startLoading}
                   >
-                    Start Test
+                   {startLoading ? 'Starting...' : 'Start Test'}
                   </button>
                 </div>
               )}
@@ -544,7 +539,10 @@ const LabOrderDetails = ({
         open={confirmOpen}
         description={confirmMessage}
         onConfirm={onConfirm}
-        onClose={() => setConfirmOpen(false)}
+        onClose={() => {
+          setConfirmOpen(false)
+          setStartLoading(false)
+        }}
         loading={confrimLoading}
       />
     </div>

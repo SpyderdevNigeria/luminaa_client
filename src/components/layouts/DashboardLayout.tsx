@@ -1,75 +1,93 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation, matchPath } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import MobileSidebar from './MobileSidebar';
-import { useLocation } from 'react-router-dom';
+
+type LinkItem = {
+  title: string;
+  to: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  subLinks?: LinkItem[];
+};
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
-  links: { title: string; to: string; label: string; subLinks?: any, icon: React.ComponentType<{ className?: string }> }[];
-  bg?:string
+  links: LinkItem[];
+  bg?: string;
 };
 
+type ActiveLink = {
+  to: string;
+  label: string;
+  sublink?: string;
+  icon?: React.ReactNode;
+};
+
+function flattenLinks(links: LinkItem[]): LinkItem[] {
+  return links.flatMap(link => {
+    const subs = link.subLinks?.map(sub => ({
+      ...sub,
+      icon: link.icon,
+    })) || [];
+
+    // Only include parent if it has a valid route
+    return link.to ? [link, ...subs] : [...subs];
+  });
+}
 
 function DashboardLayout({ children, links }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState<{ to: string; label: string;  sublink?: string, icon: React.ReactNode } | null>(null);
+  const [activeLink, setActiveLink] = useState<ActiveLink | null>(null);
   const location = useLocation();
 
-  useEffect(() => { 
-    // First, check for an exact match with the full path
-    const active = links?.find((i) => i?.to === location?.pathname) || null;
-  
-    if (active) {
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const flattenedLinks = flattenLinks(links);
+
+    const matched = flattenedLinks.find(link =>
+      matchPath({ path: link.to, end: false }, currentPath)
+    );
+
+    if (matched) {
+      const parent = links.find(link =>
+        link.subLinks?.some(sub =>
+          matchPath({ path: sub.to, end: false }, currentPath)
+        )
+      );
+
       setActiveLink({
-        to: active.to,
-        label: active.label,
-        icon: active ? <active.icon className="" /> : null,
-        sublink:''
+        to: matched.to,
+        label: matched.label,
+        icon: <matched.icon className="" />,
+        sublink: parent && parent.label !== matched.label ? ` / ${matched.label}` : '',
       });
     } else {
-      const parts = location.pathname.split("/");
-  
-      // Create the parent label (without parameters)
-      const Label = `/${parts[1]}/${parts[2]}`;
-  
-      // Find the active link matching the Label (parent path)
-      const active = links?.find((i) => i?.to === Label) || null;
-
-        setActiveLink({
-          to:  active ?  active?.to : '',
-          label: active ? active?.label : '',
-          icon: active ? <active.icon className="" /> : null,
-          sublink:` / ${active?.label} Details`,
-        });
+      setActiveLink(null);
     }
-  }, [location]);
-  
-  
+  }, [location.pathname, links]);
 
   return (
-    <div  className="min-h-screen bg-gray-100">
-      {/* Sidebar*/}
-        <Sidebar links={links} active={activeLink || { label: '' }} />
-
-      {/* Mobile Sidebar */}
+    <div className="min-h-screen bg-gray-100">
+      <Sidebar links={links} active={activeLink || { label: '' }} />
       <MobileSidebar
         links={links}
         active={activeLink || { label: '' }}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
       />
-
-      {/* Main Content Area */}
       <div className="flex flex-col flex-1 md:ml-63 relative">
         <Navbar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
-          active={activeLink ? { title: activeLink.label, sublink: activeLink.sublink || '' } : { title: '', sublink: '' }}
+          active={
+            activeLink
+              ? { title: activeLink.label, sublink: activeLink.sublink || '' }
+              : { title: '', sublink: '' }
+          }
         />
-
-        {/* Page Content */}
-        <main className={`flex-1 px-4 2xl:px-18 py-6 max-h-[90vh]  overflow-y-scroll `}>
+        <main className="flex-1 px-4 2xl:px-18 py-6 max-h-[90vh] overflow-y-scroll">
           {children}
         </main>
       </div>

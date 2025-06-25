@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DoctorApi from "../../../api/doctorApi";
-import LabOrderDetials from "../../../components/common/LabOrderDetials";
+import LabOrderDetials from "../../../components/common/LabOrderDetails";
 
 
 function DoctorLabOrderDetails() {

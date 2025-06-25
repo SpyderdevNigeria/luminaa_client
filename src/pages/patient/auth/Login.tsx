@@ -88,7 +88,7 @@ function Login() {
     }, [formData]);
     
   return (
-    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 2xl:mt-24">
+    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 ">
       <div className="text-center my-8">
         <h5 className="text-2xl md:text-3xl px-20 md:px-28 text-text-secondary">
           Welcome Back

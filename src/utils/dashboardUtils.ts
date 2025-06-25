@@ -13,8 +13,9 @@ import { HiMiniUsers } from "react-icons/hi2";
 import { RxDashboard } from "react-icons/rx";
 import { CiViewList } from "react-icons/ci";
 import { ImLab } from "react-icons/im";
-import { MdMedication } from "react-icons/md";
+import { MdInventory, MdMedication } from "react-icons/md";
 import moment from "moment";
+
 export const navItemsPatient = [
   {
     label: "Dashboard",
@@ -217,6 +218,48 @@ export const navItemsAdmin = [
     icon: LiaPillsSolid,
     to: routeLinks?.admin?.pharmacists
   },
+  
+   {
+    label:"Inventory",
+    title:"Inventory",
+    icon:MdInventory,
+    to:"",
+    subLinks: [
+      {
+        label: "Inventories",
+        title: "Inventories",
+        icon: FaUserInjured,
+        to: routeLinks?.admin?.adminInventory,
+      },
+        {
+        label: "Inventory Logs",
+        title: "Inventory Logs",
+        icon: FaUserInjured,
+        to: routeLinks?.admin?.adminInventoryLogs,
+      },
+       {
+        label: "Inventory Summary",
+        title: "Inventory Summary",
+        icon: FaUserInjured,
+        to: routeLinks?.admin?.adminInventorySummary,
+      },
+      {
+        label: "Inventory Details",
+        title: "Inventory Details",
+        icon: FaUserInjured,
+        to: routeLinks?.admin?.adminInventoryDetails,
+        visible:false
+      },
+            {
+        label: "Inventory Medication Details",
+        title: "Inventory Medication Details",
+        icon: FaUserInjured,
+        to: routeLinks?.admin?.adminInventoryMedication,
+        visible:false
+      },
+
+    ],
+  },
   {
     label:"Medications",
     title:"Medications",
@@ -283,6 +326,49 @@ export const navItemsSuperAdmin = [
     icon: LiaPillsSolid,
     to: routeLinks?.superAdmin?.pharmacists
   },
+
+   {
+    label:"Inventory",
+    title:"Inventory",
+    icon:MdInventory,
+    to:"",
+    subLinks: [
+      {
+        label: "Inventories",
+        title: "Inventories",
+        icon: FaUserInjured,
+        to: routeLinks?.superAdmin?.adminInventory,
+      },
+        {
+        label: "Inventory Logs",
+        title: "Inventory Logs",
+        icon: FaUserInjured,
+        to: routeLinks?.superAdmin?.adminInventoryLogs,
+      },
+       {
+        label: "Inventory Summary",
+        title: "Inventory Summary",
+        icon: FaUserInjured,
+        to: routeLinks?.superAdmin?.adminInventorySummary,
+      },
+      {
+        label: "Inventory Details",
+        title: "Inventory Details",
+        icon: FaUserInjured,
+        to: routeLinks?.superAdmin?.adminInventoryDetails,
+        visible:false
+      },
+               {
+        label: "Inventory Medication Details",
+        title: "Inventory Medication Details",
+        icon: FaUserInjured,
+        to: routeLinks?.superAdmin?.adminInventoryMedication,
+        visible:false
+      },
+    ],
+  },
+
+
   {
     label:"Medications",
     title:"Medications",
@@ -345,6 +431,42 @@ export const navItemsPharmacy = [
   },
 
 ]
+
+export const inventoryStatusOptions = ["in_stock", "low_stock", "expired", "out_of_stock"];
+
+export const inventoryLocationOptions = [
+  "Pharmacy",
+  "Ward A",
+  "Ward B",
+  "Lab",
+  "Store Room",
+];
+
+export const inventorySupplierOptions = [
+  "PharmaPlus",
+  "MedSupply Co.",
+  "Global Health Distributors",
+  "RxDepot",
+  "Wellness Suppliers",
+];
+
+export const inventoryLowStockOptions = [
+  { label: "Yes", value: "10" }, 
+  { label: "No", value: "" },
+];
+
+export const inventoryExpiryOptions = [
+  { label: "Yes", value: "true" },
+  { label: "No", value: "false" },
+];
+
+export const inventoryExpiringInOptions = [
+  { label: "7 days", value: "7" },
+  { label: "14 days", value: "14" },
+  { label: "30 days", value: "30" },
+  { label: "90 days", value: "90" },
+];
+
 export const adminDoctorSpecialties = [
   "Cardiology",
   "Dermatology",

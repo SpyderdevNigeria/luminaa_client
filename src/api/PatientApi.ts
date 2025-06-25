@@ -113,6 +113,11 @@ const PatientApi = {
     return response.data;
   },
 
+     createLabOrder: async (body: any) => {
+    const response = await api.post("/patient/lab-tests/orders", body);
+    return response.data;
+  },
+
      getLabOrderById: async (id: any) => {
     const response = await api.get(`/patient/lab-tests/orders/${id}`);
     return response.data;
