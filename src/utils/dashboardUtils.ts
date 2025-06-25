@@ -417,6 +417,40 @@ export const navItemsPharmacy = [
     icon: RxDashboard,
     to: routeLinks?.pharmacist?.dashboard,
   },
+     {
+    label:"Inventory",
+    title:"Inventory",
+    icon:MdInventory,
+    to:"",
+    subLinks: [
+      {
+        label: "Inventories",
+        title: "Inventories",
+        icon: FaUserInjured,
+        to: routeLinks?.pharmacist?.pharmacistInventory,
+      },
+       {
+        label: "Inventory Summary",
+        title: "Inventory Summary",
+        icon: FaUserInjured,
+        to: routeLinks?.pharmacist?.pharmacistInventorySummary,
+      },
+      {
+        label: "Inventory Details",
+        title: "Inventory Details",
+        icon: FaUserInjured,
+        to: routeLinks?.pharmacist?.pharmacistInventoryDetails,
+        visible:false
+      },
+               {
+        label: "Inventory Medication Details",
+        title: "Inventory Medication Details",
+        icon: FaUserInjured,
+        to: routeLinks?.pharmacist?.pharmacistInventoryMedication,
+        visible:false
+      },
+    ],
+  },
     {
     label:"Medications",
     title:"Medications",

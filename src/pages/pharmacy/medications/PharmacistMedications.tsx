@@ -10,6 +10,8 @@ import {
   medicationManufacturerOptions,
   medicationStatusOptions,
 } from "../../../utils/dashboardUtils";
+import routeLinks from "../../../utils/routes";
+import { useNavigate } from "react-router-dom";
 
 const PharmacistMedications = () => {
   const {
@@ -34,7 +36,7 @@ const PharmacistMedications = () => {
     setMedicationManufacturer,
     getMedications,
   } = useMedications(PharmacistApi);
-
+  const navigate = useNavigate()
   useEffect(() => {
     getMedications();
   }, [
@@ -96,7 +98,7 @@ const PharmacistMedications = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 mt-6">
           {medications.map((med) => (
-            <MedicationCard key={med.id} medication={med} />
+            <MedicationCard key={med.id} medication={med} buttonText={'View Inventory'}onAddPrescription={()=>{navigate(routeLinks?.pharmacist?.pharmacistInventory+'/medication/'+med.id)}}   />
           ))}
         </div>
       )}

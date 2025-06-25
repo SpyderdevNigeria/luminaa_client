@@ -116,6 +116,10 @@ pharmacist: {
   path:'/pharmacist',
   dashboard: '/pharmacist/dashboard',
   medications:'/pharmacist/medications',
+  pharmacistInventory: '/pharmacist/inventory',
+  pharmacistInventoryDetails:'/pharmacist/inventory/:id',
+  pharmacistInventorySummary: '/pharmacist/inventory-summary',
+  pharmacistInventoryMedication: '/pharmacist/inventory/medication/:id',
   profile:'/pharmacist/profile'
 }
 }

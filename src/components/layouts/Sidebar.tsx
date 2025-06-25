@@ -79,7 +79,7 @@ function Sidebar({ links, active }: SidebarProps) {
                   ) : (
                     <Link
                       to={item.to}
-                      className={`flex items-center text-sm p-1 my-1 rounded-lg mb-2 ${
+                      className={`flex items-center text-sm p-1 my-1 rounded-lg  ${
                         isActive ? "text-primary" : "text-inactive"
                       }`}
                     >

@@ -64,6 +64,10 @@ import AdminInventoryLogs from "./pages/admin/inventories/AdminInventoryLogs";
 import AdminInventorySummary from "./pages/admin/inventories/AdminInventorySummary";
 import AdminInventoryDetails from "./pages/admin/inventories/AdminInventoryDetails";
 import AdminInventoryMedication from "./pages/admin/inventories/AdminInventoryMedication";
+import PharmacyInventory from "./pages/pharmacy/inventories/PharmacyInventory";
+import PharmacyInventorySummary from "./pages/pharmacy/inventories/PharmacyInventorySummary";
+import PharmacyInventoryDetails from "./pages/pharmacy/inventories/PharmacyInventoryDetails";
+import PharmacyInventoryMedication from "./pages/pharmacy/inventories/PharmacyInventoryMedication";
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
 const App = createBrowserRouter([
@@ -90,30 +94,30 @@ const App = createBrowserRouter([
     ],
   },
 
-  // partner Authentication routers 
+  // partner Authentication routers
   {
     path: routeLinks?.auth?.partnerAuth,
-    element : <PartnerAuthLayout/>,
+    element: <PartnerAuthLayout />,
     children: [
-       {
+      {
         path: routeLinks?.auth?.partnerAuth,
         element: <Navigate to={routeLinks?.auth?.partnerLogin} />,
       },
       {
-        path:routeLinks?.auth?.partnerLogin,
-        element : <PartnerLogin/>
-      }
-    ]
+        path: routeLinks?.auth?.partnerLogin,
+        element: <PartnerLogin />,
+      },
+    ],
   },
   // VerifyEmail route
-    {
-        path: routeLinks?.auth?.emailVerification,
-        element: <EmailVerification />,
+  {
+    path: routeLinks?.auth?.emailVerification,
+    element: <EmailVerification />,
   },
 
   {
-        path: routeLinks?.auth?.partnerEmailVerification,
-        element: <PartnerEmailVerification />,
+    path: routeLinks?.auth?.partnerEmailVerification,
+    element: <PartnerEmailVerification />,
   },
 
   // Patient route for Onboarding
@@ -143,7 +147,7 @@ const App = createBrowserRouter([
         path: routeLinks?.patient?.consultations,
         element: <Consultaion />,
       },
-        {
+      {
         path: routeLinks?.patient?.consultationsid,
         element: <ConsultationView />,
       },
@@ -156,8 +160,8 @@ const App = createBrowserRouter([
         element: <Lab />,
       },
       {
-        path:routeLinks?.patient?.labDetails,
-        element:<LabDetails/>
+        path: routeLinks?.patient?.labDetails,
+        element: <LabDetails />,
       },
       {
         path: routeLinks?.patient?.profile,
@@ -220,252 +224,270 @@ const App = createBrowserRouter([
         path: routeLinks?.doctor?.schedule,
         element: <DoctorSchedule />,
       },
-         {
+      {
         path: routeLinks?.doctor?.labOrders,
         element: <DoctorOrder />,
       },
-        {
+      {
         path: routeLinks?.doctor?.labOrdersDetails,
         element: <DoctorLabOrderDetails />,
       },
       {
-        path:routeLinks?.doctor?.prescription,
-        element:<DoctorPrescriptions/>
-      }
+        path: routeLinks?.doctor?.prescription,
+        element: <DoctorPrescriptions />,
+      },
     ],
   },
 
   //lab Routes
   {
     path: routeLinks?.lab?.path,
-    element: <LabLayout/>,
-    children : [
-        {
-        path:  routeLinks?.lab?.path,
+    element: <LabLayout />,
+    children: [
+      {
+        path: routeLinks?.lab?.path,
         element: <Navigate to={routeLinks?.lab?.dashboard} />,
       },
-            {
-        path:  routeLinks?.lab?.dashboard,
-        element: <LabDashboard/>,
+      {
+        path: routeLinks?.lab?.dashboard,
+        element: <LabDashboard />,
       },
       {
-        path:  routeLinks?.lab?.labRequests,
-        element: <LabTestRequests/>,
+        path: routeLinks?.lab?.labRequests,
+        element: <LabTestRequests />,
       },
-        {
-        path:  routeLinks?.lab?.labRequestsDetails,
-        element: <LabTestRequestsDetails/>,
+      {
+        path: routeLinks?.lab?.labRequestsDetails,
+        element: <LabTestRequestsDetails />,
       },
-        {
+      {
         path: routeLinks?.lab?.profile,
         element: <LabProfile />,
       },
-    ]
+    ],
   },
 
-// Pharmacy Routes
+  // Pharmacy Routes
   {
     path: routeLinks?.pharmacist?.path,
-    element: <PharmacyLayout/>,
-    children : [
-        {
-        path:  routeLinks?.pharmacist?.path,
+    element: <PharmacyLayout />,
+    children: [
+      {
+        path: routeLinks?.pharmacist?.path,
         element: <Navigate to={routeLinks?.pharmacist?.dashboard} />,
       },
-            {
-        path:  routeLinks?.pharmacist?.dashboard,
-        element: <PharmacyDashboard/>,
+      {
+        path: routeLinks?.pharmacist?.dashboard,
+        element: <PharmacyDashboard />,
       },
       {
-        path:  routeLinks?.pharmacist?.medications,
-        element: <PharmacyMedications/>,
+        path: routeLinks?.pharmacist?.medications,
+        element: <PharmacyMedications />,
       },
-        {
+
+      {
+        path: routeLinks?.pharmacist?.pharmacistInventory,
+        element: <PharmacyInventory />,
+      },
+      {
+        path: routeLinks?.pharmacist?.pharmacistInventorySummary,
+        element: <PharmacyInventorySummary />,
+      },
+
+      {
+        path: routeLinks?.pharmacist?.pharmacistInventoryDetails,
+        element: <PharmacyInventoryDetails />,
+      },
+      {
+        path: routeLinks?.pharmacist?.pharmacistInventoryMedication,
+        element: <PharmacyInventoryMedication />,
+      },
+
+      {
         path: routeLinks?.pharmacist?.profile,
         element: <PharmacyProfile />,
       },
-    ]
+    ],
   },
   // Admin Routes
   {
     path: routeLinks?.auth?.adminAuth,
     element: <AdminAuthLayout />,
     children: [
-      { 
-        path:  routeLinks?.auth?.adminAuth,
+      {
+        path: routeLinks?.auth?.adminAuth,
         element: <Navigate to={routeLinks?.auth?.adminLogin} />,
-     },
+      },
       {
         path: routeLinks?.auth?.adminLogin,
         element: <AdminLogin />,
       },
-]
+    ],
   },
   {
-    path:routeLinks?.admin?.path,
+    path: routeLinks?.admin?.path,
     element: <AdminLayout />,
     children: [
       {
         path: routeLinks?.admin?.path,
         element: <Navigate to={routeLinks?.admin?.dashboard} />,
-       },
+      },
       {
         path: routeLinks?.admin?.dashboard,
         element: <AdminDashboard />,
       },
       {
         path: routeLinks?.admin?.lab,
-        element:<AdminLab/>
+        element: <AdminLab />,
       },
       {
-        path:routeLinks?.admin?.labDetails,
-        element: <AdminLabDetails/>
+        path: routeLinks?.admin?.labDetails,
+        element: <AdminLabDetails />,
       },
       {
-        path:routeLinks?.admin?.patients,
-        element: <AdminPatients/>
+        path: routeLinks?.admin?.patients,
+        element: <AdminPatients />,
       },
       {
-        path:routeLinks?.admin?.patientsDetails,
-        element: <AdminPatientDetails/>
+        path: routeLinks?.admin?.patientsDetails,
+        element: <AdminPatientDetails />,
       },
       {
-        path:routeLinks?.admin?.doctors,
-        element:<AdminDoctors/>
+        path: routeLinks?.admin?.doctors,
+        element: <AdminDoctors />,
       },
       {
-        path:routeLinks?.admin?.doctorDetails,
-        element:<AdminDoctorsDetails/>
+        path: routeLinks?.admin?.doctorDetails,
+        element: <AdminDoctorsDetails />,
       },
       {
         path: routeLinks?.admin?.pharmacists,
-        element: <AdminPharmacists/>
+        element: <AdminPharmacists />,
       },
       {
-        path:routeLinks?.admin?.pharmacistsDetails,
-        element: <AdminPharmacistsDetails/>
+        path: routeLinks?.admin?.pharmacistsDetails,
+        element: <AdminPharmacistsDetails />,
       },
       {
-        path:routeLinks?.admin?.medications,
-        element:<AdminMedications/>
+        path: routeLinks?.admin?.medications,
+        element: <AdminMedications />,
       },
       {
-        path:routeLinks?.admin?.adminInventory,
-        element:<AdminInventory/>
+        path: routeLinks?.admin?.adminInventory,
+        element: <AdminInventory />,
       },
-         {
-        path:routeLinks?.admin?.adminInventoryLogs,
-        element:<AdminInventoryLogs/>
+      {
+        path: routeLinks?.admin?.adminInventoryLogs,
+        element: <AdminInventoryLogs />,
       },
-    {
-        path:routeLinks?.admin?.adminInventorySummary,
-        element:<AdminInventorySummary/>
+      {
+        path: routeLinks?.admin?.adminInventorySummary,
+        element: <AdminInventorySummary />,
       },
 
       {
-        path:routeLinks?.admin?.adminInventoryDetails,
-        element:<AdminInventoryDetails/>
+        path: routeLinks?.admin?.adminInventoryDetails,
+        element: <AdminInventoryDetails />,
       },
-       {
-        path:routeLinks?.admin?.adminInventoryMedication,
-        element:<AdminInventoryMedication/>
+      {
+        path: routeLinks?.admin?.adminInventoryMedication,
+        element: <AdminInventoryMedication />,
       },
 
-         {
+      {
         path: routeLinks?.admin?.adminsDetails,
-        element : <SuperAdminAdminsDetails/>
+        element: <SuperAdminAdminsDetails />,
       },
-          {
+      {
         path: routeLinks?.admin?.profile,
         element: <AdminProfile />,
       },
-      ]
-},
+    ],
+  },
   {
-    path:routeLinks?.superAdmin?.path,
+    path: routeLinks?.superAdmin?.path,
     element: <SuperAdminLayout />,
     children: [
       {
         path: routeLinks?.superAdmin?.path,
         element: <Navigate to={routeLinks?.superAdmin?.dashboard} />,
-       },
+      },
       {
         path: routeLinks?.superAdmin?.dashboard,
         element: <AdminDashboard />,
       },
       {
         path: routeLinks?.superAdmin?.lab,
-        element:<AdminLab/>
-      },
-            {
-        path:routeLinks?.superAdmin?.labDetails,
-        element: <AdminLabDetails/>
+        element: <AdminLab />,
       },
       {
-        path:routeLinks?.superAdmin?.patients,
-        element: <AdminPatients/>
-      },
-            {
-        path:routeLinks?.superAdmin?.patientsDetails,
-        element: <AdminPatientDetails/>
+        path: routeLinks?.superAdmin?.labDetails,
+        element: <AdminLabDetails />,
       },
       {
-        path:routeLinks?.superAdmin?.doctors,
-        element:<AdminDoctors/>
+        path: routeLinks?.superAdmin?.patients,
+        element: <AdminPatients />,
       },
-            {
-        path:routeLinks?.superAdmin?.doctorDetails,
-        element:<AdminDoctorsDetails/>
+      {
+        path: routeLinks?.superAdmin?.patientsDetails,
+        element: <AdminPatientDetails />,
+      },
+      {
+        path: routeLinks?.superAdmin?.doctors,
+        element: <AdminDoctors />,
+      },
+      {
+        path: routeLinks?.superAdmin?.doctorDetails,
+        element: <AdminDoctorsDetails />,
       },
       {
         path: routeLinks?.superAdmin?.pharmacists,
-        element: <AdminPharmacists/>
-      },
-            {
-        path:routeLinks?.superAdmin?.pharmacistsDetails,
-        element: <AdminPharmacistsDetails/>
+        element: <AdminPharmacists />,
       },
       {
-        path:routeLinks?.superAdmin?.medications,
-        element:<AdminMedications/>
+        path: routeLinks?.superAdmin?.pharmacistsDetails,
+        element: <AdminPharmacistsDetails />,
       },
-    {
-        path:routeLinks?.superAdmin?.adminInventory,
-        element:<AdminInventory/>
+      {
+        path: routeLinks?.superAdmin?.medications,
+        element: <AdminMedications />,
       },
-         {
-        path:routeLinks?.superAdmin?.adminInventoryLogs,
-        element:<AdminInventoryLogs/>
+      {
+        path: routeLinks?.superAdmin?.adminInventory,
+        element: <AdminInventory />,
       },
-    {
-        path:routeLinks?.superAdmin?.adminInventorySummary,
-        element:<AdminInventorySummary/>
+      {
+        path: routeLinks?.superAdmin?.adminInventoryLogs,
+        element: <AdminInventoryLogs />,
+      },
+      {
+        path: routeLinks?.superAdmin?.adminInventorySummary,
+        element: <AdminInventorySummary />,
       },
 
       {
-        path:routeLinks?.superAdmin?.adminInventoryDetails,
-        element:<AdminInventoryDetails/>
+        path: routeLinks?.superAdmin?.adminInventoryDetails,
+        element: <AdminInventoryDetails />,
       },
-       {
-        path:routeLinks?.superAdmin?.adminInventoryMedication,
-        element:<AdminInventoryMedication/>
+      {
+        path: routeLinks?.superAdmin?.adminInventoryMedication,
+        element: <AdminInventoryMedication />,
       },
 
       {
         path: routeLinks?.superAdmin?.admins,
-        element : <SuperAdminAdmins/>
+        element: <SuperAdminAdmins />,
       },
-        {
+      {
         path: routeLinks?.superAdmin?.adminsDetails,
-        element : <SuperAdminAdminsDetails/>
+        element: <SuperAdminAdminsDetails />,
       },
-              {
+      {
         path: routeLinks?.superAdmin?.profile,
         element: <AdminProfile />,
       },
-      ]
-},
-
+    ],
+  },
 ]);
 
 export default App;

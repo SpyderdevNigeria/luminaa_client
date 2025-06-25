@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import AdminApi from "../../../api/adminApi";
+import PharmacyApi from "../../../api/pharmacistApi";
 import { IInventoryItem } from "../../../types/Interfaces";
 import { format } from "date-fns";
 import {
@@ -14,20 +14,19 @@ import {
   FiAlertTriangle,
   FiBarChart2,
 } from "react-icons/fi";
-import useAdminAuth from "../../../hooks/useAdminAuth";
 import routeLinks from "../../../utils/routes";
 
-const AdminInventoryDetails: React.FC = () => {
+const PharmacyInventoryDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [inventory, setInventory] = useState<IInventoryItem | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-    const { userProfile } = useAdminAuth();
+
   useEffect(() => {
     const fetchInventory = async () => {
       try {
         setLoading(true);
-        const res = await AdminApi.getInventoryById(id!);
+        const res = await PharmacyApi.getInventoryById(id!);
         setInventory(res.data);
       } catch (err) {
         setError("Failed to fetch inventory item.");
@@ -60,7 +59,7 @@ const AdminInventoryDetails: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow">
-      <Link to={userProfile?.user?.role === "admin" ? routeLinks?.admin?.adminInventory : routeLinks?.superAdmin?.adminInventory} className="text-sm text-primary flex items-center mb-4 hover:underline">
+      <Link to={routeLinks?.pharmacist?.pharmacistInventory} className="text-sm text-primary flex items-center mb-4 hover:underline">
         <FiArrowLeft className="mr-1" /> Back to Inventory List
       </Link>
 
@@ -136,4 +135,4 @@ const AdminInventoryDetails: React.FC = () => {
   );
 };
 
-export default AdminInventoryDetails;
+export default PharmacyInventoryDetails;
