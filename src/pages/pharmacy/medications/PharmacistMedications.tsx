@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import PharmacistApi from "../../../api/pharmacistApi";
-import MedicationCard from "../../../components/common/MedicationCard";
 import HeaderTab from "../../../components/common/HeaderTab";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import useMedications from "../../../hooks/useMedications";
@@ -12,6 +11,11 @@ import {
 } from "../../../utils/dashboardUtils";
 import routeLinks from "../../../utils/routes";
 import { useNavigate } from "react-router-dom";
+import Dropdown from "../../../components/dropdown/dropdown";
+import { MdInventory } from "react-icons/md";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import Table, { Column } from "../../../components/common/Table";
+import StatusBadge from "../../../components/common/StatusBadge";
 
 const PharmacistMedications = () => {
   const {
@@ -48,7 +52,51 @@ const PharmacistMedications = () => {
     medicationManufacturer,
     medicationsPage,
   ]);
+  const columns: Column<any>[] = [
+    { key: "name", label: "Name" },
+    { key: "genericName", label: "Generic Name" },
+    { key: "manufacturer", label: "Manufacturer" },
+    { key: "dosageForm", label: "Dosage Form" },
+    { key: "strength", label: "Strength" },
+    { key: "category", label: "Category" },
+    { key: "price", label: "Price", render: (m) => `₦${m.price}` },
+    {
+      key: "requiresPrescription",
+      label: "Prescription",
+      render: (m) => (m.requiresPrescription ? "Yes" : "No"),
+    },
+    {
+      key: "status",
+      label: "Status",
+      render: (m) => <StatusBadge status={m.status} />,
+    },
+    {
+      key: "isHidden",
+      label: "Hidden",
+      render: (m) => <p>{m.isHidden ? "Hidden" : "Visible"}</p>,
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      render: (m) => (
+        <Dropdown
+          showArrow={false}
+          triggerLabel=""
+          triggerIcon={<HiOutlineDotsVertical />}
+        >
+          <ul className="space-y-2 text-sm">
 
+            <li
+              onClick={() => navigate(routeLinks?.pharmacist?.pharmacistInventory+'/medication/'+ m.id)}
+              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
+            >
+              <MdInventory /> Inventory
+            </li>
+          </ul>
+        </Dropdown>
+      ),
+    },
+  ];
   return (
     <div className="bg-white p-6 min-h-screen">
       <h2 className="text-xl font-semibold mb-4">All Medications</h2>
@@ -96,11 +144,15 @@ const PharmacistMedications = () => {
       ) : medications.length === 0 ? (
         <p className="text-center mt-10 text-gray-500">No medications found.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 mt-6">
-          {medications.map((med) => (
-            <MedicationCard key={med.id} medication={med} buttonText={'View Inventory'}onAddPrescription={()=>{navigate(routeLinks?.pharmacist?.pharmacistInventory+'/medication/'+med.id)}}   />
-          ))}
-        </div>
+         <Table
+              data={medications}
+              columns={columns}
+              page={medicationsPage}
+              total={medicationsTotal}
+              limit={medicationsLimit}
+              totalPages={medicationsTotalPages}
+              setPage={setMedicationsPage}
+            />
       )}
 
       <PaginationComponent

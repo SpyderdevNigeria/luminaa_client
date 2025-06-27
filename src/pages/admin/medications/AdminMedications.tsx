@@ -319,7 +319,9 @@ function AdminMedications() {
         <div>
           {medicationsLoading ? (
             <p>Loading...</p>
-          ) : (
+          ) : medications.length === 0 ? (
+        <p className="text-center mt-10 text-gray-500">No medications found.</p>
+      ) : (
             <Table
               data={medications}
               columns={columns}

@@ -127,9 +127,7 @@ const LabOrderDetails = ({
   const addNewResult = () => {
     if (
       newResult.testName &&
-      newResult.result &&
-      newResult.unit &&
-      newResult.referenceRange
+      newResult.result
     ) {
       setResultList([...resultList, newResult]);
       setNewResult({
@@ -386,12 +384,12 @@ const LabOrderDetails = ({
           )}
 
           <div className="flex justify-end">
-            <button
+           {type === 'patient' &&   <button
               className="bg-primary text-white text-sm font-medium py-3 px-4 rounded-lg hover:bg-primary/90 transition"
               onClick={() => setModalOpen(!isModalOpen)}
             >
               Download PDF
-            </button>
+            </button>}
           </div>
           {/* PDF Modal */}
           <LabRequestReportModal
@@ -426,12 +424,12 @@ const LabOrderDetails = ({
 
                 {/* PDF Download Button */}
                 <div className="flex justify-end">
-                  <button
-                    className="bg-primary text-white text-sm font-medium py-3 px-4 rounded-lg hover:bg-primary/90 transition"
+                 {type === 'patient' &&   <button
+                    className="bg-primary text-white text-sm font-medium py-3 px-4 rounded-lg hover:bg-primary/90 transition mb-6"
                     onClick={() => setModalOpen(!isModalOpen)}
                   >
                     Download PDF
-                  </button>
+                  </button>}
                 </div>
 
                 <LabRequestResultReportModal

@@ -2,18 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../store";
 import {
   setInventory,
-  setInventoryLoading,
   setInventoryError,
   setInventoryLogs,
-  setInventoryLogsLoading,
   setInventoryLogsFilters,
   setInventorySummary,
-  setInventorySummaryLoading,
   setInventorySummaryFilters,
   setInventoryMedication,
-  setInventoryMedicationLoading,
   setInventoryMedicationFilters,
 } from "../reducers/InventorySlice";
+import { useState } from "react";
 
 interface InventoryFilters {
   page?: number;
@@ -55,7 +52,10 @@ function useInventory(api: any) {
     inventorySummary,
     inventoryMedication,
   } = useSelector((state: RootState) => state.inventory);
-
+  const [inventoryLoading, setInventoryLoading] = useState(false);
+  const [inventoryLogLoading, setInventoryLogsLoading] = useState(false)
+  const [inventorySummaryLoading, setInventorySummaryLoading] = useState(false)
+  const [inventoryMedicationLoading, setInventoryMedicationLoading] = useState(false)
   const {
     page: logsPage,
     limit: logsLimit,
@@ -72,7 +72,7 @@ function useInventory(api: any) {
 
   // ---------- GET INVENTORY ----------
   const getInventory = async (filters: InventoryFilters = {}) => {
-    dispatch(setInventoryLoading(true));
+   setInventoryLoading(true);
     dispatch(setInventoryError(null));
     try {
       const merged = { ...inventory, ...filters };
@@ -106,13 +106,14 @@ function useInventory(api: any) {
     } catch {
       dispatch(setInventoryError("Failed to fetch inventory"));
     } finally {
-      dispatch(setInventoryLoading(false));
+      setInventoryLoading(false);
     }
   };
 
   // ---------- GET INVENTORY LOGS ----------
   const getInventoryLogs = async (filters: InventoryLogFilters = {}) => {
-    dispatch(setInventoryLogsLoading(true));
+    setInventoryLogsLoading(true);
+    console.log(true)
     dispatch(setInventoryError(null));
     try {
       const merged = { ...inventoryLogs, ...filters };
@@ -144,13 +145,13 @@ function useInventory(api: any) {
     } catch {
       dispatch(setInventoryError("Failed to fetch inventory logs"));
     } finally {
-      dispatch(setInventoryLogsLoading(false));
+   setInventoryLogsLoading(false);
     }
   };
 
   // ---------- GET INVENTORY SUMMARY ----------
   const getInventorySummary = async (filters: InventorySummaryFilters = {}) => {
-    dispatch(setInventorySummaryLoading(true));
+setInventorySummaryLoading(true);
     dispatch(setInventoryError(null));
     try {
       const merged = { ...inventorySummary, ...filters };
@@ -178,7 +179,7 @@ function useInventory(api: any) {
     } catch {
       dispatch(setInventoryError("Failed to fetch inventory summary"));
     } finally {
-      dispatch(setInventorySummaryLoading(false));
+      setInventorySummaryLoading(false)
     }
   };
 
@@ -187,7 +188,7 @@ function useInventory(api: any) {
     medicationId: string,
     filters: InventoryFilters = {}
   ) => {
-    dispatch(setInventoryMedicationLoading(true));
+    setInventoryMedicationLoading(true);
     dispatch(setInventoryError(null));
     try {
       const merged = { ...inventoryMedication, ...filters, medicationId };
@@ -218,7 +219,7 @@ function useInventory(api: any) {
     } catch {
       dispatch(setInventoryError("Failed to fetch medication inventory"));
     } finally {
-      dispatch(setInventoryMedicationLoading(false));
+    setInventoryMedicationLoading(false);
     }
   };
 
@@ -229,7 +230,10 @@ function useInventory(api: any) {
     inventorySummary,
     inventoryMedication,
     inventoryLogsList: inventoryLogs?.data,
-
+    inventoryLoading,
+    inventoryLogLoading,
+    inventorySummaryLoading,
+    inventoryMedicationLoading,
     // Fetchers
     getInventory,
     getInventoryLogs,

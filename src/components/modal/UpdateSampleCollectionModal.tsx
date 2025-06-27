@@ -10,17 +10,18 @@ open: boolean;
   onSuccess: () => void;
 }
 
-const sampleOptions = [
-  { value: "Blood", label: "Blood" },
-  { value: "Urine", label: "Urine" },
-  { value: "Saliva", label: "Saliva" },
-];
+// const sampleOptions = [
+//   { value: "Blood", label: "Blood" },
+//   { value: "Urine", label: "Urine" },
+//   { value: "Saliva", label: "Saliva" },
+//    { value: "Saliva", label: "" },
+// ];
 
-const containerTypeOptions = [
-  { value: "Vacutainer", label: "Vacutainer" },
-  { value: "Syringe", label: "Syringe" },
-  { value: "Tube", label: "Tube" },
-];
+// const containerTypeOptions = [
+//   { value: "Vacutainer", label: "Vacutainer" },
+//   { value: "Syringe", label: "Syringe" },
+//   { value: "Tube", label: "Tube" },
+// ];
 
 const UpdateSampleCollectionModal: React.FC<UpdateSampleCollectionModalProps> = ({ id, onClose, onSuccess, open}) => {
   const [form, setForm] = useState({
@@ -75,11 +76,10 @@ const UpdateSampleCollectionModal: React.FC<UpdateSampleCollectionModalProps> = 
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <CommonFormField
-            type="select"
+            type="text"
             name="sample"
             label="Sample Type"
             value={form.sample}
-            options={sampleOptions}
             onChange={handleChange}
             required
           />
@@ -100,11 +100,10 @@ const UpdateSampleCollectionModal: React.FC<UpdateSampleCollectionModalProps> = 
             required
           />
           <CommonFormField
-            type="select"
+            type="text"
             name="containerType"
             label="Container Type"
             value={form.containerType}
-            options={containerTypeOptions}
             onChange={handleChange}
             required
           />

@@ -11,8 +11,14 @@ const {showToast} = useToaster()
 
   const add = (item: any) => {
     try {
-         dispatch(addToCart(item))
-         showToast("Medication added to Cart", 'success')
+      if (!item?.requiresPrescription) {
+        console.log(item)
+        dispatch(addToCart(item))
+        showToast("Medication added to Cart", 'success')
+         }else{
+            showToast(`${item?.name} requires prescription from a doctor`, 'error')
+         }
+
     } catch (error) {
             showToast("something went wrong", 'error')
     }

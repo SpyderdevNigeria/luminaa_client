@@ -25,7 +25,7 @@ const PatientOrder = () => {
   console.log(orders)
   useEffect(() => {
     getPrescriptionOrders();
-  }, [page]); // load when page changes
+  }, [page]);
 
 
 const orderColumns: Column<any>[] = [

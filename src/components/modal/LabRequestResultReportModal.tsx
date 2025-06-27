@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { useToaster } from "../common/ToasterContext";
 import SheetHeader from "../common/SheetHeader";
 import { IResult } from "../../types/Interfaces";
+import useAuth from "../../hooks/useAuth";
 
 const th = {
   padding: "10px",
@@ -65,7 +66,7 @@ function LabRequestResultReportModal({
     notes,
     resultList = [],
   } = results;
-
+ const { userProfile, } = useAuth();
   const printRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToaster();
 
@@ -150,26 +151,46 @@ function LabRequestResultReportModal({
         </h2>
 
         {/* Patient Info */}
-        <div
-          style={{
-            display: "flex",
-            alignItems:'start',
-            justifyContent: "space-between",
-            gap: "2rem",
-            flexWrap: "wrap",
-            marginTop: "30px",
-          }}
-        >
-          <div style={{ flex: 1, minWidth: "300px" }}>
-            <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Patient Information</h3>
-            <p>
-              Name:{" "}
-              <u>{`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</u>
-            </p>
-            <p>Email: <u>{patient?.email ?? "N/A"}</u></p>
-          </div>
+     <div
+  style={{
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "10px",
+    marginBottom: "20px",
+  }}
+>
+  <h3 style={{ width: "100%", fontWeight: "bold", marginBottom: "10px" }}>
+    Patient Information
+  </h3>
 
-        </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Name:</strong> <u>{`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Email:</strong> <u>{patient?.email ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Address:</strong> <u>{userProfile?.address ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>City:</strong> <u>{userProfile?.city ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Country:</strong> <u>{userProfile?.country ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Date of Birth:</strong> <u>{userProfile?.dateOfBirth ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Gender:</strong> <u>{userProfile?.gender ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Emergency Contact Name:</strong> <u>{userProfile?.emergencyContactName ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Emergency Contact Phone:</strong> <u>{userProfile?.emergencyContactPhone ?? "N/A"}</u></p>
+  </div>
+</div>
 
         {/* Test Results */}
         <div style={{ marginTop: "30px" }}>
@@ -209,7 +230,7 @@ function LabRequestResultReportModal({
         {/* Interpretation */}
         <div style={{ marginTop: "30px" }}>
           <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Interpretation</h3>
-          <p>{notes && notes.trim() !== "" ? notes : "No notes available"}</p>
+          <p>{notes  ? notes : "No notes available"}</p>
         </div>
 
         {/* Doctor Info */}

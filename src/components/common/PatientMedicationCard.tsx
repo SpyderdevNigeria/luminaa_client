@@ -26,9 +26,16 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
     <>
       <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col justify-between hover:shadow-md transition relative">
         {/* Top: Icon + Medication Name */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center  justify-between">
           <div className="bg-primary/10 text-primary p-2 rounded-full">
             <PiPillDuotone className="w-6 h-6" />
+          </div>
+          <div className="relative group inline-block">
+             {!medication?.requiresPrescription && <p className="text-primary"> OTC</p>}
+                {/* Tooltip */}
+            <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 whitespace-nowrap">
+              Over the counter
+            </div>
           </div>
         </div>
 

@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { useToaster } from "../common/ToasterContext";
 import SheetHeader from "../common/SheetHeader";
 import { IResult } from "../../types/Interfaces";
+import useAuth from "../../hooks/useAuth";
 
 
 
@@ -63,8 +64,7 @@ function LabRequestReportModal({
 
   const printRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToaster();
-
-
+ const { userProfile, } = useAuth();
   const handleDownloadPDF = async () => {
     if (!printRef.current) return;
 
@@ -175,11 +175,48 @@ function LabRequestReportModal({
       marginBottom: "40px",
     }}
   >
-    <div style={{ flex: "1 1 300px", marginBottom:'20px' }}>
-      <h3 style={{ fontWeight: "bold", marginBottom: "10px" }}>Patient Information</h3>
-      <p><strong>Name:</strong> <u>{`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</u></p>
-      <p><strong>Email:</strong> <u>{patient?.email ?? "N/A"}</u></p>
-    </div>
+<div
+  style={{
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "10px",
+    marginBottom: "20px",
+  }}
+>
+  <h3 style={{ width: "100%", fontWeight: "bold", marginBottom: "10px" }}>
+    Patient Information
+  </h3>
+
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Name:</strong> <u>{`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Email:</strong> <u>{patient?.email ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Address:</strong> <u>{userProfile?.address ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>City:</strong> <u>{userProfile?.city ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Country:</strong> <u>{userProfile?.country ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Date of Birth:</strong> <u>{userProfile?.dateOfBirth ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Gender:</strong> <u>{userProfile?.gender ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Emergency Contact Name:</strong> <u>{userProfile?.emergencyContactName ?? "N/A"}</u></p>
+  </div>
+  <div style={{ flex: "1 1 300px" }}>
+    <p><strong>Emergency Contact Phone:</strong> <u>{userProfile?.emergencyContactPhone ?? "N/A"}</u></p>
+  </div>
+</div>
+
+
 
     <div style={{ flex: "1 1 200px" }}>
       <p><strong>Test Name:</strong><br /> {testName}</p>

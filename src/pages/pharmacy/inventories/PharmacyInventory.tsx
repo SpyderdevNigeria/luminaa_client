@@ -20,6 +20,7 @@ const PharmacyInventory = () => {
     inventory,
     getInventory,
     setInventoryPage,
+    inventoryLoading,
     setInventorySearch,
     setInventoryStatus,
     setInventoryLocation,
@@ -34,7 +35,6 @@ const PharmacyInventory = () => {
     page,
     limit,
     total,
-    loading,
     search,
     status,
     location,
@@ -140,9 +140,11 @@ const PharmacyInventory = () => {
         ]}
       />
 
-      {loading ? (
+      {inventoryLoading ? (
         "Loading Inventories"
-      ) : (
+      ) : data.length === 0 ? (
+        <p className="text-center mt-10 text-gray-500">No Invenotry found.</p>
+      ) :  (
         <Table
           columns={columns}
           data={data || []}

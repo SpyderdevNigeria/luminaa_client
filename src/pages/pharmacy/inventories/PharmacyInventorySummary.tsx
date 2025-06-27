@@ -9,6 +9,7 @@ const PharmacyInventorySummary = () => {
   const {
     inventorySummary,
     getInventorySummary,
+    inventorySummaryLoading ,
     setInventorySummaryPage,
     setInventorySummarySearch,
     setInventorySummarySortBy,
@@ -114,15 +115,18 @@ const PharmacyInventorySummary = () => {
           },
         ]}
       />
-
-      <Table
+      {inventorySummaryLoading ? 
+      <p>Loading Summary </p>  : inventorySummary?.data.length === 0 ? (
+        <p className="text-center mt-10 text-gray-500">No Summary found.</p>
+      ) : 
+        <Table
         columns={columns}
         data={inventorySummary?.data || []}
         page={inventorySummary?.page}
         total={inventorySummary?.total}
         limit={inventorySummary?.limit}
         setPage={setInventorySummaryPage}
-      />
+      />}
 
       <Modal open={!!selectedRow} onClose={() => setSelectedRow(null)}>
         {selectedRow && (

@@ -16,13 +16,13 @@ const AdminInventoryLogs = () => {
     logsLimit,
     logsTotal,
     logsTotalPages,
-    logsLoading,
     logSearch,
     logAction,
     logPerformedBy,
     logMedicationId,
     logFromDate,
     logToDate,
+    inventoryLogLoading,
     getInventoryLogs,
     setLogsPage,
     setLogSearch,
@@ -92,7 +92,7 @@ const AdminInventoryLogs = () => {
       ),
     },
   ];
-
+// console.log(logsLoading)
   return (
     <div className="space-y-4 container-bd">
       <h1 className="text-2xl font-semibold">Inventory Logs</h1>
@@ -127,9 +127,11 @@ const AdminInventoryLogs = () => {
         ]}
       />
 
-      {logsLoading ? (
+      {inventoryLogLoading ? (
         <p>Loading...</p>
-      ) : (
+      ) : inventoryLogsList.length === 0 ? (
+        <p className="text-center mt-10 text-gray-500">No Inventory found.</p>
+      ) :(
         <Table
           data={inventoryLogsList}
           columns={columns}

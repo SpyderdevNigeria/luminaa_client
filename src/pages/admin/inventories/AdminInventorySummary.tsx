@@ -7,6 +7,7 @@ import Modal from "../../../components/modal/modal";
 
 const AdminInventorySummary = () => {
   const {
+    inventorySummaryLoading,
     inventorySummary,
     getInventorySummary,
     setInventorySummaryPage,
@@ -114,15 +115,17 @@ const AdminInventorySummary = () => {
           },
         ]}
       />
-
-      <Table
+    {inventorySummaryLoading ? <p>Loading summary ..</p> : inventorySummary?.data.length === 0 ? (
+        <p className="text-center mt-10 text-gray-500">No summary found..</p>
+      ) :   <Table
         columns={columns}
         data={inventorySummary?.data || []}
         page={inventorySummary?.page}
         total={inventorySummary?.total}
         limit={inventorySummary?.limit}
         setPage={setInventorySummaryPage}
-      />
+      /> }
+  
 
       <Modal open={!!selectedRow} onClose={() => setSelectedRow(null)}>
         {selectedRow && (

@@ -10,6 +10,7 @@ const AdminInventoryMedication = () => {
   const { id: medicationId } = useParams();
   const {
     inventoryMedication,
+    inventoryMedicationLoading,
     getInventoryByMedicationId,
     setInventoryMedicationPage,
     setInventoryMedicationSearch,
@@ -107,7 +108,11 @@ const AdminInventoryMedication = () => {
           },
         ]}
       />
-
+ {inventoryMedicationLoading ? (
+        <p>Loading...</p>
+      ) : inventoryMedication?.data.length === 0 ? (
+        <p className="text-center mt-10 text-gray-500">No Inventories by Medication found..</p>
+      ) :
       <Table
         columns={columns}
         data={inventoryMedication?.data || []}
@@ -116,6 +121,7 @@ const AdminInventoryMedication = () => {
         limit={inventoryMedication?.limit}
         setPage={setInventoryMedicationPage}
       />
+    }
 
       {/* Modal to view full inventory detail */}
       <Modal open={!!selectedRow} onClose={() => setSelectedRow(null)}>
