@@ -151,6 +151,11 @@ const LabOrderDetails = ({
       notes: note,
       documents: [],
     };
+    if (payload?.results?.length === 0)
+      return showToast("Please add the Result to submit result ", "error");
+    if (payload?.notes === "")
+      return showToast("YOu need to add an Interpretation", "error");
+
     handleSubmit?.(payload);
     console.log("Submitting payload:", payload);
   };
