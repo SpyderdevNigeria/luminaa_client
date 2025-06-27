@@ -48,7 +48,7 @@ const Toaster: React.FC<ToasterProps> = ({ message, type, onClose }) => {
 
   return (
     <div
-      className={`fixed top-5 right-5  px-4 py-3 z-50 shadow-lg flex items-center justify-center rounded-md ${toasterStyles[type]}`}
+      className={`fixed top-5 right-5  px-4 py-3 z-90 shadow-lg flex items-center justify-center rounded-md ${toasterStyles[type]}`}
     >
       <div className="flex items-center max-w-screen-lg w-full justify-center">
         {icons[type]}

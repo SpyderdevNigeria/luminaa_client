@@ -22,12 +22,15 @@ import { MdAddBox } from "react-icons/md";
 import { useToaster } from "./ToasterContext";
 import ConfirmModal from "../modal/ConfirmModal";
 import LabRequestResultReportModal from "../modal/LabRequestResultReportModal";
+import UpdateSampleCollectionModal from "../modal/UpdateSampleCollectionModal";
 interface LabOrderDetailsProps {
   data: {
+    sampleDetails: any;
     data: ILabOrder & {
       patient: IPatient;
       doctor: IDoctor;
       appointment: IAppointment;
+      sampleDetails:any
     };
   } | null;
   isLoading: boolean;
@@ -40,6 +43,7 @@ interface LabOrderDetailsProps {
   isLoadingResults?: boolean;
   updateDocuments?: () => void;
   loadingStatus?: boolean;
+  fetchOrder?: () => void;
 }
 
 const LabOrderDetails = ({
@@ -54,6 +58,7 @@ const LabOrderDetails = ({
   isLoadingResults,
   updateDocuments,
   loadingStatus,
+  fetchOrder,
 }: LabOrderDetailsProps) => {
   const [resultList, setResultList] = useState<IResult[]>([]);
   const [newResult, setNewResult] = useState<IResult>({
@@ -69,10 +74,11 @@ const LabOrderDetails = ({
   const { showToast } = useToaster();
 
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [showModalSample, setShowModalSample] = useState(false);
+
   const [confirmMessage, setConfirmMessage] = useState("");
   const [confrimLoading, setConfrimLoading] = useState(false);
   useEffect(() => {
-    console.log(results?.id);
     if (results?.results) {
       setResultList(results.results);
     }
@@ -82,7 +88,6 @@ const LabOrderDetails = ({
   }, [results]);
 
   const navigate = useNavigate();
-
   if (isLoading) return <TestDetailsSkeleton />;
   if (error) return <p className="p-4 text-red-500">{error}</p>;
   if (!data) return null;
@@ -171,6 +176,9 @@ const LabOrderDetails = ({
     handleStatus?.();
     setConfirmOpen(loadingStatus ?? false);
   };
+
+
+
 
   return (
     <div className="container-bd max-w-6xl mx-auto">
@@ -294,8 +302,18 @@ const LabOrderDetails = ({
                   </li>
                 ))}
               </ol>
-
-              {type === "lab" && !collectedSample && (
+              {type == 'lab' && data?.data?.status === "PENDING" ? 
+                (
+                  <div className="flex justify-end pt-4 ">
+                      <button onClick={()=>{setShowModalSample(true)}}
+                        
+                         className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
+                        >upload collected sample</button>
+                  </div>
+                )
+              : 
+              
+              (  type === "lab" && data?.data?.status === "SAMPLE_COLLECTED" && (
                 <div className="flex justify-end pt-4">
                   <button
                     className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
@@ -305,7 +323,9 @@ const LabOrderDetails = ({
                     {startLoading ? "Starting..." : "Start Test"}
                   </button>
                 </div>
-              )}
+              ))
+
+              }
             </div>
           </section>
 
@@ -576,21 +596,39 @@ const LabOrderDetails = ({
                 You dont have any Result here, if you want to upload result you
                 need to start the test{" "}
               </h1>
-              {type === "lab" && !collectedSample && (
+              {type == 'lab' && data?.data?.status === "PENDING" ? 
+                (
+                  <div className="flex justify-end pt-4 ">
+                      <button onClick={()=>{setShowModalSample(true)}}
+                        
+                         className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
+                        >upload collected sample</button>
+                  </div>
+                )
+              : 
+              
+              (  type === "lab" && data?.data?.status === "SAMPLE_COLLECTED" && (
                 <div className="flex justify-end pt-4">
                   <button
-                    className="bg-primary hover:bg-primary/90 text-white text-sm px-6 py-2 rounded-lg transition duration-200"
+                    className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
                     onClick={handleStatusChange}
                     disabled={startLoading}
                   >
                     {startLoading ? "Starting..." : "Start Test"}
                   </button>
                 </div>
-              )}
+              ))
+
+              }
             </div>
           )}
         </div>
       )}
+    <UpdateSampleCollectionModal
+        id={data?.data?.id}
+        onClose={() => setShowModalSample(false)}
+        onSuccess={()=>{fetchOrder?.()}} 
+        open={showModalSample}   />
 
       <ConfirmModal
         open={confirmOpen}

@@ -55,6 +55,11 @@ const LabApi = {
     const response = await api.delete(`/lab-tech/lab-tests/results/${resultId}/documents/${documentId}`);
     return response.data;
   },
+
+   updateSampleCollection: async (id: any, body:any) => {
+    const response = await api.patch(`/lab-tech/lab-tests/orders/${id}/sample-info`, body);
+    return response.data;
+  },
    // Lab Order endpoint end
 }
 

@@ -116,6 +116,7 @@ function LabTestRequestsDetails() {
         resultError={resultError}
         updateDocuments={fetchResults}
         loadingStatus={loadingStatus}
+        fetchOrder={fetchOrder}
       />
     </div>
   );
