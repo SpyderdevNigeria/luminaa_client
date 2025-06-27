@@ -108,10 +108,10 @@ const orderColumns: Column<any>[] = [
           className="w-34 md:w-48 h-auto absolute right-4 md:right-10 bottom-0"
         />
       </div>
-
+    <div className="container-bd">
       {/* Header Filter */}
       <HeaderTab
-        title="All Orders"
+        title=""
         onSearchChange={(value) => {
           setFilter({ search: value, page: 1 });
           getPrescriptionOrders();
@@ -184,6 +184,7 @@ const orderColumns: Column<any>[] = [
             getPrescriptionOrders();
           }}
         />}
+        </div>
       {/* Table */}
     </div>
   );
