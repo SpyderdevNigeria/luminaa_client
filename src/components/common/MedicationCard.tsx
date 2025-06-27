@@ -49,7 +49,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
                   onClick={onAddPrescription}
                   className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-primary"
                 >
-                  <FiPlusCircle /> Add as Prescription
+                  <FiPlusCircle /> {buttonText}
                 </li>
               )}
             </ul>
@@ -68,7 +68,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
           </h2>
           <p className="text-sm text-gray-500">
             Added on{" "}
-            {new Date(medication.createdAt).toLocaleDateString(undefined, {
+            {new Date(medication?.createdAt ?? "").toLocaleDateString(undefined, {
               year: "numeric",
               month: "short",
               day: "numeric",

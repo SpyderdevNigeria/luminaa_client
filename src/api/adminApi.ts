@@ -142,6 +142,20 @@ const AdminApi = {
     const response = await api.put(`/admin/inventory/${id}`, body);
     return response.data;
   },
+
+  
+   getPrescriptionOrders: async (query:any) => {
+    const response = await api.get(`/admin/orders${query}`);
+    return response.data;
+  },
+      getPrescriptionOrderById: async (id: any) => {
+    const response = await api.get(`/admin/orders/${id}`);
+    return response.data;
+  },
+  updatePrescriptionOrderStatus: async (id: any, body:any) => {
+    const response = await api.get(`/admin/orders/${id}/status`, body);
+    return response.data;
+  },
 };
 
 export default AdminApi;

@@ -28,7 +28,8 @@ const routeLinks = {
     consultations: '/patient/consultations',
      consultationsid: '/patient/consultations/:id',
     prescription:'/patient/prescription',
-    medicalHistory:'/patient/diagnosis'
+    medicalHistory:'/patient/diagnosis',
+    checkout:'/patient/checkout'
 
   },
   doctor: {
@@ -58,6 +59,8 @@ admin: {
   dashboard: '/admin/dashboard',
   patients: '/admin/patients',
   patientsDetails: '/admin/patients/:id',
+  orders: '/admin/orders',
+  orderDetails: '/admin/orders/:id',
   appointments: '/admin/appointments',
   appointmentDetails: '/admin/appointments/:id',
   profile: '/admin/profile',
@@ -87,6 +90,8 @@ superAdmin: {
   path:'/super-admin',
   dashboard: '/super-admin/dashboard',
   patients: '/super-admin/patients',
+  orders: '/super-admin/orders',
+  orderDetails: '/super-admin/orders/:id',
   patientsDetails: '/super-admin/patients/:id',
   appointments: '/super-admin/appointments',
   appointmentDetails: '/super-admin/appointments/:id',
@@ -116,6 +121,8 @@ pharmacist: {
   path:'/pharmacist',
   dashboard: '/pharmacist/dashboard',
   medications:'/pharmacist/medications',
+  orders:'/pharmacist/orders',
+  orderDetails:'/pharmacist/orders/:id',
   pharmacistInventory: '/pharmacist/inventory',
   pharmacistInventoryDetails:'/pharmacist/inventory/:id',
   pharmacistInventorySummary: '/pharmacist/inventory-summary',

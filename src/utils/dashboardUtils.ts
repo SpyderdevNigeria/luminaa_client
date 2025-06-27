@@ -64,19 +64,35 @@ export const navItemsPatient = [
     icon: CiTablets1,
     to: routeLinks?.patient?.prescription,
   },
-  {
-    label: "Orders",
-    title: "Orders",
-    icon: FiPackage,
-    to: routeLinks?.patient?.orders,
-  },
+
   {
     label: "Pharmacy",
     title: "Pharmacy",
     icon: LiaPillsSolid,
     to: routeLinks?.patient?.pharmacy,
+         subLinks: [
+      {
+        label: "checkout",
+        title: "checkout",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.patient?.labDetails,
+      },
+    ],
   },
-
+  {
+    label: "Orders",
+    title: "Orders",
+    icon: FiPackage,
+    to: routeLinks?.patient?.orders,
+         subLinks: [
+      {
+        label: "Orders details",
+        title: "Orders details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.patient?.orderDetails,
+      },
+    ],
+  },
 
    {
     label: "profile",
@@ -275,6 +291,20 @@ export const navItemsAdmin = [
     ],
   },
     {
+    label: "Orders",
+    title: "Orders",
+    icon: FiPackage,
+    to: routeLinks?.admin?.orders,
+         subLinks: [
+      {
+        label: "Orders details",
+        title: "Orders details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.admin?.orderDetails,
+      },
+    ],
+  },
+    {
     label: "Profile Management",
     title: "Profile Management",
     icon: FaRegCircleUser,
@@ -383,13 +413,27 @@ export const navItemsSuperAdmin = [
       },
     ],
   },
-
-    {
+      {
     label:"Admins",
     title:"Admins",
     icon:HiMiniUsers,
     to:routeLinks?.superAdmin?.admins,
   },
+  {
+    label: "Orders",
+    title: "Orders",
+    icon: FiPackage,
+    to: routeLinks?.superAdmin?.orders,
+         subLinks: [
+      {
+        label: "Orders details",
+        title: "Orders details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.superAdmin?.orderDetails,
+      },
+    ],
+  },
+
      {
     label: "Profile Management",
     title: "Profile Management",
@@ -456,6 +500,20 @@ export const navItemsPharmacy = [
     title:"Medications",
     icon:MdMedication,
     to:routeLinks?.pharmacist?.medications,
+  },
+    {
+    label: "Orders",
+    title: "Orders",
+    icon: FiPackage,
+    to: routeLinks?.pharmacist?.orders,
+         subLinks: [
+      {
+        label: "Orders details",
+        title: "Orders details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks?.pharmacist?.orderDetails,
+      },
+    ],
   },
     {
     label: "Profile Management",
@@ -628,4 +686,12 @@ export function getFormattedDateTime(isoDateString: string) {
     formattedDate,
     formattedTime,
   };
+}
+
+export function numberWithCommas(x: number | string): string {
+  const num = typeof x === "string" ? parseFloat(x) : x;
+  return num.toLocaleString("en-NG", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
 }

@@ -74,6 +74,7 @@ function LabTestRequestsDetails() {
         showToast("Result updated successfully.", "success");
       } else {
         console.log('create result')
+        if (payload?.results.length === 0) return  showToast("You need to add result.", "error"); 
         await LabApi.createLabOrderResult(id, payload);
         showToast("Result submitted successfully.", 'success');
       }

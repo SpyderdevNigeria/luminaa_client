@@ -127,6 +127,33 @@ const PatientApi = {
     const response = await api.get(`/patient/lab-tests/results/order/${id}`);
     return response.data;
   },
+
+    getMedications: async (query: any) => {
+    const response = await api.get(`/patient/medications${query}`);
+    return response.data;
+  },
+
+
+   getPrescriptionOrders: async (query:any) => {
+    const response = await api.get(`/patient/orders${query}`);
+    return response.data;
+  },
+
+  
+  createPrescriptionOrderValidate: async (body: any) => {
+    const response = await api.post("/patient/orders/validate", body);
+    return response.data;
+  },
+
+  createPrescriptionOrder: async (body: any) => {
+    const response = await api.post("/patient/orders", body);
+    return response.data;
+  },
+
+     getPrescriptionOrderById: async (id: any) => {
+    const response = await api.get(`/patient/orders/${id}`);
+    return response.data;
+  },
 }
 
 export default PatientApi;

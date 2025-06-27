@@ -11,6 +11,8 @@ import {
   setMedicationsStatus,
   setMedicationsRequiresPrescription,
   setMedicationsManufacturer,
+  setMedicationMaxPrice,
+  setMedicationMinPrice,
 } from "../reducers/medicationSlice";
 
 function useMedications(api: any) {
@@ -33,6 +35,11 @@ function useMedications(api: any) {
         params.append("requiresPrescription", medications.requiresPrescription);
       if (medications.manufacturer)
         params.append("manufacturer", medications.manufacturer);
+
+      if (medications.maxPrice)
+        params.append("maxPrice", medications.maxPrice.toString());
+      if (medications.minPrice)
+        params.append("minPrice", medications.minPrice.toString());
 
       const res = await api.getMedications(`?${params.toString()}`);
       dispatch(
@@ -62,6 +69,8 @@ function useMedications(api: any) {
     medicationsError: medications.error,
     medicationSearch: medications.search,
     medicationCategory: medications.category,
+    medicationMinPrice: medications.minPrice,
+    medicationMaxPrice: medications.maxPrice,
     medicationDosageForm: medications.dosageForm,
     medicationStatus: medications.status,
     medicationRequiresPrescription: medications.requiresPrescription,
@@ -85,7 +94,10 @@ function useMedications(api: any) {
       dispatch(setMedicationsRequiresPrescription(val)),
     setMedicationManufacturer: (val: string) =>
       dispatch(setMedicationsManufacturer(val)),
-
+    setMedicationMinPrice: (val: number) =>
+      dispatch(setMedicationMinPrice(val)),
+    setMedicationMaxPrice: (val: number) =>
+      dispatch(setMedicationMaxPrice(val)),
     getMedications,
   };
 }

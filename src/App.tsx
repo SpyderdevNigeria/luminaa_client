@@ -12,8 +12,7 @@ import Consultaion from "./pages/patient/consultation/Consultaion";
 import Prescriptions from "./pages/patient/prescriptions/Prescriptions";
 import Lab from "./pages/patient/lab/Lab";
 import Profile from "./pages/patient/profile/Profile";
-import Order from "./pages/patient/order/Order";
-import Pharmacy from "./pages/patient/pharmacy/Pharmacy";
+import Order from "./pages/patient/order/PatientOrder";
 import MedicalHistory from "./pages/patient/medical/MedicalHistory";
 import DoctorLayout from "./components/layouts/DoctorLayout";
 import DoctorDashboard from "./pages/doctor/dashboard/DoctorDashboard";
@@ -68,6 +67,13 @@ import PharmacyInventory from "./pages/pharmacy/inventories/PharmacyInventory";
 import PharmacyInventorySummary from "./pages/pharmacy/inventories/PharmacyInventorySummary";
 import PharmacyInventoryDetails from "./pages/pharmacy/inventories/PharmacyInventoryDetails";
 import PharmacyInventoryMedication from "./pages/pharmacy/inventories/PharmacyInventoryMedication";
+import PatientMedications from "./pages/patient/pharmacy/PatientMedications";
+import PatientCheckout from "./pages/patient/checkout/PatientCheckout";
+import PrescriptionOrderDetails from "./pages/patient/order/PatientOrderDetails";
+import AdminOrder from "./pages/admin/order/AdminOrder";
+import AdminOrderDetails from "./pages/admin/order/AdminOrderDetails";
+import PharmacyOrder from "./pages/pharmacy/order/PharmacyOrder";
+import PharmacyOrderDetails from "./pages/pharmacy/order/PharmacyOrderDetails";
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
 const App = createBrowserRouter([
@@ -171,9 +177,17 @@ const App = createBrowserRouter([
         path: routeLinks?.patient?.orders,
         element: <Order />,
       },
+            {
+        path: routeLinks?.patient?.orderDetails,
+        element: <PrescriptionOrderDetails />,
+      },
+      {
+        path:routeLinks?.patient?.checkout,
+        element:<PatientCheckout/>
+      },
       {
         path: routeLinks?.patient?.pharmacy,
-        element: <Pharmacy />,
+        element: <PatientMedications />,
       },
       {
         path: routeLinks?.patient?.medicalHistory,
@@ -284,6 +298,14 @@ const App = createBrowserRouter([
         path: routeLinks?.pharmacist?.medications,
         element: <PharmacyMedications />,
       },
+          {
+        path: routeLinks?.pharmacist?.orders,
+        element: <PharmacyOrder />,
+      },
+            {
+        path: routeLinks?.pharmacist?.orderDetails,
+        element: <PharmacyOrderDetails />,
+      },
 
       {
         path: routeLinks?.pharmacist?.pharmacistInventory,
@@ -393,7 +415,14 @@ const App = createBrowserRouter([
         path: routeLinks?.admin?.adminInventoryMedication,
         element: <AdminInventoryMedication />,
       },
-
+         {
+        path: routeLinks?.admin?.orders,
+        element: <AdminOrder />,
+      },
+            {
+        path: routeLinks?.admin?.orderDetails,
+        element: <AdminOrderDetails />,
+      },
       {
         path: routeLinks?.admin?.adminsDetails,
         element: <SuperAdminAdminsDetails />,
@@ -473,7 +502,14 @@ const App = createBrowserRouter([
         path: routeLinks?.superAdmin?.adminInventoryMedication,
         element: <AdminInventoryMedication />,
       },
-
+        {
+        path: routeLinks?.superAdmin?.orders,
+        element: <AdminOrder />,
+      },
+            {
+        path: routeLinks?.superAdmin?.orderDetails,
+        element: <AdminOrderDetails />,
+      },
       {
         path: routeLinks?.superAdmin?.admins,
         element: <SuperAdminAdmins />,

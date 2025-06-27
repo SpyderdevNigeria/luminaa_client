@@ -15,6 +15,8 @@ interface MedicationState {
   status:string;
   requiresPrescription:string;
   manufacturer:string;
+  maxPrice:number;
+  minPrice:number;
   loading:boolean;
   }
 }
@@ -31,8 +33,11 @@ const initialState: MedicationState = {
     manufacturer: '',
     total: 0,
     totalPages: 0,
+    maxPrice:0,
+    minPrice:0,
     loading: false,
     error: null,
+
   },
 };
 
@@ -74,6 +79,12 @@ const medicationSlice = createSlice({
     setMedicationsManufacturer(state, action) {
       state.medications.manufacturer = action.payload;
     },
+      setMedicationMaxPrice(state, action) {
+      state.medications.maxPrice = action.payload;
+    },
+      setMedicationMinPrice(state, action) {
+      state.medications.minPrice = action.payload;
+    },
     setMedicationsError(state, action) {
       state.medications.error = action.payload;
     },
@@ -91,6 +102,8 @@ export const {
   setMedicationsStatus,
   setMedicationsRequiresPrescription,
   setMedicationsManufacturer,
+  setMedicationMaxPrice,
+  setMedicationMinPrice,
   setMedicationsError,
 } = medicationSlice.actions;
 

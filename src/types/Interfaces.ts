@@ -160,14 +160,14 @@ export interface IMedication {
   dosageForm: string;
   strength: string;
   category: string;
-  description: string;
-  notes: string;
+  description?: string;
+  notes?: string;
   price: number;
   requiresPrescription: boolean;
-  isHidden: boolean;
-  status: "active" | "inactive";
-  createdAt: string; 
-  updatedAt: string; 
+  isHidden?: boolean;
+  status?: "active" | "inactive";
+  createdAt?: string; 
+  updatedAt?: string; 
 }
 
 export interface ISuperAdmin {

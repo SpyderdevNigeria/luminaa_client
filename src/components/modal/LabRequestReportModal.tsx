@@ -8,18 +8,7 @@ import { useToaster } from "../common/ToasterContext";
 import SheetHeader from "../common/SheetHeader";
 import { IResult } from "../../types/Interfaces";
 
-const th = {
-  padding: "10px",
-  border: "1px solid #ccc",
-  fontWeight: "bold",
-  fontSize: "13px",
-};
 
-const td = {
-  padding: "10px",
-  border: "1px solid #ccc",
-  fontSize: "13px",
-};
 
 // Types
 type Person = {
@@ -70,19 +59,11 @@ function LabRequestReportModal({
     createdAt,
     patient,
     doctor,
-    notes,
-    resultList = [],
-    statusHistory = [],
   } = results;
 
   const printRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToaster();
 
-  // Get lab personnel from status history
-  const labPersonnel =
-    status !== "PENDING"
-      ? [...statusHistory].reverse().find((entry) => entry.status !== "PENDING")?.updatedBy ?? null
-      : null;
 
   const handleDownloadPDF = async () => {
     if (!printRef.current) return;
@@ -153,109 +134,70 @@ function LabRequestReportModal({
       </Modal>
 
       {/* Hidden Printable Area */}
-      <div
-        ref={printRef}
-        style={{
-          position: "absolute",
-          left: "-9999px",
-          top: "0px",
-          padding: "40px",
-          backgroundColor: "#ffffff",
-          width: "800px",
-          fontFamily: "Arial, sans-serif",
-          color: "#111",
-          fontSize: "14px",
-          lineHeight: 1.6,
-        }}
-      >
-        <SheetHeader />
+<div
+  ref={printRef}
+  style={{
+    position: "absolute",
+    left: "-9999px",
+    top: "0px",
+    padding: "40px",
+    backgroundColor: "#ffffff",
+    width: "800px",
+    fontFamily: "Arial, sans-serif",
+    color: "#111",
+    fontSize: "14px",
+    lineHeight: 1.6,
+  }}
+>
+  <SheetHeader />
 
-        <h2
-          style={{ marginBottom: "40px", marginTop: "10px" }}
-          className="text-2xl text-primary text-center underline"
-        >
-          Lab Test Results
-        </h2>
+  <h2
+    style={{
+      marginBottom: "40px",
+      marginTop: "10px",
+      fontSize: "20px",
+      textAlign: "center",
+      color: "#0F62FE",
+      textDecoration: "underline",
+    }}
+  >
+    Lab Test Order
+  </h2>
 
-        {/* Patient Info */}
-        <div
-          style={{
-            display: "flex",
-            alignItems:'start',
-            justifyContent: "space-between",
-            gap: "2rem",
-            flexWrap: "wrap",
-            marginTop: "30px",
-          }}
-        >
-          <div style={{ flex: 1, minWidth: "300px" }}>
-            <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Patient Information</h3>
-            <p>
-              Name:{" "}
-              <u>{`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</u>
-            </p>
-            <p>Email: <u>{patient?.email ?? "N/A"}</u></p>
-          </div>
+  {/* Patient Info */}
+  <div
+    style={{
+      display: "block",
+      justifyContent: "space-between",
+      flexWrap: "wrap",
+      rowGap: "20px",
+      columnGap: "2rem",
+      marginBottom: "40px",
+    }}
+  >
+    <div style={{ flex: "1 1 300px", marginBottom:'20px' }}>
+      <h3 style={{ fontWeight: "bold", marginBottom: "10px" }}>Patient Information</h3>
+      <p><strong>Name:</strong> <u>{`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</u></p>
+      <p><strong>Email:</strong> <u>{patient?.email ?? "N/A"}</u></p>
+    </div>
 
-                  {/* Lab Personnel */}
-        {labPersonnel && (
-          <div style={{ minWidth: "300px" }}>
-            <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Laboratory Personnel</h3>
-            <p><strong>Performed by:</strong> {labPersonnel}</p>
-          </div>
-        )}
-        </div>
+    <div style={{ flex: "1 1 200px" }}>
+      <p><strong>Test Name:</strong><br /> {testName}</p>
+      <p><strong>Status:</strong><br /> {status}</p>
+      <p><strong>Priority:</strong><br /> {priority}</p>
+      <p><strong>Sample Collected:</strong><br /> {collectedSample ? "Yes" : "No"}</p>
+      <p><strong>Requested On:</strong><br /> {moment(createdAt).format("MMMM D, YYYY h:mm A")}</p>
+    </div>
+  </div>
 
-        {/* Test Results */}
-        <div style={{ marginTop: "30px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Test Results</h3>
-          {(resultList ?? []).length > 0 ? (
-            <table
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                border: "1px solid #ccc",
-              }}
-            >
-              <thead>
-                <tr style={{ backgroundColor: "#f4f4f4", textAlign: "left" }}>
-                  <th style={th}>Test Name</th>
-                  <th style={th}>Result</th>
-                  <th style={th}>Unit</th>
-                  <th style={th}>Reference Range</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(resultList ?? []).map((result, index) => (
-                  <tr key={index}>
-                    <td style={td}>{result.testName}</td>
-                    <td style={td}>{result.result}</td>
-                    <td style={td}>{result.unit}</td>
-                    <td style={td}>{result.referenceRange}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No results available.</p>
-          )}
-        </div>
+  {/* Doctor Info */}
+  <div style={{ marginTop: "20px" }}>
+    <h3 style={{ fontWeight: "bold", marginBottom: "10px" }}>Attending Doctor</h3>
+    <p><strong>Name:</strong> Dr. {doctor?.firstName} {doctor?.lastName}</p>
+    <p><strong>Specialty:</strong> {doctor?.specialty ?? "N/A"}</p>
+  </div>
+</div>
 
-        {/* Interpretation */}
-        <div style={{ marginTop: "30px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Interpretation</h3>
-          <p>{notes && notes.trim() !== "" ? notes : "No notes available"}</p>
-        </div>
-
-        {/* Doctor Info */}
-        <div style={{ marginTop: "50px", minWidth: "300px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Attending Doctor</h3>
-          <p><strong>Name:</strong> Dr. {doctor?.firstName} {doctor?.lastName}</p>
-          <p><strong>Specialty:</strong> {doctor?.specialty ?? "N/A"}</p>
-        </div>
-
-
-      </div>
     </>
   );
 }

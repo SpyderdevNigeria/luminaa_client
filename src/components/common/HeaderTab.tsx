@@ -33,7 +33,7 @@ function HeaderTab({
   onDateToChange,
 }: HeaderTabProps) {
   return (
-    <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
+    <div className="flex flex-col md:flex-row  items-center justify-between mb-4">
       <h1 className="text-base md:text-xl whitespace-nowrap">{title}</h1>
 
       <div className="flex flex-wrap items-center gap-3">
