@@ -7,6 +7,7 @@ import PatientApi from "../../../api/PatientApi";
 import { numberWithCommas } from "../../../utils/dashboardUtils";
 import { useToaster } from "../../../components/common/ToasterContext";
 import CheckoutModal from "../../../components/modal/CheckoutModal";
+
 const orderTypes = ["pickup", "delivery"];
 const paymentMethods = ["cash", "card"];
 
@@ -24,7 +25,7 @@ const OrderForm = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setWarnings([]);
-    setError([])
+    setError([]);
     setLoading(true);
     const items = cartItems.map((item) => ({
       medicationId: item?.id,
@@ -39,17 +40,13 @@ const OrderForm = () => {
     };
 
     try {
-      const response = await PatientApi?.createPrescriptionOrderValidate(
-        orderData
-      );
+      const response = await PatientApi?.createPrescriptionOrderValidate(orderData);
       const data = response?.data;
       if (data?.isValid) {
-        const finalResponse = await PatientApi?.createPrescriptionOrder(
-          orderData
-        );
+        const finalResponse = await PatientApi?.createPrescriptionOrder(orderData);
         if (finalResponse) {
           showToast("Order created successfully", "success");
-          clear()
+          clear();
           setModalOpen(true);
         }
       } else {
@@ -68,32 +65,29 @@ const OrderForm = () => {
         setWarnings(warningMessages);
         showToast("Order validation failed", "error");
       }
-   } catch (error: any) {
-  setLoading(false);
-  const responseErrors = error?.response?.data?.errors;
-
-  if (Array.isArray(responseErrors) && responseErrors.length > 0) {
-    const formattedErrors = responseErrors.map((msg: string) => {
-      const match = msg.match(/Medication ([\w-]+): (.+)/); // Extract ID and message
-      const id = match?.[1];
-      const restMessage = match?.[2] || msg;
-      const item = cartItems.find((i) => i.id === id);
-      const name = item?.name || id;
-      return `${name}: ${restMessage}`;
-    });
-
-    setError(formattedErrors);
-    showToast("Order validation failed", "error");
-  } else {
-    showToast("Order creating failed", "error");
-  }
-
-  console.log(error);
-}
- finally {
+    } catch (error: any) {
+      setLoading(false);
+      const responseErrors = error?.response?.data?.errors;
+      if (Array.isArray(responseErrors) && responseErrors.length > 0) {
+        const formattedErrors = responseErrors.map((msg: string) => {
+          const match = msg.match(/Medication ([\w-]+): (.+)/);
+          const id = match?.[1];
+          const restMessage = match?.[2] || msg;
+          const item = cartItems.find((i) => i.id === id);
+          const name = item?.name || id;
+          return `${name}: ${restMessage}`;
+        });
+        setError(formattedErrors);
+        showToast("Order validation failed", "error");
+      } else {
+        showToast("Order creating failed", "error");
+      }
+      console.log(error);
+    } finally {
       setLoading(false);
     }
   };
+
   const handleQuantityChange = (id: string, delta: number) => {
     const item = cartItems.find((i) => i.id === id);
     if (item) {
@@ -105,7 +99,7 @@ const OrderForm = () => {
   if (cartItems?.length === 0)
     return (
       <div className="h-[500px] flex flex-col items-center justify-center gap-4 container-bd">
-        <h5>You currently dont have any medication in your cart </h5>
+        <h5>You currently dont have any medication in your cart</h5>
         <Link
           to={routeLinks?.patient?.pharmacy}
           className="bg-primary text-white p-3 rounded-md"
@@ -118,16 +112,11 @@ const OrderForm = () => {
   return (
     <div className="grid md:grid-cols-5 gap-6">
       {/* Left: Order Form */}
-      <form
-        className="space-y-4 md:col-span-3 container-bd"
-        onSubmit={handleSubmit}
-      >
+      <form className="space-y-4 md:col-span-3 container-bd" onSubmit={handleSubmit}>
         <h3 className="text-lg font-semibold mb-2">Checkout Details</h3>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Order Type
-          </label>
+          <label className="block text-sm font-medium text-gray-700">Order Type</label>
           <select
             value={orderType}
             onChange={(e) => setOrderType(e.target.value)}
@@ -141,9 +130,7 @@ const OrderForm = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Payment Method
-          </label>
+          <label className="block text-sm font-medium text-gray-700">Payment Method</label>
           <select
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
@@ -205,36 +192,39 @@ const OrderForm = () => {
       <div className="space-y-4 container-bd md:col-span-2 flex flex-col justify-between">
         <div className="">
           <h3 className="text-lg font-semibold mb-2">Order Summary</h3>
-          <div className="space-y-5 max-h-[80vh] overflow-y-scroll pr-2">
+          <div className="space-y-5 max-h-[70vh] overflow-y-auto pr-2">
             {cartItems.map((item) => (
               <div
                 key={item.id}
-                className="border border-gray-200 flex items-center justify-between rounded p-2"
+                className="border border-gray-200 flex items-center justify-between rounded p-3"
               >
                 <div className="flex items-center gap-4">
-                  <div className="h-18 w-18 rounded overflow-hidden">
-                    <div className=" w-full bg-gray-100 my-auto rounded-lg h-full flex items-center justify-center">
-                      <PiPillDuotone className="text-primary w-10 h-10" />
-                    </div>
+                  <div className="h-16 w-16 bg-gray-100 rounded flex items-center justify-center overflow-hidden">
+                    {item.image?.url ? (
+                      <img
+                        src={item.image.url}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <PiPillDuotone className="text-primary w-8 h-8" />
+                    )}
                   </div>
                   <div className="text-sm">
-                    <div className="font-[500]">{item.name}</div>
-                    <div className="text-xs font-[300] text-[#ADA8A8]">
+                    <div className="font-semibold">{item.name}</div>
+                    <div className="text-xs text-gray-500">
                       {item.strength} | {item.dosageForm}
                     </div>
-                    <div className="text-xs font-[300] text-[#ADA8A8]">
-                      NGN {numberWithCommas(item.price)} x {item.quantity}
+                    <div className="text-xs text-gray-500">
+                      ₦{numberWithCommas(item.price)} × {item.quantity}
                     </div>
                   </div>
                 </div>
+
                 <div className="flex items-center gap-2 text-base font-semibold">
-                  <button onClick={() => handleQuantityChange(item.id, -1)}>
-                    −
-                  </button>
+                  <button onClick={() => handleQuantityChange(item.id, -1)} className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">−</button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => handleQuantityChange(item.id, 1)}>
-                    +
-                  </button>
+                  <button onClick={() => handleQuantityChange(item.id, 1)} className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">+</button>
                 </div>
               </div>
             ))}
@@ -243,7 +233,7 @@ const OrderForm = () => {
 
         <div className="flex justify-between font-medium border-t border-gray-300 pt-4">
           <span>Total</span>
-          <span>₦{subtotal}</span>
+          <span>₦{numberWithCommas(subtotal)}</span>
         </div>
       </div>
 

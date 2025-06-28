@@ -2,12 +2,25 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // Initial State
 const initialState = {
-  patients: {
+  users: {
     data: [],
-    search:'',
+    search: '',
     isdisabled: "",
     isactive: "",
-    role:"",
+    role: "",
+    page: 1,
+    limit: 10,
+    total: 0,
+    loading: false,
+    error: null,
+  },
+  patients: {
+    data: [],
+    search: '',
+    gender: '',
+    city: '',
+    isBioDataCompleted: '',
+    isMedicalHistoryCompleted: '',
     page: 1,
     limit: 10,
     total: 0,
@@ -19,7 +32,7 @@ const initialState = {
     page: 1,
     limit: 10,
     specialty: '',
-    status:"",
+    status: "",
     total: 0,
     loading: false,
     error: null,
@@ -62,7 +75,36 @@ const adminSlice = createSlice({
   name: 'admin',
   initialState,
   reducers: {
-    // Patients
+    // Users (formerly patients)
+    setUsersLoading(state, action) {
+      state.users.loading = action.payload;
+    },
+    setUsers(state, action) {
+      const { data, total } = action.payload;
+      state.users.data = data;
+      state.users.total = total;
+    },
+    setUsersPagination(state, action) {
+      state.users.page = action.payload.page;
+      state.users.limit = action.payload.limit;
+    },
+    setUsersError(state, action) {
+      state.users.error = action.payload;
+    },
+    setUsersSearch(state, action) {
+      state.users.search = action.payload;
+    },
+    setUsersIsDisabled(state, action) {
+      state.users.isdisabled = action.payload;
+    },
+    setUsersIsActive(state, action) {
+      state.users.isactive = action.payload;
+    },
+    setUsersRole(state, action) {
+      state.users.role = action.payload;
+    },
+
+    // Patients (new)
     setPatientsLoading(state, action) {
       state.patients.loading = action.payload;
     },
@@ -75,21 +117,23 @@ const adminSlice = createSlice({
       state.patients.page = action.payload.page;
       state.patients.limit = action.payload.limit;
     },
-    setPatientsError(state, action) {
-      state.patients.error = action.payload;
-    },
     setPatientsSearch(state, action) {
       state.patients.search = action.payload;
     },
-      setPatientsIsDisabled(state, action) {
-      state.patients.isdisabled = action.payload;
+    setPatientsGender(state, action) {
+      state.patients.gender = action.payload;
     },
-
-      setPatientsIsActive(state, action) {
-      state.patients.isactive = action.payload;
+    setPatientsCity(state, action) {
+      state.patients.city = action.payload;
     },
-       setPatientsRole(state, action) {
-      state.patients.role = action.payload;
+    setPatientsIsBioDataCompleted(state, action) {
+      state.patients.isBioDataCompleted = action.payload;
+    },
+    setPatientsIsMedicalHistoryCompleted(state, action) {
+      state.patients.isMedicalHistoryCompleted = action.payload;
+    },
+    setPatientsError(state, action) {
+      state.patients.error = action.payload;
     },
 
     // Doctors
@@ -108,7 +152,7 @@ const adminSlice = createSlice({
     setDoctorsSpecialty(state, action) {
       state.doctors.specialty = action.payload;
     },
-       setDoctorsStatus(state, action) {
+    setDoctorsStatus(state, action) {
       state.doctors.status = action.payload;
     },
     setDoctorsError(state, action) {
@@ -193,22 +237,34 @@ const adminSlice = createSlice({
 });
 
 export const {
-  // Patients
+  // Users
+  setUsersLoading,
+  setUsers,
+  setUsersPagination,
+  setUsersError,
+  setUsersSearch,
+  setUsersIsDisabled,
+  setUsersRole,
+  setUsersIsActive,
+
+  // Patients (new)
   setPatientsLoading,
   setPatients,
   setPatientsPagination,
-  setPatientsError,
   setPatientsSearch,
-  setPatientsIsDisabled,
-  setPatientsRole,
-  setPatientsIsActive,
+  setPatientsGender,
+  setPatientsCity,
+  setPatientsIsBioDataCompleted,
+  setPatientsIsMedicalHistoryCompleted,
+  setPatientsError,
+
   // Doctors
   setDoctorsLoading,
   setDoctors,
   setDoctorsPagination,
   setDoctorsSpecialty,
-  setDoctorsError,
   setDoctorsStatus,
+  setDoctorsError,
 
   // Labs
   setLabsLoading,

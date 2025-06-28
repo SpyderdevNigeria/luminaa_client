@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 // import routeLinks from "../../../utils/routes";
 import useFlatErrorList from "../../../hooks/useFlatErrorList";
@@ -43,9 +43,11 @@ function AdminLogin() {
 
     try {
       const response = await AuthApi.login(email, password);
-      const { accessToken, user } = response.data.data;
+      const { accessToken, user, refreshToken } = response.data.data;
+      console.log(response.data.data);
       const payload: IPayload = {
         token: accessToken,
+        refreshToken: refreshToken,
         user: { ...user, user: user },
       };
       if (user?.role !== "admin" && user?.role !== "super_admin") {
@@ -164,7 +166,6 @@ function AdminLogin() {
           </div>
           {getFieldErrors("password")}
         </div>
-
 
         {/* Submit */}
         <button

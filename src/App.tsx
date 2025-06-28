@@ -39,7 +39,6 @@ import AdminLayout from "./components/layouts/AdminLayout";
 import AdminLogin from "./pages/admin/auth/AdminLogin";
 import AdminDashboard from "./pages/admin/dashboard/AdminDashboard";
 import AdminLab from "./pages/admin/lab/AdminLab";
-import AdminPatients from "./pages/admin/patients/AdminPatients";
 import AdminDoctors from "./pages/admin/doctors/AdminDoctors";
 import DoctorOrder from "./pages/doctor/order/DoctorLabOrder";
 import DoctorLabOrderDetails from "./pages/doctor/order/DoctorLabOrderDetails";
@@ -54,7 +53,7 @@ import SuperAdminLayout from "./components/layouts/SuperAdminLayout";
 import SuperAdminAdmins from "./pages/admin/superadmin/admins/SuperAdminAdmins";
 import AdminProfile from "./pages/admin/profile/AdminProfile";
 import AdminLabDetails from "./pages/admin/lab/AdminLabDetails";
-import AdminPatientDetails from "./pages/admin/patients/AdminPatientDetails";
+
 import AdminDoctorsDetails from "./pages/admin/doctors/AdminDoctorsDetails";
 import AdminPharmacistsDetails from "./pages/admin/pharmacists/AdminPharmacistsDetails";
 import SuperAdminAdminsDetails from "./pages/admin/superadmin/admins/SuperAdminAdminsDetails";
@@ -74,6 +73,11 @@ import AdminOrder from "./pages/admin/order/AdminOrder";
 import AdminOrderDetails from "./pages/admin/order/AdminOrderDetails";
 import PharmacyOrder from "./pages/pharmacy/order/PharmacyOrder";
 import PharmacyOrderDetails from "./pages/pharmacy/order/PharmacyOrderDetails";
+import AdminUser from "./pages/admin/users/AdminUser";
+import AdminUserDetails from "./pages/admin/users/AdminUserDetails";
+import AdminPatientStats from "./pages/admin/patients/AdminPatientStats";
+import AdminPatients from "./pages/admin/patients/AdminPatients";
+import AdminPatientDetails from "./pages/admin/patients/AdminPatientsDetails";
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
 const App = createBrowserRouter([
@@ -366,6 +370,14 @@ const App = createBrowserRouter([
         path: routeLinks?.admin?.labDetails,
         element: <AdminLabDetails />,
       },
+         {
+        path: routeLinks?.admin?.users,
+        element: <AdminUser />,
+      },
+      {
+        path: routeLinks?.admin?.usersDetails,
+        element: <AdminUserDetails />,
+      },
       {
         path: routeLinks?.admin?.patients,
         element: <AdminPatients />,
@@ -373,6 +385,14 @@ const App = createBrowserRouter([
       {
         path: routeLinks?.admin?.patientsDetails,
         element: <AdminPatientDetails />,
+      },
+         {
+        path: routeLinks?.admin?.usersDetails,
+        element: <AdminUserDetails />,
+      },
+         {
+        path: routeLinks?.admin?.patientsStats,
+        element: <AdminPatientStats />,
       },
       {
         path: routeLinks?.admin?.doctors,
@@ -454,12 +474,28 @@ const App = createBrowserRouter([
         element: <AdminLabDetails />,
       },
       {
+        path: routeLinks?.superAdmin?.users,
+        element: <AdminUser />,
+      },
+      {
+        path: routeLinks?.superAdmin?.usersDetails,
+        element: <AdminUserDetails />,
+      },
+      {
         path: routeLinks?.superAdmin?.patients,
         element: <AdminPatients />,
       },
-      {
+        {
         path: routeLinks?.superAdmin?.patientsDetails,
         element: <AdminPatientDetails />,
+      },
+         {
+        path: routeLinks?.superAdmin?.usersDetails,
+        element: <AdminUserDetails />,
+      },
+         {
+        path: routeLinks?.superAdmin?.patientsStats,
+        element: <AdminPatientStats />,
       },
       {
         path: routeLinks?.superAdmin?.doctors,

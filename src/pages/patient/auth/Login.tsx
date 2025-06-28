@@ -44,14 +44,15 @@ function Login() {
 
     try {
       const response = await AuthApi.login(email, password);
-      const { accessToken, user } = response.data.data;
-
+      const { accessToken, user, refreshToken } = response.data.data;
+      console.log(response.data.data);
       const payload: IPayload = {
         token: accessToken,
-        user: {...user, user: user},
+        refreshToken: refreshToken,
+        user: { ...user, user: user },
       };
 
-          if (user?.role !== 'patient') {
+      if (user?.role !== "patient") {
         return setMessage({
           message: "Unauthorized access",
           type: "error",
@@ -80,13 +81,13 @@ function Login() {
     }
   };
 
-    useEffect(() => {
-      setMessage({
-        message: "",
-        type: "",
-      });
-    }, [formData]);
-    
+  useEffect(() => {
+    setMessage({
+      message: "",
+      type: "",
+    });
+  }, [formData]);
+
   return (
     <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 ">
       <div className="text-center my-8">

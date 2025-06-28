@@ -14,6 +14,9 @@ export interface CartItem {
   requiresPrescription: boolean;
   isAvailable: boolean;
   quantity: number;
+  image?: {
+    url:string,
+  }
 }
 
 interface CartState {

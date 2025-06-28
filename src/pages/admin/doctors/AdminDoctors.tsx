@@ -19,17 +19,17 @@ function AdminDoctors() {
     doctorsLoading,
     setDoctorsPage,
     getDoctors,
-    setDoctorSpecialty,
+    setDoctorsSpecialty,
     setDoctorsStatus,
     doctorsStatus,
-    doctorSpecialty,
+    doctorsSpecialty,
   } = useAdmin(AdminApi);
 
   const [showForm, setShowForm] = useState(false);
   const [editDoctor, setEditDoctor] = useState<any>(null);
   useEffect(() => {
     getDoctors();
-  }, [doctorsPage,doctorSpecialty, doctorsStatus]);
+  }, [doctorsPage,doctorsSpecialty, doctorsStatus]);
 
   const handleEdit = (doctor: any) => {
     setEditDoctor(doctor);
@@ -143,9 +143,9 @@ function AdminDoctors() {
             {
                 label: "Specialty",
                 options: adminDoctorSpecialties,
-                value: doctorSpecialty,
+                value: doctorsSpecialty,
                 onChange: (value) => {
-              setDoctorSpecialty(value);
+              setDoctorsSpecialty(value);
                 },
             },
         ]} 

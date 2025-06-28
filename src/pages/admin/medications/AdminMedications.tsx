@@ -132,6 +132,20 @@ function AdminMedications() {
     }
   };
   const columns: Column<any>[] = [
+    {
+  key: "image",
+  label: "Image",
+  render: (m) =>
+    m.image?.url ? (
+      <img
+        src={m.image.url}
+        alt={m.name}
+        className="w-12 h-12 object-cover rounded-md "
+      />
+    ) : (
+      <span className="text-gray-400 text-sm">No image</span>
+    ),
+},
     { key: "name", label: "Name" },
     { key: "genericName", label: "Generic Name" },
     { key: "manufacturer", label: "Manufacturer" },
@@ -227,6 +241,17 @@ function AdminMedications() {
           ← Back to Medications
         </button>
         <div className="space-y-4 container-bd">
+
+            {viewMedication?.image?.url && (
+              <div className="w-full md:w-64">
+                <p className="text-sm text-gray-600 mb-2">Current Image:</p>
+                <img
+                  src={viewMedication?.image?.url}
+                  alt={viewMedication.name}
+                  className="rounded-lg border object-cover w-full h-40"
+                />
+              </div>
+            )}
           <div className="mt-4 space-y-2">
             <h2 className="text-xl font-semibold">{viewMedication.name}</h2>
             <p>

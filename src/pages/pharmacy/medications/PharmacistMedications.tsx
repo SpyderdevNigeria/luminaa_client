@@ -53,6 +53,20 @@ const PharmacistMedications = () => {
     medicationsPage,
   ]);
   const columns: Column<any>[] = [
+    {
+  key: "image",
+  label: "Image",
+  render: (m) =>
+    m.image?.url ? (
+      <img
+        src={m.image.url}
+        alt={m.name}
+        className="w-12 h-12 object-cover rounded-md "
+      />
+    ) : (
+      <span className="text-gray-400 text-sm">No image</span>
+    ),
+},
     { key: "name", label: "Name" },
     { key: "genericName", label: "Generic Name" },
     { key: "manufacturer", label: "Manufacturer" },

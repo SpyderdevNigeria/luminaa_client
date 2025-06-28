@@ -2,7 +2,7 @@ import { useEffect, } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiWallet } from "react-icons/bi";
 import WalletImage from "../../../assets/images/patient/wallet.png";
-import HeaderTab from "../../../components/common/HeaderTab";
+// import HeaderTab from "../../../components/common/HeaderTab";
 import Table, { Column } from "../../../components/common/Table";
 import StatusBadge from "../../../components/common/StatusBadge";
 import usePrescriptionOrders from "../../../hooks/usePrescriptionOrders";
@@ -18,7 +18,7 @@ const PatientOrder = () => {
     total,
     totalPages,
     limit,
-    setFilter,
+    // setFilter,
     handleSetPage,
     getPrescriptionOrders,
   } = usePrescriptionOrders(PatientApi);
@@ -110,7 +110,7 @@ const orderColumns: Column<any>[] = [
       </div>
     <div className="container-bd">
       {/* Header Filter */}
-      <HeaderTab
+      {/* <HeaderTab
         title=""
         onSearchChange={(value) => {
           setFilter({ search: value, page: 1 });
@@ -164,7 +164,7 @@ const orderColumns: Column<any>[] = [
           setFilter({ dateTo: val, page: 1 });
           getPrescriptionOrders();
         }}
-      />
+      /> */}
 
       {/* Order Details Modal */}
       {loadingOrders ? <div>

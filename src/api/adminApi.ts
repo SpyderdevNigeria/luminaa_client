@@ -25,12 +25,38 @@ const AdminApi = {
     const response = await api.patch(`/admin/users/${id}/toggle-status`, body);
     return response.data;
   },
-
-  getPatients: async (query: any) => {
+  getUsers:async (query: any) => {
     const response = await api.get(`/admin/users${query}`);
     return response.data;
   },
+  getPatientById: async (id: any) => {
+    const response = await api.get(`/admin/patients/${id}`);
+    return response.data;
+  },
 
+  getPatientStats: async () => {
+  const response = await api.get("/admin/patients/stats");
+  return response.data.data;
+},
+
+  getPatients: async (query: any) => {
+    const response = await api.get(`/admin/patients${query}`);
+    return response.data;
+  },
+  createPatient: async (payload: any) => {
+    const response = await api.post("/admin/patients", payload);
+    return response.data;
+  },
+
+  updatePatient: async (id: string, payload: any) => {
+    const response = await api.put(`/admin/patients/${id}`, payload);
+    return response.data;
+  },
+
+  deletePatient: async (id: string) => {
+    const response = await api.delete(`/admin/patients/${id}`);
+    return response.data;
+  },
   getDoctors: async (query: any) => {
     const response = await api.get(`/admin/doctors${query}`);
     return response.data;
@@ -87,6 +113,11 @@ const AdminApi = {
 
   createMedication: async (body: any) => {
     const response = await api.post(`/admin/medications`, body);
+    return response.data;
+  },
+
+   createMedicationImage: async (id:string, body: any) => {
+    const response = await api.post(`/admin/medications/${id}/upload-image`, body);
     return response.data;
   },
   updateMedication: async (id: string, body: any) => {
@@ -153,7 +184,7 @@ const AdminApi = {
     return response.data;
   },
   updatePrescriptionOrderStatus: async (id: any, body:any) => {
-    const response = await api.get(`/admin/orders/${id}/status`, body);
+    const response = await api.patch(`/admin/orders/${id}/status`, body);
     return response.data;
   },
 };

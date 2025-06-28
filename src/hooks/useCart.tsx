@@ -6,8 +6,8 @@ export default function useCart() {
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.cart.items);
 const {showToast} = useToaster()
-  const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
-  const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const totalItems = items.reduce((acc: any, item: { quantity: any; }) => acc + item.quantity, 0);
+  const subtotal = items.reduce((acc: number, item: { price: number; quantity: number; }) => acc + item.price * item.quantity, 0);
 
   const add = (item: any) => {
     try {

@@ -4,6 +4,7 @@ interface AuthState {
   token: string | null;
   isAuthenticated: boolean | null;
   user: any | null;
+  refreshToken:string | null;
 }
 const user = localStorage.getItem("hms_user");
 
@@ -14,6 +15,7 @@ if (user === undefined) {
 
 const initialState: AuthState = {
   token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
+   refreshToken: typeof window !== "undefined" ? localStorage.getItem("refreshToken") : null,
   isAuthenticated: null,
   user: user ? JSON.parse(user) : null,
 };
@@ -24,13 +26,16 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<AuthState["user"]>) => {
       localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("refreshToken", action.payload.refreshToken);
       localStorage.setItem("hms_user", JSON.stringify(action.payload.user));
       state.token = action.payload.token;
+      state.refreshToken = action.payload.refreshToken;
       state.isAuthenticated = true;
       state.user = action.payload.user;
     },
     logout: (state) => {
       localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
       localStorage.removeItem("hms_user");
       state.token = null;
       state.isAuthenticated = false;

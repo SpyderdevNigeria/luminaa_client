@@ -55,8 +55,8 @@ const useAuth = (): AuthInfo => {
     } catch (error: any) {
       console.error("Failed to fetch user profile:", error);
       if (error?.response?.status === 401) {
-        dispatch(logout());
-        navigate(routeLinks.auth.login);
+        // dispatch(logout());
+        // navigate(routeLinks.auth.login);
        
       }
     } finally {

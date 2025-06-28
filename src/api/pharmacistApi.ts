@@ -44,7 +44,7 @@ const PharmacistApi = {
     return response.data;
   },
   updatePrescriptionOrderStatus: async (id: any, body:any) => {
-    const response = await api.get(`/pharmacy/orders/${id}/status`, body);
+    const response = await api.patch(`/pharmacy/orders/${id}/status`, body);
     return response.data;
   },
 };

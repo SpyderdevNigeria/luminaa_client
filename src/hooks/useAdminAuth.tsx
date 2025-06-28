@@ -45,7 +45,7 @@ const isTokenValid = (token: string | null): boolean => {
     } catch (error: any) {
       console.error("Failed to fetch user profile:", error);
       if (error?.response?.status === 401) {
-         dispatch(logout());
+        //  dispatch(logout());
       }
     } finally {
       setAuthLoading(false);

@@ -24,57 +24,58 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
 
   return (
     <>
-      <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col justify-between hover:shadow-md transition relative">
-        {/* Top: Icon + Medication Name */}
-        <div className="flex items-center  justify-between">
-          <div className="bg-primary/10 text-primary p-2 rounded-full">
-            <PiPillDuotone className="w-6 h-6" />
-          </div>
-          <div className="relative group inline-block">
-             {!medication?.requiresPrescription && <p className="text-primary"> OTC</p>}
-                {/* Tooltip */}
-            <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 whitespace-nowrap">
-              Over the counter
+      <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md transition flex flex-col justify-between relative">
+        {/* Image */}
+        <div className="w-full h-[150px] rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center mb-4">
+          {medication?.image?.url ? (
+            <img
+              src={medication.image.url}
+              alt={medication.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <PiPillDuotone className="text-4xl text-gray-400" />
+          )}
+        </div>
+
+        {/* Name & Label */}
+        <div className="flex justify-between items-center mb-2">
+          <h2 className="text-base font-semibold text-gray-900 line-clamp-2">{medication.name}</h2>
+          {!medication.requiresPrescription && (
+            <div className="relative group text-xs text-primary font-medium">
+              OTC
+              <div className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 whitespace-nowrap">
+                Over the counter
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Middle: Few Key Info */}
-        <div className="mt-2 space-y-2">
-          <div>
-            <h2 className="text-base font-semibold text-gray-900 line-clamp-2">
-              {medication.name}
-            </h2>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 uppercase">strength</p>
-            <p className="text-xs">{medication.strength}</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 uppercase">Dosage Form</p>
-            <p className="text-xs ">{medication.dosageForm}</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 uppercase">description</p>
-            <p className="text-xs line-clamp-2">{medication.description}</p>
-          </div>
-
-          <p className="text-sm font-medium text-gray-800">
-            NGN {medication.price}
+        {/* Medication Info */}
+        <div className="space-y-1 text-sm text-gray-700">
+          <p><span className="text-xs uppercase text-gray-500">Strength:</span> {medication.strength}</p>
+          <p><span className="text-xs uppercase text-gray-500">Dosage Form:</span> {medication.dosageForm}</p>
+          <p className="line-clamp-2">
+            <span className="text-xs uppercase text-gray-500">Description:</span> {medication.description}
           </p>
+          <p className="font-medium mt-2">NGN {medication.price}</p>
         </div>
 
-        {/* Cart/Prescription Actions */}
-        <div className="mt-4 flex flex-row gap-2">
+        {/* Buttons */}
+        <div className="mt-4 flex gap-2">
           <button
-            className="p-2 text-white bg-primary rounded-md"
+            className="p-2 bg-primary text-white rounded-md"
             onClick={() => setOpen(true)}
           >
             <MdRemoveRedEye />
           </button>
           <button
-            onClick={ () => { isInCart ? "" : onAddPrescription?.() }}
-            className="w-full text-sm font-medium bg-white text-primary border border-primary py-1 px-4 rounded-md hover:text-white hover:bg-primary transition"
+            onClick={() => { if (!isInCart) onAddPrescription?.(); }}
+            className={`w-full text-sm font-medium border py-1 px-4 rounded-md transition ${
+              isInCart
+                ? "bg-gray-100 text-gray-500 border-gray-300 cursor-not-allowed"
+                : "bg-white text-primary border-primary hover:bg-primary hover:text-white"
+            }`}
           >
             {isInCart ? "Already Added" : buttonText}
           </button>
@@ -82,19 +83,34 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
       </div>
 
       {/* Modal */}
-      <Modal open={open} onClose={()=>{setOpen(false)} }  hideCancel={false} buttonText={isInCart ? "Already Added" : buttonText} style="lg:min-w-3xl !md:mx-4 !md:mx-0 " handleSubmit={ ()=> { isInCart ? "" : onAddPrescription?.() }}>
-        <div className="my-4" >
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        hideCancel={false}
+        buttonText={isInCart ? "Already Added" : buttonText}
+        style="lg:min-w-3xl !md:mx-4"
+        handleSubmit={() => {
+          if (!isInCart) onAddPrescription?.();
+        }}
+      >
+        <div className="my-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Left Side */}
-            <div className=" min-w-[150px] bg-gray-100 my-auto rounded-lg h-full flex items-center justify-center">
-              <PiPillDuotone className="text-primary w-20 h-20" />
+            {/* Image Preview */}
+            <div className="bg-gray-100 rounded-lg h-full flex items-center justify-center min-h-[150px]">
+              {medication?.image?.url ? (
+                <img
+                  src={medication.image.url}
+                  alt={medication.name}
+                  className="object-cover rounded-lg max-h-[150px]"
+                />
+              ) : (
+                <PiPillDuotone className="text-primary w-20 h-20" />
+              )}
             </div>
 
-            {/* Right Side */}
-            <div className="grid grid-cols-1 md:grid-cols-2 space-y-3 md:col-span-2">
-              <h2 className="text-xl font-semibold md:col-span-2 text-gray-900">
-                {medication.name}
-              </h2>
+            {/* Detailed Info */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:col-span-2">
+              <h2 className="text-xl font-semibold md:col-span-2">{medication.name}</h2>
 
               <div>
                 <p className="text-xs text-gray-500 uppercase">Generic Name</p>
@@ -121,26 +137,20 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
                 <p className="text-sm">{medication.category}</p>
               </div>
 
-
+              <div>
+                <p className="text-xs text-gray-500 uppercase">Requires Prescription</p>
+                <p className="text-sm">{medication.requiresPrescription ? "Yes" : "No"}</p>
+              </div>
 
               <div>
-                <p className="text-xs text-gray-500 uppercase ">
-                  Requires Prescription
-                </p>
-                <p className="text-sm">
-                  {medication.requiresPrescription ? "Yes" : "No"}
-                </p>
-              </div>
-
-                     <div>
-                           <p className="text-xs text-gray-500 uppercase ">
-                  Price
-                </p>
+                <p className="text-xs text-gray-500 uppercase">Price</p>
                 <p className="text-sm">NGN {medication.price}</p>
               </div>
-                        <p className="text-sm  md:col-span-2">{medication.description}</p>
 
-
+              <div className="md:col-span-2">
+                <p className="text-xs text-gray-500 uppercase">Description</p>
+                <p className="text-sm">{medication.description}</p>
+              </div>
             </div>
           </div>
         </div>

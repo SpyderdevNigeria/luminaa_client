@@ -1,15 +1,18 @@
-import {  useEffect } from "react";
-import { FiEye } from "react-icons/fi";
+import { useState, useEffect } from "react";
+import { FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
+import { HiOutlineDotsVertical } from "react-icons/hi";
+
 import useAdmin from "../../../hooks/useAdmin";
 import AdminApi from "../../../api/adminApi";
-import { HiOutlineDotsVertical } from "react-icons/hi";
+
 import Table, { Column } from "../../../components/common/Table";
 import HeaderTab from "../../../components/common/HeaderTab";
 import Dropdown from "../../../components/dropdown/dropdown";
 import StatusBadge from "../../../components/common/StatusBadge";
-import UserImage from "../../../assets/images/patient/user.png"
-import moment from "moment";
 import AdminNavigate from "../../../components/common/AdminNavigate";
+import AdminPatientsCreate from "./component/AdminPatientsCreate";
+import ConfirmModal from "../../../components/modal/ConfirmModal";
+import { useToaster } from "../../../components/common/ToasterContext";
 
 function AdminPatients() {
   const {
@@ -18,139 +21,200 @@ function AdminPatients() {
     patientsLimit,
     patientsTotal,
     patientsLoading,
+    patientsSearch,
+    patientsGender,
+    patientsCity,
+    isBioDataCompleted,
+    isMedicalHistoryCompleted,
     getPatients,
     setPatientsPage,
     setPatientsSearch,
-    setPatientsIsDisabled,
-    setPatientsIsActive,
-    setPatientsRole,
-    patientsRole,
-    patientsSearch,
-    patientsIsDisabled,
-    patientsIsActive,
+    setPatientsGender,
+    setPatientsCity,
+    setPatientsIsBioDataCompleted,
+    setPatientsIsMedicalHistoryCompleted,
   } = useAdmin(AdminApi);
 
+  const { showToast } = useToaster();
+
+  const [showForm, setShowForm] = useState(false);
+  const [editPatient, setEditPatient] = useState<any>(null);
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
 
   useEffect(() => {
     getPatients();
   }, [
     patientsPage,
-    patientsRole,
     patientsSearch,
-    patientsIsDisabled,
-    patientsIsActive,
+    patientsGender,
+    patientsCity,
+    isBioDataCompleted,
+    isMedicalHistoryCompleted,
   ]);
 
-  useEffect(()=> {
-    setPatientsRole("patient")
-  }, [])
+  const handleEdit = (patient: any) => {
+    setEditPatient(patient);
+    setShowForm(true);
+  };
+
+  const confirmDelete = (patientId: string) => {
+    setSelectedPatientId(patientId);
+    setConfirmMessage("Are you sure you want to delete this patient?");
+    setConfirmOpen(true);
+  };
+
+  const onConfirmDelete = async () => {
+    if (!selectedPatientId) return;
+    setConfirmLoading(true);
+    try {
+      await AdminApi.deletePatient(selectedPatientId);
+      showToast("Patient deleted successfully", "success");
+      getPatients();
+    } catch (error) {
+      console.error("Delete error:", error);
+      showToast("Failed to delete patient", "error");
+    } finally {
+      setConfirmOpen(false);
+      setConfirmLoading(false);
+      setSelectedPatientId(null);
+    }
+  };
+
   const columns: Column<any>[] = [
     {
       key: "name",
       label: "Name",
-      render: (user) => (
-       <div className="flex items-center gap-2">
-          <img
-            src={user?.profilePicture?.url || UserImage}
-            alt={`${user?.firstName} ${user?.lastName}`}
-            className="w-5 h-5 rounded-full"
-          />
-          <h5 className="text-sm capitalize">{`${user?.firstName} ${user?.lastName}`}</h5>
-        </div>
+      render: (patient) => (
+        <span>{patient?.user?.firstName} {patient?.user?.lastName}</span>
       ),
     },
     {
       key: "email",
       label: "Email",
-      render: (user) => <span>{user?.email}</span>,
+      render: (patient) => <span>{patient?.user?.email}</span>,
     },
     {
-      key: "contactNumber",
-      label: "Phone",
-      render: (user) => <span>{user?.contactNumber || 'N/A'}</span>,
+      key: "gender",
+      label: "Gender",
+      render: (patient) => <span>{patient?.gender || "N/A"}</span>,
+    },
+    {
+      key: "city",
+      label: "City",
+      render: (patient) => <span>{patient?.city || "N/A"}</span>,
     },
     {
       key: "status",
       label: "Status",
-      render: (user) => (
-        <StatusBadge status={user?.isActive ? "active" : "inactive"} />
-      ),
-    },
-       {
-      key: "lastLogin",
-      label: "Last Login",
-      render: (user) => (
-        <p>{user?.lastLogin ? moment(user.lastLogin).format("YYYY-MM-DD HH:mm") : "N/A"}</p>
-      ),
-    },
-       {
-      key: "role",
-      label: "Role",
-      render: (user) => (
-        <p>{user?.role}</p>
+      render: (patient) => (
+        <StatusBadge status={patient?.isBioDataCompleted ? "active" : "inactive"} />
       ),
     },
     {
       key: "actions",
       label: "Actions",
-      render: (user) => (
-        <Dropdown
-          showArrow={false}
-          triggerLabel=""
-          triggerIcon={<HiOutlineDotsVertical />}
-        >
+      render: (patient) => (
+        <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
           <ul className="space-y-2 text-sm">
-              <AdminNavigate role={user?.role} id={user?.id}> 
-                 <FiEye /> View
-              </AdminNavigate>
+            <AdminNavigate role={"patient"} id={patient?.user?.id}>
+              <FiEye /> View
+            </AdminNavigate>
+            <li
+              onClick={() => handleEdit(patient)}
+              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
+            >
+              <FiEdit /> Edit
+            </li>
+            <li
+              onClick={() => confirmDelete(patient?.id)}
+              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"
+            >
+              <FiTrash2 /> Delete
+            </li>
           </ul>
         </Dropdown>
       ),
     },
   ];
 
+  if (showForm) {
+    return (
+      <AdminPatientsCreate
+        patient={editPatient}
+        onClose={() => {
+          setShowForm(false);
+          setEditPatient(null);
+          getPatients();
+        }}
+        onBack={() => {
+          setShowForm(false);
+          setEditPatient(null);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold">Users</h1>
+        <h1 className="text-2xl font-semibold">Patients</h1>
+        <button
+          className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
+          onClick={() => setShowForm(true)}
+        >
+          Add Patient
+        </button>
       </div>
 
       <HeaderTab
         title=""
         showSearch={true}
-        searchPlaceholder="Search By Name"
-        onSearchChange={(value) => setPatientsSearch(value)}
+        searchPlaceholder="Search by Name"
+        onSearchChange={(val) => setPatientsSearch(val)}
         dropdowns={[
           {
-            label: "Status",
-            options: ["Active", "Inactive"],
-            onChange: (value) =>
-              setPatientsIsActive(value === "Active" ? true : false),
-            value: "",
+            label: "Gender",
+            options: ["male", "female"],
+            value: patientsGender,
+            onChange: (val) => setPatientsGender(val),
           },
           {
-            label: "Disabled",
-            options: ["Yes", "No"],
-            onChange: (value) =>
-              setPatientsIsDisabled(value === "Yes" ? true : false),
-            value: "",
+            label: "City",
+            options: ["Lagos", "Abuja", "Port Harcourt"],
+            value: patientsCity,
+            onChange: (val) => setPatientsCity(val),
           },
           {
-            label: "Roles",
-            options: [
-              "admin",
-              "super_admin",
-              "doctor",
-              "patient",
-              "lab_tech",
-              "pharmacist",
-            ],
-            onChange: (value) => setPatientsRole(value),
-            value: "",
+            label: "Bio Data Completed",
+            options: ["true", "false"],
+            value: isBioDataCompleted,
+            onChange: (val) => setPatientsIsBioDataCompleted(val),
+          },
+          {
+            label: "Medical History Completed",
+            options: ["true", "false"],
+            value: isMedicalHistoryCompleted,
+            onChange: (val) => setPatientsIsMedicalHistoryCompleted(val),
           },
         ]}
       />
+
+      <ConfirmModal
+        open={confirmOpen}
+        description={confirmMessage}
+        onConfirm={onConfirmDelete}
+        onClose={() => {
+          setConfirmOpen(false);
+          setConfirmLoading(false);
+          setSelectedPatientId(null);
+        }}
+        loading={confirmLoading}
+      />
+
       <div>
         {patientsLoading ? (
           <p>Loading...</p>

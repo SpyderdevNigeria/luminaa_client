@@ -2,7 +2,12 @@ import { CiTablets1 } from "react-icons/ci";
 import { LiaStethoscopeSolid } from "react-icons/lia";
 import { LiaPillsSolid } from "react-icons/lia";
 import { FiPackage } from "react-icons/fi";
-import {  FaRegCircleUser, FaUserDoctor, FaUserInjured     } from "react-icons/fa6";
+import {
+  FaRegCircleUser,
+  FaUser,
+  FaUserDoctor,
+  FaUserInjured,
+} from "react-icons/fa6";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiTimer } from "react-icons/tfi";
@@ -23,12 +28,12 @@ export const navItemsPatient = [
     icon: RxDashboard,
     to: routeLinks?.patient?.dashboard,
   },
-    {
+  {
     label: "Consultations",
     title: "Consultations",
     icon: LiaStethoscopeSolid,
     to: routeLinks?.patient?.consultations,
-        subLinks: [
+    subLinks: [
       {
         label: "Consultations",
         title: "Consultations / Consultations Details",
@@ -37,12 +42,12 @@ export const navItemsPatient = [
       },
     ],
   },
-    {
+  {
     label: "Lab/Radiology",
     title: "Lab/Radiology",
     icon: ImLab,
     to: routeLinks?.patient?.lab,
-      subLinks: [
+    subLinks: [
       {
         label: "Lab/Radiology",
         title: "Lab/Radiology",
@@ -70,7 +75,7 @@ export const navItemsPatient = [
     title: "Pharmacy",
     icon: LiaPillsSolid,
     to: routeLinks?.patient?.pharmacy,
-         subLinks: [
+    subLinks: [
       {
         label: "checkout",
         title: "checkout",
@@ -84,7 +89,7 @@ export const navItemsPatient = [
     title: "Orders",
     icon: FiPackage,
     to: routeLinks?.patient?.orders,
-         subLinks: [
+    subLinks: [
       {
         label: "Orders details",
         title: "Orders details",
@@ -94,10 +99,10 @@ export const navItemsPatient = [
     ],
   },
 
-   {
+  {
     label: "profile",
     title: "profile",
-     icon: FaRegUserCircle  ,
+    icon: FaRegUserCircle,
     to: routeLinks?.patient?.profile,
   },
 ];
@@ -130,12 +135,12 @@ export const navItemsDoctor = [
     icon: TfiTimer,
     to: routeLinks?.doctor?.schedule,
   },
-      {
+  {
     label: "Lab Request",
     title: "Lab Request",
     icon: FiPackage,
     to: routeLinks?.doctor?.labOrders,
-     subLinks: [
+    subLinks: [
       {
         label: "Lab Requests",
         title: "Lab Requests / Request Details",
@@ -145,7 +150,7 @@ export const navItemsDoctor = [
     ],
   },
 
-    {
+  {
     label: "Prescription",
     title: "Prescription",
     icon: CiTablets1,
@@ -174,7 +179,7 @@ export const navItemsDoctor = [
 ];
 
 export const navItemsLab = [
-      {
+  {
     label: "Dashboard",
     title: "Dashboard",
     icon: RxDashboard,
@@ -185,7 +190,7 @@ export const navItemsLab = [
     title: "Test Requests",
     icon: GrTest,
     to: routeLinks?.lab?.labRequests,
-      subLinks: [
+    subLinks: [
       {
         label: "Test Requests",
         title: "Test Requests / Request Details",
@@ -200,31 +205,53 @@ export const navItemsLab = [
     icon: FaRegCircleUser,
     to: routeLinks?.lab?.profile,
   },
-]
+];
 
 export const navItemsAdmin = [
-  {  
+  {
     label: "Dashboard",
     title: "Dashboard",
     icon: RxDashboard,
     to: routeLinks?.admin?.dashboard,
   },
-      {
+
+  {
+    label: "Users",
+    title: "Users",
+    icon: FaUser,
+    to: routeLinks?.admin?.users,
+  },
+
+  {
     label: "Patients",
     title: "Patients",
-    icon: FaUserInjured ,
-    to: routeLinks?.admin?.patients,
+    icon: FaUserInjured,
+    to: "",
+    subLinks: [
+      {
+        label: "Patients",
+        title: "Patients",
+        icon: FaUserInjured,
+        to: routeLinks?.admin?.patients,
+      },
+      {
+        label: "Patients Stats",
+        title: "Patients Stats",
+        icon: FaUserInjured,
+        to: routeLinks?.admin?.patientsStats,
+      },
+    ],
   },
   {
     label: "Doctors",
     title: "Doctors",
-    icon:  FaUserDoctor,
+    icon: FaUserDoctor,
     to: routeLinks?.admin?.doctors,
   },
-    {
+  {
     label: "Laboratories",
     title: "Laboratories",
-    icon: GiTestTubes ,
+    icon: GiTestTubes,
     to: routeLinks?.admin?.lab,
   },
 
@@ -232,14 +259,14 @@ export const navItemsAdmin = [
     label: "Pharmacists",
     title: "Pharmacists",
     icon: LiaPillsSolid,
-    to: routeLinks?.admin?.pharmacists
+    to: routeLinks?.admin?.pharmacists,
   },
-  
-   {
-    label:"Inventory",
-    title:"Inventory",
-    icon:MdInventory,
-    to:"",
+
+  {
+    label: "Inventory",
+    title: "Inventory",
+    icon: MdInventory,
+    to: "",
     subLinks: [
       {
         label: "Inventories",
@@ -247,13 +274,13 @@ export const navItemsAdmin = [
         icon: FaUserInjured,
         to: routeLinks?.admin?.adminInventory,
       },
-        {
+      {
         label: "Inventory Logs",
         title: "Inventory Logs",
         icon: FaUserInjured,
         to: routeLinks?.admin?.adminInventoryLogs,
       },
-       {
+      {
         label: "Inventory Summary",
         title: "Inventory Summary",
         icon: FaUserInjured,
@@ -264,24 +291,23 @@ export const navItemsAdmin = [
         title: "Inventory Details",
         icon: FaUserInjured,
         to: routeLinks?.admin?.adminInventoryDetails,
-        visible:false
+        visible: false,
       },
-            {
+      {
         label: "Inventory Medication Details",
         title: "Inventory Medication Details",
         icon: FaUserInjured,
         to: routeLinks?.admin?.adminInventoryMedication,
-        visible:false
+        visible: false,
       },
-
     ],
   },
   {
-    label:"Medications",
-    title:"Medications",
-    icon:MdMedication,
-    to:routeLinks?.admin?.medications,
-      subLinks: [
+    label: "Medications",
+    title: "Medications",
+    icon: MdMedication,
+    to: routeLinks?.admin?.medications,
+    subLinks: [
       {
         label: "Medications",
         title: "Medications / Medications Details",
@@ -290,12 +316,12 @@ export const navItemsAdmin = [
       },
     ],
   },
-    {
+  {
     label: "Orders",
     title: "Orders",
     icon: FiPackage,
     to: routeLinks?.admin?.orders,
-         subLinks: [
+    subLinks: [
       {
         label: "Orders details",
         title: "Orders details",
@@ -304,7 +330,7 @@ export const navItemsAdmin = [
       },
     ],
   },
-    {
+  {
     label: "Profile Management",
     title: "Profile Management",
     icon: FaRegCircleUser,
@@ -325,28 +351,48 @@ export const navItemsAdmin = [
 ];
 
 export const navItemsSuperAdmin = [
-  {  
+  {
     label: "Dashboard",
     title: "Dashboard",
     icon: RxDashboard,
     to: routeLinks?.superAdmin?.dashboard,
   },
-      {
+  {
+    label: "Users",
+    title: "Users",
+    icon: FaUser,
+    to: routeLinks?.superAdmin?.users,
+  },
+  {
     label: "Patients",
     title: "Patients",
-    icon: FaUserInjured ,
-    to: routeLinks?.superAdmin?.patients,
+    icon: FaUserInjured,
+    to: "",
+    subLinks: [
+      {
+        label: "Patients",
+        title: "Patients",
+        icon: FaUserInjured,
+        to: routeLinks?.superAdmin?.patients,
+      },
+      {
+        label: "Patients Stats",
+        title: "Patients Stats",
+        icon: FaUserInjured,
+        to: routeLinks?.superAdmin?.patientsStats,
+      },
+    ],
   },
   {
     label: "Doctors",
     title: "Doctors",
-    icon:  FaUserDoctor,
+    icon: FaUserDoctor,
     to: routeLinks?.superAdmin?.doctors,
   },
-    {
+  {
     label: "Laboratories",
     title: "Laboratories",
-    icon: GiTestTubes ,
+    icon: GiTestTubes,
     to: routeLinks?.superAdmin?.lab,
   },
 
@@ -354,14 +400,14 @@ export const navItemsSuperAdmin = [
     label: "Pharmacists",
     title: "Pharmacists",
     icon: LiaPillsSolid,
-    to: routeLinks?.superAdmin?.pharmacists
+    to: routeLinks?.superAdmin?.pharmacists,
   },
 
-   {
-    label:"Inventory",
-    title:"Inventory",
-    icon:MdInventory,
-    to:"",
+  {
+    label: "Inventory",
+    title: "Inventory",
+    icon: MdInventory,
+    to: "",
     subLinks: [
       {
         label: "Inventories",
@@ -369,13 +415,13 @@ export const navItemsSuperAdmin = [
         icon: FaUserInjured,
         to: routeLinks?.superAdmin?.adminInventory,
       },
-        {
+      {
         label: "Inventory Logs",
         title: "Inventory Logs",
         icon: FaUserInjured,
         to: routeLinks?.superAdmin?.adminInventoryLogs,
       },
-       {
+      {
         label: "Inventory Summary",
         title: "Inventory Summary",
         icon: FaUserInjured,
@@ -386,24 +432,23 @@ export const navItemsSuperAdmin = [
         title: "Inventory Details",
         icon: FaUserInjured,
         to: routeLinks?.superAdmin?.adminInventoryDetails,
-        visible:false
+        visible: false,
       },
-               {
+      {
         label: "Inventory Medication Details",
         title: "Inventory Medication Details",
         icon: FaUserInjured,
         to: routeLinks?.superAdmin?.adminInventoryMedication,
-        visible:false
+        visible: false,
       },
     ],
   },
 
-
   {
-    label:"Medications",
-    title:"Medications",
-    icon:MdMedication,
-    to:routeLinks?.superAdmin?.medications,
+    label: "Medications",
+    title: "Medications",
+    icon: MdMedication,
+    to: routeLinks?.superAdmin?.medications,
     subLinks: [
       {
         label: "Medications",
@@ -413,18 +458,18 @@ export const navItemsSuperAdmin = [
       },
     ],
   },
-      {
-    label:"Admins",
-    title:"Admins",
-    icon:HiMiniUsers,
-    to:routeLinks?.superAdmin?.admins,
+  {
+    label: "Admins",
+    title: "Admins",
+    icon: HiMiniUsers,
+    to: routeLinks?.superAdmin?.admins,
   },
   {
     label: "Orders",
     title: "Orders",
     icon: FiPackage,
     to: routeLinks?.superAdmin?.orders,
-         subLinks: [
+    subLinks: [
       {
         label: "Orders details",
         title: "Orders details",
@@ -434,7 +479,7 @@ export const navItemsSuperAdmin = [
     ],
   },
 
-     {
+  {
     label: "Profile Management",
     title: "Profile Management",
     icon: FaRegCircleUser,
@@ -455,17 +500,17 @@ export const navItemsSuperAdmin = [
 ];
 
 export const navItemsPharmacy = [
-    {  
+  {
     label: "Dashboard",
     title: "Dashboard",
     icon: RxDashboard,
     to: routeLinks?.pharmacist?.dashboard,
   },
-     {
-    label:"Inventory",
-    title:"Inventory",
-    icon:MdInventory,
-    to:"",
+  {
+    label: "Inventory",
+    title: "Inventory",
+    icon: MdInventory,
+    to: "",
     subLinks: [
       {
         label: "Inventories",
@@ -473,7 +518,7 @@ export const navItemsPharmacy = [
         icon: FaUserInjured,
         to: routeLinks?.pharmacist?.pharmacistInventory,
       },
-       {
+      {
         label: "Inventory Summary",
         title: "Inventory Summary",
         icon: FaUserInjured,
@@ -484,29 +529,29 @@ export const navItemsPharmacy = [
         title: "Inventory Details",
         icon: FaUserInjured,
         to: routeLinks?.pharmacist?.pharmacistInventoryDetails,
-        visible:false
+        visible: false,
       },
-               {
+      {
         label: "Inventory Medication Details",
         title: "Inventory Medication Details",
         icon: FaUserInjured,
         to: routeLinks?.pharmacist?.pharmacistInventoryMedication,
-        visible:false
+        visible: false,
       },
     ],
   },
-    {
-    label:"Medications",
-    title:"Medications",
-    icon:MdMedication,
-    to:routeLinks?.pharmacist?.medications,
+  {
+    label: "Medications",
+    title: "Medications",
+    icon: MdMedication,
+    to: routeLinks?.pharmacist?.medications,
   },
-    {
+  {
     label: "Orders",
     title: "Orders",
     icon: FiPackage,
     to: routeLinks?.pharmacist?.orders,
-         subLinks: [
+    subLinks: [
       {
         label: "Orders details",
         title: "Orders details",
@@ -515,16 +560,20 @@ export const navItemsPharmacy = [
       },
     ],
   },
-    {
+  {
     label: "Profile Management",
     title: "Profile Management",
     icon: FaRegCircleUser,
     to: routeLinks?.pharmacist?.profile,
   },
+];
 
-]
-
-export const inventoryStatusOptions = ["in_stock", "low_stock", "expired", "out_of_stock"];
+export const inventoryStatusOptions = [
+  "in_stock",
+  "low_stock",
+  "expired",
+  "out_of_stock",
+];
 
 export const inventoryLocationOptions = [
   "Pharmacy",
@@ -543,7 +592,7 @@ export const inventorySupplierOptions = [
 ];
 
 export const inventoryLowStockOptions = [
-  { label: "Yes", value: "10" }, 
+  { label: "Yes", value: "10" },
   { label: "No", value: "" },
 ];
 
@@ -573,42 +622,73 @@ export const adminDoctorSpecialties = [
   "Psychiatry",
   "Pulmonology",
   "Urology",
-]
+];
 
 export const labDepartmentOptions = [
-  'Hematology',
-"Clinical",
-" Pathology",
-"Biochemistry",
-"Microbiology",
-"Histopathology",
-]
+  "Hematology",
+  "Clinical",
+  " Pathology",
+  "Biochemistry",
+  "Microbiology",
+  "Histopathology",
+];
 
 export const medicationCategoryOptions = [
-  'antibiotic', 'analgesic', 'antihypertensive', 'antidiabetic', 'antihistamine', 'antiviral', 'antifungal', 'cardiovascular', 'neurological', 'respiratory', 'gastrointestinal', 'dermatological', 'hormonal', 'vitamin_supplement', 'other'
-]
+  "antibiotic",
+  "analgesic",
+  "antihypertensive",
+  "antidiabetic",
+  "antihistamine",
+  "antiviral",
+  "antifungal",
+  "cardiovascular",
+  "neurological",
+  "respiratory",
+  "gastrointestinal",
+  "dermatological",
+  "hormonal",
+  "vitamin_supplement",
+  "other",
+];
 
 export const medicationDosageFormOptions = [
-   'tablet', 'capsule', 'syrup', 'injection', 'cream', 'ointment', 'drop', 'patch', 'inhaler', 'suspension', 'powder', 'gel'
-]
-export const medicationStatusOptions = [
-  'active', 'inactive', 'discontinued'
-]
+  "tablet",
+  "capsule",
+  "syrup",
+  "injection",
+  "cream",
+  "ointment",
+  "drop",
+  "patch",
+  "inhaler",
+  "suspension",
+  "powder",
+  "gel",
+];
+export const medicationStatusOptions = ["active", "inactive", "discontinued"];
 
-export const medicationManufacturerOptions = [ "GSK Pharmaceuticals", "Pfizer", "Novartis"]
+export const medicationManufacturerOptions = [
+  "GSK Pharmaceuticals",
+  "Pfizer",
+  "Novartis",
+];
 
 export const appointmentStatus = [
-  "scheduled", "confirmed", "completed", "cancelled"," no_show"
-]
+  "scheduled",
+  "confirmed",
+  "completed",
+  "cancelled",
+  " no_show",
+];
 
 export const labRequestStatus = [
-  "PENDING", "IN_PROGRESS","COMPLETED", "CANCELLED"
-]
+  "PENDING",
+  "IN_PROGRESS",
+  "COMPLETED",
+  "CANCELLED",
+];
 
-
-export const labRequestPriority = [
-  'low', 'medium', 'high'
-]
+export const labRequestPriority = ["low", "medium", "high"];
 export const returnMemberNavigationUrlLogic = (user: any) => {
   if (!user.isEmailVerified) {
     return routeLinks?.auth?.emailVerification;
@@ -621,54 +701,48 @@ export const returnMemberNavigationUrlLogic = (user: any) => {
   return "/patient/dashboard";
 };
 
-
-
-
 export const returnPartnerNavigationUrlLogic = (
   partnerType: string,
   partnerProfile: any
 ) => {
-  if (partnerProfile){
-  if (partnerType === "doctor") {
-    return routeLinks?.doctor?.dashboard;
-  }
+  if (partnerProfile) {
+    if (partnerType === "doctor") {
+      return routeLinks?.doctor?.dashboard;
+    }
 
-  if (partnerType === "lab_tech") {
-    return routeLinks?.lab?.dashboard;
-  }
+    if (partnerType === "lab_tech") {
+      return routeLinks?.lab?.dashboard;
+    }
 
-  if (partnerType === "hospital") {
-    return "/hospital/dashboard";
-  }
+    if (partnerType === "hospital") {
+      return "/hospital/dashboard";
+    }
 
-  if (partnerType === "pharmacist") {
-    return routeLinks?.pharmacist?.dashboard;
-  }
+    if (partnerType === "pharmacist") {
+      return routeLinks?.pharmacist?.dashboard;
+    }
 
-  if (partnerType === "sponsor") {
-    return "/sponsor/dashboard";
-  }
+    if (partnerType === "sponsor") {
+      return "/sponsor/dashboard";
+    }
   }
   return routeLinks?.auth?.partnerLogin;
 };
-
-
 
 export const returnAdminNavigationUrlLogic = (
   partnerType: string,
   partnerProfile: any
 ) => {
-  if (partnerProfile){
-  if (partnerType === 'admin') {
-    return routeLinks?.admin?.dashboard;
-  }
-    if (partnerType === 'super_admin') {
-    return routeLinks?.superAdmin?.dashboard;
-  }
+  if (partnerProfile) {
+    if (partnerType === "admin") {
+      return routeLinks?.admin?.dashboard;
+    }
+    if (partnerType === "super_admin") {
+      return routeLinks?.superAdmin?.dashboard;
+    }
   }
   return routeLinks?.auth?.adminLogin;
 };
-
 
 export function getFormattedDateTime(isoDateString: string) {
   const localDateString = isoDateString.replace(/Z$/, "");

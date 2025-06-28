@@ -30,7 +30,7 @@ interface LabOrderDetailsProps {
       patient: IPatient;
       doctor: IDoctor;
       appointment: IAppointment;
-      sampleDetails:any
+      sampleDetails: any;
     };
   } | null;
   isLoading: boolean;
@@ -125,10 +125,7 @@ const LabOrderDetails = ({
   };
 
   const addNewResult = () => {
-    if (
-      newResult.testName &&
-      newResult.result
-    ) {
+    if (newResult.testName && newResult.result) {
       setResultList([...resultList, newResult]);
       setNewResult({
         testName: "",
@@ -174,9 +171,6 @@ const LabOrderDetails = ({
     handleStatus?.();
     setConfirmOpen(loadingStatus ?? false);
   };
-
-
-
 
   return (
     <div className="container-bd max-w-6xl mx-auto">
@@ -300,33 +294,58 @@ const LabOrderDetails = ({
                   </li>
                 ))}
               </ol>
-              {type == 'lab' && data?.data?.status === "PENDING" ? 
-                (
-                  <div className="flex justify-end pt-4 ">
-                      <button onClick={()=>{setShowModalSample(true)}}
-                        
-                         className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
-                        >upload collected sample</button>
-                  </div>
-                )
-              : 
-              
-              (  type === "lab" && data?.data?.status === "SAMPLE_COLLECTED" && (
-                <div className="flex justify-end pt-4">
+              {type == "lab" && data?.data?.status === "PENDING" ? (
+                <div className="flex justify-end pt-4 ">
                   <button
+                    onClick={() => {
+                      setShowModalSample(true);
+                    }}
                     className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
-                    onClick={handleStatusChange}
-                    disabled={startLoading}
                   >
-                    {startLoading ? "Starting..." : "Start Test"}
+                    upload collected sample
                   </button>
                 </div>
-              ))
-
-              }
+              ) : (
+                type === "lab" &&
+                data?.data?.status === "SAMPLE_COLLECTED" && (
+                  <div className="flex justify-end pt-4">
+                    <button
+                      className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
+                      onClick={handleStatusChange}
+                      disabled={startLoading}
+                    >
+                      {startLoading ? "Starting..." : "Start Test"}
+                    </button>
+                  </div>
+                )
+              )}
             </div>
           </section>
-
+          {data?.data?.sampleDetails  && (
+            <section>
+              <h2 className="text-xl font-semibold mb-2 text-primary">
+                sampleDetails
+              </h2>
+              <div className="flex flex-col lg:flex-row gap-6">
+                <InfoLabel
+                  label={data?.data?.sampleDetails?.sample}
+                  info="Sample"
+                />
+                <InfoLabel
+                  label={data?.data?.sampleDetails?.volume}
+                  info="Volume"
+                />
+                <InfoLabel
+                  label={data?.data?.sampleDetails?.containerType}
+                  info="Container Type"
+                />
+                <InfoLabel
+                  label={moment(data?.data?.sampleDetails?.collectionDate).format("MMM D, YYYY h:mm A")}
+                  info="Collection Date"
+                />
+              </div>
+            </section>
+          )}
           {/* Patient & Doctor Info */}
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Patient Info */}
@@ -384,31 +403,35 @@ const LabOrderDetails = ({
           )}
 
           <div className="flex justify-end">
-           {type === 'patient' &&   <button
-              className="bg-primary text-white text-sm font-medium py-3 px-4 rounded-lg hover:bg-primary/90 transition"
-              onClick={() => setModalOpen(!isModalOpen)}
-            >
-              Download PDF
-            </button>}
+            {type === "patient" && (
+              <button
+                className="bg-primary text-white text-sm font-medium py-3 px-4 rounded-lg hover:bg-primary/90 transition"
+                onClick={() => setModalOpen(!isModalOpen)}
+              >
+                Download PDF
+              </button>
+            )}
           </div>
           {/* PDF Modal */}
-          <LabRequestReportModal
-            results={{
-              testName,
-              notes: notes ?? "",
-              priority: priority ?? "",
-              status: status ?? "",
-              collectedSample: collectedSample ?? false,
-              resultList: results?.results,
-              documents: results?.documents,
-              patient,
-              statusHistory: statusHistory,
-              doctor,
-              createdAt,
-            }}
-            isModalOpen={isModalOpen}
-            setModalOpen={setModalOpen}
-          />
+          {type === "patient" && (
+            <LabRequestReportModal
+              results={{
+                testName,
+                notes: notes ?? "",
+                priority: priority ?? "",
+                status: status ?? "",
+                collectedSample: collectedSample ?? false,
+                resultList: results?.results,
+                documents: results?.documents,
+                patient,
+                statusHistory: statusHistory,
+                doctor,
+                createdAt,
+              }}
+              isModalOpen={isModalOpen}
+              setModalOpen={setModalOpen}
+            />
+          )}
         </div>
       )}
 
@@ -424,26 +447,30 @@ const LabOrderDetails = ({
 
                 {/* PDF Download Button */}
                 <div className="flex justify-end">
-                 {type === 'patient' &&   <button
-                    className="bg-primary text-white text-sm font-medium py-3 px-4 rounded-lg hover:bg-primary/90 transition mb-6"
-                    onClick={() => setModalOpen(!isModalOpen)}
-                  >
-                    Download PDF
-                  </button>}
+                  {type === "patient" && (
+                    <button
+                      className="bg-primary text-white text-sm font-medium py-3 px-4 rounded-lg hover:bg-primary/90 transition mb-6"
+                      onClick={() => setModalOpen(!isModalOpen)}
+                    >
+                      Download PDF
+                    </button>
+                  )}
                 </div>
 
-                <LabRequestResultReportModal
-                  results={{
-                    testName,
-                    resultList: results?.results,
-                    documents: results?.documents,
-                    patient,
-                    doctor,
-                    createdAt,
-                  }}
-                  isModalOpen={isModalOpen}
-                  setModalOpen={setModalOpen}
-                />
+                {type === "patient" && (
+                  <LabRequestResultReportModal
+                    results={{
+                      testName,
+                      resultList: results?.results,
+                      documents: results?.documents,
+                      patient,
+                      doctor,
+                      createdAt,
+                    }}
+                    isModalOpen={isModalOpen}
+                    setModalOpen={setModalOpen}
+                  />
+                )}
                 {isLoadingResults ? (
                   <p>Loading results...</p>
                 ) : resultError ? (
@@ -594,39 +621,43 @@ const LabOrderDetails = ({
                 You dont have any Result here, if you want to upload result you
                 need to start the test{" "}
               </h1>
-              {type == 'lab' && data?.data?.status === "PENDING" ? 
-                (
-                  <div className="flex justify-end pt-4 ">
-                      <button onClick={()=>{setShowModalSample(true)}}
-                        
-                         className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
-                        >upload collected sample</button>
-                  </div>
-                )
-              : 
-              
-              (  type === "lab" && data?.data?.status === "SAMPLE_COLLECTED" && (
-                <div className="flex justify-end pt-4">
+              {type == "lab" && data?.data?.status === "PENDING" ? (
+                <div className="flex justify-end pt-4 ">
                   <button
+                    onClick={() => {
+                      setShowModalSample(true);
+                    }}
                     className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
-                    onClick={handleStatusChange}
-                    disabled={startLoading}
                   >
-                    {startLoading ? "Starting..." : "Start Test"}
+                    upload collected sample
                   </button>
                 </div>
-              ))
-
-              }
+              ) : (
+                type === "lab" &&
+                data?.data?.status === "SAMPLE_COLLECTED" && (
+                  <div className="flex justify-end pt-4">
+                    <button
+                      className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
+                      onClick={handleStatusChange}
+                      disabled={startLoading}
+                    >
+                      {startLoading ? "Starting..." : "Start Test"}
+                    </button>
+                  </div>
+                )
+              )}
             </div>
           )}
         </div>
       )}
-    <UpdateSampleCollectionModal
+      <UpdateSampleCollectionModal
         id={data?.data?.id}
         onClose={() => setShowModalSample(false)}
-        onSuccess={()=>{fetchOrder?.()}} 
-        open={showModalSample}   />
+        onSuccess={() => {
+          fetchOrder?.();
+        }}
+        open={showModalSample}
+      />
 
       <ConfirmModal
         open={confirmOpen}

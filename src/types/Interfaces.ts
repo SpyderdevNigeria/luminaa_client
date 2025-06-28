@@ -168,6 +168,9 @@ export interface IMedication {
   status?: "active" | "inactive";
   createdAt?: string; 
   updatedAt?: string; 
+  image?: {
+    url?: string;
+  } | null;
 }
 
 export interface ISuperAdmin {
@@ -188,6 +191,7 @@ export interface ISuperAdmin {
 export interface IPayload {
   token: string;
   user: IUser;
+  refreshToken:string;
 }
 
 export interface IResult {

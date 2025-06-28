@@ -20,7 +20,7 @@ type User = {
   updatedAt: string;
 };
 
-function AdminPatientDetails() {
+function AdminUserDetails() {
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
@@ -116,4 +116,4 @@ function AdminPatientDetails() {
   );
 }
 
-export default AdminPatientDetails;
+export default AdminUserDetails;

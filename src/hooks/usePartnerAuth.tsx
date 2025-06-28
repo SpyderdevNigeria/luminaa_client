@@ -48,7 +48,7 @@ const isTokenValid = (token: string | null): boolean => {
     } catch (error: any) {
       console.error("Failed to fetch user profile:", error);
       if (error?.response?.status === 401) {
-         dispatch(logout());
+        //  dispatch(logout());
       }
     } finally {
       setAuthLoading(false);
@@ -66,7 +66,9 @@ useEffect(() => {
   }
 
   // If the user is patient, log them out
-  if (userProfile?.user?.role === "patient") {
+  if ( userProfile?.user?.role === "patient" ||
+        userProfile?.user?.role === "admin" ||
+        userProfile?.user?.role === "super_admin") {
     dispatch(logout());
     navigate(routeLinks.auth.login);
     return;

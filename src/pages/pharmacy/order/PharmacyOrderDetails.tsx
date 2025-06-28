@@ -44,7 +44,7 @@ const PharmacyOrderDetails = () => {
       await PharmacistApi.updatePrescriptionOrderStatus(order.id, { status: newStatus });
       // Refresh order details after update
       await fetchOrder(order.id);
-      showToast("Order status updated successfully", "error");
+      showToast("Order status updated successfully", "success");
     } catch (error) {
       console.error("Failed to update status:", error);
       showToast("Failed to update order status", "error");
@@ -99,10 +99,16 @@ const PharmacyOrderDetails = () => {
             className=" form-input focus:outline-primary text-sm w-full md:max-w-[200px]"
             disabled={updating}
           >
-            <option value="pending">Pending</option>
-            <option value="processing">Processing</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
+          <option value="pending">Pending</option>
+      <option value="confirmed">Confirmed</option>
+      <option value="preparing">Preparing</option>
+      <option value="ready_for_pickup">Ready for Pickup</option>
+      <option value="ready_for_delivery">Ready for Delivery</option>
+      <option value="out_for_delivery">Out for Delivery</option>
+      <option value="delivered">Delivered</option>
+      <option value="picked_up">Picked Up</option>
+      <option value="cancelled">Cancelled</option>
+      <option value="expired">Expired</option>
           </select>
           <button
             onClick={handleUpdateStatus}
