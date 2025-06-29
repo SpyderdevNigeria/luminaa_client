@@ -71,6 +71,13 @@ const orderColumns: Column<any>[] = [
     arrows: true,
   },
 
+    {
+    key: "date",
+    label: "Date",
+    render: (order) => <span>{new Date(order.createdAt).toLocaleDateString()}</span>,
+    arrows: true,
+  },
+
   {
     key: "action",
     label: "Action",

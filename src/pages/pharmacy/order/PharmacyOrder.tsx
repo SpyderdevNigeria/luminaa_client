@@ -69,6 +69,13 @@ const orderColumns: Column<any>[] = [
     render: (order) => <StatusBadge status={order.status} />,
     arrows: true,
   },
+  
+    {
+    key: "date",
+    label: "Date",
+    render: (order) => <span>{new Date(order.createdAt).toLocaleDateString()}</span>,
+    arrows: true,
+  },
 
   {
     key: "action",

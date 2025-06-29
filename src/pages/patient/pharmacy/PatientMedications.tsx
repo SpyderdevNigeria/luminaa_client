@@ -12,14 +12,13 @@ import {
 } from "../../../utils/dashboardUtils";
 import ShoppingCartPanel from "../../../components/common/ShoppingCartPanel";
 import { IMedication } from "../../../types/Interfaces";
-import { MdKeyboardArrowRight } from "react-icons/md";
 import PatientMedicationCard from "../../../components/common/PatientMedicationCard";
 
 const PatientMedications = () => {
   const [cartOpen, setCartOpen] = useState(false);
-  const [filterVisible, setFilterVisible] = useState(true);
+  const [priceModalOpen, setPriceModalOpen] = useState(false);
 
-  const { items: cartItems, totalItems, add } = useCart();
+  const { items: cartItems, totalItems, add, cartItemLoading } = useCart();
 
   const {
     medications,
@@ -64,226 +63,147 @@ const PatientMedications = () => {
     medicationsPage,
   ]);
 
+  const applyPriceFilter = () => {
+    getMedications();
+    setPriceModalOpen(false);
+  };
+
   return (
-    <div className={`bg-white p-6 min-h-screen flex flex-col ${filterVisible ? 'md:flex-row' : '' }  gap-6`}>
-      {/* Filter Sidebar */}
-      <aside className="w-full md:w-1/4">
-        <div className="sidebar mb-4 mb-lg-0 sticky top-0">
-          <button
-            onClick={() => setFilterVisible(!filterVisible)}
-            className="text-sm text-primary underline mb-2"
-          >
-            {filterVisible ? "Hide Filters" : "Show Filters"}
-          </button>
-          {filterVisible && (
-            <div className="space-y-6 hidden md:block">
-              <div className="sidebar-widget border-b border-gray-300 pb-4">
-                <div className="form-group relative mb-4">
-                 <input
-                  type="text"
-                  placeholder="Search..."
-                  value={medicationSearch}
-                  onChange={(e) => setMedicationSearch(e.target.value)}
-                  className="form-input focus:outline-primary"
-                />
-                </div>
-                <h5 className="mb-3 font-semibold">Category</h5>
-                <ul className="list-group space-y-2">
-                      <li
-                      className={`list-group-item text-sm flex  ${medicationCategory === '' ? 'text-primary' : ''} justify-between items-center cursor-pointer`}
-                      onClick={() => setMedicationCategory("")}
-                    >
-                      <span>{'All'}</span>
-                    </li>
-                  {medicationCategoryOptions.map((opt) => (
-                    <li
-                      key={opt}
-                      className={`list-group-item text-sm flex capitalize ${medicationCategory === opt ? 'text-primary' : ''} justify-between items-center cursor-pointer`}
-                      onClick={() => setMedicationCategory(opt)}
-                    >
-                      <span>{opt}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+    <div className="bg-gray-50 p-4 md:p-6 min-h-screen">
+   <div className="bg-white p-4 rounded-xl shadow mb-6">
+  <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4">
+    {/* Search Input */}
+    <div className="flex flex-col">
+      <label className="text-sm font-medium text-gray-600 mb-1">Search</label>
+      <input
+        type="text"
+        placeholder="Search medications..."
+        value={medicationSearch}
+        onChange={(e) => setMedicationSearch(e.target.value)}
+        className="form-input w-full focus:outline-primary"
+      />
+    </div>
 
-              <div className="sidebar-widget  border-b border-gray-300 pb-4">
-                <h5 className="mb-3 font-semibold">Price</h5>
-                <div className="flex items-center gap-2">
-                  <input
-                    className="form-input focus:outline-primary"
-                    type="number"
-                    placeholder="Min"
-                    value={medicationMinPrice}
-                    onChange={(e) => setMedicationMinPrice(Number(e.target.value))}
-                  />
-                  <span>-</span>
-                  <input
-                    className="form-input focus:outline-primary"
-                    type="number"
-                    placeholder="Max"
-                    value={medicationMaxPrice}
-                    onChange={(e) => setMedicationMaxPrice(Number(e.target.value))}
-                  />
-                  <button className="p-2 rounded-md bg-primary text-white"
-                  onClick={getMedications}>
-                    <MdKeyboardArrowRight />
-                  </button>
-                </div>
-              </div>
 
-              <div className="sidebar-widget pb-4">
-                <h5 className="mb-3 font-semibold">Dosage Form</h5>
-                <ul className="list-group space-y-1">
-                    <li
-                      className={`list-group-item text-sm flex  ${medicationCategory === '' ? 'text-primary' : ''} justify-between items-center cursor-pointer`}
-                      onClick={() => setMedicationDosageForm("")}
-                    >
-                      <span>{'All'}</span>
-                    </li>
-                  {medicationDosageFormOptions.map((opt) => (
-                    <li
-                      key={opt}
-                       className={`list-group-item text-sm flex capitalize ${medicationCategory === opt ? 'text-primary' : ''} justify-between items-center cursor-pointer`}
-                      onClick={() => setMedicationDosageForm(opt)}
-                    >
-                      {opt}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
-        </div>
-      </aside>
+    {/* Category */}
+    <div className="flex flex-col">
+      <label className="text-sm font-medium text-gray-600 mb-1">Category</label>
+      <select
+        value={medicationCategory}
+        onChange={(e) => setMedicationCategory(e.target.value)}
+        className="form-input focus:outline-primary"
+      >
+        <option value="">All</option>
+        {medicationCategoryOptions.map((opt) => (
+          <option key={opt} value={opt}>{opt}</option>
+        ))}
+      </select>
+    </div>
 
-      {/* Medications Grid */}
-      <div className="flex-1">
-        <div className="flex flex-col md:flex-row items-center justify-between">
-           <h2 className="text-xl font-semibold mb-4">All Medications</h2>
-        <aside className="w-full flex flex-col md:flex-row md:w-md items-center justify-end gap-4 mb-4">
-          <input
-            type="text"
-            placeholder="Search... "
-            value={medicationSearch}
-            onChange={(e) => setMedicationSearch(e.target.value)}
-            className="form-input focus:outline-primary block md:hidden"
-          />
+    {/* Dosage Form */}
+    <div className="flex flex-col">
+      <label className="text-sm font-medium text-gray-600 mb-1">Dosage Form</label>
+      <select
+        value={medicationDosageForm}
+        onChange={(e) => setMedicationDosageForm(e.target.value)}
+        className="form-input focus:outline-primary"
+      >
+        <option value="">All</option>
+        {medicationDosageFormOptions.map((opt) => (
+          <option key={opt} value={opt}>{opt}</option>
+        ))}
+      </select>
+    </div>
 
-          <input
-            type="number"
-            placeholder="Min Price"
-            value={medicationMinPrice}
-            onChange={(e) => setMedicationMinPrice(Number(e.target.value))}
-            className="form-input focus:outline-primary block md:hidden"
-          />
+    {/* Status */}
+    <div className="flex flex-col">
+      <label className="text-sm font-medium text-gray-600 mb-1">Status</label>
+      <select
+        value={medicationStatus}
+        onChange={(e) => setMedicationStatus(e.target.value)}
+        className="form-input focus:outline-primary"
+      >
+        <option value="">All</option>
+        {medicationStatusOptions.map((opt) => (
+          <option key={opt} value={opt}>{opt}</option>
+        ))}
+      </select>
+    </div>
 
-          <input
-            type="number"
-            placeholder="Max Price"
-            value={medicationMaxPrice}
-            onChange={(e) => setMedicationMaxPrice(Number(e.target.value))}
-            className="form-input focus:outline-primary block md:hidden"
-          />
+    {/* Prescription */}
+    <div className="flex flex-col">
+      <label className="text-sm font-medium text-gray-600 mb-1">Prescription</label>
+      <select
+        value={medicationRequiresPrescription}
+        onChange={(e) => setMedicationRequiresPrescription(e.target.value)}
+        className="form-input focus:outline-primary"
+      >
+        <option value="">All</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
 
-          <select
-            value={medicationStatus}
-            onChange={(e) => setMedicationStatus(e.target.value)}
-            className="form-input focus:outline-primary"
-          >
-            <option value="">Status</option>
-            {medicationStatusOptions.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
+    {/* Manufacturer */}
+    <div className="flex flex-col">
+      <label className="text-sm font-medium text-gray-600 mb-1">Manufacturer</label>
+      <select
+        value={medicationManufacturer}
+        onChange={(e) => setMedicationManufacturer(e.target.value)}
+        className="form-input focus:outline-primary"
+      >
+        <option value="">All</option>
+        {medicationManufacturerOptions.map((opt) => (
+          <option key={opt} value={opt}>{opt}</option>
+        ))}
+      </select>
+    </div>
 
-          <select
-            value={medicationCategory}
-            onChange={(e) => setMedicationCategory(e.target.value)}
-            className="form-input focus:outline-primary block md:hidden"
-          >
-            <option value="">Category</option>
-            {medicationCategoryOptions.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
+        {/* Price Range Button */}
+    <div className="flex flex-col">
+      <label className="text-sm font-medium text-gray-600 mb-1">Price Range</label>
+      <button
+        onClick={() => setPriceModalOpen(true)}
+        className="h-[38px] px-4 bg-primary text-white rounded-md hover:bg-primary/90 transition"
+      >
+        Set Price Range
+      </button>
+    </div>
+  </div>
+</div>
 
-          <select
-            value={medicationDosageForm}
-            onChange={(e) => setMedicationDosageForm(e.target.value)}
-            className="form-input focus:outline-primary block md:hidden"
-          >
-            <option value="">Dosage Form</option>
-            {medicationDosageFormOptions.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
 
-          <select
-            value={medicationRequiresPrescription}
-            onChange={(e) => setMedicationRequiresPrescription(e.target.value)}
-            className="form-input focus:outline-primary"
-            aria-placeholder="requires prescription"
-          >
-            <option value="">Requires prescription</option>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-
-          <select
-            value={medicationManufacturer}
-            onChange={(e) => setMedicationManufacturer(e.target.value)}
-            className="form-input focus:outline-primary"
-          >
-            <option value="">Manufacturer</option>
-            {medicationManufacturerOptions.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
-        </aside>
-        </div>
-
-       
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
         {medicationsLoading ? (
-          <p className="flex flex-col justify-center text-center mt-10 text-gray-500 min-h-[500px]">
+          <p className="col-span-full text-center text-gray-500 py-20">
             Loading medications...
           </p>
         ) : medications.length === 0 ? (
-          <p className="text-center mt-10 text-gray-500">
+          <p className="col-span-full text-center text-gray-500 py-20">
             No medications found.
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-6">
-            {medications.map((med: IMedication) => (
-              <PatientMedicationCard
-                key={med.id}
-                medication={med}
-                buttonText="Add To Cart"
-                cartItems={cartItems}
-                onAddPrescription={() => addtoCart(med)}
-              />
-            ))}
-          </div>
+          medications.map((med: IMedication) => (
+            <PatientMedicationCard
+              key={med.id}
+              medication={med}
+              buttonText="Add To Cart"
+              cartItems={cartItems}
+              onAddPrescription={() => addtoCart(med)}
+              loading={cartItemLoading}
+            />
+          ))
         )}
-
-        <PaginationComponent
-          page={medicationsPage}
-          total={medicationsTotal}
-          limit={medicationsLimit}
-          totalPages={medicationsTotalPages ?? 1}
-          onPageChange={setMedicationsPage}
-        />
       </div>
 
-      {/* Floating Cart Icon */}
+      <PaginationComponent
+        page={medicationsPage}
+        total={medicationsTotal}
+        limit={medicationsLimit}
+        totalPages={medicationsTotalPages ?? 1}
+        onPageChange={setMedicationsPage}
+      />
+
       {totalItems > 0 && (
         <button
           onClick={() => setCartOpen(true)}
@@ -293,8 +213,53 @@ const PatientMedications = () => {
         </button>
       )}
 
-      {/* Shopping Cart Panel */}
       <ShoppingCartPanel open={cartOpen} setOpen={setCartOpen} />
+
+      {/* Price Modal */}
+      {priceModalOpen && (
+        <div className="fixed inset-0 bg-black/20  bg-opacity/10 z-50 flex items-center justify-center px-4">
+          <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full space-y-4">
+            <h2 className="text-lg font-bold">Set Price Range</h2>
+            <div className="space-y-2">
+           <div>
+            <h4>Min Price</h4>
+               <input
+                type="number"
+                placeholder="Min Price"
+                value={medicationMinPrice}
+                onChange={(e) => setMedicationMinPrice(Number(e.target.value))}
+                className="form-input w-full"
+              />
+           </div>
+           <div>
+             
+           </div>
+            <h4>Max Price</h4>
+              <input
+                type="number"
+                placeholder="Max Price"
+                value={medicationMaxPrice}
+                onChange={(e) => setMedicationMaxPrice(Number(e.target.value))}
+                className="form-input w-full"
+              />
+            </div>
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                onClick={() => setPriceModalOpen(false)}
+                className="px-4 py-2 text-gray-600\"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={applyPriceFilter}
+                className="px-4 py-2 bg-primary text-white rounded-md"
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

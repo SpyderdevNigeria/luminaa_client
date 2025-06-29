@@ -171,7 +171,7 @@ const InventoryForm: React.FC<InventoryFormProps> = ({
           label="Notes"
           value={formData.notes}
           onChange={handleChange}
-          required
+          // required
         />
       </div>
       <div className="flex justify-end gap-4 pt-4 md:col-span-full">

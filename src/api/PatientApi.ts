@@ -132,7 +132,10 @@ const PatientApi = {
     const response = await api.get(`/patient/medications${query}`);
     return response.data;
   },
-
+  getMedicationsCheck: async (id: any) => {
+    const response = await api.get(`/patient/medications/${id}/prescription-check`);
+    return response.data;
+  },
 
    getPrescriptionOrders: async (query:any) => {
     const response = await api.get(`/patient/orders${query}`);

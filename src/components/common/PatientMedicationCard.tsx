@@ -11,6 +11,7 @@ interface PatientMedicationCardProps {
   quantity?: number;
   buttonText?: string;
   cartItems?: IMedication[];
+  loading?:boolean;
 }
 
 const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
@@ -18,10 +19,15 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
   onAddPrescription,
   buttonText = "Add to Cart",
   cartItems = [],
+  loading,
 }) => {
   const [open, setOpen] = useState(false);
+  const [activeId, setActiveId] = useState("")
   const isInCart = cartItems.some((item) => item.id === medication.id);
-
+  const handleCartAdd = (id:any) => {
+    setActiveId(id)
+    if (!isInCart) onAddPrescription?.();
+  }
   return (
     <>
       <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md transition flex flex-col justify-between relative">
@@ -45,7 +51,7 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
             <div className="relative group text-xs text-primary font-medium">
               OTC
               <div className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 whitespace-nowrap">
-                Over the counter
+                Over-the-counter
               </div>
             </div>
           )}
@@ -70,14 +76,14 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
             <MdRemoveRedEye />
           </button>
           <button
-            onClick={() => { if (!isInCart) onAddPrescription?.(); }}
+            onClick={() => { handleCartAdd(medication?.id) }}
             className={`w-full text-sm font-medium border py-1 px-4 rounded-md transition ${
               isInCart
                 ? "bg-gray-100 text-gray-500 border-gray-300 cursor-not-allowed"
                 : "bg-white text-primary border-primary hover:bg-primary hover:text-white"
             }`}
           >
-            {isInCart ? "Already Added" : buttonText}
+           {loading && activeId === medication?.id ? "Loading..." : isInCart ? "Already Added" : buttonText}
           </button>
         </div>
       </div>
@@ -87,7 +93,7 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
         open={open}
         onClose={() => setOpen(false)}
         hideCancel={false}
-        buttonText={isInCart ? "Already Added" : buttonText}
+        buttonText={loading && activeId === medication?.id ? "Loading..." : isInCart ? "Already Added" : buttonText}
         style="lg:min-w-3xl !md:mx-4"
         handleSubmit={() => {
           if (!isInCart) onAddPrescription?.();
