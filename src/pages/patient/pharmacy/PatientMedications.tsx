@@ -71,9 +71,9 @@ const PatientMedications = () => {
   return (
     <div className="bg-gray-50 p-4 md:p-6 min-h-screen">
    <div className="bg-white p-4 rounded-xl shadow mb-6">
-  <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4">
+  <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4">
     {/* Search Input */}
-    <div className="flex flex-col">
+    <div className="flex flex-col md:col-span-3">
       <label className="text-sm font-medium text-gray-600 mb-1">Search</label>
       <input
         type="text"
@@ -164,7 +164,7 @@ const PatientMedications = () => {
       <label className="text-sm font-medium text-gray-600 mb-1">Price Range</label>
       <button
         onClick={() => setPriceModalOpen(true)}
-        className="h-[38px] px-4 bg-primary text-white rounded-md hover:bg-primary/90 transition"
+        className="h-full p-3 bg-primary text-white rounded-md hover:bg-primary/90 transition"
       >
         Set Price Range
       </button>
