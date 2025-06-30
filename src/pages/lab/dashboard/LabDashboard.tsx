@@ -62,7 +62,7 @@ function LabDashboard() {
               ) : (
                 <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 3xl:grid-cols-4 gap-4">
                   {orders.length > 0 ? (
-                    orders.map((order) => (
+                    orders.slice(0, 8).map((order) => (
                       <LabCard key={order.id} order={order} type="lab" />
                     ))
                   ) : (
