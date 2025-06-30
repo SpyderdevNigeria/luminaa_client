@@ -47,7 +47,8 @@ type LabRequestResultReportModalProps = {
     createdAt: string;
     patient?: Person;
     doctor?: Person;
-    notes?:string;
+    notes?: string;
+    statusHistory?: any[];
     resultList?: IResult[] | undefined | null;
     documents?: LabDocument[];
   };
@@ -64,9 +65,10 @@ function LabRequestResultReportModal({
     patient,
     doctor,
     notes,
+    statusHistory,
     resultList = [],
   } = results;
- const { userProfile, } = useAuth();
+  const { userProfile } = useAuth();
   const printRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToaster();
 
@@ -99,6 +101,13 @@ function LabRequestResultReportModal({
     }
   };
 
+  const labPersonnel =
+    statusHistory && statusHistory.length > 0
+      ? [...(statusHistory ?? [])]
+          .reverse()
+          .find((entry) => entry.status !== "PENDING")?.updatedBy ?? null
+      : null;
+
   return (
     <>
       <Modal
@@ -112,12 +121,16 @@ function LabRequestResultReportModal({
       >
         <main className="min-h-[200px] flex flex-col gap-4 py-4">
           <div className="space-y-1">
-            <h4 className="text-sm text-text-secondary font-light">Test Name</h4>
+            <h4 className="text-sm text-text-secondary font-light">
+              Test Name
+            </h4>
             <h3 className="text-sm text-text-primary">{testName}</h3>
           </div>
 
           <div className="space-y-1">
-            <h4 className="text-sm text-text-secondary font-light">Requested On</h4>
+            <h4 className="text-sm text-text-secondary font-light">
+              Requested On
+            </h4>
             <h3 className="text-sm text-text-primary">
               {moment(createdAt).format("MMMM D, YYYY h:mm A")}
             </h3>
@@ -151,50 +164,64 @@ function LabRequestResultReportModal({
         </h2>
 
         {/* Patient Info */}
-     <div
-  style={{
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "10px",
-    marginBottom: "20px",
-  }}
->
-  <h3 style={{ width: "100%", fontWeight: "bold", marginBottom: "10px" }}>
-    Patient Information
-  </h3>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px",
+            marginBottom: "20px",
+          }}
+        >
+          <h3
+            style={{ width: "100%", fontWeight: "bold", marginBottom: "10px" }}
+          >
+            Patient Information
+          </h3>
 
-  <div style={{ flex: "1 1 300px" }}>
-    <p><strong>Name:</strong> <u>{`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}</u></p>
-  </div>
-  <div style={{ flex: "1 1 300px" }}>
-    <p><strong>Email:</strong> <u>{patient?.email ?? "N/A"}</u></p>
-  </div>
-  <div style={{ flex: "1 1 300px" }}>
-    <p><strong>Address:</strong> <u>{userProfile?.address ?? "N/A"}</u></p>
-  </div>
-  <div style={{ flex: "1 1 300px" }}>
-    <p><strong>City:</strong> <u>{userProfile?.city ?? "N/A"}</u></p>
-  </div>
-  <div style={{ flex: "1 1 300px" }}>
-    <p><strong>Country:</strong> <u>{userProfile?.country ?? "N/A"}</u></p>
-  </div>
-  <div style={{ flex: "1 1 300px" }}>
-    <p><strong>Date of Birth:</strong> <u>{userProfile?.dateOfBirth ?? "N/A"}</u></p>
-  </div>
-  <div style={{ flex: "1 1 300px" }}>
-    <p><strong>Gender:</strong> <u>{userProfile?.gender ?? "N/A"}</u></p>
-  </div>
-  <div style={{ flex: "1 1 300px" }}>
-    <p><strong>Emergency Contact Name:</strong> <u>{userProfile?.emergencyContactName ?? "N/A"}</u></p>
-  </div>
-  <div style={{ flex: "1 1 300px" }}>
-    <p><strong>Emergency Contact Phone:</strong> <u>{userProfile?.emergencyContactPhone ?? "N/A"}</u></p>
-  </div>
-</div>
+          <div style={{ flex: "1 1 300px" }}>
+            <p>
+              <strong>Name:</strong>{" "}
+              {`${patient?.firstName ?? ""} ${patient?.lastName ?? ""}`}
+            </p>
+          </div>
+          <div style={{ flex: "1 1 300px" }}>
+            <p>
+              <strong>Email:</strong> {patient?.email ?? "N/A"}
+            </p>
+          </div>
+          <div style={{ flex: "1 1 300px" }}>
+            <p>
+              <strong>Address:</strong> {userProfile?.address ?? "N/A"}
+            </p>
+          </div>
+          <div style={{ flex: "1 1 300px" }}>
+            <p>
+              <strong>City:</strong> {userProfile?.city ?? "N/A"}
+            </p>
+          </div>
+          <div style={{ flex: "1 1 300px" }}>
+            <p>
+              <strong>Country:</strong> {userProfile?.country ?? "N/A"}
+            </p>
+          </div>
+          <div style={{ flex: "1 1 300px" }}>
+            <p>
+              <strong>Date of Birth:</strong>{" "}
+              {userProfile?.dateOfBirth ?? "N/A"}
+            </p>
+          </div>
+          <div style={{ flex: "1 1 300px" }}>
+            <p>
+              <strong>Gender:</strong> {userProfile?.gender ?? "N/A"}
+            </p>
+          </div>
+        </div>
 
         {/* Test Results */}
         <div style={{ marginTop: "30px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Test Results</h3>
+          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+            Test Results
+          </h3>
           {(resultList ?? []).length > 0 ? (
             <table
               style={{
@@ -229,18 +256,68 @@ function LabRequestResultReportModal({
 
         {/* Interpretation */}
         <div style={{ marginTop: "30px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Interpretation</h3>
-          <p>{notes  ? notes : "No notes available"}</p>
+          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+            Interpretation
+          </h3>
+          <p>{notes ? notes : "No notes available"}</p>
         </div>
 
         {/* Doctor Info */}
-        <div style={{ marginTop: "50px", minWidth: "300px" }}>
-          <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>Attending Doctor</h3>
-          <p><strong>Name:</strong> Dr. {doctor?.firstName} {doctor?.lastName}</p>
-          <p><strong>Specialty:</strong> {doctor?.specialty ?? "N/A"}</p>
-        </div>
+        {doctor && labPersonnel ? (
+          <div style={{ display: "flex", gap: "20px", justifyContent: "space-between", marginTop: "50px" }}>
+            <div style={{ minWidth: "300px" }}>
+              <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+                Attending Doctor
+              </h3>
+              <p>
+                <strong>Name:</strong> Dr. {doctor?.firstName}{" "}
+                {doctor?.lastName}
+              </p>
+              <p>
+                <strong>Specialty:</strong> {doctor?.specialty ?? "N/A"}
+              </p>
+            </div>
 
+            {labPersonnel && (
+              <div style={{ minWidth: "300px" }}>
+                <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+                  Laboratory Personnel
+                </h3>
+                <p>
+                  <strong>Performed by:</strong> {labPersonnel}
+                </p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            {doctor && (
+              <div style={{ minWidth: "300px" }}>
+                <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+                  Attending Doctor
+                </h3>
+                <p>
+                  <strong>Name:</strong> Dr. {doctor?.firstName}{" "}
+                  {doctor?.lastName}
+                </p>
+                <p>
+                  <strong>Specialty:</strong> {doctor?.specialty ?? "N/A"}
+                </p>
+              </div>
+            )}
 
+            {labPersonnel && (
+              <div style={{ minWidth: "300px" }}>
+                <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+                  Laboratory Personnel
+                </h3>
+                <p>
+                  <strong>Performed by:</strong> {labPersonnel}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

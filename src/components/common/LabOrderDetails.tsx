@@ -461,8 +461,10 @@ const LabOrderDetails = ({
                   <LabRequestResultReportModal
                     results={{
                       testName,
+                      notes: notes ?? "",
                       resultList: results?.results,
                       documents: results?.documents,
+                      statusHistory: statusHistory,
                       patient,
                       doctor,
                       createdAt,

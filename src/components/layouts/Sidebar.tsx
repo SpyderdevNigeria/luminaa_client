@@ -36,7 +36,7 @@ function Sidebar({ links, active }: SidebarProps) {
         <h4 className="py-2 text-xs text-inactive font-medium">DASHBOARD</h4>
 
         {/* Scrollable nav */}
-        <div className="flex-1 overflow-y-auto max-h-[calc(100vh-150px)] pr-1">
+        <div className="flex-1 overflow-y-auto  scrollbar-visible max-h-[calc(100vh-200px)] pr-1">
           <nav className="flex flex-col gap-1 font-medium mt-2">
             {links.map((item, idx) => {
               const isActive = active?.label === item.label;

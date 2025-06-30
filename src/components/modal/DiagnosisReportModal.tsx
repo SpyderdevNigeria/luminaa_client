@@ -175,34 +175,34 @@ function MedicalReportModal({
       <h3 style={sectionTitle}>Patient Details</h3>
       <p>
         Name:{" "}
-        <u>
+      
           {diagnosis?.appointment?.patient?.user?.firstName}{" "}
           {diagnosis?.appointment?.patient?.user?.lastName}
-        </u>
+      
       </p>
       <p>
         Date of Birth:{" "}
-        <u>
+        
           {moment(diagnosis?.appointment?.patient?.dateOfBirth).format(
             "MMMM D, YYYY"
           )}
-        </u>
+      
       </p>
       <p>
-        Gender: <u>{diagnosis?.appointment?.patient?.gender}</u>
+        Gender: {diagnosis?.appointment?.patient?.gender}
       </p>
       <p>
-        Phone: <u>{diagnosis?.appointment?.patient?.phoneNumber}</u>
+        Phone:{diagnosis?.appointment?.patient?.phoneNumber}
       </p>
-      <p>
+      <p className="capitalize">
         Address:{" "}
-        <u>
+       
           {diagnosis?.appointment?.patient?.address},{" "}
           {diagnosis?.appointment?.patient?.city},{" "}
           {diagnosis?.appointment?.patient?.state},{" "}
           {diagnosis?.appointment?.patient?.country} -{" "}
           {diagnosis?.appointment?.patient?.zipCode}
-        </u>
+       
       </p>
     </div>
 

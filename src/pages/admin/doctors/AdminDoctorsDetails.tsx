@@ -81,7 +81,8 @@ function AdminDoctorsDetails() {
         <StatusBadge status={user.isActive ? "Active" : "Inactive"}/>
         </div>
         <div>
-          <strong>Disabled:</strong> {user.isDisabled ? "Yes" : "No"}
+          <strong>Disabled:</strong>{" "}
+          <StatusBadge status={user.isDisabled ? "Disabled" : "Enabled"} />
         </div>
         <div>
           <strong>Email Verified:</strong> {user.isEmailVerified ? "Yes" : "No"}
@@ -105,10 +106,10 @@ function AdminDoctorsDetails() {
               disabled={statusLoading}
             >
               {statusLoading
-                ? "Toggling..."
-                : user.isActive
-                ? "Deactivate"
-                : "Activate"}
+                ? "loading..."
+                : user.isDisabled
+                ? "isDisabled"
+                : "Enabled"}
             </button>
           </div>
         </>
