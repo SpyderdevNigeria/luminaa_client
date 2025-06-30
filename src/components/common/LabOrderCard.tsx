@@ -147,6 +147,15 @@ function LabCard({
             {priority} priority
           </span>
         </div>
+            {type !== "patient" && 
+                  <div className="md:col-span-2">
+          <h4 className="text-sm font-medium text-gray-600">Patient</h4>
+          <p className="text-sm text-gray-800">  <span>
+          {order.patient?.firstName && order.patient?.lastName ? order.patient?.firstName + " " + order.patient?.lastName : "N/A"}
+        </span></p>
+        </div>
+        }
+
         {type !== "patient" && 
                   <div className="md:col-span-2">
           <h4 className="text-sm font-medium text-gray-600">Notes</h4>
