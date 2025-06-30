@@ -44,7 +44,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
         return navigate(routeLinks?.patient?.profile);
       case "doctor":
         return navigate(routeLinks?.doctor?.profile);
-      case "lab-tech":
+      case "lab_tech":
         return navigate(routeLinks?.lab?.profile);
       case "pharmacist":
         return navigate(routeLinks?.pharmacist?.profile);

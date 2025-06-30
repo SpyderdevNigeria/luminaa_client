@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from "react";
 import DashboardCard from "../../../components/common/DashboardCard";
 import LabApi from "../../../api/labApi";
-import LabCard from "../../../components/common/LabOrderCard";
 import { Link } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import useOrder from "../../../hooks/useOrder";
-import { LabCardSkeleton } from "../../../components/skeleton/SkeletonCards";
+import Table, { Column } from "../../../components/common/Table";
+import StatusBadge from "../../../components/common/StatusBadge";
 function LabDashboard() {
   const { orders, ordersPage, ordersLoading, getOrders } = useOrder(LabApi);
 
@@ -32,6 +32,52 @@ function LabDashboard() {
     return priorityCounts;
   }, [orders]);
 
+  const columns: Column<(typeof orders)[0]>[] = [
+    {
+      key: "patient",
+      label: "Patient",
+      render: (order) => (
+        <span>
+          {order.patient?.firstName} {order.patient?.lastName}
+        </span>
+      ),
+    },
+    {
+      key: "testName",
+      label: "Test Name",
+    },
+    {
+      key: "priority",
+      label: "Priority",
+    },
+    {
+      key: "doctor",
+      label: "Doctor",
+      render: (order) => (
+        <span>
+          {order.doctor?.firstName && order.doctor?.lastName ? order.doctor?.firstName + " " + order.doctor?.lastName : "N/A"}
+        </span>
+      ),
+    },
+    {
+      key: "status",
+      label: "Status",
+      render: (order) => (
+        <StatusBadge status={order.status} />
+      ),
+    },
+
+        {
+      key: "Action",
+      label: "Action",
+      render: (order) => (
+        <Link to={routeLinks?.lab?.labRequests+'/'+order.id} className="underline text-primary">
+          View
+        </Link>
+      ),
+    },
+  ];
+
   return (
     <div className="flex flex-col gap-4">
       <section className="flex flex-col gap-4">
@@ -54,24 +100,24 @@ function LabDashboard() {
             </div>
             <div className="my-4">
               {ordersLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4">
-                  {[...Array(4)].map((_, idx) => (
-                    <LabCardSkeleton key={idx} />
-                  ))}
-                </div>
+                <div className="py-8 text-center">Loading...</div>
               ) : (
-                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 3xl:grid-cols-4 gap-4">
-                  {orders.length > 0 ? (
-                    orders.slice(0, 8).map((order) => (
-                      <LabCard key={order.id} order={order} type="lab" />
-                    ))
-                  ) : (
-                    <p className="col-span-full text-center">
-                      No lab test requests found.
-                    </p>
-                  )}
-                </div>
+                <Table
+                  data={orders.slice(0, 8)} 
+                  columns={columns}
+                  page={ordersPage}
+                  limit={8}
+                  total={orders.length}
+                  setPage={() => {}} 
+                  showPaginate={false}
+                />
               )}
+
+              {ordersLoading !== true && orders?.length === 0 ? (
+                <p className="col-span-full text-center">
+                  No lab test requests found.
+                </p>
+              ) : null}
             </div>
           </main>
         </div>
