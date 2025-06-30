@@ -34,6 +34,9 @@ function BookingType({ nextStep, data, setData }: BookingTypeProps) {
   useEffect(() => {
     setData({...data, type: selectedType });
   }, [selectedType]);
+    useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [])
   return (
     <div>
       <section className={`mt-8`}>
