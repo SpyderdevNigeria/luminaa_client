@@ -196,7 +196,9 @@ function DoctorAppointmentsView({
         >
           Order Tests
         </button>
-        <button className="py-3 flex flex-row items-center justify-center text-gray-700 border-2 border-dashboard-gray bg-dashboard-gray rounded-lg col-span-2">
+        <button 
+        onClick={() => setConfirmOpen(true)}
+        className="py-3 flex flex-row items-center justify-center text-gray-700 border-2 border-dashboard-gray bg-dashboard-gray rounded-lg col-span-2">
           Finish Consultation
         </button>
         <h1 className="py-3 flex flex-row items-center justify-center col-span-2 text-gray-700">
