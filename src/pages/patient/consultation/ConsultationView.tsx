@@ -128,9 +128,13 @@ const { formattedDate, formattedTime } = getFormattedDateTime(appointment?.sched
                     <SiGooglemeet className="text-2xl" />
                     Meeting Details
                   </h5>
-                  <button className="px-6 py-2 rounded bg-primary text-white text-xs hover:bg-primary-dark">
+                  <a 
+                   href={appointment?.onlineMeetingDetails?.link || "#"}
+                    target="_blank"
+            rel="noopener noreferrer"
+                  className="px-6 py-2 rounded bg-primary text-white text-xs hover:bg-primary-dark">
                     Join Meeting
-                  </button>
+                  </a>
                 </div>
               </section>
 

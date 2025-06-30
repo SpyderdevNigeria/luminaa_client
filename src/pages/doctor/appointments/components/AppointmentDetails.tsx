@@ -10,21 +10,27 @@ import { IoExitOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import routeLinks from "../../../../utils/routes";
 import InfoLabel from "../../../../components/common/InfoLabel";
-import UserProfile from "../../../../assets/images/patient/user.png"
+import UserProfile from "../../../../assets/images/patient/user.png";
 import moment from "moment";
 import { getFormattedDateTime } from "../../../../utils/dashboardUtils";
 
 interface DoctorAppointmentsViewProps {
-  handleNext: (e:string) => void;
+  handleNext: (e: string) => void;
   appointment: any;
 }
 
-function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsViewProps) {
-  const { patient, scheduledDate, status, patientNote, location, id } = appointment;
+function DoctorAppointmentsView({
+  handleNext,
+  appointment,
+}: DoctorAppointmentsViewProps) {
+  const { patient, scheduledDate, status, patientNote, location, id } =
+    appointment;
 
-  const patientName = `${patient?.user?.firstName || ""} ${patient?.user?.lastName || ""}`;
+  const patientName = `${patient?.user?.firstName || ""} ${
+    patient?.user?.lastName || ""
+  }`;
   const patientImage = patient?.user?.profilePicture?.url || UserProfile;
-    const { formattedDate, formattedTime } = getFormattedDateTime(scheduledDate);
+  const { formattedDate, formattedTime } = getFormattedDateTime(scheduledDate);
 
   return (
     <section className="flex flex-col gap-4">
@@ -67,7 +73,12 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
             <MdOutlineStickyNote2 className="text-2xl" />
             {patientNote || "No patient note provided..."}
           </h5>
-          <Link to={routeLinks?.doctor?.patients + `/${patient?.id}`} className="text-blue-800 text-sm underline">View Patient Details</Link>
+          <Link
+            to={routeLinks?.doctor?.patients + `/${patient?.id}`}
+            className="text-blue-800 text-sm underline"
+          >
+            View Patient Details
+          </Link>
         </main>
       </main>
 
@@ -82,9 +93,14 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
             <TfiTimer className="mx-1 text-amber-400" />
             Send Reminder
           </button>
-          <button className="px-8 py-2 rounded-sm bg-[#00BA8F] text-white text-xs">
+          <a
+            href={appointment?.onlineMeetingDetails?.link || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-2 rounded-sm bg-[#00BA8F] text-white text-xs"
+          >
             Join Meeting
-          </button>
+          </a>
         </div>
       </main>
 
@@ -109,10 +125,7 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
               info={"Meeting Type"}
               style="bg-purple-100 text-purple-600 py-1 px-2 rounded-sm"
             />
-            <InfoLabel
-              label={location}
-              info={"Meeting Link or address"}
-            />
+            <InfoLabel label={location} info={"Meeting Link or address"} />
             <InfoLabel label={"None"} info={"Time"} />
           </div>
         </div>
@@ -128,10 +141,7 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
               info="Age"
             />
             <InfoLabel label={patient.gender || "N/A"} info="Gender" />
-            <InfoLabel
-              label={patient.address || "N/A"}
-              info="Address"
-            />
+            <InfoLabel label={patient.address || "N/A"} info="Address" />
           </div>
         </div>
       </main>
@@ -140,19 +150,26 @@ function DoctorAppointmentsView({ handleNext, appointment }: DoctorAppointmentsV
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <button
           className="py-3 flex flex-row items-center justify-center text-[#4976F4] border-2 border-dashed border-[#4976F4] bg-blue-50 rounded-lg"
-          onClick={ () => {handleNext("DiagnosisDetails")}}
+          onClick={() => {
+            handleNext("DiagnosisDetails");
+          }}
         >
           <PiNotepadDuotone className="text-2xl mx-2" /> Diagnosis
         </button>
         <button
-          onClick={ () => {handleNext("PrescriptionDetails")}}
+          onClick={() => {
+            handleNext("PrescriptionDetails");
+          }}
           className="py-3 flex flex-row items-center justify-center text-[#0091FF] border-2 border-[#0091FF1A] bg-[#0091FF1A] rounded-lg"
         >
-           Prescriptions <IoExitOutline className="text-2xl mx-2" />
+          Prescriptions <IoExitOutline className="text-2xl mx-2" />
         </button>
-             <button className="py-3 flex flex-row items-center justify-center text-white border-2 bg-primary rounded-lg col-span-2"
-              onClick={ () => {handleNext("OrderDetails")}}
-             >
+        <button
+          className="py-3 flex flex-row items-center justify-center text-white border-2 bg-primary rounded-lg col-span-2"
+          onClick={() => {
+            handleNext("OrderDetails");
+          }}
+        >
           Order Tests
         </button>
         <button className="py-3 flex flex-row items-center justify-center text-gray-700 border-2 border-dashboard-gray bg-dashboard-gray rounded-lg col-span-2">
