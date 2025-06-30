@@ -123,9 +123,9 @@ const handleChange = (
         showToast('Lab created successfully', 'success');
       }
       onClose();
-    } catch (error) {
+    } catch (error:any) {
       setMessage({
-        message: "An error occurred",
+        message: error?.response?.data?.message || "An error occurred",
         type: "error",
       });
       console.log(error);

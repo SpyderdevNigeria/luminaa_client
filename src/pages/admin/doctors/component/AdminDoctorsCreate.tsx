@@ -115,10 +115,10 @@ const AdminDoctorsCreate: React.FC<Props> = ({
         showToast('Doctor created successfully', 'success');
       }
       onClose();
-    } catch (error) {
+    } catch (error:any) {
       console.error(error);
       setMessage({
-        message: "An error occurred",
+        message: error?.response?.data?.message || "An error occurred",
         type: "error",
       });
     }

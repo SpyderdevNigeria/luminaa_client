@@ -100,9 +100,9 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
         showToast('Pharmacist created successfully', 'success');
       }
       onClose();
-    } catch (error) {
+    } catch (error:any) {
       setMessage({
-        message: "An error occurred",
+        message: error?.response?.data?.message || "An error occurred",
         type: "error",
       });
       console.error(error);
@@ -136,16 +136,12 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
             { name: "licenseExpiryDate", label: "License Expiry Date", type: "date", required: true },
             { name: "hireDate", label: "Hire Date", type: "date", required: true },
              { name: "contactNumber", label: "Contact Number", required: true, type: "number" },
-            { name: "Status", label: "Status", type: "select", required: true, options: ['active', 'inactive'] },
           ].map((field) => (
             <CommonFormField
               key={field.name}
               {...field}
               value={formData[field.name as keyof FormData]}
               onChange={handleChange}
-              options={
-                field.options?.map((opt) => ({ value: opt, label: opt })) || []
-              }
 
             />
           ))}
