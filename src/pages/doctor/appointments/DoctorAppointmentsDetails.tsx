@@ -5,12 +5,14 @@ import DiagnosisDetails from "./components/DiagnosisDetails"
 import PrescriptionDetails from "./components/PrescriptionDetails";
 import doctorApi from "../../../api/doctorApi";
 import OrderDetails from "./components/OrderDetails";
+import { useSearchParams } from "react-router-dom";
 
 function DoctorAppointmentsDetails() {
   const [step, setStep] = useState('AppointmentDetails');
   const handleNext = (e: SetStateAction<string>) => setStep(e);
   const handleBack = () => setStep('AppointmentDetails');
-
+  const [searchParams] = useSearchParams();
+  const prescription = searchParams.get("prescription");
     const { id } = useParams<{ id: string }>();
     const [appointment, setAppointment] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -33,6 +35,9 @@ function DoctorAppointmentsDetails() {
       };
   
       fetchAppointment();
+      if (prescription) {
+        setStep("PrescriptionDetails");
+      }
     }, [id]);
 
     

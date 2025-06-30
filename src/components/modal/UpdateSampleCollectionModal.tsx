@@ -43,7 +43,7 @@ const UpdateSampleCollectionModal: React.FC<UpdateSampleCollectionModalProps> = 
 
   const handleSubmit = async () => {
     setError("");
-    if (form?.sample === "" || form?.collectionDate === "" || form?.volume === "" || form?.containerType === "") return showToast("All fields are required to submit this form", "error"); 
+    if (form?.sample === "" || form?.collectionDate === "") return showToast("All fields are required to submit this form", "error");
       setLoading(true);
     try {
       await LabApi.updateSampleCollection(id, {
@@ -91,7 +91,7 @@ const UpdateSampleCollectionModal: React.FC<UpdateSampleCollectionModalProps> = 
             onChange={handleChange}
             required
           />
-          <CommonFormField
+          {/* <CommonFormField
             type="text"
             name="volume"
             label="Volume"
@@ -106,7 +106,7 @@ const UpdateSampleCollectionModal: React.FC<UpdateSampleCollectionModalProps> = 
             value={form.containerType}
             onChange={handleChange}
             required
-          />
+          /> */}
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
 

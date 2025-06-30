@@ -1,6 +1,6 @@
 import UserImage from "../../assets/images/patient/user.png";
 import InfoLabel from "./InfoLabel";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
   ILabOrder,
@@ -302,7 +302,7 @@ const LabOrderDetails = ({
                     }}
                     className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-6 py-2 rounded-md transition"
                   >
-                    upload collected sample
+                    Enter collected sample
                   </button>
                 </div>
               ) : (
@@ -454,6 +454,14 @@ const LabOrderDetails = ({
                     >
                       Download PDF
                     </button>
+                  )}
+                     {type === "doctor" && (
+                    <Link
+                    
+                      className="bg-primary text-white text-sm font-medium py-3 px-4 rounded-lg hover:bg-primary/90 transition mb-6"
+                       to={routeLinks?.doctor?.appointment+"/"+data?.data?.appointment?.id+"?prescription=add"}                    >
+                      Add Medication
+                    </Link>
                   )}
                 </div>
 
