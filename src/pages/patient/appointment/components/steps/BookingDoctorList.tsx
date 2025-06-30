@@ -85,6 +85,10 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
     fetchDoctors();
   }, [page, limit, search, specialty]);
 
+  useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [])
+
   const handleDoctorSelect = useCallback((doctor: Doctor) => {
     setSelectedDoctor(doctor);
   }, []);

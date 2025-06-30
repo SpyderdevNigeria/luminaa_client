@@ -28,11 +28,17 @@ function Appointment() {
   return (
     <div>
     <div className="p-4 md:p-8">
-      <Link to={routeLinks?.patient?.dashboard}>
+      <div>
+           <Link to={routeLinks?.patient?.dashboard}>
         <img src={website?.logo} alt=""
         className="w-40 object-contain mx-auto md:mx-0"
         />
       </Link>
+
+      <Link to={routeLinks?.patient?.dashboard} className="text-primary underline">
+        Dashboard
+      </Link>
+      </div>
     </div>
     <div className="flex flex-col items-center justify-center  p-4 ">
         {!userProfile?.medicalHistory  ? <BookingCondition userProfile={userProfile}/> : <Booking />} 

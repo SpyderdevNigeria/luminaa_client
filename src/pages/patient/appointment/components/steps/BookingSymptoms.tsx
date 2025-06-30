@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BookingDetails from "../BookingDetails";
 import PatientApi from "../../../../../api/PatientApi";
 import FeedbackMessage from "../../../../../components/common/FeedbackMessage";
@@ -25,6 +25,10 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
       [e.target.name]: e.target.value,
     }));
   };
+
+  useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [])
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
