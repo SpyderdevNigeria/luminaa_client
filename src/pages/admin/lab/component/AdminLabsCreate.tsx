@@ -4,6 +4,7 @@ import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import CommonFormField from "../../../../components/common/CommonFormField";
 import { labDepartmentOptions } from "../../../../utils/dashboardUtils";
+import { useToaster } from "../../../../components/common/ToasterContext";
 
 type LabUser = {
   firstName: string;
@@ -18,6 +19,7 @@ export type Lab = {
   licenseNumber: string;
   licenseExpiryDate: string;
   hireDate: string;
+  contactNumber:number;
 };
 
 type FormData = {
@@ -29,6 +31,7 @@ type FormData = {
   licenseNumber: string;
   licenseExpiryDate: string;
   hireDate: string;
+  contactNumber:number;
 };
 
 type Props = {
@@ -40,7 +43,7 @@ type Props = {
 const AdminLabsCreate: React.FC<Props> = ({ lab = null, onBack, onClose }) => {
   const [message, setMessage] = useState({ message: "", type: "" });
   const [loading, setLoading] = useState(false);
-
+   const { showToast } = useToaster();
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -49,6 +52,7 @@ const AdminLabsCreate: React.FC<Props> = ({ lab = null, onBack, onClose }) => {
     department: "",
     licenseNumber: "",
     licenseExpiryDate: "",
+    contactNumber:0,
     hireDate: "",
   });
 
@@ -62,6 +66,7 @@ const AdminLabsCreate: React.FC<Props> = ({ lab = null, onBack, onClose }) => {
         licenseNumber: lab.licenseNumber || "",
         licenseExpiryDate: lab.licenseExpiryDate?.slice(0, 10) || "",
         hireDate: lab.hireDate?.slice(0, 10) || "",
+        contactNumber: lab?.contactNumber || 0,
       });
     }
   }, [lab]);
@@ -108,12 +113,14 @@ const handleChange = (
           message: response?.data?.message || "Lab updated successfully",
           type: "success",
         });
+        showToast('Lab updated successfully', 'success');
       } else {
         const response = await AdminApi.createLabs(payload);
         setMessage({
           message: response?.data?.message || "Lab created successfully",
           type: "success",
         });
+        showToast('Lab created successfully', 'success');
       }
       onClose();
     } catch (error) {
@@ -160,6 +167,7 @@ const handleChange = (
             { name: "email", label: "Email", type: "email", required: true },
             { name: "department", label: "Department", type:"select", options:labDepartment, required: true,},
             { name: "licenseNumber", label: "License Number", required: true, type: "text" },
+            { name: "contactNumber", label: "Contact Number", required: true, type: "number" },
             {
               name: "licenseExpiryDate",
               label: "License Expiry Date",

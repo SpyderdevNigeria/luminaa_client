@@ -4,6 +4,7 @@ import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import CommonFormField from "../../../../components/common/CommonFormField";
 import {IPharmacist} from "../../../../types/Interfaces"
+import { useToaster } from "../../../../components/common/ToasterContext";
 type FormData = {
   firstName: string;
   lastName: string;
@@ -13,6 +14,7 @@ type FormData = {
   status:string;
   licenseExpiryDate: string;
   hireDate: string;
+  contactNumber:number;
 
 };
 
@@ -25,7 +27,7 @@ type Props = {
 const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, onClose }) => {
   const [message, setMessage] = useState({ message: "", type: "" });
   const [loading, setLoading] = useState(false);
-
+  const { showToast } = useToaster();
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -33,7 +35,8 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
     licenseNumber: "",
     licenseExpiryDate: "",
     hireDate: "",
-    status:""
+    status:"",
+    contactNumber:0,
   });
 
   useEffect(() => {
@@ -45,7 +48,8 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
         licenseNumber: pharmacist.licenseNumber || "",
         licenseExpiryDate: pharmacist.licenseExpiryDate?.slice(0, 10) || "",
         hireDate: pharmacist.hireDate?.slice(0, 10) || "",
-        status:pharmacist?.status || ''
+        status:pharmacist?.status || '',
+        contactNumber:pharmacist?.contactNumber || 0
       });
     }
   }, [pharmacist]);
@@ -86,12 +90,14 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
           message: response?.data?.message || "Pharmacist updated successfully",
           type: "success",
         });
+         showToast('Pharmacist updated successfully', 'success');
       } else {
         const response = await AdminApi.createPharmacist(payload);
         setMessage({
           message: response?.data?.message || "Pharmacist created successfully",
           type: "success",
         });
+        showToast('Pharmacist created successfully', 'success');
       }
       onClose();
     } catch (error) {
@@ -129,6 +135,7 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
             { name: "licenseNumber", label: "License Number", required: true, type: "text" },
             { name: "licenseExpiryDate", label: "License Expiry Date", type: "date", required: true },
             { name: "hireDate", label: "Hire Date", type: "date", required: true },
+             { name: "contactNumber", label: "Contact Number", required: true, type: "number" },
             { name: "Status", label: "Status", type: "select", required: true, options: ['active', 'inactive'] },
           ].map((field) => (
             <CommonFormField

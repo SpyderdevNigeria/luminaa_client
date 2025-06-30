@@ -13,6 +13,11 @@ type BioDataProps = {
     emergencyContactPhone: string;
   };
 };
+const getMaxDateFor18YearsOld = () => {
+  const today = new Date();
+  today.setFullYear(today.getFullYear() - 18);
+  return today.toISOString().split("T")[0]; 
+};
 
 function BioData({ submitform, handleChange, data, }: BioDataProps) {
   return (
@@ -29,14 +34,16 @@ function BioData({ submitform, handleChange, data, }: BioDataProps) {
               Date of Birth
             </label>
             <input
-              type="date"
-              name="dateOfBirth"
-              id="dateOfBirth"
-              onChange={handleChange}
-              value={data.dateOfBirth}
-              required
-              className={`form-input focus:outline-primary border border-gray-light`}
-            />
+            type="date"
+            name="dateOfBirth"
+            id="dateOfBirth"
+            onChange={handleChange}
+            value={data.dateOfBirth}
+            required
+            className={`form-input focus:outline-primary border border-gray-light`}
+            max={getMaxDateFor18YearsOld()}
+          />
+
           </div>
 
           {/* Gender */}

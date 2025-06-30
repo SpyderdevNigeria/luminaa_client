@@ -150,6 +150,7 @@ export interface IPharmacist {
   licenseExpiryDate: string;
   hireDate: string;
   status:string;
+  contactNumber?:number;
 };
 
 export interface IMedication {

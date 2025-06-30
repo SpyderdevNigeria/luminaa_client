@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PiPillDuotone } from "react-icons/pi";
 import { IMedication } from "../../types/Interfaces";
 import { MdRemoveRedEye } from "react-icons/md";
@@ -24,10 +24,16 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState("")
   const isInCart = cartItems.some((item) => item.id === medication.id);
-  const handleCartAdd = (id:any) => {
-    setActiveId(id)
+  const handleCartAdd = (id: any) => {
+    setActiveId(id);
     if (!isInCart) onAddPrescription?.();
   }
+
+  useEffect(() => {
+    if (isInCart) {
+      setActiveId("");
+    }
+  }, [isInCart]);
   return (
     <>
       <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md transition flex flex-col justify-between relative">
@@ -95,9 +101,7 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
         hideCancel={false}
         buttonText={loading && activeId === medication?.id ? "Loading..." : isInCart ? "Already Added" : buttonText}
         style="lg:min-w-3xl !md:mx-4"
-        handleSubmit={() => {
-          if (!isInCart) onAddPrescription?.();
-        }}
+        handleSubmit={handleCartAdd.bind(null, medication?.id)}
       >
         <div className="my-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

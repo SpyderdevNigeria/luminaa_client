@@ -4,6 +4,7 @@ import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import CommonFormField from "../../../../components/common/CommonFormField";
 import { adminDoctorSpecialties } from "../../../../utils/dashboardUtils";
+import { useToaster } from "../../../../components/common/ToasterContext";
 
 type DoctorUser = {
   firstName: string;
@@ -61,6 +62,8 @@ const AdminDoctorsCreate: React.FC<Props> = ({
     joinedDate: "",
   });
 
+  const { showToast } = useToaster();
+
   useEffect(() => {
     if (doctor) {
       setFormData({
@@ -102,12 +105,14 @@ const AdminDoctorsCreate: React.FC<Props> = ({
           message: response?.data?.message || "Doctor updated successfully",
           type: "success",
         });
+        showToast('Doctor updated successfully', 'success');
       } else {
         const response = await AdminApi.createDoctors(payload);
         setMessage({
           message: response?.data?.message || "Doctor created successfully",
           type: "success",
         });
+        showToast('Doctor created successfully', 'success');
       }
       onClose();
     } catch (error) {
