@@ -59,7 +59,7 @@ const AdminInventoryDetails: React.FC = () => {
   } = inventory;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow">
+    <div className=" mx-auto p-6 bg-white rounded-xl shadow">
       <Link to={userProfile?.user?.role === "admin" ? routeLinks?.admin?.adminInventory : routeLinks?.superAdmin?.adminInventory} className="text-sm text-primary flex items-center mb-4 hover:underline">
         <FiArrowLeft className="mr-1" /> Back to Inventory List
       </Link>
@@ -67,7 +67,7 @@ const AdminInventoryDetails: React.FC = () => {
       <h2 className="text-2xl font-bold text-gray-900 mb-1">{medicationName}</h2>
       <p className="text-sm italic text-gray-500 mb-4">{medicationGenericName}</p>
 
-      <div className="space-y-3 text-sm text-gray-700">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-700">
         <div className="flex items-center gap-2">
           <FiBarChart2 className="text-gray-400" />
           Quantity: <span className="font-medium">{quantity}</span>

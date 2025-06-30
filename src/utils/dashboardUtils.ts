@@ -701,6 +701,27 @@ export const returnMemberNavigationUrlLogic = (user: any) => {
   return "/patient/dashboard";
 };
 
+export const getAge = (dateOfBirth?: string | null): number | null => {
+  if (!dateOfBirth) return null;
+
+  const birthDate = new Date(dateOfBirth);
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  // Check if birthday has occurred yet this year
+  const hasHadBirthdayThisYear =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+
+  if (!hasHadBirthdayThisYear) {
+    age--;
+  }
+
+  return age;
+};
+
+
 export const returnPartnerNavigationUrlLogic = (
   partnerType: string,
   partnerProfile: any

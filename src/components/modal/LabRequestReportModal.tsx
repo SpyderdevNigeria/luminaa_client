@@ -8,6 +8,7 @@ import { useToaster } from "../common/ToasterContext";
 import SheetHeader from "../common/SheetHeader";
 import { IResult } from "../../types/Interfaces";
 import useAuth from "../../hooks/useAuth";
+import { getAge } from "../../utils/dashboardUtils";
 
 
 
@@ -212,7 +213,7 @@ function LabRequestReportModal({
     <p><strong>Country:</strong> {userProfile?.country ?? "N/A"}</p>
   </div>
   <div style={{ flex: "1 1 300px" }}>
-    <p><strong>Date of Birth:</strong> {userProfile?.dateOfBirth ?? "N/A"}</p>
+    <p><strong>Age:</strong> {getAge(userProfile?.dateOfBirth) ?? "N/A"}</p>
   </div>
   <div style={{ flex: "1 1 300px" }}>
     <p><strong>Gender:</strong> {userProfile?.gender ?? "N/A"}</p>

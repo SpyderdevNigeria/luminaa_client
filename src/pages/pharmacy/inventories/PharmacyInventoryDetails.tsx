@@ -66,7 +66,7 @@ const PharmacyInventoryDetails: React.FC = () => {
       <h2 className="text-2xl font-bold text-gray-900 mb-1">{medicationName}</h2>
       <p className="text-sm italic text-gray-500 mb-4">{medicationGenericName}</p>
 
-      <div className="space-y-3 text-sm text-gray-700">
+     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-700">
         <div className="flex items-center gap-2">
           <FiBarChart2 className="text-gray-400" />
           Quantity: <span className="font-medium">{quantity}</span>

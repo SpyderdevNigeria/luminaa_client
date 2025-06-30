@@ -36,7 +36,7 @@ function DoctorPatientsDetails() {
       component: user ? <PatientInformation user={user} /> : null,
     },
     {
-      label: "Medical History",
+      label: "Premobid Condition",
       component: user ? <MedicalHistory user={user} /> : null,
     },
     {
@@ -72,7 +72,7 @@ function DoctorPatientsDetails() {
                 {user?.firstName} {user?.lastName}
               </h4>
               <h4 className="text-xs 2xl:text-base text-inactive">
-                {user?.gender} | #{user?.id || user?.id}
+                {user?.gender} | #{user?.id?.split("-")[0]}
               </h4>
             </div>
           </div>
