@@ -63,7 +63,7 @@ function Onboarding() {
     setFeedback({ message: "", type: "" });
 
     try {
-    await ProfileApi.updateBio(formData).then((res) => {
+    await ProfileApi.updateBio({...formData,  dateOfBirth: new Date(formData.dateOfBirth).toISOString(),  }).then((res) => {
       console.log(res);
        if (res) {
         setFormData(initialData);

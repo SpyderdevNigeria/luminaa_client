@@ -2,7 +2,9 @@ import React from "react";
 
 type BioDataProps = {
   submitform: (e: React.FormEvent) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   data: {
     gender: string;
     maritalStatus: string;
@@ -13,37 +15,45 @@ type BioDataProps = {
     emergencyContactPhone: string;
   };
 };
+
+// Helper to ensure user must be 18 years or older
 const getMaxDateFor18YearsOld = () => {
   const today = new Date();
   today.setFullYear(today.getFullYear() - 18);
-  return today.toISOString().split("T")[0]; 
+  return today.toISOString().split("T")[0];
 };
 
-function BioData({ submitform, handleChange, data, }: BioDataProps) {
+// Format the date safely to YYYY-MM-DD
+const formatDate = (date: string | Date | null | undefined) => {
+  if (!date) return "";
+  const parsed = new Date(date);
+  return isNaN(parsed.getTime()) ? "" : parsed.toISOString().split("T")[0];
+};
+
+function BioData({ submitform, handleChange, data }: BioDataProps) {
   return (
     <div>
       <form onSubmit={submitform}>
         <h2 className="text-2xl md:text-3xl my-8 px-20 text-center text-text-secondary">
           Bio Data
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
 
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
           {/* Date of Birth */}
           <div className="col-span-2">
             <label htmlFor="dateOfBirth" className="form-label text-primary">
               Date of Birth
             </label>
             <input
-            type="date"
-            name="dateOfBirth"
-            id="dateOfBirth"
-            onChange={handleChange}
-            value={data.dateOfBirth}
-            required
-            className={`form-input focus:outline-primary border border-gray-light`}
-            max={getMaxDateFor18YearsOld()}
-          />
-
+              type="date"
+              name="dateOfBirth"
+              id="dateOfBirth"
+              onChange={handleChange}
+              value={formatDate(data.dateOfBirth)}
+              required
+              className="form-input focus:outline-primary border border-gray-light"
+              max={getMaxDateFor18YearsOld()}
+            />
           </div>
 
           {/* Gender */}
@@ -57,14 +67,13 @@ function BioData({ submitform, handleChange, data, }: BioDataProps) {
               onChange={handleChange}
               value={data.gender}
               required
-             className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light"
             >
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
-          
           </div>
 
           {/* Marital Status */}
@@ -78,7 +87,7 @@ function BioData({ submitform, handleChange, data, }: BioDataProps) {
               onChange={handleChange}
               value={data.maritalStatus}
               required
-               className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light"
             >
               <option value="">Select Status</option>
               <option value="Single">Single</option>
@@ -86,7 +95,6 @@ function BioData({ submitform, handleChange, data, }: BioDataProps) {
               <option value="Divorced">Divorced</option>
               <option value="Widowed">Widowed</option>
             </select>
-           
           </div>
 
           {/* Religion */}
@@ -100,7 +108,7 @@ function BioData({ submitform, handleChange, data, }: BioDataProps) {
               onChange={handleChange}
               value={data.religion}
               required
-              className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light"
             >
               <option value="">Select Religion</option>
               <option value="Christianity">Christianity</option>
@@ -108,13 +116,12 @@ function BioData({ submitform, handleChange, data, }: BioDataProps) {
               <option value="Traditional">Traditional</option>
               <option value="Other">Other</option>
             </select>
-            
           </div>
 
           {/* Phone Number */}
           <div className="col-span-2">
             <label htmlFor="phoneNumber" className="form-label text-primary">
-              Phone Number <br />
+              Phone Number
             </label>
             <input
               type="tel"
@@ -124,9 +131,8 @@ function BioData({ submitform, handleChange, data, }: BioDataProps) {
               value={data.phoneNumber}
               required
               placeholder="Enter phone number"
-              className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light"
             />
-           
           </div>
 
           {/* Emergency Contact Name */}
@@ -142,9 +148,8 @@ function BioData({ submitform, handleChange, data, }: BioDataProps) {
               value={data.emergencyContactName}
               required
               placeholder="Full name"
-               className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light"
             />
-           
           </div>
 
           {/* Emergency Contact Phone */}
@@ -160,9 +165,8 @@ function BioData({ submitform, handleChange, data, }: BioDataProps) {
               value={data.emergencyContactPhone}
               required
               placeholder="Phone number"
-              className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light"
             />
-          
           </div>
         </div>
 

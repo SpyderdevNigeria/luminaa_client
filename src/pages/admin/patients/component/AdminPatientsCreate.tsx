@@ -3,6 +3,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import CommonFormField from "../../../../components/common/CommonFormField";
+import { useToaster } from "../../../../components/common/ToasterContext";
 
 type Patient = {
   id: string;
@@ -51,7 +52,7 @@ const AdminPatientsCreate: React.FC<Props> = ({ patient = null, onBack, onClose 
     emergencyContactName: "",
     emergencyContactPhone: "",
   });
-
+   const { showToast } = useToaster();
   useEffect(() => {
     if (patient) {
       const { id, ...rest } = patient;
@@ -74,11 +75,15 @@ const AdminPatientsCreate: React.FC<Props> = ({ patient = null, onBack, onClose 
       } else {
         const response = await AdminApi.createPatient(formData);
         setMessage({ message: response?.data?.message || "Patient created successfully", type: "success" });
+        showToast('Patient created successfully', 'success');
       }
       onClose();
-    } catch (error) {
+    } catch (error:any) {
       console.error(error);
-      setMessage({ message: "An error occurred", type: "error" });
+        setMessage({
+        message: error?.response?.data?.message || "An error occurred",
+        type: "error",
+      });
     }
     setLoading(false);
   };

@@ -37,7 +37,7 @@ const LabApi = {
   },
 
   updateLabOrderResultById: async (id: any, body:any) => {
-    const response = await api.patch(`/lab-tech/lab-tests/result/${id}`, body);
+    const response = await api.patch(`/lab-tech/lab-tests/results/${id}`, body);
     return response.data;
   },
 

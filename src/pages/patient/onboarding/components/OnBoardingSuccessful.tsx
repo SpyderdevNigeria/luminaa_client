@@ -3,7 +3,7 @@ import Calendaricon from '../../../../assets/images/auth/calendar.webp'
 import routeLinks from '../../../../utils/routes'
 function OnBoardingSuccessful() {
   return (
-    <div className='flex flex-col items-center justify-center gap-8 max-w-md px-8 mx-auto 2xl:mt-24'>
+    <div className='flex flex-col items-center justify-center gap-8 max-w-md px-8 mx-auto '>
         <img src={Calendaricon} alt="" className='w-[200px] ' />
         <div className='text-center'>
         <h2 className="text-2xl  font-semibold">Account creation successful</h2>

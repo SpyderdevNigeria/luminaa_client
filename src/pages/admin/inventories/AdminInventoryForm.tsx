@@ -148,7 +148,6 @@ const InventoryForm: React.FC<InventoryFormProps> = ({
         label="Reference"
         value={formData.reference}
         onChange={handleChange}
-        required
       />
       <div className="md:col-span-full">
         <CommonFormField

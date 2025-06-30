@@ -13,7 +13,10 @@ import InfoLabel from "../../../../components/common/InfoLabel";
 import UserProfile from "../../../../assets/images/patient/user.png";
 import moment from "moment";
 import { getFormattedDateTime } from "../../../../utils/dashboardUtils";
-
+import ConfirmModal from "../../../../components/modal/ConfirmModal";
+import DoctorApi from "../../../../api/doctorApi";
+import { useState } from "react";
+import { useToaster } from "../../../../components/common/ToasterContext";
 interface DoctorAppointmentsViewProps {
   handleNext: (e: string) => void;
   appointment: any;
@@ -31,6 +34,27 @@ function DoctorAppointmentsView({
   }`;
   const patientImage = patient?.user?.profilePicture?.url || UserProfile;
   const { formattedDate, formattedTime } = getFormattedDateTime(scheduledDate);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [confrimLoading, setStartLoading] = useState(false);
+  const { showToast } = useToaster();
+  const onConfirm = async () => {
+    try {
+      setStartLoading(true);
+      // Example API call or navigation
+      await DoctorApi.finishConsultation(appointment?.id);
+      console.log("Finishing consultation...");
+      setConfirmOpen(false);
+      setStartLoading(false);
+      showToast("Finished consultation", "success");
+      // Optional: redirect or update view
+    } catch (error:any) {
+      console.error("Failed to finish consultation", error);
+      showToast(error?.response?.data?.message || "Failed to finish consultation", "error");
+      setStartLoading(false);
+    }
+  };
+
+  const confirmMessage = "Are you sure you want to finish this consultation?";
 
   return (
     <section className="flex flex-col gap-4">
@@ -180,6 +204,17 @@ function DoctorAppointmentsView({
           records to finish this treatment
         </h1>
       </section>
+      {/* Confirm Modal */}
+      <ConfirmModal
+        open={confirmOpen}
+        description={confirmMessage}
+        onConfirm={onConfirm}
+        onClose={() => {
+          setConfirmOpen(false);
+          setStartLoading(false);
+        }}
+        loading={confrimLoading}
+      />
     </section>
   );
 }

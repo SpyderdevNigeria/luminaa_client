@@ -64,6 +64,11 @@ const DoctorApi = {
     return response.data;
   },
 
+    finishConsultation: async (id: any) => {
+    const response = await api.post(`/doctor/appointments/${id}/complete`);
+    return response.data;
+  },
+
   //Appointment endpoints end 
 
 
