@@ -28,14 +28,14 @@ function Appointment() {
   return (
     <div>
     <div className="p-4 md:p-8">
-      <div>
+      <div className="flex flex-row items-center justify-between ">
            <Link to={routeLinks?.patient?.dashboard}>
         <img src={website?.logo} alt=""
         className="w-40 object-contain mx-auto md:mx-0"
         />
       </Link>
 
-      <Link to={routeLinks?.patient?.dashboard} className="text-primary underline">
+      <Link to={routeLinks?.patient?.dashboard} className="text-primary hover:underline">
         Dashboard
       </Link>
       </div>
