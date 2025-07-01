@@ -13,7 +13,7 @@ function LabTestRequestsDetails() {
   const [isLoadingResults, setLoadingResults] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
   const [resultError, setResultError] = useState<string | null>(null);
-  const [loadingStatus, setLoadingStatus] = useState(false)
+  const [loadingStatus, setLoadingStatus] = useState(false);
   const { showToast } = useToaster();
   const fetchOrder = async () => {
     try {
@@ -53,6 +53,8 @@ function LabTestRequestsDetails() {
     }
   }, [id]);
 
+
+
   useEffect(() => {
     if (labOrder) {
       if (labOrder?.data?.result) {
@@ -62,33 +64,34 @@ function LabTestRequestsDetails() {
   }, [labOrder]);
   const handleResult = async (payload: any) => {
     setLoadingResults(true);
-    console.log(labOrder)
+    console.log(labOrder);
     try {
       if (labOrder?.data?.result) {
-         console.log('update result', labResultMeta?.id, payload)
+        console.log("update result", labResultMeta?.id, payload);
         await LabApi.updateLabOrderResultById(labResultMeta?.id, {
-          documents : payload?.documents,
+          documents: payload?.documents,
           notes: payload?.notes,
           results: payload?.results,
         });
         showToast("Result updated successfully.", "success");
       } else {
-        console.log('create result')
-        if (payload?.results.length === 0) return  showToast("You need to add result.", "error"); 
+        console.log("create result");
+        if (payload?.results.length === 0)
+          return showToast("You need to add result.", "error");
         await LabApi.createLabOrderResult(id, payload);
-        showToast("Result submitted successfully.", 'success');
+        showToast("Result submitted successfully.", "success");
       }
       fetchResults();
     } catch (err) {
       console.error("Error submitting result:", err);
-      showToast("Failed to submit result.", 'error');
+      showToast("Failed to submit result.", "error");
     } finally {
       setLoadingResults(false);
     }
   };
 
   const handleStatus = async () => {
-    setLoadingStatus(true)
+    setLoadingStatus(true);
     try {
       const data = await LabApi.updateLabOrderStatus(id);
       if (data) {
@@ -99,7 +102,7 @@ function LabTestRequestsDetails() {
       console.error(err);
       setOrderError("Failed to update lab order status.");
     }
-    setLoadingStatus(false)
+    setLoadingStatus(false);
   };
 
   return (

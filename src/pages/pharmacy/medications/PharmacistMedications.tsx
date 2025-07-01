@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import PharmacistApi from "../../../api/pharmacistApi";
 import HeaderTab from "../../../components/common/HeaderTab";
-import PaginationComponent from "../../../components/common/PaginationComponent";
 import useMedications from "../../../hooks/useMedications";
 import {
   medicationCategoryOptions,
@@ -169,13 +168,6 @@ const PharmacistMedications = () => {
             />
       )}
 
-      <PaginationComponent
-        page={medicationsPage}
-        total={medicationsTotal}
-        limit={medicationsLimit}
-        totalPages={medicationsTotalPages ?? 1}
-        onPageChange={setMedicationsPage}
-      />
     </div>
   );
 };

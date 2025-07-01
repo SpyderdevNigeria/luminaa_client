@@ -34,8 +34,8 @@ const PharmacyInventoryDetails: React.FC = () => {
         setLoading(false);
       }
     };
-
     if (id) fetchInventory();
+
   }, [id]);
 
   if (loading) return <p className="text-center mt-20 text-gray-600">Loading inventory details...</p>;

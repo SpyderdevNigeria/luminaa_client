@@ -8,7 +8,6 @@ import { logout, updateUser } from "../../reducers/authSlice";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import LabApi from "../../api/labApi";
 import { navItemsLab } from "../../utils/dashboardUtils";
-
 function LabLayout() {
   const navigate = useNavigate();
   const { userProfile, authLoading } = usePartnerAuth();

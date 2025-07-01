@@ -72,7 +72,6 @@ function LabRequestResultReportModal({
   const { userProfile } = useAuth();
   const printRef = useRef<HTMLDivElement>(null);
   const { showToast } = useToaster();
-
   // Get lab personnel from status history
 
   const handleDownloadPDF = async () => {
@@ -254,7 +253,6 @@ function LabRequestResultReportModal({
             <p>No results available.</p>
           )}
         </div>
-
         {/* Interpretation */}
         <div style={{ marginTop: "30px" }}>
           <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>

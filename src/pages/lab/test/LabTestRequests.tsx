@@ -22,7 +22,8 @@ function LabTestRequests() {
 
 
  useEffect(() => {
-  getOrders();
+   getOrders();
+   window.scrollTo({ top: 0, behavior: "smooth" });
 }, [ordersPage, status, priority]);
 
   const columns: Column<(typeof orders)[0]>[] = [

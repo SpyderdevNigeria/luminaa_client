@@ -108,7 +108,7 @@ const formFields = [
     type: "textarea",
     name: "notes",
     label: "Notes",
-    required: true,
+    // required: true,
   },
 ] as const;
 

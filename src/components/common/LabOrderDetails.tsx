@@ -469,7 +469,7 @@ const LabOrderDetails = ({
                   <LabRequestResultReportModal
                     results={{
                       testName,
-                      notes: notes ?? "",
+                      notes: results?.notes ?? "",
                       resultList: results?.results,
                       documents: results?.documents,
                       statusHistory: statusHistory,

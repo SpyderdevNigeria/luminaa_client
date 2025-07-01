@@ -66,6 +66,8 @@ function DashboardLayout({ children, links }: DashboardLayoutProps) {
     } else {
       setActiveLink(null);
     }
+      const scrollable = document.getElementById("scroll-container");
+    scrollable?.scrollTo(0, 0);
   }, [location.pathname, links]);
 
   return (
@@ -87,7 +89,9 @@ function DashboardLayout({ children, links }: DashboardLayoutProps) {
               : { title: '', sublink: '' }
           }
         />
-        <main className="flex-1 px-4 2xl:px-18 py-6 max-h-[90vh] overflow-y-scroll">
+        <main className="flex-1 px-4 2xl:px-18 py-6 max-h-[90vh] overflow-y-scroll"
+        id="scroll-container"
+        >
           {children}
         </main>
       </div>

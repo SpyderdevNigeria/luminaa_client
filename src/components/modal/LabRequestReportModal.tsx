@@ -162,14 +162,8 @@ function LabRequestReportModal({
   <SheetHeader />
 
   <h2
-    style={{
-      marginBottom: "40px",
-      marginTop: "10px",
-      fontSize: "20px",
-      textAlign: "center",
-      color: "#0F62FE",
-      textDecoration: "underline",
-    }}
+             style={{ marginBottom: "40px", marginTop: "10px" }}
+          className="text-2xl text-primary text-center underline"
   >
     Lab Test Order
   </h2>
