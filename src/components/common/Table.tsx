@@ -32,7 +32,7 @@ const Table = <T extends object>({
 
   return (
     <div className="">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto scrollbar-visible">
         <table className="w-full text-left text-sm border-separate border-spacing-y-2">
           <thead className="bg-primary text-white">
             <tr>

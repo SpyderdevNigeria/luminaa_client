@@ -20,9 +20,10 @@ const ShoppingCartPanel: React.FC<Props> = ({ open, setOpen,  }) => {
     const item = cartItems.find((i) => i.id === id);
     if (item) {
       const newQuantity = item.quantity + delta;
-      if (newQuantity >= 1) {
-        update(id, newQuantity);
-      }
+       update(id, newQuantity);
+      // if (newQuantity >= 1) {
+      //   update(id, newQuantity);
+      // }
     }
   };
 
