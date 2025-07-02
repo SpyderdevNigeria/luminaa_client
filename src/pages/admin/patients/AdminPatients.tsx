@@ -8,7 +8,6 @@ import AdminApi from "../../../api/adminApi";
 import Table, { Column } from "../../../components/common/Table";
 import HeaderTab from "../../../components/common/HeaderTab";
 import Dropdown from "../../../components/dropdown/dropdown";
-import StatusBadge from "../../../components/common/StatusBadge";
 import AdminNavigate from "../../../components/common/AdminNavigate";
 import AdminPatientsCreate from "./component/AdminPatientsCreate";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
@@ -89,13 +88,13 @@ function AdminPatients() {
       key: "name",
       label: "Name",
       render: (patient) => (
-        <span>{patient?.user?.firstName} {patient?.user?.lastName}</span>
+       <span>{patient?.user?.firstName && patient?.user?.lastName ? `${patient?.user?.firstName} ${patient?.user?.lastName}` : "N/A"}</span>
       ),
     },
     {
       key: "email",
       label: "Email",
-      render: (patient) => <span>{patient?.user?.email}</span>,
+      render: (patient) => <span>{patient?.user?.email || "N/A"}</span>,
     },
     {
       key: "gender",
@@ -108,10 +107,17 @@ function AdminPatients() {
       render: (patient) => <span>{patient?.city || "N/A"}</span>,
     },
     {
-      key: "status",
-      label: "Status",
+      key: "isBioDataCompleted",
+      label: "BioData Completed",
       render: (patient) => (
-        <StatusBadge status={patient?.isBioDataCompleted ? "active" : "inactive"} />
+        <span>{patient?.isBioDataCompleted ? "YES" : "NO"}</span>
+      ),
+    },
+       {
+      key: "isMedicalHistoryCompleted",
+      label: "MedicalHistoryCompleted",
+      render: (patient) => (
+        <span>{patient?.isMedicalHistoryCompleted ? "YES" : "NO"}</span>
       ),
     },
     {
