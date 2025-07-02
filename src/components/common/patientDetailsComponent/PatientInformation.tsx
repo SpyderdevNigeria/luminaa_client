@@ -1,5 +1,5 @@
-import InfoLabel from "../../../../components/common/InfoLabel";
-import { IPatient } from "../../../../types/Interfaces";
+import InfoLabel from "../InfoLabel";
+import { IPatient } from "../../../types/Interfaces";
 
 type Props = {
   user: IPatient;
@@ -28,14 +28,14 @@ function PatientInformation({ user }: Props) {
         />
         <InfoLabel label={user.emergencyContactName} info="Emergency Contact Name" />
         <InfoLabel label={user.emergencyContactPhone} info="Emergency Contact Phone" />
-        <InfoLabel
+        {/* <InfoLabel
           label={`${user.totalAppointments}`}
           info="Total Appointments"
-        />
-        <InfoLabel
+        /> */}
+        {/* <InfoLabel
           label={new Date(user.lastAppointmentDate).toLocaleString()}
           info="Last Appointment"
-        />
+        /> */}
       </div>
     </div>
   );

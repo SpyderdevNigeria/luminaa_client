@@ -78,6 +78,10 @@ import AdminUserDetails from "./pages/admin/users/AdminUserDetails";
 import AdminPatientStats from "./pages/admin/patients/AdminPatientStats";
 import AdminPatients from "./pages/admin/patients/AdminPatients";
 import AdminPatientDetails from "./pages/admin/patients/AdminPatientsDetails";
+import DoctorAllPatients from "./pages/doctor/allpatients/DoctorAllPatients";
+import DoctorAllPatientsDetails from "./pages/doctor/allpatients/DoctorAllPatientsDetails";
+import AdminDoctorsStats from "./pages/admin/doctors/AdminDoctorsStats";
+import AdminDoctorsSpecialties from "./pages/admin/doctors/AdminDoctorsSpecialties";
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
 const App = createBrowserRouter([
@@ -232,6 +236,15 @@ const App = createBrowserRouter([
       {
         path: routeLinks?.doctor?.patientView,
         element: <DoctorPatientsDetails />,
+      },
+
+            {
+        path: routeLinks?.doctor?.allPatients,
+        element: <DoctorAllPatients />,
+      },
+      {
+        path: routeLinks?.doctor?.allPatientsDetails,
+        element: <DoctorAllPatientsDetails />,
       },
       // Doctor Patient Link End
       {
@@ -398,6 +411,14 @@ const App = createBrowserRouter([
         path: routeLinks?.admin?.doctors,
         element: <AdminDoctors />,
       },
+       {
+        path: routeLinks?.admin?.doctorsStats,
+        element: <AdminDoctorsStats />,
+      },
+          {
+        path: routeLinks?.admin?.doctorsSpecialties,
+        element: <AdminDoctorsSpecialties />,
+      },
       {
         path: routeLinks?.admin?.doctorDetails,
         element: <AdminDoctorsDetails />,
@@ -500,6 +521,14 @@ const App = createBrowserRouter([
       {
         path: routeLinks?.superAdmin?.doctors,
         element: <AdminDoctors />,
+      },
+         {
+        path: routeLinks?.superAdmin?.doctorsStats,
+        element: <AdminDoctorsStats />,
+      },
+          {
+        path: routeLinks?.superAdmin?.doctorsSpecialties,
+        element: <AdminDoctorsSpecialties />,
       },
       {
         path: routeLinks?.superAdmin?.doctorDetails,

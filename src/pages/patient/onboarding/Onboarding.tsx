@@ -25,6 +25,8 @@ const initialData = {
   state: "",
   country: "",
   zipCode: "",
+  tribe:"",
+  stateOfOrigin: "",
 };
 
 function Onboarding() {

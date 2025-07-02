@@ -5,6 +5,7 @@ import userSlice from "./userSlice";
 import orderSlice from "./orderSlice";
 import cartSlice from './cartSlice';
 import adminSlice from "./adminSlice";
+import patientSlice from './patientSlice';
 import inventorySlice from "./InventorySlice";
 import diagnosisSlice from "./DiagnosisSlice";
 import superAdminSlice from "./superAdminSlice"
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   users: userSlice, 
   admin: adminSlice,
   orders: orderSlice,
+  patients:patientSlice,
   diagnosis: diagnosisSlice,
   inventory:inventorySlice,
   superAdmin: superAdminSlice,

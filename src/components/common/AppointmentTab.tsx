@@ -57,7 +57,7 @@ const AppointmentTab = ({
   const now = new Date();
 
   const upcomingAppointments = transformedAppointments.filter(
-    (app) => new Date(app.scheduledDate) > now
+    (app) => new Date(app.scheduledDate) > now && app.status?.toLowerCase() !== "completed"
   );
 
   const pastAppointments = transformedAppointments.filter(

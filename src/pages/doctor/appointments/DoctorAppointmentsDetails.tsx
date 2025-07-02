@@ -18,8 +18,13 @@ function DoctorAppointmentsDetails() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
   
-    useEffect(() => {
-      const fetchAppointment = async () => {
+    useEffect(() => {  
+      fetchAppointment();
+      if (prescription) {
+        setStep("PrescriptionDetails");
+      }
+    }, [id]);
+          const fetchAppointment = async () => {
         try {
           const data = await doctorApi.getAppointmentsById(id);
           if (data) {
@@ -33,13 +38,6 @@ function DoctorAppointmentsDetails() {
           setLoading(false);
         }
       };
-  
-      fetchAppointment();
-      if (prescription) {
-        setStep("PrescriptionDetails");
-      }
-    }, [id]);
-
     
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
@@ -47,7 +45,7 @@ function DoctorAppointmentsDetails() {
   
   return <div className="container-bd">
      {step === "AppointmentDetails" && (
-      <AppointmentDetails appointment={appointment} handleNext={(e)=>{handleNext(e)}}/>
+      <AppointmentDetails fetchAppointment={() => fetchAppointment()} appointment={appointment} handleNext={(e)=>{handleNext(e)}}/>
      )}
 
       {step === "DiagnosisDetails" && (

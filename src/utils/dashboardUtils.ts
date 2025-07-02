@@ -14,7 +14,7 @@ import { TfiTimer } from "react-icons/tfi";
 import { GrTest } from "react-icons/gr";
 import { GiTestTubes } from "react-icons/gi";
 import routeLinks from "./routes";
-import { HiMiniUsers } from "react-icons/hi2";
+import { HiMiniUsers, HiUsers } from "react-icons/hi2";
 import { RxDashboard } from "react-icons/rx";
 import { CiViewList } from "react-icons/ci";
 import { ImLab } from "react-icons/im";
@@ -160,16 +160,51 @@ export const navItemsDoctor = [
     label: "Patients",
     title: "Patients",
     icon: FaUserInjured,
-    to: routeLinks?.doctor?.patients,
+    to: "",
     subLinks: [
+      {
+        label: "My Patients",
+        title: "My Patients",
+        icon: FaUserInjured,
+        to: routeLinks?.doctor?.patients,
+      },
+      {
+        label: "All Patients",
+        title: "All Patients",
+        icon: FaUserInjured,
+        to: routeLinks?.doctor?.allPatients,
+      },
+      {
+        label: "Patients",
+        title: "Patients / Patients Details",
+        icon: HiUsers,
+        visible: false,
+        to: routeLinks?.doctor?.allPatientsDetails,
+      },
       {
         label: "Patients",
         title: "Patients / Patients Details",
         icon: FaUserInjured,
+        visible: false,
         to: routeLinks?.doctor?.patientView,
       },
     ],
   },
+
+  //   {
+  //   label: "All Patients",
+  //   title: "All Patients",
+  //   icon: HiUsers,
+  //   to: routeLinks?.doctor?.allPatients,
+  //   subLinks: [
+  //     {
+  //       label: "Patients",
+  //       title: "Patients / Patients Details",
+  //       icon: HiUsers,
+  //       to: routeLinks?.doctor?.allPatientsDetails,
+  //     },
+  //   ],
+  // },
   {
     label: "Profile Management",
     title: "Profile Management",
@@ -246,7 +281,27 @@ export const navItemsAdmin = [
     label: "Doctors",
     title: "Doctors",
     icon: FaUserDoctor,
-    to: routeLinks?.admin?.doctors,
+    to: "",
+        subLinks: [
+      {
+        label: "Doctors",
+        title: "Doctors",
+        icon: FaUserDoctor,
+        to: routeLinks?.admin?.doctors,
+      },
+      {
+        label: "Doctors Stats",
+        title: "Doctors Stats",
+        icon: FaUserDoctor,
+        to: routeLinks?.admin?.doctorsStats,
+      },
+        {
+        label: "Doctors Specialties",
+        title: "Doctors Specialties",
+        icon: FaUserDoctor,
+        to: routeLinks?.admin?.doctorsSpecialties,
+      },
+    ],
   },
   {
     label: "Laboratories",
@@ -387,7 +442,27 @@ export const navItemsSuperAdmin = [
     label: "Doctors",
     title: "Doctors",
     icon: FaUserDoctor,
-    to: routeLinks?.superAdmin?.doctors,
+    to: "",
+        subLinks: [
+      {
+        label: "Doctors",
+        title: "Doctors",
+        icon: FaUserDoctor,
+        to: routeLinks?.superAdmin?.doctors,
+      },
+      {
+        label: "Doctors Stats",
+        title: "Doctors Stats",
+        icon: FaUserDoctor,
+        to: routeLinks?.superAdmin?.doctorsStats,
+      },
+        {
+        label: "Doctors Specialties",
+        title: "Doctors Specialties",
+        icon: FaUserDoctor,
+        to: routeLinks?.superAdmin?.doctorsSpecialties,
+      },
+    ],
   },
   {
     label: "Laboratories",
@@ -712,7 +787,8 @@ export const getAge = (dateOfBirth?: string | null): number | null => {
   // Check if birthday has occurred yet this year
   const hasHadBirthdayThisYear =
     today.getMonth() > birthDate.getMonth() ||
-    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+    (today.getMonth() === birthDate.getMonth() &&
+      today.getDate() >= birthDate.getDate());
 
   if (!hasHadBirthdayThisYear) {
     age--;
@@ -720,7 +796,6 @@ export const getAge = (dateOfBirth?: string | null): number | null => {
 
   return age;
 };
-
 
 export const returnPartnerNavigationUrlLogic = (
   partnerType: string,

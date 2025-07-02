@@ -4,7 +4,6 @@ import PatientApi from "../../../../../api/PatientApi";
 import DoctorCard from "../../../../../components/common/DoctorCard";
 import DoctorIcon from "../../../../../assets/images/doctor/doctor.png";
 import PaginationComponent from "../../../../../components/common/PaginationComponent";
-import { adminDoctorSpecialties } from "../../../../../utils/dashboardUtils";
 import { FiSearch } from "react-icons/fi";
 import { HiOutlineFilter } from "react-icons/hi";
 import { useToaster } from "../../../../../components/common/ToasterContext";
@@ -36,7 +35,10 @@ interface BookingDoctorListProps {
   data: any;
   prevStep: () => void;
 }
-
+interface Specialty {
+  specialty: string;
+  doctorCount: number;
+}
 const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
   nextStep,
   setData,
@@ -84,6 +86,19 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
 
     fetchDoctors();
   }, [page, limit, search, specialty]);
+  const [specialties, setSpecialties] = useState<Specialty[]>([]);
+
+  useEffect(() => {
+    const fetchSpecialties = async () => {
+      try {
+        const response = await PatientApi.getDoctorsSpecialties();
+        setSpecialties(response);
+      } catch (error) {
+        console.error("Failed to fetch specialties", error);
+      }
+    };
+    fetchSpecialties();
+  }, []);
 
   useEffect(()=>{
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -178,152 +193,103 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
     <div>
       {!selectedDoctor ? (
         <section className="mt-4">
+      <button onClick={prevStep} className="text-primary cursor-pointer">← Back</button>
+      <h5 className="mb-4 text-lg font-semibold">Available Doctors</h5>
 
-         <button
-              onClick={prevStep}
-              className="text-primary cursor-pointer"
-            >
-             ← Back
-            </button>
-          <h5 className="mb-4 text-lg">Available Doctors</h5>
+      {data?.type === "A Specialist" && (
+        <div className="flex flex-col md:flex-row-reverse md:items-center md:justify-between gap-4 mb-4">
+          <div className="relative w-full md:w-1/2">
+            <FiSearch className="absolute left-3 top-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search by name..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+              className="border border-gray-300 rounded-md px-10 py-3 w-full focus:outline-primary"
+            />
+          </div>
 
-          {/* Search and Filter Controls */}
-          {data?.type === "A Specialist" && (
-            <div className="flex flex-col md:flex-row-reverse md:items-center md:justify-between gap-4 mb-4">
-              <div className="relative w-full md:w-1/2">
-                <FiSearch className="absolute left-3 top-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search by name..."
-                  value={search}
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                    setPage(1);
-                  }}
-                  className="border border-gray-300 rounded-md px-10 py-3 w-full focus:outline-primary"
-                />
-              </div>
+          <button
+            onClick={() => setShowSpecialtyList(!showSpecialtyList)}
+            className="md:hidden flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-md"
+          >
+            <HiOutlineFilter /> Filter Specialties
+          </button>
+        </div>
+      )}
 
-              <button
-                onClick={() => setShowSpecialtyList(!showSpecialtyList)}
-                className="md:hidden flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-md"
-              >
-                <HiOutlineFilter /> Filter Specialties
-              </button>
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* Specialties Sidebar */}
-            {data?.type === "A Specialist" && (
-              <div
-                className={`${
-                  showSpecialtyList ? "block" : "hidden"
-                } md:block flex-col gap-4 mb-4`}
-              >
-                <div className="flex flex-col gap-2 w-full items-start">
-                  <div className="w-full p-4  rounded-md bg-gray-100 md:bg-white">
-                    <h5 className="text-xl font-bold">Specialties</h5>
-                  </div>
-
-                  <div
-                    className={`w-full p-2 hover:bg-primary rounded-md hover:text-white cursor-pointer ${
-                      specialty === "" && "bg-primary text-white"
-                    }`}
-                    onClick={() => handleSpecialtySelect("")}
-                  >
-                    <h1 className="mx-2">All</h1>
-                  </div>
-
-                  {adminDoctorSpecialties.map((spec) => (
-                    <div
-                      key={spec}
-                      className={`w-full p-2 hover:bg-primary rounded-md hover:text-white cursor-pointer ${
-                        specialty.toLowerCase() === spec.toLowerCase() &&
-                        "bg-primary text-white"
-                      }`}
-                      onClick={() => handleSpecialtySelect(spec)}
-                    >
-                      <h1 className="mx-2">{spec}</h1>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Doctors Grid */}
-            <div
-              className={`${
-                data?.type === "A Specialist"
-                  ? "md:col-span-3"
-                  : "md:col-span-4"
-              }`}
-            >
-              {loading ? (
-                <div
-                  className={`grid grid-cols-1 md:grid-cols-3 ${
-                    data?.type === "A Specialist"
-                      ? "lg:grid-cols-3 mt-8"
-                      : "lg:grid-cols-4"
-                  } gap-6 mt-4`}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        {data?.type === "A Specialist" && (
+          <aside className={`${showSpecialtyList ? "block" : "hidden"} md:block`}>
+            <div className="bg-white rounded-md p-4 shadow-sm border border-gray-200">
+              <h5 className="text-xl font-semibold mb-3">Specialties</h5>
+              <ul className="space-y-2">
+                <li
+                  onClick={() => handleSpecialtySelect("")}
+                  className={`cursor-pointer px-4 py-2 rounded-md ${specialty === "" ? "bg-primary text-white" : "hover:bg-primary hover:text-white"}`}
                 >
-                  {[1, 2, 3, 4].map((_, index) => (
-                    <div
-                      key={index}
-                      className="p-6 bg-white rounded-xl shadow-sm animate-pulse space-y-4"
-                    >
-                      <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto" />
-                      <div className="h-4 bg-gray-100 rounded w-3/4 mx-auto" />
-                      <div className="h-3 bg-gray-100 rounded w-1/2 mx-auto" />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div>
-                  <div
-                    className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 ${
-                      data?.type === "A Specialist"
-                        ? "lg:grid-cols-3 mt-8"
-                        : "lg:grid-cols-4"
-                    } gap-6`}
+                  All
+                </li>
+                {specialties.map(({ specialty: name, doctorCount }) => (
+                  <li
+                    key={name}
+                    onClick={() => handleSpecialtySelect(name)}
+                    className={`cursor-pointer flex justify-between items-center px-4 py-2 rounded-md ${specialty.toLowerCase() === name.toLowerCase() ? "bg-primary text-white" : "hover:bg-primary hover:text-white"}`}
                   >
-                    {doctors.length === 0 ? (
-                      <div
-                        className={`h-[500px] flex flex-col items-center justify-center ${
-                          data?.type === "A Specialist"
-                            ? "lg:col-span-3 mt-8"
-                            : "lg:col-span-4"
-                        }`}
-                      >
-                        <p>No Available doctor</p>
-                      </div>
-                    ) : (
-                      doctors.map((doctor) => (
-                        <DoctorCard
-                          key={doctor.id}
-                          doctor={doctor}
-                          handleClick={() => {
-                            handleDoctorSelect(doctor);
-                          }}
-                        />
-                      ))
-                    )}
-                  </div>
+                    <span>{name}</span>
+                    <span className="text-sm bg-white text-primary font-semibold rounded-full px-2 py-0.5 border border-primary">
+                      {doctorCount}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        )}
 
-                  {totalPages > 1 && (
-                    <PaginationComponent
-                      page={page}
-                      total={total}
-                      limit={limit}
-                      totalPages={totalPages}
-                      onPageChange={(newPage: number) => setPage(newPage)}
-                    />
-                  )}
+        {/* Doctors Display */}
+        <div className={`${data?.type === "A Specialist" ? "md:col-span-3" : "md:col-span-4"}`}>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="p-6 bg-white rounded-xl shadow-sm animate-pulse space-y-4">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto" />
+                  <div className="h-4 bg-gray-100 rounded w-3/4 mx-auto" />
+                  <div className="h-3 bg-gray-100 rounded w-1/2 mx-auto" />
                 </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {doctors.length === 0 ? (
+                  <div className="h-[300px] flex flex-col items-center justify-center col-span-full">
+                    <p>No available doctor</p>
+                  </div>
+                ) : (
+                  doctors.map((doctor: Doctor) => (
+                    <DoctorCard key={doctor.id} doctor={doctor} handleClick={() => handleDoctorSelect(doctor)} />
+                  ))
+                )}
+              </div>
+
+              {totalPages > 1 && (
+                <PaginationComponent
+                  page={page}
+                  total={total}
+                  limit={limit}
+                  totalPages={totalPages}
+                  onPageChange={(newPage: number) => setPage(newPage)}
+                />
               )}
             </div>
-          </div>
-        </section>
+          )}
+        </div>
+      </div>
+    </section>
       ) : (
         <main className="mt-4 max-w-2xl mx-auto">
           <section className="flex flex-row items-center justify-between mb-4">

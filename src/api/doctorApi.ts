@@ -180,9 +180,37 @@ const DoctorApi = {
     const response = await api.get(`/doctor/appointments/patients${query}`);
     return response.data;
   },
-
-    getUsersById: async (id: any) => {
+    getUserById: async (id: any) => {
     const response = await api.get(`/doctor/appointments/patients/${id}`);
+    return response.data;
+  },
+
+      getPatients: async (query: any) => {
+    const response = await api.get(`/doctor/patients${query}`);
+    return response.data;
+  },
+
+    getPatientsCompleteProfileById: async (id: any) => {
+    const response = await api.get(`/doctor/patients/${id}/complete-profile`);
+    return response.data;
+  },
+
+      getPatientsAppointmentById: async (id: any) => {
+    const response = await api.get(`/doctor/patients/${id}/appointments`);
+    return response.data;
+  },
+      getPatientsPrescriptionById: async (id: any) => {
+    const response = await api.get(`/doctor/patients/${id}/prescriptions`);
+    return response.data;
+  },
+
+        getPatientsDiagnosesById: async (id: any) => {
+    const response = await api.get(`/doctor/patients/${id}/diagnoses`);
+    return response.data;
+  },
+
+          getPatientsAttendingDoctorById: async (id: any) => {
+    const response = await api.get(`/doctor/patients/${id}/attending-doctors`);
     return response.data;
   },
 }

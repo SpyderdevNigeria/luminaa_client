@@ -90,13 +90,13 @@ const DiagnosisForm = ({
 const fields = [
   {
     name: "primaryDiagnosis",
-    label: "Primary Diagnosis",
+    label: "Reason for the Appointment",
     type: "text",
     required: true,
   },
   {
     name: "symptoms",
-    label: "Symptoms",
+    label: "Patient Symptoms",
     type: "text",
     required: true,
   },
@@ -118,20 +118,20 @@ const fields = [
       { value: "severe", label: "Severe" },
     ],
   },
-  {
-    name: "diagnosisCode",
-    label: "Diagnosis Code",
-    type: "text",
-    optional: true,
-  },
-  {
-    name: "isConfirmed",
-    label: "Confirmed Diagnosis",
-    type: "checkbox",
-  },
+  // {
+  //   name: "diagnosisCode",
+  //   label: "Diagnosis Code",
+  //   type: "text",
+  //   optional: true,
+  // },
+  // {
+  //   name: "isConfirmed",
+  //   label: "Confirmed Diagnosis",
+  //   type: "checkbox",
+  // },
   {
     name: "additionalRecommendations",
-    label: "Additional Recommendations",
+    label: " Examination Findings",
     type: "textarea",
 
   },
@@ -150,6 +150,7 @@ const fields = [
       className={
         field.name === "notes" ||
         field.name === "symptoms" ||
+        field.name === "severity" ||
         field.name === "primaryDiagnosis" ||
         field.name === "additionalRecommendations"
           ? "col-span-2"
@@ -163,7 +164,7 @@ const fields = [
         onChange={handleChange}
         type={field.type as any}
         required={field.required}
-        options={field.options}
+        // options={field.options}
       />
     </div>
   ))}

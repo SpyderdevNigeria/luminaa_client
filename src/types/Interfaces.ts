@@ -102,6 +102,9 @@ export interface IPatient {
   updatedAt: string; 
   totalAppointments: number;
   lastAppointmentDate: string; 
+  activePrescriptions: number,
+  attendingDoctors: IDoctor[],
+  totalDoctors: number,
   profilePicture: {
     url:string;
   };

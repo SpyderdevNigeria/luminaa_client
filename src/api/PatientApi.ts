@@ -36,6 +36,12 @@ const PatientApi = {
     const response = await api.get(`/patient/doctors${query}`);
     return response.data;
   },
+
+    getDoctorsSpecialties: async () => {
+  const response = await api.get("/patient/doctors/specialties/available");
+  return response.data.data;
+},
+
       getDoctorById: async (id: any) => {
     const response = await api.get(`/patient/doctors/${id}`);
     return response.data;

@@ -1,14 +1,16 @@
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import DoctorApi from "../../../api/doctorApi";
-import PatientInformation from "./components/PatientInformation";
-import MedicalHistory from "./components/PatientMedicalHistory";
-import AppointmentHistory from "./components/PatientAppointmentHistory";
-import PatientPrescription from "./components/PatientPrescription";
-import PatientDiagnosis from "./components/PatientDiagnosis";
+// import AppointmentHistory from "./components/PatientAppointmentHistory";
+// import PatientPrescription from "./components/PatientPrescription";
+// import PatientDiagnosis from "./components/PatientDiagnosis";
 import { IPatient } from "../../../types/Interfaces";
 import UserImage from "../../../assets/images/patient/user.png"
+import { PiNotepadDuotone } from "react-icons/pi";
+import routeLinks from "../../../utils/routes";
+import PatientInformation from "../../../components/common/patientDetailsComponent/PatientInformation";
+import MedicalHistory from "../../../components/common/patientDetailsComponent/PatientMedicalHistory";
 function DoctorPatientsDetails() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("Patient Information");
@@ -19,7 +21,7 @@ function DoctorPatientsDetails() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await DoctorApi.getUsersById(id);
+        const response = await DoctorApi.getUserById(id);
         setUser(response?.data);
       } catch (error) {
         console.error("Failed to fetch user", error);
@@ -39,21 +41,21 @@ function DoctorPatientsDetails() {
       label: "Premobid Condition",
       component: user ? <MedicalHistory user={user} /> : null,
     },
-    {
-      label: "Appointment History",
-      component: <AppointmentHistory />,
-    },
-    {
-      label: "Prescriptions",
-      component: <PatientPrescription  />,
-    },
-    {
-      label: "Diagnosis",
-      component: <PatientDiagnosis />,
-    },
+    // {
+    //   label: "Appointment History",
+    //   component: <AppointmentHistory />,
+    // },
+    // {
+    //   label: "Prescriptions",
+    //   component: <PatientPrescription  />,
+    // },
+    // {
+    //   label: "Diagnosis",
+    //   component: <PatientDiagnosis />,
+    // },
   ];
   if (loading) return <p className="p-4">Loading patient details...</p>;
-
+  if (!user) return <p className="p-4">Patient not found.</p>;
   return (
     <div>
       {/* Patient Info */}
@@ -76,9 +78,9 @@ function DoctorPatientsDetails() {
               </h4>
             </div>
           </div>
-          {/* <button className="px-8 py-2 rounded-sm bg-primary text-white text-xs 2xl:text-base flex items-center gap-2">
-            <PiNotepadDuotone /> Book an appointment
-          </button> */}
+          <Link to={routeLinks?.doctor?.allPatients + '/' + id} className="px-8 py-2 rounded-sm bg-primary text-white text-xs 2xl:text-base flex items-center gap-2">
+            <PiNotepadDuotone /> View More Details
+          </Link>
         </div>
       </main>
 

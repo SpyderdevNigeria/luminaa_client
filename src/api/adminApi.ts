@@ -69,6 +69,14 @@ const AdminApi = {
     const response = await api.patch(`/admin/doctors`, body);
     return response.data;
   },
+  getDoctorsStats: async () => {
+  const response = await api.get("/admin/doctors/stats");
+  return response.data.data;
+},
+  getDoctorsSpecialties: async () => {
+  const response = await api.get("/admin/doctors/specialties/available");
+  return response.data.data;
+},
 
   getLabs: async (query: any) => {
     const response = await api.get(`/admin/lab-techs${query}`);

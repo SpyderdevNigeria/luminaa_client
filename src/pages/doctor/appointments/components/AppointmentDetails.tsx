@@ -20,11 +20,13 @@ import { useToaster } from "../../../../components/common/ToasterContext";
 interface DoctorAppointmentsViewProps {
   handleNext: (e: string) => void;
   appointment: any;
+  fetchAppointment: () => void;
 }
 
 function DoctorAppointmentsView({
   handleNext,
   appointment,
+  fetchAppointment,
 }: DoctorAppointmentsViewProps) {
   const { patient, scheduledDate, status, patientNote, location, id } =
     appointment;
@@ -46,6 +48,7 @@ function DoctorAppointmentsView({
       setConfirmOpen(false);
       setStartLoading(false);
       showToast("Finished consultation", "success");
+      fetchAppointment(); // Refresh appointment data
       // Optional: redirect or update view
     } catch (error:any) {
       console.error("Failed to finish consultation", error);

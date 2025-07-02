@@ -1,11 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DashboardCard from "../../../components/common/DashboardCard";
-import useAdmin from "../../../hooks/useAdmin"; 
 import AdminApi from "../../../api/adminApi";
-
-type Patient = {
-  role?: string;
-};
+import useAdmin from "../../../hooks/useAdmin";
 
 function AdminDashboard() {
   const {
@@ -13,40 +9,34 @@ function AdminDashboard() {
     getDoctors,
     getLabs,
     getPharmacists,
+    patientsTotal,
     doctorsTotal,
     labsTotal,
     pharmacistsTotal,
-    pharmacistsLoading,
     patientsLoading,
     doctorsLoading,
     labsLoading,
-    patientsTotal,
-  } = useAdmin(AdminApi) as {
-    getPatients: () => void;
-    getDoctors: () => void;
-    getLabs: () => void;
-    getPharmacists: () => void;
-    patientsTotal: number;
-    doctorsTotal: number;
-    labsTotal: number;
-    pharmacistsTotal: number;
-    pharmacistsLoading: boolean;
-    patientsLoading: boolean;
-    doctorsLoading: boolean;
-    labsLoading: boolean;
-    patients: Patient[];
-  };
+    pharmacistsLoading,
+  } = useAdmin(AdminApi);
+
+  const [doctorSpecialties, setDoctorSpecialties] = useState<any[]>([]);
+  const [patientStats, setPatientStats] = useState<any>(null);
+  const [medicationsTotal, setMedicationsTotal] = useState(0);
 
   useEffect(() => {
     getPatients();
     getDoctors();
     getLabs();
     getPharmacists();
+
+    AdminApi.getDoctorsStats().then(setDoctorSpecialties).catch(console.error);
+    AdminApi.getPatientStats().then(setPatientStats).catch(console.error);
+    AdminApi.getMedications("").then((res) => setMedicationsTotal(res?.data?.total)).catch(console.error);
   }, []);
 
-
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
+      {/* 👇 Original Section (Don’t touch) */}
       <section className="flex flex-col gap-4">
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <DashboardCard title="Patients" count={patientsLoading ? 0 : patientsTotal} />
@@ -55,6 +45,58 @@ function AdminDashboard() {
           <DashboardCard title="Pharmacy" count={pharmacistsLoading ? 0 : pharmacistsTotal} />
         </div>
       </section>
+
+      {/* 👇 Additional Stats Section (New Design) */}
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Medication Count */}
+        <div className="bg-white rounded-xl p-5 shadow-md">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">Total Medications</h3>
+          <p className="text-3xl font-bold text-primary">{medicationsTotal}</p>
+        </div>
+
+        {/* Inventory Summary */}
+        {/* {inventorySummary && (
+          <div className="bg-white rounded-xl p-5 shadow-md space-y-2">
+            <h3 className="text-lg font-semibold text-gray-800">Inventory Summary</h3>
+            <div className="text-sm text-gray-700">
+              <p>Total Items: <span className="font-bold">{inventorySummary.totalItems}</span></p>
+              <p>In Stock: <span className="font-bold">{inventorySummary.inStockCount}</span></p>
+              <p>Out of Stock: <span className="font-bold">{inventorySummary.outOfStockCount}</span></p>
+              <p>Total Value (₦): <span className="font-bold">{Math.round(inventorySummary.totalValue)}</span></p>
+            </div>
+          </div>
+        )} */}
+
+        {/* Patient Stats */}
+        {patientStats && (
+          <div className="bg-white rounded-xl p-5 shadow-md space-y-2">
+            <h3 className="text-lg font-semibold text-gray-800">Patient Stats</h3>
+            <div className="text-sm text-gray-700">
+              <p>Active Patients: <span className="font-bold">{patientStats.activePatients}</span></p>
+              <p>Bio Data Completed: <span className="font-bold">{patientStats.bioDataCompleted}</span></p>
+              <p>Medical History Completed: <span className="font-bold">{patientStats.medicalHistoryCompleted}</span></p>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* 👇 Doctors by Specialty Section */}
+      {doctorSpecialties?.length > 0 && (
+        <section className="bg-white rounded-xl p-6 shadow-md">
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Doctors by Specialty</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {doctorSpecialties.map((spec) => (
+              <div
+                key={spec.specialty}
+                className="p-4 border rounded-lg bg-gray-50 text-center shadow-sm"
+              >
+                <p className="text-sm font-medium text-gray-600">{spec.specialty}</p>
+                <p className="text-xl font-bold text-primary">{spec.doctorCount}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

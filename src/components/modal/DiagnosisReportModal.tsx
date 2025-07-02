@@ -68,21 +68,21 @@ function MedicalReportModal({
         <main className="min-h-[200px] flex flex-col gap-4 py-4">
           <div className="space-y-1">
             <h4 className="text-sm text-text-secondary font-[300]">
-              Diagnosis
+             Reason for the Appointment
             </h4>
             <h3 className="text-sm text-text-primary">
               {diagnosis?.primaryDiagnosis}
             </h3>
           </div>
 
-          <div className="space-y-1">
+          {/* <div className="space-y-1">
             <h4 className="text-sm text-text-secondary font-[300]">
               Diagnosis Code
             </h4>
             <h3 className="text-sm text-text-primary">
               {diagnosis?.diagnosisCode}
             </h3>
-          </div>
+          </div> */}
 
           <div className="space-y-1">
             <h4 className="text-sm text-text-secondary font-[300]">Severity</h4>
@@ -116,7 +116,7 @@ function MedicalReportModal({
 
           <div className="space-y-1">
             <h4 className="text-sm text-text-secondary font-[300]">
-              Additional Recommendations
+             Examination Findings 
             </h4>
             <h3 className="text-sm text-text-primary">
               {diagnosis?.additionalRecommendations || "None"}

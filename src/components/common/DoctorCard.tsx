@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DoctorIcon from "../../assets/images/doctor/doctor.png";
-import {   FaCalendarAlt } from "react-icons/fa";
+import { FaCalendarAlt } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
 import Modal from "../modal/modal";
 import { useToaster } from "./ToasterContext";
@@ -22,8 +22,7 @@ interface Doctor {
           endTime: string;
           dayOfWeek: string;
           startTime: string;
-        }[]
-      | null;
+        }[] | null;
   } | null;
 }
 
@@ -35,15 +34,15 @@ interface DoctorCardProps {
 const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
   const [showAvailability, setShowAvailability] = useState(false);
   const { showToast } = useToaster();
+
   const fullName = `Dr. ${doctor.user.firstName} ${doctor.user.lastName}`;
   const imageUrl = doctor.user.profilePicture?.url || DoctorIcon;
 
   return (
     <>
-      <div className="bg-white p-4 rounded-xl shadow-md relative hover:shadow-lg transition cursor-pointer">
-
-        {/* Image */}
-        <div className="w-24 h-24 mx-auto rounded-full overflow-hidden  shadow-md">
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-all p-4 flex flex-col items-center">
+        {/* Profile Picture */}
+        <div className="w-20 h-20 rounded-full overflow-hidden shadow-md mb-3">
           <img
             src={imageUrl}
             alt={fullName}
@@ -51,43 +50,40 @@ const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
           />
         </div>
 
-        {/* Name & Specialty */}
-        <div className="text-center mt-3">
-          <h3 className="text-base font-semibold">{fullName}</h3>
+        {/* Name and Specialty */}
+        <h3 className="text-center text-base font-semibold text-gray-800">
+          {fullName}
+        </h3>
+        <span className="mt-1 text-sm text-gray-500">{doctor.specialty}</span>
 
-          <div className="mt-2">
-            <p className="text-xs text-gray-500">specialty</p>
-            <span className="inline-block text-primary text-base font-medium px-3 py-1 rounded-full">
-              {doctor.specialty}
-            </span>
+        {/* Actions */}
+        <div className="flex items-center gap-2 mt-4 w-full">
+          {/* Availability Button */}
+          <div className="relative group">
+            <button
+              onClick={() => setShowAvailability(true)}
+              className="p-2 rounded-md border border-primary text-primary hover:bg-primary hover:text-white transition"
+            >
+              <FaCalendarAlt className="text-sm" />
+            </button>
+            <div className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+              View Availability
+            </div>
           </div>
-        </div>
 
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2 mt-1 border-gray-50  pt-3">
-         <div className="relative group inline-block">
-  <button
-    onClick={() => setShowAvailability(true)}
-    className="text-primary border border-primary p-2 rounded-md"
-  >
-    <FaCalendarAlt className="text-sm" />
-  </button>
-
-  {/* Tooltip */}
-  <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 whitespace-nowrap">
-    View Availability
-  </div>
-</div>
-
+          {/* Book Button */}
           <button
             onClick={() => {
-              doctor?.availability?.data && doctor.availability.data.length > 0 ?
-              handleClick?.()
-              : showToast("Sorry this doctor is currently unavailable", "error");
+              doctor?.availability?.data?.length
+                ? handleClick?.()
+                : showToast(
+                    "Sorry, this doctor is currently unavailable",
+                    "error"
+                  );
             }}
-            className="flex-1 w-full text-xs flex items-center justify-center gap-1 bg-primary text-white rounded-md py-2"
+            className="flex-1 flex items-center justify-center gap-2 bg-primary text-white rounded-md py-2 text-sm hover:bg-primary/90 transition"
           >
-            <FaBookmark className="text-sm" /> Book An Appointment
+            <FaBookmark className="text-sm" /> Book Appointment
           </button>
         </div>
       </div>
@@ -99,12 +95,12 @@ const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
           onClose={() => setShowAvailability(false)}
           title={`${fullName}'s Availability`}
         >
-          <div className="space-y-3 my-8">
+          <div className="space-y-3 my-6">
             {doctor?.availability?.data?.length ? (
               doctor.availability.data.map((slot, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-2 bg-gray-100 rounded-md text-sm"
+                  className="flex items-center justify-between px-4 py-2 bg-gray-100 rounded text-sm"
                 >
                   <span className="capitalize font-medium">
                     {slot.dayOfWeek}
@@ -118,7 +114,7 @@ const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
               ))
             ) : (
               <p className="text-center text-gray-500 text-sm">
-               No availability info provided.
+                No availability info provided.
               </p>
             )}
           </div>
