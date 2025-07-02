@@ -11,6 +11,7 @@ export interface CommonFormFieldProps {
   label: string;
   value: any;
   required?: boolean;
+  max?: string; 
   options?: SelectOption[]; // updated to support value-label pairs
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -22,6 +23,7 @@ const CommonFormField: React.FC<CommonFormFieldProps> = ({
   name,
   label,
   value,
+  max,
   required = false,
   options = [],
   onChange,
@@ -82,6 +84,7 @@ const CommonFormField: React.FC<CommonFormFieldProps> = ({
           value={value}
           onChange={onChange}
           required={required}
+          max={type === "date" ? max : undefined} // only apply max for date typ
           className="form-input border-gray-300 focus:outline-primary text-gray-light w-full"
         />
       )}

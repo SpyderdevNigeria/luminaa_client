@@ -796,7 +796,19 @@ export const getAge = (dateOfBirth?: string | null): number | null => {
 
   return age;
 };
+// Helper to ensure user must be 18 years or older
+export const getMaxDateFor18YearsOld = () => {
+  const today = new Date();
+  today.setFullYear(today.getFullYear() - 18);
+  return today.toISOString().split("T")[0];
+};
 
+// Format the date safely to YYYY-MM-DD
+export const formatDate = (date: string | Date | null | undefined) => {
+  if (!date) return "";
+  const parsed = new Date(date);
+  return isNaN(parsed.getTime()) ? "" : parsed.toISOString().split("T")[0];
+};
 export const returnPartnerNavigationUrlLogic = (
   partnerType: string,
   partnerProfile: any

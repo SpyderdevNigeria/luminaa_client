@@ -84,6 +84,7 @@ const ProfilePage = () => {
     };
   };
 
+    
   return (
     <div>
       <h2 className="text-base md:text-lg font-[400] mb-2">
@@ -152,7 +153,7 @@ const ProfilePage = () => {
                     ["Last Name", user?.lastName || "—"],
                     ["Email", user?.email || "—"],
                     ["Phone Number", userProfile?.phoneNumber || "—"],
-                    ["Date of Birth", userProfile?.dateOfBirth || "—"],
+                    ["Date of Birth", userProfile?.dateOfBirth ? new Date(userProfile?.dateOfBirth).toLocaleDateString() : "—"],
                     ["Gender", userProfile?.gender || "—"],
                     ["Marital Status", userProfile?.maritalStatus || "—"],
                     ["Religion", userProfile?.religion || "—"],

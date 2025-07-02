@@ -4,6 +4,7 @@ import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import CommonFormField from "../../../../components/common/CommonFormField";
 import { useToaster } from "../../../../components/common/ToasterContext";
+import { formatDate, getMaxDateFor18YearsOld } from "../../../../utils/dashboardUtils";
 
 type Patient = {
   id: string;
@@ -129,9 +130,10 @@ const AdminPatientsCreate: React.FC<Props> = ({ patient = null, onBack, onClose 
               type={field.type || "text"}
               name={field.name}
               label={field.label}
-              value={formData[field.name] || ""}
+              value={field.name === "dateOfBirth" ? formatDate(formData[field.name]) : formData[field.name] || ""}
               required={field.required}
               onChange={handleChange}
+              max={field.name === "dateOfBirth" ? getMaxDateFor18YearsOld() : undefined}
               options={field.options?.map((opt) => ({ value: opt, label: opt })) || []}
             />
           ))}

@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDate, getMaxDateFor18YearsOld } from "../../../../utils/dashboardUtils";
 
 type BioDataProps = {
   submitform: (e: React.FormEvent) => void;
@@ -37,19 +38,7 @@ const states = [
   "Sokoto", "Taraba", "Yobe", "Zamfara", "FCT - Abuja"
 ];
 
-// Helper to ensure user must be 18 years or older
-const getMaxDateFor18YearsOld = () => {
-  const today = new Date();
-  today.setFullYear(today.getFullYear() - 18);
-  return today.toISOString().split("T")[0];
-};
 
-// Format the date safely to YYYY-MM-DD
-const formatDate = (date: string | Date | null | undefined) => {
-  if (!date) return "";
-  const parsed = new Date(date);
-  return isNaN(parsed.getTime()) ? "" : parsed.toISOString().split("T")[0];
-};
 
 function BioData({ submitform, handleChange, data }: BioDataProps) {
   return (
