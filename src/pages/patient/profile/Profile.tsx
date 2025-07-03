@@ -157,6 +157,7 @@ const ProfilePage = () => {
                     ["Gender", userProfile?.gender || "—"],
                     ["Marital Status", userProfile?.maritalStatus || "—"],
                     ["Religion", userProfile?.religion || "—"],
+                    ["State of Origin", userProfile?.stateOfOrigin || "-"],
                     [
                       "Emergency Contact Name",
                       userProfile?.emergencyContactName || "—",

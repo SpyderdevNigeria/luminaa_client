@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PatientApi from "../../../../api/PatientApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
+import { states } from "../../../../utils/dashboardUtils";
 
 type BioDataForm = {
   dateOfBirth: string;
@@ -10,6 +11,7 @@ type BioDataForm = {
   phoneNumber: string;
   emergencyContactName: string;
   emergencyContactPhone: string;
+  stateOfOrigin:string;
 };
 
 
@@ -29,6 +31,7 @@ function PersonalForm({ userProfile, updateUser, dispatch }: PersonalFormProps) 
     maritalStatus: userProfile?.maritalStatus || "",
     religion: userProfile?.religion || "",
     phoneNumber: userProfile?.phoneNumber || "",
+    stateOfOrigin : userProfile?.stateOfOrigin || "",
     emergencyContactName: userProfile?.emergencyContactName || "",
     emergencyContactPhone: userProfile?.emergencyContactPhone || "",
   };
@@ -155,7 +158,28 @@ function PersonalForm({ userProfile, updateUser, dispatch }: PersonalFormProps) 
               <option value="Other">Other</option>
             </select>
           </div>
-
+        {/* State of Origin */}
+        <div className="col-span-2">
+          <label htmlFor="stateOfOrigin" className="form-label text-primary">
+            State of Origin
+          </label>
+          <select
+            name="stateOfOrigin"
+            id="stateOfOrigin"
+            onChange={handleChange}
+            value={data.stateOfOrigin}
+            required
+            className="form-input focus:outline-primary border border-gray-light"
+          >
+            <option value="">Select state</option>
+            {states.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+          </select>
+        </div>
+        
           {/* Phone Number */}
           <div className="col-span-2">
             <label htmlFor="phoneNumber" className="form-label text-primary">

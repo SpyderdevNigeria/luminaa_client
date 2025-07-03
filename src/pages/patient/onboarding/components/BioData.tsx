@@ -1,5 +1,5 @@
 import React from "react";
-import { formatDate, getMaxDateFor18YearsOld } from "../../../../utils/dashboardUtils";
+import { formatDate, getMaxDateFor18YearsOld, states } from "../../../../utils/dashboardUtils";
 
 type BioDataProps = {
   submitform: (e: React.FormEvent) => void;
@@ -14,29 +14,10 @@ type BioDataProps = {
     phoneNumber: string;
     emergencyContactName: string;
     emergencyContactPhone: string;
-    tribe: string;
     stateOfOrigin: string;
   };
 };
 
-
-const tribes = [
-  "Hausa", "Yoruba", "Igbo", "Ijaw", "Kanuri", "Ibibio", "Tiv", "Fulani",
-  "Nupe", "Idoma", "Itsekiri", "Urhobo", "Efik", "Edo", "Berom", "Igala",
-  "Gbagyi", "Igbira", "Jukun", "Ebira", "Angas", "Bachama", "Bajju", "Bassa",
-  "Birom", "Bolewa", "Egbema", "Gade", "Goemai", "Hausa-Fulani", "Isoko",
-  "Kambari", "Kanikon", "Karekare", "Koro", "Marghi", "Ngas", "Nupoid", "Okpameri",
-  "Oro", "Shuwa", "Tangana", "Yagba", "Zarma"
-  // Add or remove as needed
-];
-
-const states = [
-  "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno",
-  "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "Gombe", "Imo",
-  "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos",
-  "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers",
-  "Sokoto", "Taraba", "Yobe", "Zamfara", "FCT - Abuja"
-];
 
 
 
@@ -127,27 +108,7 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
               <option value="Other">Other</option>
             </select>
           </div>
-     {/* Tribe */}
-<div className="col-span-2">
-  <label htmlFor="tribe" className="form-label text-primary">
-    Tribe
-  </label>
-  <select
-    name="tribe"
-    id="tribe"
-    onChange={handleChange}
-    value={data.tribe}
-    required
-    className="form-input focus:outline-primary border border-gray-light"
-  >
-    <option value="">Select tribe</option>
-    {tribes.map((tribe) => (
-      <option key={tribe} value={tribe}>
-        {tribe}
-      </option>
-    ))}
-  </select>
-</div>
+
 
 {/* State of Origin */}
 <div className="col-span-2">

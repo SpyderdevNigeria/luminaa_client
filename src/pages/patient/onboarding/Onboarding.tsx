@@ -25,7 +25,6 @@ const initialData = {
   state: "",
   country: "",
   zipCode: "",
-  tribe:"",
   stateOfOrigin: "",
 };
 
