@@ -7,9 +7,10 @@ interface AdminNavigateProps {
   role: "admin" | "doctor" | "patient" | "lab_tech" | "pharmacist" | "super_admin";
   id: string;
   children: ReactNode;
+  type?: string;
 }
 
-function AdminNavigate({ role, id, children }: AdminNavigateProps) {
+function AdminNavigate({ role, id, children, type }: AdminNavigateProps) {
   const navigate = useNavigate();
   const { userProfile } = useAdminAuth();
   let url: string | null = null;
@@ -22,7 +23,7 @@ function AdminNavigate({ role, id, children }: AdminNavigateProps) {
     } else if (role === "doctor") {
       url = `${routeLinks.superAdmin.doctors}/${id}`;
     } else if (role === "patient") {
-      url = `${routeLinks.superAdmin.patients}/${id}`;
+      url =  type === "true" ? `${routeLinks.superAdmin.patients}/${id}` : `${routeLinks.superAdmin.users}/${id}`;
     } else if (role === "lab_tech") {
       url = `${routeLinks.superAdmin.lab}/${id}`;
     } else if (role === "pharmacist") {
@@ -34,7 +35,7 @@ function AdminNavigate({ role, id, children }: AdminNavigateProps) {
     } else if (role === "doctor") {
       url = `${routeLinks.admin.doctors}/${id}`;
     } else if (role === "patient") {
-      url = `${routeLinks.admin.patients}/${id}`;
+      url = type === "true" ? `${routeLinks.admin.patients}/${id}` : `${routeLinks.admin.users}/${id}`;
     } else if (role === "lab_tech") {
       url = `${routeLinks.admin.lab}/${id}`;
     } else if (role === "pharmacist") {

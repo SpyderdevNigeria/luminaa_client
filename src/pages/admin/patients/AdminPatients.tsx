@@ -126,7 +126,7 @@ function AdminPatients() {
       render: (patient) => (
         <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
           <ul className="space-y-2 text-sm">
-            <AdminNavigate role={"patient"} id={patient?.id}>
+            <AdminNavigate role={"patient"} id={patient?.id} type="true">
               <FiEye /> View
             </AdminNavigate>
             <li

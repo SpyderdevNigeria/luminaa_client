@@ -9,6 +9,7 @@ type User = {
       firstName: string;
   lastName: string;
   email: string;
+  profilePicture:string;
   },
   role: string;
   isActive: boolean;
@@ -73,7 +74,10 @@ function AdminPatientDetails() {
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg p-6 space-y-8">
       <h2 className="text-2xl font-semibold mb-2">Patient Details</h2>
-
+      <section>
+        <h4 className="text-lg font-medium mb-2">Profile Image</h4>
+        <img src={user?.user?.profilePicture || ""} alt="" className="w-30 h-30 rounded-full object-cover" />
+      </section>
       {/* Account Info */}
       <section>
         <h4 className="text-lg font-medium mb-2">Account Information</h4>

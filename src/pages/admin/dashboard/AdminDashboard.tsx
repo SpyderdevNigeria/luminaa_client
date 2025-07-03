@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DashboardCard from "../../../components/common/DashboardCard";
 import AdminApi from "../../../api/adminApi";
 import useAdmin from "../../../hooks/useAdmin";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+// import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 function AdminDashboard() {
   const {
@@ -21,7 +21,7 @@ function AdminDashboard() {
   } = useAdmin(AdminApi);
 
   const [doctorSpecialties, setDoctorSpecialties] = useState<any[]>([]);
-  const [patientStats, setPatientStats] = useState<any>(null);
+  // const [patientStats, setPatientStats] = useState<any>(null);
   const [medicationsTotal, setMedicationsTotal] = useState(0);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function AdminDashboard() {
     getPharmacists();
 
     AdminApi.getDoctorsStats().then(setDoctorSpecialties).catch(console.error);
-    AdminApi.getPatientStats().then(setPatientStats).catch(console.error);
+    // AdminApi.getPatientStats().then(setPatientStats).catch(console.error);
     AdminApi.getMedications("")
       .then((res) => setMedicationsTotal(res?.data?.total))
       .catch(console.error);
@@ -79,7 +79,7 @@ function AdminDashboard() {
         )} */}
 
         {/* Patient Stats */}
-        {patientStats && (
+        {/* {patientStats && (
           <div className="bg-white rounded-xl p-5 shadow-md space-y-4">
             <h3 className="text-lg font-semibold text-gray-800">
               Patient Stats
@@ -131,7 +131,6 @@ function AdminDashboard() {
               </PieChart>
             </ResponsiveContainer>
 
-            {/* Legend below chart */}
             <div className="text-sm text-gray-700 space-y-1">
               <p>
                 <span className="inline-block w-3 h-3 mr-2 rounded-sm bg-[#3B82F6]"></span>{" "}
@@ -147,7 +146,7 @@ function AdminDashboard() {
               </p>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="bg-white rounded-xl p-5 shadow-md">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">
