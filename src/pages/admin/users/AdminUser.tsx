@@ -74,6 +74,14 @@ function AdminUser() {
         <StatusBadge status={user?.isActive ? "active" : "inactive"} />
       ),
     },
+
+        {
+      key: "isDisabled",
+      label: "Disabled",
+      render: (user) => (
+        <span>{user?.isDisabled ? "YES" : "NO"}</span>
+      ),
+    },
     {
       key: "lastLogin",
       label: "Last Login",

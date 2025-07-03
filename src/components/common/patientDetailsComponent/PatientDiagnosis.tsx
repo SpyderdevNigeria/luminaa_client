@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DoctorApi from "../../../api/doctorApi";
 import Table, { Column } from "../Table";
+
 import moment from "moment";
+import MedicalReportModal from "../../modal/DiagnosisReportModal";
 
 interface Diagnosis {
   id: string;
@@ -14,6 +16,7 @@ interface Diagnosis {
   isConfirmed: boolean;
   additionalRecommendations: string;
   diagnosisDate: string;
+  diagnosis?: string;
   diagnosingDoctor?: {
     name: string;
     specialization: string;
@@ -25,7 +28,8 @@ function PatientDiagnosis() {
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const [selectedDiagnosis, setSelectedDiagnosis] = useState<Diagnosis | null>(null);
+const [isModalOpen, setModalOpen] = useState(false);
   useEffect(() => {
     const fetchDiagnoses = async () => {
       try {
@@ -48,15 +52,20 @@ function PatientDiagnosis() {
       label: "ID",
       render: (item) => <span className="text-xs">#{item?.id?.slice(0, 8)}</span>,
     },
-    {
-      key: "primaryDiagnosis",
+        {
+      key: "diagnosis",
       label: "Diagnosis",
-      render: (item) => <span className="capitalize text-sm">{item?.primaryDiagnosis}</span>,
+      render: (item) => <span className="text-sm">{item?.diagnosis || "—"}</span>,
     },
     {
-      key: "severity",
-      label: "Severity",
-      render: (item) => <span className="capitalize text-sm">{item?.severity}</span>,
+      key: "primaryDiagnosis",
+      label: "Reason for the Appointment ",
+      render: (item) => <span className="capitalize text-sm">{item?.primaryDiagnosis}</span>,
+    },
+        {
+      key: "symptoms",
+      label: "Patient Symptoms",
+      render: (item) => <span className="capitalize text-sm">{item?.symptoms}</span>,
     },
     {
       key: "diagnosisDate",
@@ -69,15 +78,21 @@ function PatientDiagnosis() {
       render: (item) => <span className="text-sm">{item?.diagnosingDoctor?.name || "—"}</span>,
     },
     {
-      key: "notes",
-      label: "Doctor's Note",
-      render: (item) => <span className="text-sm">{item?.notes || "—"}</span>,
-    },
-    {
-      key: "additionalRecommendations",
-      label: "Recommendation",
-      render: (item) => <span className="text-sm">{item?.additionalRecommendations || "—"}</span>,
-    },
+  key: "action",
+  label: "Action",
+  render: (item) => (
+    <button
+      onClick={() => {
+        setSelectedDiagnosis(item);
+        setModalOpen(true);
+      }}
+      className="text-xs underline text-primary"
+    >
+      View
+    </button>
+  ),
+}
+
   ];
 
   return (
@@ -99,6 +114,15 @@ function PatientDiagnosis() {
           setPage={() => {}}
         />
       )}
+
+      {selectedDiagnosis && (
+  <MedicalReportModal
+    isModalOpen={isModalOpen}
+    setModalOpen={setModalOpen}
+    data={selectedDiagnosis}
+    type={'doctor'}
+  />
+)}
     </div>
   );
 }

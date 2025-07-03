@@ -12,6 +12,7 @@ type MedicalReportModalProps = {
   isModalOpen: boolean;
   setModalOpen: (e: any) => void;
   data: any;
+  type?:string;
 };
 const sectionTitle = {
   fontSize: "16px",
@@ -25,6 +26,7 @@ function MedicalReportModal({
   isModalOpen,
   setModalOpen,
   data,
+  type="patient"
 }: MedicalReportModalProps) {
   const diagnosis = data;
   const printRef = useRef<HTMLDivElement>(null);
@@ -63,7 +65,7 @@ function MedicalReportModal({
         hideCancel={false}
         style="!md:max-w-2xl !md:mx-4 !md:mx-0"
         buttonText="Download"
-        handleSubmit={handleDownloadPDF}
+        handleSubmit={ type === "patient" ? handleDownloadPDF : undefined}
       >
         <main className="min-h-[200px] flex flex-col gap-4 py-4">
           <div className="space-y-1">
@@ -75,19 +77,12 @@ function MedicalReportModal({
             </h3>
           </div>
 
-          {/* <div className="space-y-1">
+          <div className="space-y-1">
             <h4 className="text-sm text-text-secondary font-[300]">
-              Diagnosis Code
+             Patient Symptoms
             </h4>
             <h3 className="text-sm text-text-primary">
-              {diagnosis?.diagnosisCode}
-            </h3>
-          </div> */}
-
-          <div className="space-y-1">
-            <h4 className="text-sm text-text-secondary font-[300]">Severity</h4>
-            <h3 className="text-sm text-text-primary capitalize">
-              {diagnosis?.severity}
+              {diagnosis?.symptoms}
             </h3>
           </div>
 
@@ -122,8 +117,15 @@ function MedicalReportModal({
               {diagnosis?.additionalRecommendations || "None"}
             </h3>
           </div>
-
-          <div className="space-y-1 print:hidden">
+            <div className="space-y-1">
+            <h4 className="text-sm text-text-secondary font-[300]">
+             Diagnosis
+            </h4>
+            <h3 className="text-sm text-text-primary">
+              {diagnosis?.diagnosis || "None"}
+            </h3>
+          </div>
+          {type === "patient" &&           <div className="space-y-1 print:hidden">
             <h4 className="text-sm text-text-secondary font-[300]">
               Attachment
             </h4>
@@ -134,7 +136,8 @@ function MedicalReportModal({
               <FaFilePdf />
               Diagnosis.pdf
             </button>
-          </div>
+          </div>}
+
         </main>
       </Modal>
 
@@ -227,16 +230,40 @@ function MedicalReportModal({
   </p>
 
   {/* Diagnosis Section */}
-  <div style={{ marginTop: "30px" }}>
-    <h3 style={sectionTitle}>Diagnosis</h3>
-    <p>Diagnosis: {diagnosis?.primaryDiagnosis}</p>
-    <p>Severity: {diagnosis?.severity}</p>
-    <p>Symptoms: {diagnosis?.symptoms}</p>
-    <p>Doctor's Note: {diagnosis?.notes || "No note available."}</p>
-    <p>
-      Additional Recommendations:{" "}
-      {diagnosis?.additionalRecommendations || "None"}
-    </p>
+  <div style={{ marginTop: "30px",  }} >
+    <h3 style={{
+  fontSize: "16px",
+  fontWeight: "bold",
+  marginBottom: "10px",
+  paddingBottom: "4px",
+}} className=" text-center">Diagnosis</h3>
+<div className="overflow-x-auto border rounded-lg">
+  <table className="min-w-full table-auto border-collapse">
+    <tbody>
+      <tr className="border-b">
+        <td className="font-semibold px-4 py-2 border-r w-1/3">Reason for the Appointment</td>
+        <td className="px-4 py-2">{diagnosis?.primaryDiagnosis || "—"}</td>
+      </tr>
+      <tr className="border-b">
+        <td className="font-semibold px-4 py-2 border-r">Patient Symptoms</td>
+        <td className="px-4 py-2">{diagnosis?.symptoms || "—"}</td>
+      </tr>
+      <tr className="border-b">
+        <td className="font-semibold px-4 py-2 border-r">Doctor's Note</td>
+        <td className="px-4 py-2">{diagnosis?.notes || "No note available."}</td>
+      </tr>
+      <tr className="border-b">
+        <td className="font-semibold px-4 py-2 border-r">Examination Findings</td>
+        <td className="px-4 py-2">{diagnosis?.additionalRecommendations || "None"}</td>
+      </tr>
+      <tr >
+        <td className="font-semibold px-4 py-2 border-r">Diagnosis</td>
+        <td className="px-4 py-2">{diagnosis?.diagnosis || "None"}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
   </div>
 
   {/* Doctor at Bottom */}

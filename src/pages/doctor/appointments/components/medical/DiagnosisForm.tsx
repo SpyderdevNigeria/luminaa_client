@@ -11,6 +11,7 @@ interface DiagnosisData {
   diagnosisCode: string;
   isConfirmed: boolean;
   additionalRecommendations: string;
+  diagnosis: string;
   id?: string;
 }
 
@@ -29,6 +30,7 @@ const defaultData: DiagnosisData = {
   diagnosisCode: "",
   isConfirmed: false,
   additionalRecommendations: "",
+  diagnosis: "",
 };
 
 const DiagnosisForm = ({
@@ -135,6 +137,13 @@ const fields = [
     type: "textarea",
 
   },
+
+    {
+    name: "diagnosis",
+    label: "Diagnosis",
+    type: "textarea",
+
+  },
 ];
 
 
@@ -152,6 +161,7 @@ const fields = [
         field.name === "symptoms" ||
         field.name === "severity" ||
         field.name === "primaryDiagnosis" ||
+        field.name === "diagnosis" ||
         field.name === "additionalRecommendations"
           ? "col-span-2"
           : "col-span-2 md:col-span-1"

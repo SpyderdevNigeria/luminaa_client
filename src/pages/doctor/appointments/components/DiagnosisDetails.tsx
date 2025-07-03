@@ -15,6 +15,7 @@ interface Diagnosis {
   isConfirmed: boolean;
   additionalRecommendations: string;
   createdAt: string;
+  diagnosis:string;
 }
 
 interface DiagnosisDetailsProps {

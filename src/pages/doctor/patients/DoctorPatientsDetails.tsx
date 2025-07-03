@@ -1,14 +1,12 @@
 
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import DoctorApi from "../../../api/doctorApi";
-// import AppointmentHistory from "./components/PatientAppointmentHistory";
-// import PatientPrescription from "./components/PatientPrescription";
-// import PatientDiagnosis from "./components/PatientDiagnosis";
+import AppointmentHistory from "../../../components/common/patientDetailsComponent/PatientAppointmentHistory";
+import PatientPrescription from "../../../components/common/patientDetailsComponent/PrescriptionsHistory";
+import PatientDiagnosis from "../../../components/common/patientDetailsComponent/PatientDiagnosis";
 import { IPatient } from "../../../types/Interfaces";
 import UserImage from "../../../assets/images/patient/user.png"
-import { PiNotepadDuotone } from "react-icons/pi";
-import routeLinks from "../../../utils/routes";
 import PatientInformation from "../../../components/common/patientDetailsComponent/PatientInformation";
 import MedicalHistory from "../../../components/common/patientDetailsComponent/PatientMedicalHistory";
 function DoctorPatientsDetails() {
@@ -41,18 +39,18 @@ function DoctorPatientsDetails() {
       label: "Premobid Condition",
       component: user ? <MedicalHistory user={user} /> : null,
     },
-    // {
-    //   label: "Appointment History",
-    //   component: <AppointmentHistory />,
-    // },
-    // {
-    //   label: "Prescriptions",
-    //   component: <PatientPrescription  />,
-    // },
-    // {
-    //   label: "Diagnosis",
-    //   component: <PatientDiagnosis />,
-    // },
+ {
+      label: "Appointment History",
+      component: <AppointmentHistory />,
+    },
+    {
+      label: "Prescriptions",
+      component: <PatientPrescription />,
+    },
+    {
+      label: "Diagnosis",
+      component: <PatientDiagnosis />,
+    },
   ];
   if (loading) return <p className="p-4">Loading patient details...</p>;
   if (!user) return <p className="p-4">Patient not found.</p>;
@@ -78,9 +76,9 @@ function DoctorPatientsDetails() {
               </h4>
             </div>
           </div>
-          <Link to={routeLinks?.doctor?.allPatients + '/' + id} className="px-8 py-2 rounded-sm bg-primary text-white text-xs 2xl:text-base flex items-center gap-2">
+          {/* <Link to={routeLinks?.doctor?.allPatients + '/' + id} className="px-8 py-2 rounded-sm bg-primary text-white text-xs 2xl:text-base flex items-center gap-2">
             <PiNotepadDuotone /> View More Details
-          </Link>
+          </Link> */}
         </div>
       </main>
 

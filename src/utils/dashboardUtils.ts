@@ -168,12 +168,12 @@ export const navItemsDoctor = [
         icon: FaUserInjured,
         to: routeLinks?.doctor?.patients,
       },
-      {
-        label: "All Patients",
-        title: "All Patients",
-        icon: FaUserInjured,
-        to: routeLinks?.doctor?.allPatients,
-      },
+      // {
+      //   label: "All Patients",
+      //   title: "All Patients",
+      //   icon: FaUserInjured,
+      //   to: routeLinks?.doctor?.allPatients,
+      // },
       {
         label: "Patients",
         title: "Patients / Patients Details",

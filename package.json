@@ -30,6 +30,7 @@
     "react-pin-input-hook": "^1.0.9",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.2",
+    "recharts": "^3.0.2",
     "swiper": "^11.2.8"
   },
   "devDependencies": {
