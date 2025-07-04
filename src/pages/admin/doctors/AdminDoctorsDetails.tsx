@@ -32,7 +32,8 @@ function AdminDoctorsDetails() {
     try {
       setLoading(true);
       if (!id) return;
-      const response = await AdminApi.getUserById(id);
+      const response = await AdminApi.getDoctorById(id);
+      console.log(response);
       setUser(response?.data);
       setRole(response?.data?.role);
     } finally {

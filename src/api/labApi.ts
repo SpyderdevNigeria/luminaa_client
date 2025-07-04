@@ -11,6 +11,10 @@ const LabApi = {
     return response.data;
 
   },
+     uploadDocument: async (body: any) => {
+    const response = await api.post("/lab-techs/upload-document", body);
+    return response.data;
+  },
  
     // Lab Orders
     getLabOrders: async (query:any) => {

@@ -23,13 +23,15 @@ function AdminDoctors() {
     setDoctorsStatus,
     doctorsStatus,
     doctorsSpecialty,
+    doctorsSearch,
+    setDoctorsSearch,
   } = useAdmin(AdminApi);
 
   const [showForm, setShowForm] = useState(false);
   const [editDoctor, setEditDoctor] = useState<any>(null);
   useEffect(() => {
     getDoctors();
-  }, [doctorsPage,doctorsSpecialty, doctorsStatus]);
+  }, [doctorsPage,doctorsSpecialty, , doctorsSearch]);
 
   const handleEdit = (doctor: any) => {
     setEditDoctor(doctor);
@@ -77,7 +79,7 @@ function AdminDoctors() {
   render: (doctor) => (
       <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
         <ul className="space-y-2 text-sm">
-           <AdminNavigate role={'doctor'} id={doctor?.user?.id}> 
+           <AdminNavigate role={'doctor'} id={doctor?.id} type="true"> 
                  <FiEye /> View
               </AdminNavigate>
           <li
@@ -130,7 +132,8 @@ function AdminDoctors() {
 
       <HeaderTab
         title=""
-        showSearch={false}
+        searchPlaceholder="name, email, or specialty"
+        onSearchChange={(value) => setDoctorsSearch(value)}
         dropdowns={[
             {
                 label: "Status",

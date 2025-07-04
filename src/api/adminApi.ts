@@ -21,6 +21,19 @@ const AdminApi = {
     return response.data;
   },
 
+  getDoctorById: async (id: any) => {
+    const response = await api.get(`/admin/doctors/${id}`);
+    return response.data;
+  },
+  getLabById: async (id: any) => {
+    const response = await api.get(`/admin/lab-techs/${id}`);
+    return response.data;
+  },
+  getPharmacistById: async (id: any) => {
+    const response = await api.get(`/admin/pharmacists/${id}`);
+    return response.data;
+  },
+
   toggleUserStatus: async (id: any, body: any) => {
     const response = await api.patch(`/admin/users/${id}/toggle-status`, body);
     return response.data;

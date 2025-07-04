@@ -19,27 +19,27 @@ function AdminNavigate({ role, id, children, type }: AdminNavigateProps) {
 
   if (isSuperAdmin) {
     if (role === "admin" || role === "super_admin") {
-      url = `${routeLinks.superAdmin.admins}/${id}`;
+      url = type === "true" ? `${routeLinks.superAdmin.admins}/${id}` : `${routeLinks.superAdmin.users}/${id}`;
     } else if (role === "doctor") {
-      url = `${routeLinks.superAdmin.doctors}/${id}`;
+      url = type === "true" ? `${routeLinks.superAdmin.doctors}/${id}` : `${routeLinks.superAdmin.users}/${id}`;
     } else if (role === "patient") {
       url =  type === "true" ? `${routeLinks.superAdmin.patients}/${id}` : `${routeLinks.superAdmin.users}/${id}`;
     } else if (role === "lab_tech") {
-      url = `${routeLinks.superAdmin.lab}/${id}`;
+      url = type === "true" ? `${routeLinks.superAdmin.lab}/${id}` : `${routeLinks.superAdmin.users}/${id}`;
     } else if (role === "pharmacist") {
-      url = `${routeLinks.superAdmin.pharmacists}/${id}`;
+      url = type === "true" ? `${routeLinks.superAdmin.pharmacists}/${id}` : `${routeLinks.superAdmin.users}/${id}`;
     }
   } else {
     if (role === "admin") {
-      url = `${routeLinks.admin.admin}/${id}`;
+      url = type === "true" ? `${routeLinks.admin.admin}/${id}` : `${routeLinks.admin.users}/${id}`;
     } else if (role === "doctor") {
-      url = `${routeLinks.admin.doctors}/${id}`;
+      url =  type === "true" ? `${routeLinks.admin.doctors}/${id}` : `${routeLinks.admin.users}/${id}`;
     } else if (role === "patient") {
       url = type === "true" ? `${routeLinks.admin.patients}/${id}` : `${routeLinks.admin.users}/${id}`;
     } else if (role === "lab_tech") {
-      url = `${routeLinks.admin.lab}/${id}`;
+      url = type === "true" ? `${routeLinks.admin.lab}/${id}` : `${routeLinks.admin.users}/${id}`;
     } else if (role === "pharmacist") {
-      url = `${routeLinks.admin.pharmacists}/${id}`;
+      url = type === "true" ? `${routeLinks.admin.pharmacists}/${id}` : `${routeLinks.admin.users}/${id}`;
     }
   }
 

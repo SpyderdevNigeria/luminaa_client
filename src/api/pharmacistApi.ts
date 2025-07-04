@@ -10,7 +10,10 @@ const PharmacistApi = {
     const response = await api.put("/pharmacists/profile", data);
     return response.data;
   },
-
+    uploadDocument: async (body: any) => {
+    const response = await api.post("/pharmacists/upload-document", body);
+    return response.data;
+  },
   getMedications: async (query: any) => {
     const response = await api.get(`/pharmacist/medications${query}`);
     return response.data;

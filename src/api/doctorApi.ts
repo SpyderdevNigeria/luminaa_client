@@ -18,6 +18,10 @@ const DoctorApi = {
     const response = await api.put("/doctors/profile", body);
     return response.data;
   },
+    uploadDocument: async (body: any) => {
+    const response = await api.post("/doctors/upload-document", body);
+    return response.data;
+  },
 
 
   // Avaliablility Endpoints 

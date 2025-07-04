@@ -3,6 +3,8 @@ import { SetStateAction, useEffect, useState } from "react";
 import MedicalInfoForm from "./components/MedicalInfoForm";
 import SecurityPreferences from "./components/SecurityPreferences";
 import { useAppSelector } from "../../../hooks/reduxHooks";
+import MedicalCertification from "./components/MedicalCertification";
+import { PiCertificateFill } from "react-icons/pi";
 const LabProfile = () => {
   const userProfile = useAppSelector((state) => state.auth.user);
 
@@ -51,7 +53,10 @@ const LabProfile = () => {
         userProfile={userProfile}
         handleChange={handleChange}
         handleClose={handleClose}   />}
-
+           {showMedicalForm === 'certification' && <MedicalCertification
+        handleClose={handleClose}
+        userProfile={userProfile}
+      />}
     </div>
   );
 };
@@ -89,6 +94,22 @@ const Settings = ({ onMedicalClick }: { onMedicalClick: (e: any) => void }) => {
         </div>
         <span className="text-xl">&gt;</span>
       </div>
+
+                <div
+                    className="flex items-center justify-between py-4 border-b border-dashboard-gray cursor-pointer"
+                    onClick={()=> {onMedicalClick('certification')}}
+                  >
+                    <div className="flex items-center gap-3">
+                      <PiCertificateFill   className="text-xl" />
+                      <div>
+                        <h3 className="text-lg ">Medical Certificates</h3>
+                        <p className="text-xs text-gray-500">
+                          Update your medical certificates and preferences
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-xl">&gt;</span>
+                  </div>
     </div>
   );
 };

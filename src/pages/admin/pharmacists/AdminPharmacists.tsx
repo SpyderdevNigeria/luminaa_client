@@ -13,11 +13,13 @@ import AdminNavigate from "../../../components/common/AdminNavigate";
 function AdminPharmacists() {
   const {
     pharmacists,
+    pharmacistsSearch,
     pharmacistsPage,
     pharmacistsLimit,
     pharmacistsTotal,
     pharmacistsLoading,
     setPharmacistsPage,
+    setPharmacistsSearch,
     getPharmacists,
   } = useAdmin(AdminApi);
 
@@ -26,7 +28,7 @@ function AdminPharmacists() {
 
   useEffect(() => {
     getPharmacists();
-  }, [pharmacistsPage]);
+  }, [pharmacistsPage, pharmacistsSearch ]);
 
   const handleEdit = (pharmacist: any) => {
     setEditPharmacist(pharmacist);
@@ -97,7 +99,7 @@ function AdminPharmacists() {
           triggerIcon={<HiOutlineDotsVertical />}
         >
           <ul className="space-y-2 text-sm">
-             <AdminNavigate role={'pharmacist'} id={pharmacist?.user?.id}> 
+             <AdminNavigate role={'pharmacist'} id={pharmacist?.id} type="true"> 
                  <FiEye /> View
               </AdminNavigate>
             <li
@@ -150,7 +152,8 @@ function AdminPharmacists() {
         </button>
       </div>
 
-      <HeaderTab title="" showSearch={false} dropdowns={[]} />
+      <HeaderTab title=""   searchPlaceholder="name, or email"
+        onSearchChange={(value) => setPharmacistsSearch(value)}dropdowns={[]} />
 
       <div>
         {pharmacistsLoading ? (

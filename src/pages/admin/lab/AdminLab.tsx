@@ -20,6 +20,8 @@ function AdminLabs() {
     setLabsPage,
     getLabs,
     labsDepartment,
+    labsSearch,
+    setLabsSearch,
   } = useAdmin(AdminApi);
 
   const [showForm, setShowForm] = useState(false);
@@ -27,7 +29,7 @@ function AdminLabs() {
 
   useEffect(() => {
     getLabs();
-  }, [labsPage, labsDepartment]);
+  }, [labsPage, labsDepartment, labsSearch]);
 
   const handleEdit = (lab: any) => {
     setEditLab(lab);
@@ -81,7 +83,7 @@ function AdminLabs() {
       render: (lab) => (
         <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>
           <ul className="space-y-2 text-sm">
-           <AdminNavigate role={'lab_tech'} id={lab?.user?.id}> 
+           <AdminNavigate role={'lab_tech'} id={lab?.id} type="true"> 
                  <FiEye /> View
               </AdminNavigate>
             <li
@@ -137,7 +139,8 @@ function AdminLabs() {
         </button>
       </div>
 
-      <HeaderTab title="" showSearch={false} dropdowns={[]} />
+      <HeaderTab title=""      searchPlaceholder="name, email, or department"
+        onSearchChange={(value) => setLabsSearch(value)} dropdowns={[]} />
 
       <div>
         {labsLoading ? (

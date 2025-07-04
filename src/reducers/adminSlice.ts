@@ -33,6 +33,7 @@ const initialState = {
     limit: 10,
     specialty: '',
     status: "",
+     search: '',
     total: 0,
     loading: false,
     error: null,
@@ -42,6 +43,7 @@ const initialState = {
     page: 1,
     limit: 10,
     department: '',
+     search: '',
     total: 0,
     loading: false,
     error: null,
@@ -149,6 +151,9 @@ const adminSlice = createSlice({
       state.doctors.page = action.payload.page;
       state.doctors.limit = action.payload.limit;
     },
+    setDoctorsSearch(state, action) {
+      state.doctors.search = action.payload;
+    },
     setDoctorsSpecialty(state, action) {
       state.doctors.specialty = action.payload;
     },
@@ -167,6 +172,9 @@ const adminSlice = createSlice({
       const { data, total } = action.payload;
       state.labs.data = data;
       state.labs.total = total;
+    },
+    setLabsSearch(state, action) {
+      state.labs.search = action.payload;
     },
     setLabsPagination(state, action) {
       state.labs.page = action.payload.page;
@@ -198,6 +206,7 @@ const adminSlice = createSlice({
     setPharmacistsError(state, action) {
       state.pharmacists.error = action.payload;
     },
+
 
     // Medications
     setMedicationsLoading(state, action) {
@@ -265,6 +274,7 @@ export const {
   setDoctorsSpecialty,
   setDoctorsStatus,
   setDoctorsError,
+  setDoctorsSearch,
 
   // Labs
   setLabsLoading,
@@ -272,6 +282,7 @@ export const {
   setLabsPagination,
   setLabsDepartment,
   setLabsError,
+  setLabsSearch,
 
   // Pharmacists
   setPharmacistsLoading,

@@ -26,13 +26,13 @@ import {
   setDoctorsPagination,
   setDoctorsSpecialty,
   setDoctorsStatus,
-
+  setDoctorsSearch,
   setLabs,
   setLabsLoading,
   setLabsError,
   setLabsPagination,
   setLabsDepartment,
-
+  setLabsSearch,
   setPharmacists,
   setPharmacistsLoading,
   setPharmacistsError,
@@ -112,6 +112,7 @@ function useAdmin(api: any) {
       const params = new URLSearchParams();
       params.append("page", doctors.page.toString());
       params.append("limit", doctors.limit.toString());
+      if (doctors.search) params.append("search", doctors.search);
       if (doctors.specialty) params.append("specialty", doctors.specialty);
       if (doctors.status) params.append("status", doctors.status);
 
@@ -132,6 +133,7 @@ function useAdmin(api: any) {
       const params = new URLSearchParams();
       params.append("page", labs.page.toString());
       params.append("limit", labs.limit.toString());
+      if (labs.search) params.append("search", labs.search);
       if (labs.department) params.append("department", labs.department);
 
       const res = await api.getLabs(`?${params.toString()}`);
@@ -236,6 +238,8 @@ function useAdmin(api: any) {
     doctorsError: doctors.error,
     doctorsSpecialty: doctors.specialty,
     doctorsStatus: doctors.status,
+    doctorsSearch: doctors.search,
+    setDoctorsSearch: (val: string) => dispatch(setDoctorsSearch(val)),
     setDoctorsPage: (val: number) => dispatch(setDoctorsPagination({ page: val, limit: doctors.limit })),
     setDoctorsLimit: (val: number) => dispatch(setDoctorsPagination({ page: doctors.page, limit: val })),
     setDoctorsSpecialty: (val: string) => dispatch(setDoctorsSpecialty(val)),
@@ -250,6 +254,8 @@ function useAdmin(api: any) {
     labsLoading: labs.loading,
     labsError: labs.error,
     labsDepartment: labs.department,
+    labsSearch: labs.search,
+    setLabsSearch: (val: string) => dispatch(setLabsSearch(val)),
     setLabsPage: (val: number) => dispatch(setLabsPagination({ page: val, limit: labs.limit })),
     setLabsLimit: (val: number) => dispatch(setLabsPagination({ page: labs.page, limit: val })),
     setLabsDepartment: (val: string) => dispatch(setLabsDepartment(val)),
