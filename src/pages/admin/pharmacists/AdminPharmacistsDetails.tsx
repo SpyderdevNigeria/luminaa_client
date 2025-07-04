@@ -18,6 +18,12 @@ type PharmacistUser = {
   updatedAt: string;
 };
 
+type Document = {
+  id: string;
+  url: string;
+  type: string;
+};
+
 type Pharmacist = {
   id: string;
   licenseNumber: string;
@@ -26,12 +32,14 @@ type Pharmacist = {
   isActive: boolean;
   isProfileVerified: boolean;
   user: PharmacistUser;
+  licenseDocument?: Document;
 };
 
 function AdminPharmacistsDetails() {
   const { id } = useParams();
   const [pharmacist, setPharmacist] = useState<Pharmacist | null>(null);
   const [loading, setLoading] = useState(false);
+
   const fetchPharmacist = async () => {
     try {
       setLoading(true);
@@ -43,14 +51,46 @@ function AdminPharmacistsDetails() {
     }
   };
 
-
   useEffect(() => {
     fetchPharmacist();
   }, [id]);
 
   if (loading || !pharmacist) return <p>Loading pharmacist...</p>;
 
-  const { user } = pharmacist;
+  const { user, licenseDocument } = pharmacist;
+
+  const renderDocument = (doc: Document, label: string) => {
+    const downloadUrl = doc?.url?.replace("/upload/", "/upload/fl_attachment/");
+    return (
+      <div className="space-y-2">
+        <p className="font-medium">{label}</p>
+        <div className="flex items-center gap-4">
+          <img
+            src={doc?.url}
+            alt={label}
+            className="w-[150px] h-[150px] object-cover border border-gray-300 rounded"
+          />
+          <div className="flex flex-col gap-2">
+            <a
+              href={doc?.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-1 rounded border border-primary bg-white text-primary text-sm text-center"
+            >
+              View
+            </a>
+            <a
+              href={downloadUrl}
+              download
+              className="px-4 py-1 rounded bg-primary text-white text-sm text-center"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg p-6 space-y-6">
@@ -95,12 +135,9 @@ function AdminPharmacistsDetails() {
           <strong>Last Login:</strong>{" "}
           {user.lastLogin ? format(new Date(user.lastLogin), "PPP") : "N/A"}
         </div>
-        {/* <div>
-          <strong>Created:</strong>{" "}
-          {user?.createdAt}
-        </div> */}
       </div>
 
+      {licenseDocument && renderDocument(licenseDocument, "License Document")}
     </div>
   );
 }

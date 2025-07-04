@@ -11,6 +11,12 @@ type LabUser = {
   email: string;
 };
 
+type Document = {
+  id: string;
+  url: string;
+  type: string;
+};
+
 type LabData = {
   id: string;
   user: LabUser;
@@ -20,6 +26,7 @@ type LabData = {
   hireDate: string;
   isActive: boolean;
   isProfileVerified: boolean;
+  licenseDocument?: Document;
 };
 
 function AdminLabDetails() {
@@ -43,6 +50,40 @@ function AdminLabDetails() {
   }, [id]);
 
   if (loading || !lab) return <p>Loading lab technician...</p>;
+
+  const renderDocument = (doc: Document, label: string) => {
+    const downloadUrl = doc?.url?.replace("/upload/", "/upload/fl_attachment/");
+
+    return (
+      <div className="space-y-2">
+        <p className="font-medium">{label}</p>
+        <div className="flex items-center gap-4">
+          <img
+            src={doc?.url}
+            alt={label}
+            className="w-[150px] h-[150px] object-cover border border-gray-300 rounded"
+          />
+          <div className="flex flex-col gap-2">
+            <a
+              href={doc?.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-1 rounded border border-primary bg-white text-primary text-sm text-center"
+            >
+              View
+            </a>
+            <a
+              href={downloadUrl}
+              download
+              className="px-4 py-1 rounded bg-primary text-white text-sm text-center"
+            >
+              Download
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg p-6 space-y-6">
@@ -77,6 +118,8 @@ function AdminLabDetails() {
           <strong>Profile Verified:</strong> {lab.isProfileVerified ? "Yes" : "No"}
         </div>
       </div>
+
+      {lab.licenseDocument && renderDocument(lab.licenseDocument, "License Document")}
     </div>
   );
 }

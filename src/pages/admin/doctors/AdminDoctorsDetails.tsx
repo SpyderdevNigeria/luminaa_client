@@ -1,68 +1,66 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import AdminApi from "../../../api/adminApi"; 
+import AdminApi from "../../../api/adminApi";
 import { format } from "date-fns";
 import StatusBadge from "../../../components/common/StatusBadge";
 
-
-type User = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-  isActive: boolean;
-  isDisabled: boolean;
-  phoneNumber: string | null;
-  lastLogin: string;
-  profilePicture?: any;
-  isEmailVerified: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
-
 function AdminDoctorsDetails() {
   const { id } = useParams();
-  const [user, setUser] = useState<User | null>(null);
+  const [doctor, setDoctor] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [statusLoading, setStatusLoading] = useState(false);
-  const [role, setRole] = useState("");
 
-  const fetchUser = async () => {
+  const fetchDoctor = async () => {
     try {
       setLoading(true);
       if (!id) return;
       const response = await AdminApi.getDoctorById(id);
-      console.log(response);
-      setUser(response?.data);
-      setRole(response?.data?.role);
+      setDoctor(response?.data);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleToggleStatus = async () => {
-    try {
-      setStatusLoading(true);
-      
-      if (user) {
-        await AdminApi.toggleUserStatus(user.id, {isDisabled : !user.isDisabled  });
-        await fetchUser();
-      }
-    } finally {
-      setStatusLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchUser();
+    fetchDoctor();
   }, [id]);
 
-  if (loading || !user) return <p>Loading user...</p>;
+  if (loading || !doctor) return <p>Loading doctor...</p>;
+
+  const { user, specialty, availability, licenseDocument, graduationCertificate } = doctor;
+
+  const renderDocument = (doc: any, label: string) => (
+    <div className="space-y-2">
+      <p className="font-medium">{label}</p>
+      <div className="flex items-center gap-4">
+        <img
+          src={doc?.url}
+          alt={label}
+          className="w-[150px] h-[150px] object-cover border border-gray-300 rounded"
+        />
+        <div className="flex flex-col gap-2">
+          <a
+            href={doc?.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-1 rounded border border-primary bg-white text-primary text-sm text-center"
+          >
+            View
+          </a>
+          <a
+            href={doc?.url}
+            download
+            className="px-4 py-1 rounded  bg-primary text-white text-sm text-center"
+          >
+            Download
+          </a>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-lg p-6 space-y-6">
-      <h2 className="text-2xl font-semibold mb-4">User Details</h2>
+      <h2 className="text-2xl font-semibold mb-4">Doctor Details</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
         <div>
@@ -72,14 +70,11 @@ function AdminDoctorsDetails() {
           <strong>Email:</strong> {user.email}
         </div>
         <div>
-          <strong>Phone:</strong> {user.phoneNumber || "N/A"}
-        </div>
-        <div>
-          <strong>Role:</strong> {user.role}
+          <strong>Specialty:</strong> {specialty}
         </div>
         <div>
           <strong>Status:</strong>{" "}
-        <StatusBadge status={user.isActive ? "Active" : "Inactive"}/>
+          <StatusBadge status={doctor.isActive ? "Active" : "Inactive"} />
         </div>
         <div>
           <strong>Disabled:</strong>{" "}
@@ -93,28 +88,30 @@ function AdminDoctorsDetails() {
           {user.lastLogin ? format(new Date(user.lastLogin), "PPPppp") : "N/A"}
         </div>
         <div>
-          <strong>Created:</strong>{" "}
-          {format(new Date(user.createdAt), "PPPppp")}
+          <strong>Profile Created:</strong>{" "}
+          {user.createdAt ? format(new Date(user.createdAt), "PPPppp") : "N/A"}
+        </div>
+        <div className="col-span-2">
+          <strong>Availability:</strong>
+          <ul className="list-disc list-inside">
+            {availability?.data?.length > 0 ? (
+              availability.data.map((slot: any, index: number) => (
+                <li key={index}>
+                  {slot.dayOfWeek}: {slot.startTime} - {slot.endTime}
+                </li>
+              ))
+            ) : (
+              <p>No availability set</p>
+            )}
+          </ul>
         </div>
       </div>
 
-      {role!== "super_admin" && (
-        <>
-          <div className="flex justify-end">
-            <button
-              onClick={handleToggleStatus}
-              className="bg-primary text-white px-6 py-2 rounded-md"
-              disabled={statusLoading}
-            >
-              {statusLoading
-                ? "loading..."
-                : user.isDisabled
-                ? "isDisabled"
-                : "Enabled"}
-            </button>
-          </div>
-        </>
-      )}
+      <div className="space-y-4">
+        {licenseDocument && renderDocument(licenseDocument, "License Document")}
+        {graduationCertificate &&
+          renderDocument(graduationCertificate, "Graduation Certificate")}
+      </div>
     </div>
   );
 }

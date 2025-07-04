@@ -199,22 +199,22 @@ const DoctorApi = {
     return response.data;
   },
 
-      getPatientsAppointmentById: async (id: any) => {
-    const response = await api.get(`/doctor/patients/${id}/appointments`);
+      getPatientsAppointmentById: async (id: any, query: any) => {
+    const response = await api.get(`/doctor/patients/${id}/appointments${query}`);
     return response.data;
   },
-      getPatientsPrescriptionById: async (id: any) => {
-    const response = await api.get(`/doctor/patients/${id}/prescriptions`);
-    return response.data;
-  },
-
-        getPatientsDiagnosesById: async (id: any) => {
-    const response = await api.get(`/doctor/patients/${id}/diagnoses`);
+      getPatientsPrescriptionById: async (id: any, query: any) => {
+    const response = await api.get(`/doctor/patients/${id}/prescriptions${query}`);
     return response.data;
   },
 
-          getPatientsAttendingDoctorById: async (id: any) => {
-    const response = await api.get(`/doctor/patients/${id}/attending-doctors`);
+        getPatientsDiagnosesById: async (id: any, query: any) => {
+    const response = await api.get(`/doctor/patients/${id}/diagnoses${query}`);
+    return response.data;
+  },
+
+          getPatientsAttendingDoctorById: async (id: any, query: any) => {
+    const response = await api.get(`/doctor/patients/${id}/attending-doctors${query}`);
     return response.data;
   },
 }

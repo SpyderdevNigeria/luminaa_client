@@ -23,22 +23,32 @@ function PrescriptionsHistory() {
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+
+  const fetchPrescriptions = async () => {
+    if (!id) return;
+    try {
+      setLoading(true);
+
+      const params = new URLSearchParams();
+      if (dateFrom) params.append("dateFrom", dateFrom);
+      if (dateTo) params.append("dateTo", dateTo);
+      const query = params.toString() ? `?${params.toString()}` : "";
+
+      const data = await DoctorApi.getPatientsPrescriptionById(id, query);
+      setPrescriptions(data?.data || []);
+    } catch (err) {
+      setError("Failed to fetch prescriptions.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchPrescriptions = async () => {
-      try {
-        const data = await DoctorApi.getPatientsPrescriptionById(id);
-        setPrescriptions(data?.data || []);
-      } catch (err) {
-        setError("Failed to fetch prescriptions.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPrescriptions();
-  }, [id]);
+  }, [id, dateFrom, dateTo]);
 
   const columns: Column<Prescription>[] = [
     {
@@ -49,7 +59,9 @@ function PrescriptionsHistory() {
     {
       key: "medicationName",
       label: "Medication",
-      render: (item) => <span className="capitalize text-sm">{item.medicationName}</span>,
+      render: (item) => (
+        <span className="capitalize text-sm">{item.medicationName}</span>
+      ),
     },
     {
       key: "dosage",
@@ -69,23 +81,53 @@ function PrescriptionsHistory() {
     {
       key: "instructions",
       label: "Instructions",
-      render: (item) => <span className="text-sm">{item.instructions || "—"}</span>,
+      render: (item) => (
+        <span className="text-sm">{item.instructions || "—"}</span>
+      ),
     },
     {
       key: "prescribedDate",
       label: "Date",
-      render: (item) => <span className="text-sm">{moment(item.prescribedDate).format("LLL")}</span>,
+      render: (item) => (
+        <span className="text-sm">
+          {moment(item.prescribedDate).format("LLL")}
+        </span>
+      ),
     },
     {
       key: "prescribingDoctor",
       label: "Doctor",
-      render: (item) => <span className="text-sm">{item.prescribingDoctor?.name || "—"}</span>,
+      render: (item) => (
+        <span className="text-sm">{item.prescribingDoctor?.name || "—"}</span>
+      ),
     },
   ];
 
   return (
     <div className="">
-      <h4 className="text-inactive text-base mb-2">Prescriptions History</h4>
+      <h4 className="text-inactive text-base mb-4">Prescriptions History</h4>
+
+      {/* Date Filter Controls */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-4">
+        <div className="w-full sm:w-64">
+          <label className="text-sm font-medium text-gray-700">From</label>
+          <input
+            type="date"
+            value={dateFrom}
+            onChange={(e) => setDateFrom(e.target.value)}
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="w-full sm:w-64">
+          <label className="text-sm font-medium text-gray-700">To</label>
+          <input
+            type="date"
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+          />
+        </div>
+      </div>
 
       {loading ? (
         <p>Loading...</p>
