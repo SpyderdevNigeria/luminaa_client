@@ -11,6 +11,7 @@ function LabTestRequests() {
   const {
     orders,
     ordersPage,
+    search,
     ordersLimit,
     ordersTotal,
     ordersLoading,
@@ -24,7 +25,7 @@ function LabTestRequests() {
  useEffect(() => {
    getOrders();
    window.scrollTo({ top: 0, behavior: "smooth" });
-}, [ordersPage, status, priority]);
+}, [ordersPage, search, status, priority]);
 
   const columns: Column<(typeof orders)[0]>[] = [
     {
@@ -77,7 +78,11 @@ function LabTestRequests() {
       <div className="p-2 lg:p-4 rounded-lg">
         <HeaderTab
           title="laboratory "
-          showSearch={false}
+            showSearch={true}
+            searchPlaceholder="Test Name"
+            onSearchChange={(value) => setOrdersFilters({
+              search: value
+            })}
           dropdowns={[
                  {
               label: "Status",

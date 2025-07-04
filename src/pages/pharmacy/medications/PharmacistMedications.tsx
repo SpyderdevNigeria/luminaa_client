@@ -75,7 +75,7 @@ const PharmacistMedications = () => {
     { key: "price", label: "Price", render: (m) => `₦${m.price}` },
     {
       key: "requiresPrescription",
-      label: "Prescription",
+      label: "Requires Prescription",
       render: (m) => (m.requiresPrescription ? "Yes" : "No"),
     },
     {
@@ -138,7 +138,7 @@ const PharmacistMedications = () => {
             onChange: setMedicationDosageForm,
           },
           {
-            label: "Requires Rx",
+            label:  "Requires Prescription",
             options: ["true", "false"],
             value: medicationRequiresPrescription,
             onChange: setMedicationRequiresPrescription,

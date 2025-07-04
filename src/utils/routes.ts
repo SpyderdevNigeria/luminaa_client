@@ -29,7 +29,8 @@ const routeLinks = {
      consultationsid: '/patient/consultations/:id',
     prescription:'/patient/prescription',
     medicalHistory:'/patient/diagnosis',
-    checkout:'/patient/checkout'
+    checkout:'/patient/checkout',
+    helpCenter:'/patient/helpcenter',
 
   },
   doctor: {
@@ -46,6 +47,7 @@ const routeLinks = {
     labOrdersDetails:'/doctor/lab-orders/:id',
     appointmentView : '/doctor/appointments/:id',
     patientView : '/doctor/patients/:id',
+      helpCenter:'/doctor/helpcenter',
 },
 
 lab: { 
@@ -54,6 +56,7 @@ lab: {
     labRequests: '/lab/requests',  
     labRequestsDetails: '/lab/requests/:id', 
     profile: '/lab/profile',
+    helpCenter:'/lab/helpcenter',
 },
 
 admin: {
@@ -92,6 +95,7 @@ admin: {
   adminInventoryLogs: '/admin/inventory-logs',
   adminInventorySummary: '/admin/inventory-summary',
    adminInventoryMedication: '/admin/inventory/medication/:id',
+   helpCenter:'/admin/helpcenter',
 },
 superAdmin: {
   path:'/super-admin',
@@ -128,6 +132,7 @@ superAdmin: {
   adminInventoryLogs: '/super-admin/inventory-logs',
   adminInventorySummary: '/super-admin/inventory-summary',
   adminInventoryMedication: '/super-admin/inventory/medication/:id',
+  helpCenter:'/super-admin/helpcenter',
 },
 pharmacist: {
   path:'/pharmacist',
@@ -139,7 +144,8 @@ pharmacist: {
   pharmacistInventoryDetails:'/pharmacist/inventory/:id',
   pharmacistInventorySummary: '/pharmacist/inventory-summary',
   pharmacistInventoryMedication: '/pharmacist/inventory/medication/:id',
-  profile:'/pharmacist/profile'
+  profile:'/pharmacist/profile',
+  helpCenter:'/pharmacist/helpcenter',
 }
 }
 

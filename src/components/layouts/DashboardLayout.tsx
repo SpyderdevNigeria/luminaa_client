@@ -37,7 +37,7 @@ function flattenLinks(links: LinkItem[]): LinkItem[] {
   });
 }
 
-function DashboardLayout({ children, links }: DashboardLayoutProps) {
+function DashboardLayout({ children, links, }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeLink, setActiveLink] = useState<ActiveLink | null>(null);
   const location = useLocation();
@@ -72,12 +72,13 @@ function DashboardLayout({ children, links }: DashboardLayoutProps) {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Sidebar links={links} active={activeLink || { label: '' }} />
+      <Sidebar links={links} active={activeLink || { label: '' }}  />
       <MobileSidebar
         links={links}
         active={activeLink || { label: '' }}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
+
       />
       <div className="flex flex-col flex-1 md:ml-63 relative">
         <Navbar

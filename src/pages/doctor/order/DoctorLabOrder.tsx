@@ -1,6 +1,6 @@
 import { useEffect, } from "react";
 import HeaderTab from "../../../components/common/HeaderTab";
-import { labRequestStatus } from "../../../utils/dashboardUtils";
+import { labRequestPriority, labRequestStatus } from "../../../utils/dashboardUtils";
 import useOrder from "../../../hooks/useOrder";
 import DoctorApi from "../../../api/doctorApi";
 import Table, { Column } from "../../../components/common/Table";
@@ -12,18 +12,20 @@ function LabTestRequests() {
   const {
     orders,
     status,
+    search,
     ordersPage,
     ordersLimit,
     ordersTotal,
     ordersLoading,
     setOrdersFilters,
     getOrders,
+     priority,
   } = useOrder(DoctorApi);
 
 
 useEffect(() => {
   getOrders();
-}, [ordersPage, status]);
+}, [ordersPage, search, status, priority]);
 
   const columns: Column<(typeof orders)[0]>[] = [
     {
@@ -75,7 +77,11 @@ useEffect(() => {
       <div className="p-2 lg:p-4 rounded-lg">
         <HeaderTab
           title="orders"
-          showSearch={false}
+            showSearch={true}
+            searchPlaceholder="Test Name"
+            onSearchChange={(value) => setOrdersFilters({
+              search: value
+            })}
           dropdowns={[
             {
               label: "Status",
@@ -85,6 +91,12 @@ useEffect(() => {
               status: value === "All" ? null : value.toLowerCase(),
             })
             },
+                  {
+                          label: "priority",
+                          options: ["all", ...labRequestPriority],
+                          value: priority || "",
+                          onChange: (value) => setOrdersFilters({ priority: value === "All" ? undefined : value.toLowerCase()}),
+                        },
           ]}
         />
 

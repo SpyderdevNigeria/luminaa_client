@@ -36,7 +36,7 @@ function PharmacistDashboard() {
     { key: "price", label: "Price", render: (m) => `₦${m.price}` },
     {
       key: "requiresPrescription",
-      label: "Prescription",
+      label: "Requires Prescription",
       render: (m) => (m.requiresPrescription ? "Yes" : "No"),
     },
     {

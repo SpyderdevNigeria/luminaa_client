@@ -229,7 +229,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
               { label: "Status", options: medicationStatusOptions, value: medicationStatus, onChange: setMedicationStatus },
               { label: "Category", options: medicationCategoryOptions, value: medicationCategory, onChange: setMedicationCategory },
               { label: "Dosage Form", options: medicationDosageFormOptions, value: medicationDosageForm, onChange: setMedicationDosageForm },
-              { label: "Requires Rx", options: ["true", "false"], value: medicationRequiresPrescription, onChange: setMedicationRequiresPrescription },
+              { label:  "Requires Prescription", options: ["true", "false"], value: medicationRequiresPrescription, onChange: setMedicationRequiresPrescription },
               { label: "Manufacturer", options: medicationManufacturerOptions, value: medicationManufacturer, onChange: setMedicationManufacturer },
             ]}
           />

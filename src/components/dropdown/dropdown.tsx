@@ -24,7 +24,7 @@ export default function Dropdown({
           type="button"
           className={
             triggerLabel !== ""
-              ? "cursor-pointer bg-white inline-flex items-center gap-2 text-base py-2 px-3 border border-dashboard-gray rounded-sm"
+              ? `cursor-pointer bg-white inline-flex items-center gap-2 ${style} text-base py-2 px-3 border border-dashboard-gray `
               : "cursor-pointer"
           }
         >
@@ -36,7 +36,7 @@ export default function Dropdown({
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className={`bg-white shadow-md max-h-[300px] overflow-y-scroll rounded-md p-2 w-48 z-50 ${style}`}
+          className={`bg-white shadow-md max-h-[300px] overflow-y-scroll  p-2 w-48 z-50 `}
           sideOffset={8}
           align="end"
         >

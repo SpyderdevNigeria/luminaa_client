@@ -82,6 +82,11 @@ import DoctorAllPatients from "./pages/doctor/allpatients/DoctorAllPatients";
 import DoctorAllPatientsDetails from "./pages/doctor/allpatients/DoctorAllPatientsDetails";
 import AdminDoctorsStats from "./pages/admin/doctors/AdminDoctorsStats";
 import AdminDoctorsSpecialties from "./pages/admin/doctors/AdminDoctorsSpecialties";
+import PatientHelpCenter from "./pages/patient/HelpCenter/PatientHelpCenter";
+import DoctorHelpCenter from "./pages/admin/HelpCenter/AdminHelpCenter";
+import LabHelpCenter from "./pages/lab/HelpCenter/LabHelpCenter";
+import PharmacyHelpCenter from "./pages/pharmacy/HelpCenter/PharmacyHelpCenter";
+import AdminHelpCenter from "./pages/admin/HelpCenter/AdminHelpCenter";
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
 const App = createBrowserRouter([
@@ -152,6 +157,10 @@ const App = createBrowserRouter([
       {
         path: routeLinks?.patient?.path,
         element: <Navigate to={routeLinks?.patient?.dashboard} />,
+      },
+      {
+        path:routeLinks?.patient?.helpCenter,
+        element:<PatientHelpCenter/>
       },
       {
         path: routeLinks?.patient?.dashboard,
@@ -263,9 +272,14 @@ const App = createBrowserRouter([
         path: routeLinks?.doctor?.labOrdersDetails,
         element: <DoctorLabOrderDetails />,
       },
+      
       {
         path: routeLinks?.doctor?.prescription,
         element: <DoctorPrescriptions />,
+      },
+       {
+        path:routeLinks?.doctor?.helpCenter,
+        element:<DoctorHelpCenter/>
       },
     ],
   },
@@ -290,6 +304,10 @@ const App = createBrowserRouter([
       {
         path: routeLinks?.lab?.labRequestsDetails,
         element: <LabTestRequestsDetails />,
+      },
+            {
+        path:routeLinks?.lab?.helpCenter,
+        element:<LabHelpCenter/>
       },
       {
         path: routeLinks?.lab?.profile,
@@ -341,7 +359,10 @@ const App = createBrowserRouter([
         path: routeLinks?.pharmacist?.pharmacistInventoryMedication,
         element: <PharmacyInventoryMedication />,
       },
-
+                  {
+        path:routeLinks?.pharmacist?.helpCenter,
+        element:<PharmacyHelpCenter/>
+      },
       {
         path: routeLinks?.pharmacist?.profile,
         element: <PharmacyProfile />,
@@ -468,6 +489,10 @@ const App = createBrowserRouter([
         path: routeLinks?.admin?.adminsDetails,
         element: <SuperAdminAdminsDetails />,
       },
+                     {
+        path:routeLinks?.admin?.helpCenter,
+        element:<AdminHelpCenter/>
+      },
       {
         path: routeLinks?.admin?.profile,
         element: <AdminProfile />,
@@ -582,6 +607,10 @@ const App = createBrowserRouter([
       {
         path: routeLinks?.superAdmin?.adminsDetails,
         element: <SuperAdminAdminsDetails />,
+      },
+                         {
+        path:routeLinks?.superAdmin?.helpCenter,
+        element:<AdminHelpCenter/>
       },
       {
         path: routeLinks?.superAdmin?.profile,

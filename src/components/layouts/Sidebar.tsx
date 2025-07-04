@@ -22,7 +22,7 @@ function Sidebar({ links, active }: SidebarProps) {
   const toggleDropdown = (label: string) => {
     setOpenDropdown(openDropdown === label ? null : label);
   };
-
+  
   return (
     <aside className="hidden md:flex w-63 fixed inset-y-0 left-0 z-40 bg-white px-4 flex-col justify-between pb-2">
       <div className="flex flex-col h-full">

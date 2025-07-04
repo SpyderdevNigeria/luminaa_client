@@ -265,7 +265,7 @@ const AdminInventory = () => {
               { label: "Status", options: ["active", "inactive"], value: medicationStatus, onChange: setMedicationStatus },
               { label: "Category", options: [], value: medicationCategory, onChange: setMedicationCategory },
               { label: "Dosage Form", options: [], value: medicationDosageForm, onChange: setMedicationDosageForm },
-              { label: "Requires Rx", options: ["true", "false"], value: medicationRequiresPrescription, onChange: setMedicationRequiresPrescription },
+              { label:  "Requires Prescription", options: ["true", "false"], value: medicationRequiresPrescription, onChange: setMedicationRequiresPrescription },
               { label: "Manufacturer", options: [], value: medicationManufacturer, onChange: setMedicationManufacturer },
             ]}
           />

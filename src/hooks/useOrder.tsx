@@ -67,6 +67,7 @@ function useOrder(api: any) {
     // Orders
     orders: orders.data,
     status:orders.filters.status,
+    search:orders?.filters.search,
     priority:orders.filters.priority,
     ordersPage: orders.filters.page,
     ordersLimit: orders.filters.limit,

@@ -1,21 +1,52 @@
 import { AiOutlineLogout } from "react-icons/ai";
 import { BsQuestionCircle } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import routeLinks from "../../utils/routes";
 import { useState } from "react";
 import LogoutModal from "../modal/LogoutModal";
-import { useAppDispatch } from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { logout } from "../../reducers/authSlice";
 
 function SidebarFooter() {
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const dispatch = useAppDispatch();
+  const userProfile = useAppSelector((state) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(logout());
     setIsLogoutOpen(false);
     navigate(routeLinks.auth.login);
+  };
+
+  const handleNavigateToHelpCenter = () => {
+    let url = "";
+
+    switch (userProfile?.user?.role) {
+      case "patient":
+        url = routeLinks.patient?.helpCenter;
+        break;
+      case "doctor":
+        url = routeLinks.doctor?.helpCenter;
+        break;
+      case "admin":
+        url = routeLinks.admin?.helpCenter;
+        break;
+      case "super_admin":
+        url = routeLinks.superAdmin?.helpCenter;
+        break;
+      case "pharmacist":
+        url = routeLinks.pharmacist?.helpCenter;
+        break;
+      case "lab_tech":
+        url = routeLinks.lab?.helpCenter;
+        break;
+      default:
+        url = "/";
+        break;
+    }
+
+    navigate(url);
   };
 
   return (
@@ -25,12 +56,12 @@ function SidebarFooter() {
         onClose={() => setIsLogoutOpen(false)}
         handleLogout={handleLogout}
       />
-      <Link to="" className="flex items-center text-sm p-2 font-[400]">
+
+      <button onClick={handleNavigateToHelpCenter} className="flex items-center text-sm p-2 font-[400]">
         <BsQuestionCircle className="w-6 h-6 mx-2" />
         Help
-      </Link>
+      </button>
 
-      {/* Wire this button to open the logout confirmation */}
       <button
         onClick={() => setIsLogoutOpen(true)}
         type="button"
@@ -43,4 +74,7 @@ function SidebarFooter() {
   );
 }
 
+
 export default SidebarFooter;
+
+
