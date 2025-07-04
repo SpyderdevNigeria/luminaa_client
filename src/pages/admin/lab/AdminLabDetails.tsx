@@ -27,6 +27,7 @@ type LabData = {
   isActive: boolean;
   isProfileVerified: boolean;
   licenseDocument?: Document;
+  graduationCertificate?: Document;
 };
 
 function AdminLabDetails() {
@@ -120,6 +121,8 @@ function AdminLabDetails() {
       </div>
 
       {lab.licenseDocument && renderDocument(lab.licenseDocument, "License Document")}
+      {lab.graduationCertificate &&
+          renderDocument(lab.graduationCertificate, "Graduation Certificate")}
     </div>
   );
 }

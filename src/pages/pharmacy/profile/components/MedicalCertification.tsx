@@ -24,7 +24,7 @@ const MedicalCertification: React.FC<MedicalCertificationsProps> = ({
     // { key: "additionalCertificates", label: "Additional Certificates" },
   ]}
   uploadFn={PharmacistApi.uploadDocument}
-  onUploadSuccess={(data) => dispatch(updateUser({...userProfile, ...data,  user:{...userProfile}}))}
+ onUploadSuccess={(data) => dispatch(updateUser({ ...data, isEmailVerified: userProfile?.isEmailVerified, user:{...userProfile?.user}}))}
 />
 
     </>

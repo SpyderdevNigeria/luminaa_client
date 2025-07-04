@@ -60,6 +60,7 @@ function PartnerEmailVerification() {
     try {
       await AuthApi.verifyEmailOtp(userProfile?.user?.email, otp).then(
         (res) => {
+          console.log(res)
           if (res) {
             dispatch(
               updateUser({

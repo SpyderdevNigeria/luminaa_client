@@ -33,6 +33,7 @@ type Pharmacist = {
   isProfileVerified: boolean;
   user: PharmacistUser;
   licenseDocument?: Document;
+  graduationCertificate?: Document;
 };
 
 function AdminPharmacistsDetails() {
@@ -57,7 +58,7 @@ function AdminPharmacistsDetails() {
 
   if (loading || !pharmacist) return <p>Loading pharmacist...</p>;
 
-  const { user, licenseDocument } = pharmacist;
+  const { user} = pharmacist;
 
   const renderDocument = (doc: Document, label: string) => {
     const downloadUrl = doc?.url?.replace("/upload/", "/upload/fl_attachment/");
@@ -137,7 +138,9 @@ function AdminPharmacistsDetails() {
         </div>
       </div>
 
-      {licenseDocument && renderDocument(licenseDocument, "License Document")}
+      {pharmacist.licenseDocument && renderDocument(pharmacist.licenseDocument, "License Document")}
+      {pharmacist.graduationCertificate &&
+          renderDocument(pharmacist.graduationCertificate, "Graduation Certificate")}
     </div>
   );
 }
