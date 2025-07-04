@@ -35,7 +35,13 @@ const AdminOrder = () => {
 
 const orderColumns: Column<any>[] = [
   { key: "orderNo", label: "Order No", arrows: true },
-
+       {
+      key: "name",
+      label: "Name",
+      render: (patient) => (
+       <span>{patient?.patient?.firstName && patient?.patient?.lastName ? `${patient?.patient?.firstName} ${patient?.patient?.lastName}` : "N/A"}</span>
+      ),
+    },
   {
     key: "totalAmount",
     label: "Amount",

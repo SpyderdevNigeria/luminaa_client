@@ -7,12 +7,14 @@ type DropdownProps = {
   triggerLabel: string;
   children: ReactNode;
   showArrow?: boolean;
+  style?:string;
 };
 
 export default function Dropdown({
   triggerIcon,
   triggerLabel,
   children,
+  style = "",
   showArrow = true,
 }: DropdownProps) {
   return (
@@ -34,7 +36,7 @@ export default function Dropdown({
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="bg-white shadow-md rounded-md p-2 w-48 z-50"
+          className={`bg-white shadow-md max-h-[300px] overflow-y-scroll rounded-md p-2 w-48 z-50 ${style}`}
           sideOffset={8}
           align="end"
         >

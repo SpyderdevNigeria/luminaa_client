@@ -94,7 +94,7 @@ const fields = [
     name: "primaryDiagnosis",
     label: "Reason for the Appointment",
     type: "text",
-    required: true,
+    // required: true,
   },
   {
     name: "symptoms",
@@ -106,7 +106,7 @@ const fields = [
     name: "notes",
     label: "Notes",
     type: "textarea",
-    required: true,
+    // required: true,
   },
   {
     name: "severity",
@@ -174,7 +174,7 @@ const fields = [
         onChange={handleChange}
         type={field.type as any}
         required={field.required}
-        // options={field.options}
+        options={field.options}
       />
     </div>
   ))}

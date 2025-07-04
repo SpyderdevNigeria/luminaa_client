@@ -136,8 +136,8 @@ export const navItemsDoctor = [
     to: routeLinks?.doctor?.schedule,
   },
   {
-    label: "Lab Request",
-    title: "Lab Request",
+    label: "Lab Requests",
+    title: "Lab Requests",
     icon: FiPackage,
     to: routeLinks?.doctor?.labOrders,
     subLinks: [
@@ -151,8 +151,8 @@ export const navItemsDoctor = [
   },
 
   {
-    label: "Prescription",
-    title: "Prescription",
+    label: "Prescriptions",
+    title: "Prescriptions",
     icon: CiTablets1,
     to: routeLinks?.doctor?.prescription,
   },

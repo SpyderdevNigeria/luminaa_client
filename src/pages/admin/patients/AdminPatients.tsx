@@ -30,8 +30,8 @@ function AdminPatients() {
     setPatientsSearch,
     setPatientsGender,
     setPatientsCity,
-    setPatientsIsBioDataCompleted,
-    setPatientsIsMedicalHistoryCompleted,
+    // setPatientsIsBioDataCompleted,
+    // setPatientsIsMedicalHistoryCompleted,
   } = useAdmin(AdminApi);
 
   const { showToast } = useToaster();
@@ -194,18 +194,18 @@ function AdminPatients() {
             value: patientsCity,
             onChange: (val) => setPatientsCity(val),
           },
-          {
-            label: "Bio Data Completed",
-            options: ["true", "false"],
-            value: isBioDataCompleted,
-            onChange: (val) => setPatientsIsBioDataCompleted(val),
-          },
-          {
-            label: "Medical History Completed",
-            options: ["true", "false"],
-            value: isMedicalHistoryCompleted,
-            onChange: (val) => setPatientsIsMedicalHistoryCompleted(val),
-          },
+          // {
+          //   label: "Bio Data Completed",
+          //   options: ["true", "false"],
+          //   value: isBioDataCompleted,
+          //   onChange: (val) => setPatientsIsBioDataCompleted(val),
+          // },
+          // {
+          //   label: "Medical History Completed",
+          //   options: ["true", "false"],
+          //   value: isMedicalHistoryCompleted,
+          //   onChange: (val) => setPatientsIsMedicalHistoryCompleted(val),
+          // },
         ]}
       />
 

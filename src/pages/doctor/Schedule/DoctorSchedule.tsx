@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import DoctorApi from '../../../api/doctorApi';
 import { useToaster } from '../../../components/common/ToasterContext';
+import Dropdown from '../../../components/dropdown/dropdown';
+import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 const defaultTime = { from: '09:00', to: '17:00' };
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -34,8 +36,8 @@ const DoctorSchedule = () => {
     from: string;
     to: string;
   }
-const [loading, setLoading] = useState(false)
-const { showToast } = useToaster();
+  const [loading, setLoading] = useState(false)
+  const { showToast } = useToaster();
   const [workingDays, setWorkingDays] = useState<Record<string, WorkingDay>>(
     daysOfWeek.reduce((acc, day) => {
       acc[day] = {
@@ -51,18 +53,18 @@ const { showToast } = useToaster();
   useEffect(() => {
     const loadAvailability = async () => {
       try {
-        const {data} = await DoctorApi.getAvailability();
+        const { data } = await DoctorApi.getAvailability();
         const formatted = { ...workingDays };
 
-      if (data?.data) {
-         data?.data.forEach((item: any) => {
-          formatted[item.dayOfWeek] = {
-            active: true,
-            from: convertTo12Hour(item.startTime),
-            to: convertTo12Hour(item.endTime),
-          };
-        });
-      }
+        if (data?.data) {
+          data?.data.forEach((item: any) => {
+            formatted[item.dayOfWeek] = {
+              active: true,
+              from: convertTo12Hour(item.startTime),
+              to: convertTo12Hour(item.endTime),
+            };
+          });
+        }
 
         setWorkingDays(formatted);
       } catch (error) {
@@ -107,7 +109,7 @@ const { showToast } = useToaster();
     try {
       await DoctorApi.updateAvailability({ data: payload });
       showToast('Schedule updated successfully!', 'success');
-       setLoading(false)
+      setLoading(false)
     } catch (error) {
       console.error('Failed to update availability:', error);
       showToast('Something went wrong while saving schedule.', "error");
@@ -140,29 +142,36 @@ const { showToast } = useToaster();
 
             {workingDays[day].active ? (
               <div className="flex items-center gap-3">
-                <select
-                  value={workingDays[day].from}
-                  onChange={(e) => handleTimeChange(day, 'from', e.target.value)}
-                  className="border border-dashboard-gray text-[#898989] !rounded-full px-3 py-1 text-sm focus:outline-none"
-                >
+                <Dropdown triggerLabel={workingDays[day].from} style='rounded-full'>
                   {times.map((time) => (
-                    <option key={time} value={time}>{time}</option>
+                    <DropdownMenuItem
+                      key={time}
+                      onSelect={() => handleTimeChange(day, 'from', time)}
+                      className="cursor-pointer px-3 py-1 text-sm hover:bg-gray-100 text-[#898989] focus:outline-none"
+                    >
+                      {time}
+                    </DropdownMenuItem>
                   ))}
-                </select>
+                </Dropdown>
+
                 <span className="text-sm text-[#898989]">to</span>
-                <select
-                  value={workingDays[day].to}
-                  onChange={(e) => handleTimeChange(day, 'to', e.target.value)}
-                  className="border border-dashboard-gray text-[#898989] !rounded-full px-3 py-1 text-sm focus:outline-none"
-                >
+
+                <Dropdown triggerLabel={workingDays[day].to}  style='rounded-full'>
                   {times.map((time) => (
-                    <option key={time} value={time}>{time}</option>
+                    <DropdownMenuItem
+                      key={time}
+                      onSelect={() => handleTimeChange(day, 'to', time)}
+                      className="cursor-pointer px-3 py-1 text-sm hover:bg-gray-100 text-[#898989] focus:outline-none"
+                    >
+                      {time}
+                    </DropdownMenuItem>
                   ))}
-                </select>
+                </Dropdown>
               </div>
             ) : (
               <span className="text-sm text-gray-400">Not working on this day</span>
             )}
+
           </div>
         ))}
       </div>
