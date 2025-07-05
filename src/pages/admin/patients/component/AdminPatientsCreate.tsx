@@ -101,7 +101,7 @@ const AdminPatientsCreate: React.FC<Props> = ({ patient = null, onBack, onClose 
     { name: "dateOfBirth", label: "Date of Birth", type: "date", required: true },
     { name: "gender", label: "Gender", type: "select", required: true, options: ["Male", "Female", "Other"] },
     { name: "maritalStatus", label: "Marital Status", required: true, type: "select", options: ["Single", "Married", "Divorced"] },
-    { name: "religion", label: "Religion", required: true },
+    { name: "religion", label: "Religion", required: true, options: ["Christianity", "Islam", "Traditional", "Judaism", "Other"] },
     { name: "address", label: "Address", required: true },
     { name: "city", label: "City", required: true },
     { name: "state", label: "State", required: true },

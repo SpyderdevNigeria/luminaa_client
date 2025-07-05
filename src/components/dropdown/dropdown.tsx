@@ -36,7 +36,7 @@ export default function Dropdown({
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className={`bg-white shadow-md max-h-[300px] overflow-y-scroll  p-2 w-48 z-50 `}
+          className={`bg-white shadow-md max-h-[300px] overflow-y-scroll scrollbar-visible p-2 w-48 z-50 `}
           sideOffset={8}
           align="end"
         >

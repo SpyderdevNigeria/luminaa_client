@@ -1,5 +1,7 @@
-import React from "react";
-import { formatDate, getMaxDateFor18YearsOld, states } from "../../../../utils/dashboardUtils";
+import React, { useEffect, useState } from "react";
+import getAllCountries from "countries-states-cities";
+import getStatesOfCountry from "countries-states-cities";
+import { formatDate, getMaxDateFor18YearsOld } from "../../../../utils/dashboardUtils";
 
 type BioDataProps = {
   submitform: (e: React.FormEvent) => void;
@@ -7,6 +9,7 @@ type BioDataProps = {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   data: {
+    country: string;
     gender: string;
     maritalStatus: string;
     dateOfBirth: string;
@@ -18,10 +21,32 @@ type BioDataProps = {
   };
 };
 
-
-
-
 function BioData({ submitform, handleChange, data }: BioDataProps) {
+  const [countries, setCountries] = useState<string[]>([]);
+  const [states, setStates] = useState<string[]>([]);
+
+  // Load countries on mount
+  useEffect(() => {
+    const allCountries = getAllCountries.getAllCountries();
+    setCountries(allCountries.map((country: any) => country.name));
+  }, []);
+
+  // Load states when country changes
+  useEffect(() => {
+    if (data.country) {
+      const allCountries = getAllCountries.getAllCountries();
+      const selectedCountry = allCountries.find((country: any) => country.name === data.country);
+      if (selectedCountry) {
+        const countryStates = getStatesOfCountry.getStatesOfCountry(selectedCountry.id);
+        setStates(countryStates.map((state: any) => state.name));
+      } else {
+        setStates([]);
+      }
+    } else {
+      setStates([]);
+    }
+  }, [data.country]);
+
   return (
     <div>
       <form onSubmit={submitform}>
@@ -109,29 +134,53 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
             </select>
           </div>
 
+          {/* Country */}
+          <div className="col-span-2">
+            <label htmlFor="country" className="form-label text-primary">
+              Country
+            </label>
+            <select
+              name="country"
+              id="country"
+              onChange={handleChange}
+              value={data.country}
+              required
+              className="form-input focus:outline-primary border border-gray-light scrollbar-visible"
+            >
+              <option value="">Select Country</option>
+              {countries.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
+          </div>
 
-{/* State of Origin */}
-<div className="col-span-2">
-  <label htmlFor="stateOfOrigin" className="form-label text-primary">
-    State of Origin
-  </label>
-  <select
-    name="stateOfOrigin"
-    id="stateOfOrigin"
-    onChange={handleChange}
-    value={data.stateOfOrigin}
-    required
-    className="form-input focus:outline-primary border border-gray-light"
-  >
-    <option value="">Select state</option>
-    {states.map((state) => (
-      <option key={state} value={state}>
-        {state}
-      </option>
-    ))}
-  </select>
-</div>
-
+          {/* State of Origin */}
+            <div className="col-span-2">
+          {data.country && (
+              <div className="col-span-2">
+              <label htmlFor="stateOfOrigin" className="form-label text-primary">
+                State of Origin
+              </label>
+              <select
+                name="stateOfOrigin"
+                id="stateOfOrigin"
+                onChange={handleChange}
+                value={data.stateOfOrigin}
+                required
+                className="form-input focus:outline-primary border border-gray-light scrollbar-visible"
+              >
+                <option value="">Select State</option>
+                {states.map((state) => (
+                  <option key={state} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
+               </div>
+          )}
+            </div>
 
           {/* Phone Number */}
           <div className="col-span-2">

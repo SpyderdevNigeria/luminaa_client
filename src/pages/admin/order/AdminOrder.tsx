@@ -51,23 +51,6 @@ const orderColumns: Column<any>[] = [
         minimumFractionDigits: 2,
       })}`,
   },
-
-  {
-    key: "paymentMethod",
-    label: "Payment Method",
-    arrows: true,
-    render: (order) => order.paymentMethod || "-",
-  },
-
-  {
-    key: "paymentStatus",
-    label: "Payment Status",
-    arrows: true,
-    render: (order) => (
-      <span className="capitalize">{order.paymentStatus || "N/A"}</span>
-    ),
-  },
-
   {
     key: "orderType",
     label: "Order Type",

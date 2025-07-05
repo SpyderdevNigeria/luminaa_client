@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import getAllCountries from "countries-states-cities";
+import getStatesOfCountry from "countries-states-cities";
 
 interface ResidentialDetailsProps {
   submitform: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -21,6 +23,30 @@ function ResidentialDetails({
   data,
   isLoading,
 }: ResidentialDetailsProps) {
+  const [countries, setCountries] = useState<string[]>([]);
+  const [states, setStates] = useState<string[]>([]);
+
+  // Load countries on mount
+  useEffect(() => {
+    const allCountries = getAllCountries.getAllCountries();
+    setCountries(allCountries.map((country: any) => country.name));
+  }, []);
+
+  // Load states when country changes
+  useEffect(() => {
+    if (data.country) {
+      const allCountries = getAllCountries.getAllCountries();
+      const selectedCountry = allCountries.find((country: any) => country.name === data.country);
+      if (selectedCountry) {
+        const countryStates = getStatesOfCountry.getStatesOfCountry(selectedCountry.id);
+        setStates(countryStates.map((state: any) => state.name));
+      } else {
+        setStates([]);
+      }
+    } else {
+      setStates([]);
+    }
+  }, [data.country]);
   return (
     <div>
       <form onSubmit={submitform}>
@@ -42,7 +68,7 @@ function ResidentialDetails({
               onChange={handleChange}
               value={data.address}
               placeholder="Street Address"
-              className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light"
             />
           </div>
 
@@ -59,9 +85,8 @@ function ResidentialDetails({
               onChange={handleChange}
               value={data.city}
               placeholder="City"
-               className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light"
             />
-     
           </div>
 
           {/* State */}
@@ -69,17 +94,22 @@ function ResidentialDetails({
             <label htmlFor="state" className="form-label text-primary">
               State
             </label>
-            <input
-              required
-              type="text"
+            <select
               name="state"
               id="state"
               onChange={handleChange}
               value={data.state}
-              placeholder="State"
-              className={`form-input focus:outline-primary border border-gray-light`}
-            />
-
+              required
+              disabled={!data.country}
+              className="form-input focus:outline-primary border border-gray-light scrollbar-visible"
+            >
+              <option value="">Select State</option>
+              {states.map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Country */}
@@ -93,17 +123,15 @@ function ResidentialDetails({
               id="country"
               onChange={handleChange}
               value={data.country}
-              className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light scrollbar-visible"
             >
-              <option value="" disabled>
-                Select Country
-              </option>
-              <option value="Nigeria">Nigeria</option>
-              <option value="Ghana">Ghana</option>
-              <option value="Kenya">Kenya</option>
-              <option value="South Africa">South Africa</option>
+              <option value="">Select Country</option>
+              {countries.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
             </select>
-           
           </div>
 
           {/* Zip Code */}
@@ -119,9 +147,8 @@ function ResidentialDetails({
               onChange={handleChange}
               value={data.zipCode}
               placeholder="Zip Code"
-           className={`form-input focus:outline-primary border border-gray-light`}
+              className="form-input focus:outline-primary border border-gray-light"
             />
-          
           </div>
         </div>
 
