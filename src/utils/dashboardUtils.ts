@@ -304,10 +304,18 @@ export const navItemsAdmin = [
     ],
   },
   {
-    label: "Laboratories",
-    title: "Laboratories",
+    label: "Lab/radiology scientists",
+    title: "Lab/radiology scientists",
     icon: GiTestTubes,
-    to: routeLinks?.admin?.lab,
+    to: "",
+    subLinks: [
+      {
+        label: "Laboratories",
+        title: "Laboratories",
+        icon: GiTestTubes,
+        to: routeLinks?.admin?.lab,
+      },
+    ],
   },
 
   {
@@ -465,10 +473,18 @@ export const navItemsSuperAdmin = [
     ],
   },
   {
-    label: "Laboratories",
-    title: "Laboratories",
+    label: "Lab/radiology scientists",
+    title: "Lab/radiology scientists",
     icon: GiTestTubes,
-    to: routeLinks?.superAdmin?.lab,
+    to: "",
+    subLinks: [
+      {
+        label: "Laboratories",
+        title: "Laboratories",
+        icon: GiTestTubes,
+        to: routeLinks?.superAdmin?.lab,
+      },
+    ],
   },
 
   {

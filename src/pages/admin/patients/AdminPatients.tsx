@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiEye, FiEdit, FiTrash2, FiUpload } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
 import useAdmin from "../../../hooks/useAdmin";
@@ -12,6 +12,7 @@ import AdminNavigate from "../../../components/common/AdminNavigate";
 import AdminPatientsCreate from "./component/AdminPatientsCreate";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
 import { useToaster } from "../../../components/common/ToasterContext";
+import UploadCsvModal from "../../../components/modal/UploadCsvModal";
 
 function AdminPatients() {
   const {
@@ -43,7 +44,7 @@ function AdminPatients() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState("");
   const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
-
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
   useEffect(() => {
     getPatients();
   }, [
@@ -88,7 +89,7 @@ function AdminPatients() {
       key: "name",
       label: "Name",
       render: (patient) => (
-       <span>{patient?.user?.firstName && patient?.user?.lastName ? `${patient?.user?.firstName} ${patient?.user?.lastName}` : "N/A"}</span>
+        <span>{patient?.user?.firstName && patient?.user?.lastName ? `${patient?.user?.firstName} ${patient?.user?.lastName}` : "N/A"}</span>
       ),
     },
     {
@@ -113,7 +114,7 @@ function AdminPatients() {
         <span>{patient?.isBioDataCompleted ? "YES" : "NO"}</span>
       ),
     },
-       {
+    {
       key: "isMedicalHistoryCompleted",
       label: "MedicalHistoryCompleted",
       render: (patient) => (
@@ -163,17 +164,33 @@ function AdminPatients() {
       />
     );
   }
-
+  const handleUpload = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append("csv", file);
+    } catch (error) {
+      console.error("Upload failed", error);
+      showToast("Upload Failed.", "error");
+    }
+  };
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Patients</h1>
-        <button
-          className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
-          onClick={() => setShowForm(true)}
-        >
-          Add Patient
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
+            onClick={() => setShowForm(true)}
+          >
+            Add Patient
+          </button>
+          <button
+            className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
+            onClick={() => setUploadModalOpen(true)}
+          >
+            <FiUpload /> Upload Patients
+          </button>
+        </div>
       </div>
 
       <HeaderTab
@@ -235,6 +252,11 @@ function AdminPatients() {
           />
         )}
       </div>
+      <UploadCsvModal
+        isOpen={uploadModalOpen}
+        onClose={() => setUploadModalOpen(false)}
+        onUpload={handleUpload}
+      />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiPlus, FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiPlus, FiEye, FiEdit, FiTrash2, FiUpload } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import useMedications from "../../../hooks/useMedications";
 import AdminApi from "../../../api/adminApi";
@@ -21,6 +21,7 @@ import { MdInventory } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import useAdminAuth from "../../../hooks/useAdminAuth";
+import UploadCsvModal from "../../../components/modal/UploadCsvModal";
 
 function AdminMedications() {
   const {
@@ -54,9 +55,10 @@ function AdminMedications() {
   // ConfirmModal states
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState("");
-  const [onConfirm, setOnConfirm] = useState<() => void>(() => {});
+  const [onConfirm, setOnConfirm] = useState<() => void>(() => { });
   const [confirmLoading, setConfirmLoading] = useState(false);
   const navigate = useNavigate();
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
   const { userProfile } = useAdminAuth();
   useEffect(() => {
     getMedications();
@@ -124,28 +126,38 @@ function AdminMedications() {
     setConfirmOpen(true);
   };
 
-  const handleNavigate = (id:string) => {
+  const handleUpload = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append("csv", file);
+    } catch (error) {
+      console.error("Upload failed", error);
+      showToast("Upload Failed.", "error");
+    }
+  };
+
+  const handleNavigate = (id: string) => {
     if (userProfile?.user?.role === "admin") {
-      navigate(routeLinks?.admin?.adminInventory+'/medication/'+ id)
-    }else{
-      navigate(routeLinks?.superAdmin?.adminInventory+'/medication/'+ id)   
+      navigate(routeLinks?.admin?.adminInventory + '/medication/' + id)
+    } else {
+      navigate(routeLinks?.superAdmin?.adminInventory + '/medication/' + id)
     }
   };
   const columns: Column<any>[] = [
     {
-  key: "image",
-  label: "Image",
-  render: (m) =>
-    m.image?.url ? (
-      <img
-        src={m.image.url}
-        alt={m.name}
-        className="w-12 h-12 object-cover rounded-md "
-      />
-    ) : (
-      <span className="text-gray-400 text-sm">No image</span>
-    ),
-},
+      key: "image",
+      label: "Image",
+      render: (m) =>
+        m.image?.url ? (
+          <img
+            src={m.image.url}
+            alt={m.name}
+            className="w-12 h-12 object-cover rounded-md "
+          />
+        ) : (
+          <span className="text-gray-400 text-sm">No image</span>
+        ),
+    },
     { key: "name", label: "Name" },
     { key: "genericName", label: "Generic Name" },
     { key: "manufacturer", label: "Manufacturer" },
@@ -242,16 +254,16 @@ function AdminMedications() {
         </button>
         <div className="space-y-4 container-bd">
 
-            {viewMedication?.image?.url && (
-              <div className="w-full md:w-64">
-                <p className="text-sm text-gray-600 mb-2">Current Image:</p>
-                <img
-                  src={viewMedication?.image?.url}
-                  alt={viewMedication.name}
-                  className="rounded-lg border object-cover w-full h-40"
-                />
-              </div>
-            )}
+          {viewMedication?.image?.url && (
+            <div className="w-full md:w-64">
+              <p className="text-sm text-gray-600 mb-2">Current Image:</p>
+              <img
+                src={viewMedication?.image?.url}
+                alt={viewMedication.name}
+                className="rounded-lg border object-cover w-full h-40"
+              />
+            </div>
+          )}
           <div className="mt-4 space-y-2">
             <h2 className="text-xl font-semibold">{viewMedication.name}</h2>
             <p>
@@ -294,12 +306,20 @@ function AdminMedications() {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Medications</h1>
-        <button
-          className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
-          onClick={() => setShowForm(true)}
-        >
-          <FiPlus /> Add Medication
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
+            onClick={() => setShowForm(true)}
+          >
+            <FiPlus /> Add Medication
+          </button>
+          <button
+            className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
+            onClick={() => setUploadModalOpen(true)}
+          >
+            <FiUpload /> Upload Medications
+          </button>
+        </div>
       </div>
 
       <section>
@@ -327,7 +347,7 @@ function AdminMedications() {
               onChange: setMedicationDosageForm,
             },
             {
-              label:  "Requires Prescription",
+              label: "Requires Prescription",
               options: ["true", "false"],
               value: medicationRequiresPrescription,
               onChange: setMedicationRequiresPrescription,
@@ -345,8 +365,8 @@ function AdminMedications() {
           {medicationsLoading ? (
             <p>Loading...</p>
           ) : medications.length === 0 ? (
-        <p className="text-center mt-10 text-gray-500">No medications found.</p>
-      ) : (
+            <p className="text-center mt-10 text-gray-500">No medications found.</p>
+          ) : (
             <Table
               data={medications}
               columns={columns}
@@ -366,6 +386,12 @@ function AdminMedications() {
           confirmText="Yes, Confirm"
           onConfirm={onConfirm}
           loading={confirmLoading}
+        />
+
+        <UploadCsvModal
+          isOpen={uploadModalOpen}
+          onClose={() => setUploadModalOpen(false)}
+          onUpload={handleUpload}
         />
       </section>
     </div>

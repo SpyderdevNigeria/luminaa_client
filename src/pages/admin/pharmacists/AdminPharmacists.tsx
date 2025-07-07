@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiPlus, FiEye, FiEdit } from "react-icons/fi";
+import { FiPlus, FiEye, FiEdit, FiUpload } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import useAdmin from "../../../hooks/useAdmin";
 import AdminApi from "../../../api/adminApi";
@@ -9,6 +9,8 @@ import Dropdown from "../../../components/dropdown/dropdown";
 import StatusBadge from "../../../components/common/StatusBadge";
 import AdminPharmacistsCreate from "./component/AdminPharmacistsCreate";
 import AdminNavigate from "../../../components/common/AdminNavigate";
+import { useToaster } from "../../../components/common/ToasterContext";
+import UploadCsvModal from "../../../components/modal/UploadCsvModal";
 
 function AdminPharmacists() {
   const {
@@ -25,7 +27,8 @@ function AdminPharmacists() {
 
   const [showForm, setShowForm] = useState(false);
   const [editPharmacist, setEditPharmacist] = useState<any>(null);
-
+   const { showToast } = useToaster();
+     const [uploadModalOpen, setUploadModalOpen] = useState(false);
   useEffect(() => {
     getPharmacists();
   }, [pharmacistsPage, pharmacistsSearch ]);
@@ -139,10 +142,21 @@ function AdminPharmacists() {
     );
   }
 
+    const handleUpload = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append("csv", file);
+    } catch (error) {
+      console.error("Upload failed", error);
+      showToast("Upload Failed.", "error");
+    }
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Pharmacists</h1>
+         <div className="flex items-center gap-4">
         <button
           className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
           onClick={() => setShowForm(true)}
@@ -150,6 +164,14 @@ function AdminPharmacists() {
           <FiPlus />
           Add Pharmacist
         </button>
+
+               <button
+                    className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
+                    onClick={() => setUploadModalOpen(true)}
+                  >
+                    <FiUpload /> Upload Pharmacists
+                  </button>
+                     </div>
       </div>
 
       <HeaderTab title=""   searchPlaceholder="name, or email"
@@ -169,6 +191,11 @@ function AdminPharmacists() {
           />
         )}
       </div>
+         <UploadCsvModal
+              isOpen={uploadModalOpen}
+              onClose={() => setUploadModalOpen(false)}
+              onUpload={handleUpload}
+            />
     </div>
   );
 }
