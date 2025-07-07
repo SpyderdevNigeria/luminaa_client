@@ -32,53 +32,53 @@ const Table = <T extends object>({
   const getTotalPages = Math.ceil((total ?? 0) / limit);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const scrollAmount = 200;
+  // const scrollAmount = 200;
 
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+  // const [canScrollLeft, setCanScrollLeft] = useState(false);
+  // const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const updateScrollButtons = () => {
-    const container = scrollRef.current;
-    if (!container) return;
+  // const updateScrollButtons = () => {
+  //   const container = scrollRef.current;
+  //   if (!container) return;
 
-    const { scrollLeft, scrollWidth, clientWidth } = container;
+  //   const { scrollLeft, scrollWidth, clientWidth } = container;
 
-    setCanScrollLeft(scrollLeft > 0);
-    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1); // -1 for precision
-  };
+  //   setCanScrollLeft(scrollLeft > 0);
+  //   setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1); // -1 for precision
+  // };
 
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-    }
-  };
+  // const scrollLeft = () => {
+  //   if (scrollRef.current) {
+  //     scrollRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+  //   }
+  // };
 
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
-  };
+  // const scrollRight = () => {
+  //   if (scrollRef.current) {
+  //     scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  //   }
+  // };
 
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
+  // useEffect(() => {
+  //   const container = scrollRef.current;
+  //   if (!container) return;
 
-    updateScrollButtons(); // Initial check
+  //   updateScrollButtons(); 
 
-    container.addEventListener("scroll", updateScrollButtons);
-    window.addEventListener("resize", updateScrollButtons);
+  //   container.addEventListener("scroll", updateScrollButtons);
+  //   window.addEventListener("resize", updateScrollButtons);
 
-    return () => {
-      container.removeEventListener("scroll", updateScrollButtons);
-      window.removeEventListener("resize", updateScrollButtons);
-    };
-  }, [data, columns]);
+  //   return () => {
+  //     container.removeEventListener("scroll", updateScrollButtons);
+  //     window.removeEventListener("resize", updateScrollButtons);
+  //   };
+  // }, [data, columns]);
 
   return (
     <div className="space-y-4">
       {/* Scroll control buttons */}
 
-      {canScrollLeft || canScrollRight &&  <div className="flex justify-end items-center gap-2">
+    {/* <div className="flex justify-end items-center gap-2">
         <button
           onClick={scrollLeft}
           disabled={!canScrollLeft}
@@ -101,13 +101,13 @@ const Table = <T extends object>({
         >
           Scroll Right →
         </button>
-      </div>}
+      </div> */}
 
 
       {/* Scrollable table */}
-      <div ref={scrollRef} className="overflow-x-auto scrollbar-visible">
+      <div ref={scrollRef} className=" overflow-x-auto scrollbar-visible">
         <table className="w-full text-left text-sm border-separate border-spacing-y-2 min-w-max">
-          <thead className="bg-primary text-white">
+          <thead className="bg-primary text-white sticky">
             <tr>
               <th className="p-3 font-light">S/N</th>
               {columns.map((col, index) => (
@@ -199,4 +199,4 @@ const Table = <T extends object>({
   );
 };
 
-export default Table;
+export default Table; 

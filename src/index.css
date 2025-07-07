@@ -150,7 +150,8 @@ button {
 
 .scrollbar-visible::-webkit-scrollbar {
   display: block !important;                  
-  width: 4px;
+  width: 10px;
+  height: 10px;
 }
 
 .scrollbar-visible::-webkit-scrollbar-thumb {

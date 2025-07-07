@@ -90,7 +90,7 @@ function DashboardLayout({ children, links, }: DashboardLayoutProps) {
               : { title: '', sublink: '' }
           }
         />
-        <main className="flex-1 px-4 2xl:px-18 py-6 max-h-[90vh] overflow-y-scroll"
+        <main className="flex-1 px-4 2xl:px-18 py-6 max-h-[90vh] overflow-y-scroll scrollbar-visible"
         id="scroll-container"
         >
           {children}
