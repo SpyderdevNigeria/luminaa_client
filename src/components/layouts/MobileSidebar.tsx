@@ -45,7 +45,7 @@ function MobileSidebar({
                 <img
                   src={website?.logo}
                   alt={website?.name}
-                  className="h-8 md:h-8"
+                 className={` ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
                 />
                 <div className="hidden md:flex items-center gap-2 text-base text-primary-text ml-6 md:ml-18">
                   <GoSidebarExpand className="w-5 h-5" />

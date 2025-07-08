@@ -1,6 +1,11 @@
+// let logo_url = 'http://res.cloudinary.com/dwirhx8kk/image/upload/v1742399951/cli/y0agkvfy6lgoq1ztybd7.png';
+import Logo from "../assets/images/logo.png";
 const website = {
-  logo: 'http://res.cloudinary.com/dwirhx8kk/image/upload/v1742399951/cli/y0agkvfy6lgoq1ztybd7.png',
-  name: 'Lumina Medicals',
+  logo: Logo,
+  name: 'Immanuel Clinic',
+  square: true,
+  logoSquareSize :"w-20",
+  logoRegularSize: "w-36 md:w-44",
   contact: {
     email: 'email@mail.com',
     phone1: '+1 234 567 890',

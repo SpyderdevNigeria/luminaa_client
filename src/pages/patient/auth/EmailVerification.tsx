@@ -95,9 +95,9 @@ function EmailVerification() {
   if (authLoading) return <LoadingScreen />;
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
-      <div className="w-36 md:w-44 absolute top-6 left-6">
+      <div className=" absolute top-6 left-6">
         <Link to="/">
-          <img src={website?.logo} alt="Logo" className="w-full" />
+          <img src={website?.logo} alt="Logo"  className={` ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`} />
         </Link>
       </div>
 

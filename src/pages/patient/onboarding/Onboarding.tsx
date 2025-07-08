@@ -106,7 +106,7 @@ function Onboarding() {
           <img
             src={website.logo}
             alt="Logo"
-            className="w-40 object-contain mx-auto md:mx-0"
+            className={`object-contain mx-auto md:mx-0 ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
           />
         </Link>
       </div>

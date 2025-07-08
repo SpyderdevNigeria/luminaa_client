@@ -24,9 +24,13 @@ function AdminAuthLayout() {
   return (
     <div className="min-h-screen  grid grid-cols-1 lg:grid-cols-7 bg-white">
       {/* Left - Side*/}
-      <div className="flex flex-col items-start px-6 sm:px-16 col-span-7">
-        <Link to={'/'} className="flex justify-center mb-4">
-       <img src={website?.logo} alt="Logo" className="h-8 md:h-14 mt-12 mb-24" />        </Link>
+      <div className="flex flex-col items-start px-6 gap-8  col-span-7">
+        <Link to={'/'} className="flex justify-center  p-4 md:p-4">
+          <img src={website?.logo} alt="Logo"
+
+            className={` ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
+
+          /> </Link>
         <Outlet />
       </div>
 

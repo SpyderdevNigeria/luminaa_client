@@ -124,7 +124,7 @@ function PartnerEmailVerification() {
           {/* Logo */}
           <div className="mb-6 text-start">
             <Link to="/" className="block">
-              <img src={website?.logo} alt="Logo" className="h-10 2xl:h-16" />
+              <img src={website?.logo} alt="Logo"  className={` ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}/>
             </Link>
           </div>
 

@@ -14,7 +14,7 @@ export default function Home() {
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">{website?.name}</span>
               <img
-                className="h-8 md:h-14 w-auto"
+               className={` ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
                 src={website?.logo}
                 alt=""
               />

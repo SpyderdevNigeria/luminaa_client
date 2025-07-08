@@ -16,7 +16,8 @@ function SheetHeader() {
     <img
       src={website?.logo}
       alt="Logo"
-      style={{ width: "200px", height: "auto", objectFit: "contain" }}
+      style={{  height: "auto", objectFit: "contain" }}
+       className={`${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
     />
   </div>
 

@@ -31,7 +31,7 @@ function Appointment() {
       <div className="flex flex-row items-center justify-between ">
            <Link to={routeLinks?.patient?.dashboard}>
         <img src={website?.logo} alt=""
-        className="w-40 object-contain mx-auto md:mx-0"
+         className={`object-contain mx-auto md:mx-0 ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
         />
       </Link>
 

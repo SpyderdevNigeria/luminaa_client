@@ -30,7 +30,7 @@ function PatientAuthLayout() {
             <img
               src={website?.logo}
               alt="Logo"
-              className="w-36 md:w-44 mx-auto md:mx-0"
+              className={` mx-auto md:mx-0 ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
             />
           </Link>
         </div>

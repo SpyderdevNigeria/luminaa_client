@@ -30,7 +30,7 @@ function Sidebar({ links, active }: SidebarProps) {
           <img
             src={website?.logo}
             alt={website?.name}
-            className="h-10 md:h-10"
+             className={` ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
           />
         </div>
         <h4 className="py-2 text-xs text-inactive font-medium">DASHBOARD</h4>
