@@ -18,7 +18,6 @@ function AdminAuthLayout() {
     }
   }, [userProfile, authLoading, navigate]);
 
-  // Loading while auth is verifying
   if (authLoading) return <LoadingScreen />;
 
   return (
