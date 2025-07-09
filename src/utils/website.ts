@@ -2,10 +2,10 @@
 import Logo from "../assets/images/logo.png";
 const website = {
   logo: Logo,
-  name: 'Immanuel Clinic',
-  square: true,
+  name: 'Ponyx hospital',
+  square: false,
   logoSquareSize :"w-20",
-  logoRegularSize: "w-36 md:w-44",
+  logoRegularSize: "w-36 md:w-40",
   contact: {
     email: 'email@mail.com',
     phone1: '+1 234 567 890',
