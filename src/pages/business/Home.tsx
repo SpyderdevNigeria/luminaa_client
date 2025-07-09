@@ -71,7 +71,7 @@ export default function Home() {
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-gray-500/10">
                   <div className="space-y-2 py-6 flex flex-col ">
-                     <Link to={routeLinks?.auth?.partnerLogin}  className="text-sm font-semibold text-gray-900">Partner</Link>
+                     <Link to={routeLinks?.auth?.partnerLogin}  className="text-sm font-semibold text-gray-900">Practitioners</Link>
                       <Link to={routeLinks?.auth?.adminLogin}  className="text-sm font-semibold text-gray-900">Admin</Link>
                   </div>
                   <div className="py-6">
