@@ -26,9 +26,10 @@ const generateDays = (year: number, month: number) => {
 interface CustomCalendarProps {
   selected?: string;
   onChange?: (date: string) => void;
+  isDateDisabled?: (date: Date) => boolean;
 }
 
-const CustomCalendar = ({ selected, onChange }: CustomCalendarProps) => {
+const CustomCalendar = ({ selected, onChange, isDateDisabled }: CustomCalendarProps) => {
   const today = new Date();
   const selectedDate = selected ? new Date(selected) : null;
 
@@ -85,7 +86,7 @@ const CustomCalendar = ({ selected, onChange }: CustomCalendarProps) => {
   return (
     <div className={`w-full mx-auto p-4 bg-white rounded-lg border ${selected !== "" ? 'border-dashboard-gray' : ''}`}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="w-full flex items-center justify-between mb-4">
         <button onClick={prevMonth} className="text-xl font-bold">
           <MdOutlineKeyboardArrowLeft />
         </button>
@@ -101,36 +102,44 @@ const CustomCalendar = ({ selected, onChange }: CustomCalendarProps) => {
       </div>
 
       {/* Days of week */}
-      <div className="grid grid-cols-7 gap-2 text-center font-[400] text-[#141414] mb-2">
+      <div className="w-full grid grid-cols-7 gap-2 text-center font-[400] text-[#141414] mb-2">
         {daysOfWeek.map((day) => (
           <div key={day}>{day}</div>
         ))}
       </div>
 
       {/* Dates grid */}
-      <div className="grid grid-cols-7 gap-2 text-center">
+      <div className="w-full grid grid-cols-7 gap-2 text-center justify-center">
         {days.map((day, index) => {
-          const todayClass = day && isToday(day)
-            ? "border border-primary"
-            : "";
+          const date = day ? new Date(currentYear, currentMonth, day) : null;
+
+          const todayClass = date && isToday(day!) ? "border border-primary" : "";
 
           const isSelected =
             selectedDate &&
-            day === selectedDate.getDate() &&
-            currentMonth === selectedDate.getMonth() &&
-            currentYear === selectedDate.getFullYear();
+            date &&
+            selectedDate.toDateString() === date.toDateString();
 
           const selectedClass = isSelected ? "bg-primary text-white" : "";
 
-          const disabledClass = day && isPastDate(day)
+          const isDisabled =
+            !day ||
+            isPastDate(day) ||
+            (date && isDateDisabled?.(date));
+
+          const disabledClass = isDisabled
             ? "text-gray-300 cursor-not-allowed"
             : "hover:bg-blue-100 cursor-pointer";
 
           return (
             <div
               key={index}
-              className={`h-10 w-10 flex items-center justify-center rounded-sm ${todayClass} ${selectedClass} ${disabledClass}`}
-              onClick={() => !isPastDate(day!) && handleDateClick(day)}
+              className={`h-10 w-10 mx-auto flex items-center justify-center rounded-sm ${todayClass} ${selectedClass} ${disabledClass}`}
+              onClick={() => {
+                if (!isDisabled && day) {
+                  handleDateClick(day);
+                }
+              }}
             >
               {day || ""}
             </div>

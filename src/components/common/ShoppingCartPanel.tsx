@@ -64,12 +64,12 @@ const ShoppingCartPanel: React.FC<Props> = ({ open, setOpen,  }) => {
 
                   {/* Info */}
                   <div className="text-sm">
-                    <div className="font-semibold">{item.name}</div>
+                    <div className="font-semibold">{item?.name}</div>
                     <div className="text-xs text-gray-500">
-                      {item.strength} | {item.dosageForm}
+                      {item?.strength} | {item?.dosageForm}
                     </div>
                     <div className="text-xs text-gray-500">
-                      NGN {numberWithCommas(item.price)} × {item.quantity}
+                      NGN {numberWithCommas(item?.price)} × {item?.quantity}
                     </div>
                   </div>
                 </div>
@@ -77,14 +77,14 @@ const ShoppingCartPanel: React.FC<Props> = ({ open, setOpen,  }) => {
                 {/* Quantity Controls */}
                 <div className="flex items-center gap-2 text-base font-semibold">
                   <button
-                    onClick={() => handleQuantityChange(item.id, -1)}
+                    onClick={() => handleQuantityChange(item?.id, -1)}
                     className="px-2 py-1 bg-gray-200 rounded text-gray-700 hover:bg-gray-300"
                   >
                     −
                   </button>
-                  <span>{item.quantity}</span>
+                  <span>{item?.quantity}</span>
                   <button
-                    onClick={() => handleQuantityChange(item.id, 1)}
+                    onClick={() => handleQuantityChange(item?.id, 1)}
                     className="px-2 py-1 bg-gray-200 rounded text-gray-700 hover:bg-gray-300"
                   >
                     +
@@ -109,7 +109,7 @@ const ShoppingCartPanel: React.FC<Props> = ({ open, setOpen,  }) => {
           navigate(routeLinks?.patient?.checkout)
           }}
           className={`mt-4 w-full py-2 px-3 text-center text-white bg-primary rounded hover:bg-primary/90 transition ${
-            cartItems.length === 0 ? "pointer-events-none opacity-50" : ""
+            cartItems?.length === 0 ? "pointer-events-none opacity-50" : ""
           }`}
         >
           Checkout

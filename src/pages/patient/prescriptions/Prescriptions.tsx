@@ -7,9 +7,12 @@ import PatientApi from "../../../api/PatientApi";
 import HeaderTab from "../../../components/common/HeaderTab";
 import { IPrescription } from "../../../types/Interfaces";
 import PrescriptionDetailsModal from "../../../components/modal/PrescriptionDetailsModal";
-import PrescriptionCard from "../../../components/common/PrescriptionCard";
 import DoctorImage from "../../../assets/images/doctor/doctor.png";
 import { FaCalendarAlt } from "react-icons/fa";
+import PrescriptionAppointmentView from "../../../components/common/RenderPrescriptionView";
+import { FiShoppingCart } from "react-icons/fi";
+import useCart from "../../../hooks/useCart";
+import ShoppingCartPanel from "../../../components/common/ShoppingCartPanel";
 function Prescriptions() {
   const [selectedPrescriptions, setSelectedPrescriptions] = useState<
     IPrescription[]
@@ -40,7 +43,8 @@ function Prescriptions() {
     setPage,
     getPrescriptions,
   } = usePrescriptions(PatientApi);
-
+   const {  totalItems, } = useCart();
+     const [cartOpen, setCartOpen] = useState(false);
   useEffect(() => {
     if (
       prescriptions.length > 0 &&
@@ -80,73 +84,7 @@ function Prescriptions() {
     >
   );
 
-  const renderPrescriptionView = () => {
-    const selectedData = appointmentsMap[expandedAppointmentId!];
-    if (!selectedData) return null;
 
-    const { appointment, doctor, prescriptions } = selectedData;
-
-    return (
-      <div className="space-y-6">
-        <button
-          onClick={() => setExpandedAppointmentId(null)}
-          className="text-sm text-gray-600 underline mb-4"
-        >
-          ← Back to all appointments
-        </button>
-
-        <div className="bg-white">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div>
-              <h3 className="text-xl font-semibold text-gray-800">
-                {doctor
-                  ? `Dr. ${doctor.firstName} ${doctor.lastName}`
-                  : "Doctor"}
-              </h3>
-              <p className="text-sm text-gray-600">{doctor?.specialty}</p>
-            </div>
-
-            <button
-              onClick={() => {
-                setSelectedPrescriptions(prescriptions);
-                setModalOpenPrescriptionDownload(true);
-              }}
-              className="bg-primary text-white px-4 py-1.5 text-sm rounded  transition"
-            >
-              Download Prescriptions 
-            </button>
-          </div>
-
-          <div className="text-xs mt-3 text-gray-700 space-y-1">
-            <p>
-              <strong>Scheduled:</strong>{" "}
-              {appointment?.scheduledDate
-                ? moment(appointment.scheduledDate).format(
-                    "MMMM D, YYYY h:mm A"
-                  )
-                : "N/A"}
-            </p>
-            <p>
-              <strong>Prescriptions:</strong> {prescriptions.length}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-            {prescriptions.map((prescription) => (
-              <PrescriptionCard
-                key={prescription._id}
-                prescription={prescription}
-                onView={() => {
-                  setSelectedPrescription(prescription);
-                  setModalOpen(true);
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="space-y-6 container-bd">
@@ -190,7 +128,15 @@ function Prescriptions() {
           No prescriptions found.
         </div>
       ) : expandedAppointmentId ? (
-        renderPrescriptionView()
+         <PrescriptionAppointmentView
+          appointmentId={expandedAppointmentId}
+          doctor={appointmentsMap[expandedAppointmentId].doctor}
+          appointment={appointmentsMap[expandedAppointmentId].appointment}
+          onBack={() => setExpandedAppointmentId(null)}
+          setModalOpenPrescriptionDownload={setModalOpenPrescriptionDownload}
+          setSelectedPrescription={setSelectedPrescription}
+          setModalOpen={setModalOpen}
+        />
       ) : (
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {Object.entries(appointmentsMap).map(
@@ -280,6 +226,8 @@ function Prescriptions() {
               </div>
             )
           )}
+
+
         </div>
       )}
 
@@ -295,7 +243,17 @@ function Prescriptions() {
         setModalOpen={setModalOpenPrescriptionDownload}
         prescriptions={selectedPrescriptions}
       />
-
+         {totalItems > 0 && (
+                <button
+                  onClick={() => setCartOpen(true)}
+                  className="fixed bottom-6 right-6 bg-primary text-white rounded-full p-4 shadow-xl flex items-center gap-2 z-20"
+                >
+                  <FiShoppingCart className="text-2xl" />
+                </button>
+              )}
+        
+              <ShoppingCartPanel open={cartOpen} setOpen={setCartOpen} />
+        
       {/* Pagination */}
       {!expandedAppointmentId && totalPages > 1 && (
         <PaginationComponent

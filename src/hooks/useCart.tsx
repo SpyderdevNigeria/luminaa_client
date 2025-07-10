@@ -14,6 +14,7 @@ export default function useCart() {
   const [cartItemLoading, setCartItemLoading] = useState(false);
   const items = useAppSelector((state) => state.cart.items);
   const { showToast } = useToaster();
+
   const totalItems = items.reduce(
     (acc: any, item: { quantity: any }) => acc + item.quantity,
     0
@@ -33,21 +34,59 @@ export default function useCart() {
       } else {
         const prescriptionCheck = await PatientApi.getMedicationsCheck(item.id);
         if (!prescriptionCheck?.data?.hasPrescription) {
-          showToast(
-            `${item?.name} requires prescription from a doctor`,
-            "error"
-          );
+          showToast(`${item?.name} requires prescription from a doctor`, "error");
           return;
         }
         dispatch(addToCart(item));
         showToast("Medication added to Cart", "success");
       }
     } catch (error) {
-      showToast("something went wrong", "error");
-    }finally {
+      showToast("Something went wrong", "error");
+    } finally {
       setCartItemLoading(false);
     }
   };
+
+  const addBulk = async (itemsToAdd: any[]) => {
+    setCartItemLoading(true);
+    try {
+      const results = await Promise.allSettled(
+        itemsToAdd.map(async (item) => {
+          if (!item?.requiresPrescription) {
+            return { item, allowed: true };
+          }
+          const check = await PatientApi.getMedicationsCheck(item.id);
+          return {
+            item,
+            allowed: !!check?.data?.hasPrescription,
+          };
+        })
+      );
+
+      let addedCount = 0;
+
+      results.forEach((result) => {
+        if (result.status === "fulfilled") {
+          const { item, allowed } = result.value;
+          if (allowed) {
+            dispatch(addToCart(item));
+            addedCount++;
+          } else {
+            showToast(`${item.name} requires prescription from a doctor`, "error");
+          }
+        }
+      });
+
+      if (addedCount > 0) {
+        showToast(`${addedCount} item(s) added to cart`, "success");
+      }
+    } catch (error) {
+      showToast("Bulk add failed", "error");
+    } finally {
+      setCartItemLoading(false);
+    }
+  };
+
   const remove = (id: any) => dispatch(removeFromCart(id));
   const update = (id: any, quantity: any) =>
     dispatch(updateQuantity({ id, quantity }));
@@ -58,6 +97,7 @@ export default function useCart() {
     totalItems,
     subtotal,
     add,
+    addBulk, 
     remove,
     update,
     clear,

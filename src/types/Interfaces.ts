@@ -16,6 +16,7 @@ export interface IPrescription {
   status:string;
   instructions:string;
   createdAt: string;
+  medication?:IMedication;
   isRefillable:string | boolean;
    appointment?:IAppointment,
    doctor?: IDoctor

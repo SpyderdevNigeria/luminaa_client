@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import getAllCountries from "countries-states-cities";
 import getStatesOfCountry from "countries-states-cities";
-import { formatDate, getMaxDateFor18YearsOld } from "../../../../utils/dashboardUtils";
+import {
+  formatDate,
+  getMaxDateFor18YearsOld,
+  nigerianStates,
+} from "../../../../utils/dashboardUtils";
 
 type BioDataProps = {
   submitform: (e: React.FormEvent) => void;
@@ -25,19 +29,35 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
   const [countries, setCountries] = useState<string[]>([]);
   const [states, setStates] = useState<string[]>([]);
 
-  // Load countries on mount
+  // Load countries and set default country to Nigeria
   useEffect(() => {
     const allCountries = getAllCountries.getAllCountries();
     setCountries(allCountries.map((country: any) => country.name));
+
+    if (!data.country) {
+      const event = {
+        target: {
+          name: "country",
+          value: "Nigeria",
+        },
+      } as React.ChangeEvent<HTMLSelectElement>;
+      handleChange(event);
+    }
   }, []);
 
-  // Load states when country changes
+  // Load states based on country
   useEffect(() => {
-    if (data.country) {
+    if (data.country === "Nigeria") {
+      setStates(nigerianStates.slice(1)); // Skip "Select State"
+    } else if (data.country) {
       const allCountries = getAllCountries.getAllCountries();
-      const selectedCountry = allCountries.find((country: any) => country.name === data.country);
+      const selectedCountry = allCountries.find(
+        (country: any) => country.name === data.country
+      );
       if (selectedCountry) {
-        const countryStates = getStatesOfCountry.getStatesOfCountry(selectedCountry.id);
+        const countryStates = getStatesOfCountry.getStatesOfCountry(
+          selectedCountry.id
+        );
         setStates(countryStates.map((state: any) => state.name));
       } else {
         setStates([]);
@@ -145,7 +165,8 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
               onChange={handleChange}
               value={data.country}
               required
-              className="form-input focus:outline-primary border border-gray-light scrollbar-visible"
+              disabled
+              className="form-input focus:outline-primary border border-gray-light bg-gray-100 text-gray-700 cursor-not-allowed"
             >
               <option value="">Select Country</option>
               {countries.map((country) => (
@@ -157,10 +178,12 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
           </div>
 
           {/* State of Origin */}
-            <div className="col-span-2">
           {data.country && (
-              <div className="col-span-2">
-              <label htmlFor="stateOfOrigin" className="form-label text-primary">
+            <div className="col-span-2">
+              <label
+                htmlFor="stateOfOrigin"
+                className="form-label text-primary"
+              >
                 State of Origin
               </label>
               <select
@@ -178,9 +201,8 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
                   </option>
                 ))}
               </select>
-               </div>
-          )}
             </div>
+          )}
 
           {/* Phone Number */}
           <div className="col-span-2">
@@ -201,7 +223,10 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
 
           {/* Emergency Contact Name */}
           <div className="col-span-2">
-            <label htmlFor="emergencyContactName" className="form-label text-primary">
+            <label
+              htmlFor="emergencyContactName"
+              className="form-label text-primary"
+            >
               Emergency Contact Name
             </label>
             <input
@@ -218,7 +243,10 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
 
           {/* Emergency Contact Phone */}
           <div className="col-span-2">
-            <label htmlFor="emergencyContactPhone" className="form-label text-primary">
+            <label
+              htmlFor="emergencyContactPhone"
+              className="form-label text-primary"
+            >
               Emergency Contact Phone
             </label>
             <input

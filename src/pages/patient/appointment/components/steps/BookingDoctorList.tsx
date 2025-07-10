@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import CustomCalendar from "../../../../../components/common/CustomCalendar";
 import PatientApi from "../../../../../api/PatientApi";
 import DoctorCard from "../../../../../components/common/DoctorCard";
@@ -188,6 +188,17 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
     if (window.innerWidth < 768) setShowSpecialtyList(false); // Hide sidebar on mobile
   };
 
+    const availableDays = useMemo(() => {
+    return selectedDoctor?.availability?.data?.map((slot) =>
+      slot.dayOfWeek.toLowerCase()
+    ) || [];
+  }, [selectedDoctor]);
+
+  const isDateDisabled = (date: Date) => {
+    const dayName = date.toLocaleDateString("en-US", { weekday: "long" }).toLowerCase();
+    return !availableDays.includes(dayName);
+  };
+
 
   return (
     <div>
@@ -352,10 +363,11 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
 
           <div className="mb-6">
             <h6 className="font-semibold mb-2">Select Date</h6>
-            <CustomCalendar
-              selected={selectedDate}
-              onChange={(date) => handleDateChange(date)}
-            />
+           <CustomCalendar
+          selected={selectedDate}
+          onChange={(date) => handleDateChange(date)}
+          isDateDisabled={isDateDisabled}
+        />
           </div>
 
           <div className="mb-6">

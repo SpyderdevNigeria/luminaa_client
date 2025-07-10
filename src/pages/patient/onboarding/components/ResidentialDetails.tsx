@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import getAllCountries from "countries-states-cities";
 import getStatesOfCountry from "countries-states-cities";
+import { nigerianStates } from "../../../../utils/dashboardUtils";
 
 interface ResidentialDetailsProps {
   submitform: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -25,20 +26,33 @@ function ResidentialDetails({
 }: ResidentialDetailsProps) {
   const [countries, setCountries] = useState<string[]>([]);
   const [states, setStates] = useState<string[]>([]);
-
-  // Load countries on mount
   useEffect(() => {
     const allCountries = getAllCountries.getAllCountries();
     setCountries(allCountries.map((country: any) => country.name));
+    if (!data.country) {
+      const event = {
+        target: {
+          name: "country",
+          value: "Nigeria",
+        },
+      } as React.ChangeEvent<HTMLSelectElement>;
+
+      handleChange(event);
+    }
   }, []);
 
-  // Load states when country changes
   useEffect(() => {
-    if (data.country) {
+    if (data.country === "Nigeria") {
+      setStates(nigerianStates.slice(1));
+    } else if (data.country) {
       const allCountries = getAllCountries.getAllCountries();
-      const selectedCountry = allCountries.find((country: any) => country.name === data.country);
+      const selectedCountry = allCountries.find(
+        (country: any) => country.name === data.country
+      );
       if (selectedCountry) {
-        const countryStates = getStatesOfCountry.getStatesOfCountry(selectedCountry.id);
+        const countryStates = getStatesOfCountry.getStatesOfCountry(
+          selectedCountry.id
+        );
         setStates(countryStates.map((state: any) => state.name));
       } else {
         setStates([]);
@@ -47,6 +61,7 @@ function ResidentialDetails({
       setStates([]);
     }
   }, [data.country]);
+
   return (
     <div>
       <form onSubmit={submitform}>
@@ -123,7 +138,8 @@ function ResidentialDetails({
               id="country"
               onChange={handleChange}
               value={data.country}
-              className="form-input focus:outline-primary border border-gray-light scrollbar-visible"
+              disabled
+              className="form-input focus:outline-primary border border-gray-light scrollbar-visible bg-gray-100 text-gray-700 cursor-not-allowed"
             >
               <option value="">Select Country</option>
               {countries.map((country) => (
