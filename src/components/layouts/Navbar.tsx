@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import routeLinks from "../../utils/routes";
 import LogoutModal from "../modal/LogoutModal";
 import { logout } from "../../reducers/authSlice";
+import Multilingual from "../common/Multilingual";
 type NavbarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
@@ -73,6 +74,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
         </h1>
 
         <div className="flex items-center gap-4">
+          <Multilingual/>
           <Notification />
 
           {/* Avatar & Dropdown */}

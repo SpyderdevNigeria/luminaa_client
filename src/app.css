@@ -22,3 +22,22 @@
 .container-bd {
   @apply bg-white rounded-lg p-2 md:p-6;
 }
+/* Hide branding text and adjust spacing */
+.goog-logo-link,
+.goog-te-gadget span {
+  display: none !important;
+}
+
+#google_translate_element {
+  font-size: 0 !important;
+  margin: 0;
+}
+
+/* Hide Google banner at top */
+body .goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+

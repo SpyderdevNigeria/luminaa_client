@@ -90,7 +90,7 @@ const { formattedDate, formattedTime } = getFormattedDateTime(appointment?.sched
               <p className="text-sm text-gray-600 text-center">Specialty: {doctor?.specialty}</p>
 
               <div className="flex flex-wrap gap-2 mt-4 text-sm justify-center md:justify-start">
-                <span className="flex items-center gap-1 bg-[#00B2FF1A] text-primary  px-3 py-1 rounded-full">
+                <span className="flex items-center text-xs gap-1 bg-[#00B2FF1A] text-primary  px-3 py-1 rounded-full">
                  Meeting Venue : <TbLocation /> {appointment.location}
                 </span>
               </div>

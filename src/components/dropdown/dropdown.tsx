@@ -24,7 +24,7 @@ export default function Dropdown({
           type="button"
           className={
             triggerLabel !== ""
-              ? `cursor-pointer bg-white inline-flex items-center gap-2 ${style} text-base py-2 px-3 border border-dashboard-gray `
+              ? `cursor-pointer bg-white inline-flex items-center gap-2 ${style} text-base py-2 px-3 border border-dashboard-gray  focus:outline-primary`
               : "cursor-pointer"
           }
         >
