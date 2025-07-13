@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { useLayoutEffect } from "react";
 import LoadingScreen from "../loading/LoadingScreen";
 import { returnMemberNavigationUrlLogic } from "../../utils/dashboardUtils";
+import Multilingual from "../common/Multilingual";
 
 function PatientAuthLayout() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function PatientAuthLayout() {
       className="min-h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${Background})` }}
     >
-      <div className="p-4 md:p-8">
+      <div className="p-4 md:p-8 flex flex-row items-center justify-between  ">
         <div className="w-36 md:w-44">
           <Link to="/">
             <img
@@ -34,6 +35,7 @@ function PatientAuthLayout() {
             />
           </Link>
         </div>
+        <Multilingual />
       </div>
 
       <div className="px-4 md:px-0">

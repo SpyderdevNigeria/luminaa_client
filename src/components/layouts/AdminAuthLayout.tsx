@@ -4,6 +4,7 @@ import useAdminAuth from "../../hooks/useAdminAuth";
 import { useLayoutEffect } from "react";
 import LoadingScreen from "../loading/LoadingScreen";
 import { returnAdminNavigationUrlLogic } from "../../utils/dashboardUtils";
+import Multilingual from "../common/Multilingual";
 // import PartnerInfoCarousel from "../common/PartnerInfoCarousel";
 function AdminAuthLayout() {
   const navigate = useNavigate();
@@ -21,15 +22,22 @@ function AdminAuthLayout() {
   if (authLoading) return <LoadingScreen />;
 
   return (
-    <div className="min-h-screen  grid grid-cols-1 lg:grid-cols-7 bg-white">
+    <div className="min-h-screen bg-white">
       {/* Left - Side*/}
-      <div className="flex flex-col items-start px-6 gap-8  col-span-7">
-        <Link to={'/'} className="flex justify-center  p-4 md:p-4">
-          <img src={website?.logo} alt="Logo"
+      <div className="">
+       <div className="p-4 md:p-8 flex flex-row items-center justify-between  ">
+        <div className="w-36 md:w-44">
+          <Link to="/">
+            <img
+              src={website?.logo}
+              alt="Logo"
+              className={` mx-auto md:mx-0 ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
+            />
+          </Link>
+        </div>
+        <Multilingual />
+      </div>
 
-            className={` ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
-
-          /> </Link>
         <Outlet />
       </div>
 

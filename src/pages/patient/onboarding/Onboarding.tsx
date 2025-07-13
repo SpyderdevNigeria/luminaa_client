@@ -12,6 +12,7 @@ import routeLinks from "../../../utils/routes";
 import LoadingScreen from "../../../components/loading/LoadingScreen";
 import { updateUser } from "../../../reducers/authSlice";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
+import Multilingual from "../../../components/common/Multilingual";
 const initialData = {
   dateOfBirth: "",
   gender: "",
@@ -101,7 +102,7 @@ function Onboarding() {
       className="min-h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${Background})` }}
     >
-      <div className="p-4 py-4 md:px-8">
+    <div className="p-4 md:p-8 flex flex-row items-center justify-between  ">
         <Link to="/">
           <img
             src={website.logo}
@@ -109,6 +110,7 @@ function Onboarding() {
             className={`object-contain mx-auto md:mx-0 ${website?.square ? website?.logoSquareSize : website?.logoRegularSize}`}
           />
         </Link>
+         <Multilingual />
       </div>
 
       <div className="flex flex-col items-center justify-center p-4">

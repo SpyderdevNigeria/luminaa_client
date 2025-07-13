@@ -5,6 +5,7 @@ import { useLayoutEffect } from "react";
 import LoadingScreen from "../loading/LoadingScreen";
 import { returnPartnerNavigationUrlLogic } from "../../utils/dashboardUtils";
 import PartnerImage from "../../assets/images/auth/partnerAuth.png";
+import Multilingual from "../common/Multilingual";
 function PartnerAuthLayout() {
   const navigate = useNavigate();
   const { userProfile, authLoading } = usePartnerAuth();
@@ -48,12 +49,17 @@ function PartnerAuthLayout() {
       </div>
 
       {/* Right - Form Area */}
-      <div className="md:flex items-center justify-center px-6 sm:px-16 py-12 bg-white">
+      <div className="md:flex  flex-col  items-center px-6 sm:px-16 py-12 bg-white">
         {/* Logo for mobile */}
-        <div className="mb-12 block md:hidden">
+        <div className="mb-12 flex flex-row items-center justify-between md:hidden">
           <Link to="/" className="block">
             <img src={website?.logo} alt="Logo" className="h-10" />
           </Link>
+
+           <Multilingual />
+        </div>
+        <div className="w-full hidden md:block text-end mb-24">
+         <Multilingual />
         </div>
         <div className="w-full max-w-lg">
           <Outlet />
