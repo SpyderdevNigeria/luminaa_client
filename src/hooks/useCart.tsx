@@ -20,16 +20,19 @@ export default function useCart() {
     0
   );
   const subtotal = items.reduce(
-    (acc: number, item: { price: number; quantity: number }) =>
-      acc + item.price * item.quantity,
-    0
+    (acc: number, item: { price: number; quantity: number }) => acc + item?.price * item?.quantity, 0
   );
 
   const add = async (item: any) => {
+    const itembody = { ...item, price: item?.price || 0 };
+    if (itembody?.price <= 0) {
+      showToast("Price must be greater than 0", "error");
+      return;
+    }
     setCartItemLoading(true);
     try {
       if (!item?.requiresPrescription) {
-        dispatch(addToCart(item));
+        dispatch(addToCart(itembody));
         showToast("Medication added to Cart", "success");
       } else {
         const prescriptionCheck = await PatientApi.getMedicationsCheck(item.id);
@@ -37,7 +40,8 @@ export default function useCart() {
           showToast(`${item?.name} requires prescription from a doctor`, "error");
           return;
         }
-        dispatch(addToCart(item));
+        console.log(itembody);
+        dispatch(addToCart(itembody));
         showToast("Medication added to Cart", "success");
       }
     } catch (error) {

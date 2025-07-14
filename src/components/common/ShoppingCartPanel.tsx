@@ -54,7 +54,7 @@ const ShoppingCartPanel: React.FC<Props> = ({ open, setOpen,  }) => {
                     {item?.image?.url ? (
                       <img
                         src={item?.image?.url}
-                        alt={item.name}
+                        alt={item?.name}
                         className="w-full h-full object-cover"
                       />
                     ) : (
