@@ -60,7 +60,10 @@ const AdminApi = {
     const response = await api.post("/admin/patients", payload);
     return response.data;
   },
-
+  uploadPatientsCSV: async (payload: any) => {
+    const response = await api.post("/admin/patients/upload-csv", payload);
+    return response.data;
+  },
   updatePatient: async (id: string, payload: any) => {
     const response = await api.put(`/admin/patients/${id}`, payload);
     return response.data;
@@ -136,7 +139,10 @@ const AdminApi = {
     const response = await api.post(`/admin/medications`, body);
     return response.data;
   },
-
+    uploadMedicationCSV: async (payload: any) => {
+    const response = await api.post("/admin/medications/upload-csv", payload);
+    return response.data;
+  },
    createMedicationImage: async (id:string, body: any) => {
     const response = await api.post(`/admin/medications/${id}/upload-image`, body);
     return response.data;

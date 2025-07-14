@@ -8,15 +8,14 @@ interface UploadCsvModalProps {
   isOpen: boolean;
   onClose: () => void;
   onUpload: (file: File) => void;
+  loadingUpload?: boolean;
 }
 
-export default function UploadCsvModal({ isOpen, onClose, onUpload }: UploadCsvModalProps) {
+export default function UploadCsvModal({loadingUpload, isOpen, onClose, onUpload }: UploadCsvModalProps) {
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const { showToast } = useToaster();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     if (!csvFile) {
       showToast("Please select a valid CSV file.", "error");
       return;
@@ -28,10 +27,10 @@ export default function UploadCsvModal({ isOpen, onClose, onUpload }: UploadCsvM
   };
 
   return (
-    <Modal open={isOpen} onClose={onClose} hideCancel={true} title="Upload CSV File">
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <Modal open={isOpen} onClose={onClose} hideCancel={false} handleSubmit={handleSubmit} buttonText="Upload CSV" loading={loadingUpload} title="Upload CSV File">
+      <div className="space-y-4 mb-4">
         <FileDropzone
-          label="Upload CSV"
+          label="Upload"
           file={csvFile}
           onDrop={(file) => {
             if (file && file.name.toLowerCase().endsWith(".csv")) {
@@ -44,15 +43,7 @@ export default function UploadCsvModal({ isOpen, onClose, onUpload }: UploadCsvM
           accept=".csv"
           allowedExtensions={[".csv"]}
         />
-        <div className="flex justify-end gap-2">
-          <button type="button" onClick={onClose} className="text-primary cursor-pointer py-2 px-4 bg-white rounded-md text-sm">
-            Cancel
-          </button>
-          <button type="submit" className="text-white cursor-pointer py-2 px-4 bg-primary rounded-md text-sm">
-            Upload CSV
-          </button>
-        </div>
-      </form>
+      </div>
     </Modal>
   );
 }

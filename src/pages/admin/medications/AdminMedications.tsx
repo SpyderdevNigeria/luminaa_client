@@ -51,7 +51,7 @@ function AdminMedications() {
   const [editMedication, setEditMedication] = useState<any>(null);
   const [viewMedication, setViewMedication] = useState<any>(null);
   const { showToast } = useToaster();
-
+    const [loadingUpload, setLoadingUpload] = useState(false)
   // ConfirmModal states
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState("");
@@ -127,12 +127,19 @@ function AdminMedications() {
   };
 
   const handleUpload = async (file: File) => {
+      setLoadingUpload(true)
     try {
       const formData = new FormData();
-      formData.append("csv", file);
+      formData.append("file", file);
+       await AdminApi.uploadMedicationCSV(formData);
+         getMedications();
+      setUploadModalOpen(false);
+        showToast("Medications uploaded successfully", "success");
     } catch (error) {
       console.error("Upload failed", error);
       showToast("Upload Failed.", "error");
+    }finally{
+      setLoadingUpload(false)
     }
   };
 
@@ -314,10 +321,11 @@ function AdminMedications() {
             <FiPlus /> Add Medication
           </button>
           <button
-            className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
+          disabled={loadingUpload}
+            className={` ${loadingUpload ? "opacity-50 cursor-not-allowed bg-primary" : "bg-primary"} text-white px-6 py-2 text-sm rounded-md flex items-center gap-2`}
             onClick={() => setUploadModalOpen(true)}
           >
-            <FiUpload /> Upload Medications
+            <FiUpload />  {loadingUpload ? " Uploading..." : "Upload Medications"}
           </button>
         </div>
       </div>
@@ -392,6 +400,7 @@ function AdminMedications() {
           isOpen={uploadModalOpen}
           onClose={() => setUploadModalOpen(false)}
           onUpload={handleUpload}
+          loadingUpload={loadingUpload}
         />
       </section>
     </div>
