@@ -93,7 +93,7 @@ function Register() {
   return (
     <main className="max-w-[500px] w-full mx-auto px-2 md:px-4">
       <div className="text-center mb-8">
-        <h5 className="text-2xl md:text-3xl px-20 md:px-28 text-text-secondary">
+        <h5 className="text-2xl md:text-3xl px-20 md:px-24 text-text-secondary">
           Welcome to {website?.name}
         </h5>
         <p className="my-4 px-4 text-text-primary leading-5">
