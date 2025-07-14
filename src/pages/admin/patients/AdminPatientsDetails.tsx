@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AdminApi from "../../../api/adminApi";
 import { format } from "date-fns";
-
+import UserImage from "../../../assets/images/patient/user.png"
 type User = {
   id: string;
   user:{
@@ -76,7 +76,7 @@ function AdminPatientDetails() {
       <h2 className="text-2xl font-semibold mb-2">Patient Details</h2>
       <section>
         <h4 className="text-lg font-medium mb-2">Profile Image</h4>
-        <img src={user?.user?.profilePicture || ""} alt="" className="w-30 h-30 rounded-full object-cover" />
+        <img src={user?.user?.profilePicture || UserImage} alt="" className="w-30 h-30 rounded-full object-cover" />
       </section>
       {/* Account Info */}
       <section>

@@ -171,7 +171,7 @@ function AdminMedications() {
     { key: "dosageForm", label: "Dosage Form" },
     { key: "strength", label: "Strength" },
     { key: "category", label: "Category" },
-    { key: "price", label: "Price", render: (m) => `₦${m.price}` },
+    { key: "price", label: "Price", render: (m) => `₦${m.price || 0}` },
     {
       key: "requiresPrescription",
       label: "Requires Prescription",
@@ -266,42 +266,42 @@ function AdminMedications() {
               <p className="text-sm text-gray-600 mb-2">Current Image:</p>
               <img
                 src={viewMedication?.image?.url}
-                alt={viewMedication.name}
+                alt={viewMedication?.name}
                 className="rounded-lg border object-cover w-full h-40"
               />
             </div>
           )}
           <div className="mt-4 space-y-2">
-            <h2 className="text-xl font-semibold">{viewMedication.name}</h2>
+            <h2 className="text-xl font-semibold">{viewMedication?.name}</h2>
             <p>
-              <strong>Generic Name:</strong> {viewMedication.genericName}
+              <strong>Generic Name:</strong> {viewMedication?.genericName}
             </p>
             <p>
-              <strong>Manufacturer:</strong> {viewMedication.manufacturer}
+              <strong>Manufacturer:</strong> {viewMedication?.manufacturer}
             </p>
             <p>
-              <strong>Dosage Form:</strong> {viewMedication.dosageForm}
+              <strong>Dosage Form:</strong> {viewMedication?.dosageForm}
             </p>
             <p>
-              <strong>Strength:</strong> {viewMedication.strength}
+              <strong>Strength:</strong> {viewMedication?.strength}
             </p>
             <p>
-              <strong>Category:</strong> {viewMedication.category}
+              <strong>Category:</strong> {viewMedication?.category}
             </p>
             <p>
-              <strong>Price:</strong> ₦{viewMedication.price}
+              <strong>Price:</strong> ₦{viewMedication?.price || 0}
             </p>
             <p>
               <strong>Prescription Required:</strong>{" "}
-              {viewMedication.requiresPrescription ? "Yes" : "No"}
+              {viewMedication?.requiresPrescription ? "Yes" : "No"}
             </p>
             <div>
               <strong>Status:</strong>{" "}
-              <StatusBadge status={viewMedication.status} />
+              <StatusBadge status={viewMedication?.status} />
             </div>
             <p>
               <strong>Visibility:</strong>{" "}
-              {viewMedication.isHidden ? "Hidden" : "Visible"}
+              {viewMedication?.isHidden ? "Hidden" : "Visible"}
             </p>
           </div>
         </div>

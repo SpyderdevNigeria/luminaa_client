@@ -55,16 +55,16 @@ const AdminMedicationsCreate: React.FC<Props> = ({ medication = null, onBack, on
   useEffect(() => {
     if (medication) {
       setFormData({
-        name: medication.name || "",
-        genericName: medication.genericName || "",
-        manufacturer: medication.manufacturer || "",
-        dosageForm: medication.dosageForm || "",
-        strength: medication.strength || "",
-        category: medication.category || "",
-        description: medication.description || "",
-        price: parseInt(medication.price.toString()) || 0,
-        requiresPrescription: medication.requiresPrescription || false,
-        status: medication.status || "active",
+        name: medication?.name || "",
+        genericName: medication?.genericName || "",
+        manufacturer: medication?.manufacturer || "",
+        dosageForm: medication?.dosageForm || "",
+        strength: medication?.strength || "",
+        category: medication?.category || "",
+        description: medication?.description || "",
+        price: medication?.price ? parseInt(medication?.price.toString()) : 0,
+        requiresPrescription: medication?.requiresPrescription || false,
+        status: medication?.status || "active",
       });
     }
   }, [medication]);
@@ -96,7 +96,7 @@ const AdminMedicationsCreate: React.FC<Props> = ({ medication = null, onBack, on
 
     try {
       if (medication) {
-        const response = await AdminApi.updateMedication(medication.id, {
+        const response = await AdminApi.updateMedication(medication?.id, {
           ...formData,
           price: formData?.price,
         });
@@ -135,7 +135,7 @@ const AdminMedicationsCreate: React.FC<Props> = ({ medication = null, onBack, on
     formData.append("file", selectedImage);
 
     try {
-      await AdminApi.createMedicationImage(medication.id, formData);
+      await AdminApi.createMedicationImage(medication?.id, formData);
       showToast("Image uploaded successfully", "success");
       setSelectedImage(null);
     } catch (err) {
@@ -232,7 +232,7 @@ const AdminMedicationsCreate: React.FC<Props> = ({ medication = null, onBack, on
               options: statusOptions,
               required: true,
             },
-            { name: "description", label: "Description", type: "textarea", required: true },
+            { name: "description", label: "Description", type: "textarea", required: false },
           ].map((field) => (
             <CommonFormField
               key={field.name}
@@ -269,7 +269,7 @@ const AdminMedicationsCreate: React.FC<Props> = ({ medication = null, onBack, on
                 <p className="text-sm text-gray-600 mb-2">Current Image:</p>
                 <img
                   src={medication?.image?.url}
-                  alt={medication.name}
+                  alt={medication?.name}
                   className="rounded-lg border object-cover w-full h-40"
                 />
               </div>

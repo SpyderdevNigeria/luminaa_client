@@ -11,7 +11,7 @@ type Patient = {
   firstName: string;
   lastName: string;
   email: string;
-  contactNumber: string;
+  contactNumber: string | undefined | null;
   dateOfBirth: string;
   gender: string;
   maritalStatus: string;
@@ -23,6 +23,13 @@ type Patient = {
   zipCode: string;
   emergencyContactName: string;
   emergencyContactPhone: string;
+  user?:{
+      id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  }
+  phoneNumber?:string;
 };
 
 type FormData = Omit<Patient, "id"> & { [key: string]: string };
@@ -56,8 +63,24 @@ const AdminPatientsCreate: React.FC<Props> = ({ patient = null, onBack, onClose 
    const { showToast } = useToaster();
   useEffect(() => {
     if (patient) {
-      const { id, ...rest } = patient;
-      setFormData(rest);
+      console.log(patient);
+      setFormData({
+        firstName: patient.user?.firstName || patient.firstName || "",
+        lastName: patient.user?.lastName || patient.lastName || "",
+        email: patient.user?.email || patient.email || "",
+        contactNumber: patient.phoneNumber || patient.contactNumber || "",
+        dateOfBirth: patient.dateOfBirth || "",
+        gender: patient.gender || "",
+        maritalStatus: patient.maritalStatus || "",
+        religion: patient.religion || "",
+        address: patient.address || "",
+        city: patient.city || "",
+        state: patient.state || "",
+        country: patient.country || "",
+        zipCode: patient.zipCode || "",
+        emergencyContactName: patient.emergencyContactName || "",
+        emergencyContactPhone: patient.emergencyContactPhone || "",
+      });
     }
   }, [patient]);
 
@@ -71,8 +94,8 @@ const AdminPatientsCreate: React.FC<Props> = ({ patient = null, onBack, onClose 
     setLoading(true);
     try {
       if (patient) {
-        // const response = await AdminApi.updatePatient(formData);
-        // setMessage({ message: response?.data?.message || "Patient updated successfully", type: "success" });
+        const response = await AdminApi.updatePatient(patient?.id, formData);
+        setMessage({ message: response?.data?.message || "Patient updated successfully", type: "success" });
       } else {
         const response = await AdminApi.createPatient(formData);
         setMessage({ message: response?.data?.message || "Patient created successfully", type: "success" });
