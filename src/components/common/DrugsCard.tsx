@@ -21,7 +21,7 @@ const DrugsCard = ({ med, handleAddToCart } : DrugsCardProps) => {
         <span>{med.dosage}</span> | <span>{med.packSize}</span>
       </p>
       <div className="flex flex-row items-center justify-between w-full mt-3">
-        <p className="text-sm font-medium">NGN {numberWithCommas(med.price)}</p>
+        <p className="text-sm font-medium">NGN {numberWithCommas(med.price) || 0}</p>
         <button
           onClick={() => handleAddToCart(med)}
           className="ml-auto text-white bg-primary px-3 py-1 text-sm rounded"

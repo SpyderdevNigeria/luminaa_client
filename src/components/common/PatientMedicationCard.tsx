@@ -23,7 +23,7 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState("")
-  const isInCart = cartItems.some((item) => item.id === medication.id);
+  const isInCart = cartItems.some((item) => item.id === medication?.id);
   const handleCartAdd = (id: any) => {
     setActiveId(id);
     if (!isInCart) onAddPrescription?.();
@@ -41,8 +41,8 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
         <div className="w-full h-[150px] rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center mb-4">
           {medication?.image?.url ? (
             <img
-              src={medication.image.url}
-              alt={medication.name}
+              src={medication?.image.url}
+              alt={medication?.name}
               className="w-full h-full object-cover"
             />
           ) : (
@@ -52,8 +52,8 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
 
         {/* Name & Label */}
         <div className="flex justify-between items-center mb-2">
-          <h2 className="text-base font-semibold text-gray-900 line-clamp-2">{medication.name}</h2>
-          {!medication.requiresPrescription && (
+          <h2 className="text-base font-semibold text-gray-900 line-clamp-2">{medication?.name}</h2>
+          {!medication?.requiresPrescription && (
             <div className="relative group text-xs text-primary font-medium">
               OTC
               <div className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 whitespace-nowrap">
@@ -65,12 +65,12 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
 
         {/* Medication Info */}
         <div className="space-y-1 text-sm text-gray-700">
-          <p><span className="text-xs uppercase text-gray-500">Strength:</span> {medication.strength}</p>
-          <p><span className="text-xs uppercase text-gray-500">Dosage Form:</span> {medication.dosageForm}</p>
+          <p><span className="text-xs uppercase text-gray-500">Strength:</span> {medication?.strength}</p>
+          <p><span className="text-xs uppercase text-gray-500">Dosage Form:</span> {medication?.dosageForm}</p>
           <p className="line-clamp-2">
-            <span className="text-xs uppercase text-gray-500">Description:</span> {medication.description}
+            <span className="text-xs uppercase text-gray-500">Description:</span> {medication?.description}
           </p>
-          <p className="font-medium mt-2">NGN {medication.price}</p>
+          <p className="font-medium mt-2">NGN {medication?.price || 0}</p>
         </div>
 
         {/* Buttons */}
@@ -109,8 +109,8 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
             <div className="bg-gray-100 rounded-lg h-full flex items-center justify-center min-h-[150px]">
               {medication?.image?.url ? (
                 <img
-                  src={medication.image.url}
-                  alt={medication.name}
+                  src={medication?.image.url}
+                  alt={medication?.name}
                   className="object-cover rounded-lg max-h-[150px]"
                 />
               ) : (
@@ -120,46 +120,46 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
 
             {/* Detailed Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:col-span-2">
-              <h2 className="text-xl font-semibold md:col-span-2">{medication.name}</h2>
+              <h2 className="text-xl font-semibold md:col-span-2">{medication?.name}</h2>
 
               <div>
                 <p className="text-xs text-gray-500 uppercase">Generic Name</p>
-                <p className="text-sm">{medication.genericName}</p>
+                <p className="text-sm">{medication?.genericName}</p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500 uppercase">Manufacturer</p>
-                <p className="text-sm">{medication.manufacturer}</p>
+                <p className="text-sm">{medication?.manufacturer}</p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500 uppercase">Dosage Form</p>
-                <p className="text-sm">{medication.dosageForm}</p>
+                <p className="text-sm">{medication?.dosageForm}</p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500 uppercase">Strength</p>
-                <p className="text-sm">{medication.strength}</p>
+                <p className="text-sm">{medication?.strength}</p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500 uppercase">Category</p>
-                <p className="text-sm">{medication.category}</p>
+                <p className="text-sm">{medication?.category}</p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500 uppercase">Requires Prescription</p>
-                <p className="text-sm">{medication.requiresPrescription ? "Yes" : "No"}</p>
+                <p className="text-sm">{medication?.requiresPrescription ? "Yes" : "No"}</p>
               </div>
 
               <div>
                 <p className="text-xs text-gray-500 uppercase">Price</p>
-                <p className="text-sm">NGN {medication.price}</p>
+                <p className="text-sm">NGN {medication?.price || 0}</p>
               </div>
 
               <div className="md:col-span-2">
                 <p className="text-xs text-gray-500 uppercase">Description</p>
-                <p className="text-sm">{medication.description}</p>
+                <p className="text-sm">{medication?.description}</p>
               </div>
             </div>
           </div>
