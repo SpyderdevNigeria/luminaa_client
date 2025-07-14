@@ -26,7 +26,7 @@ export default function useCart() {
   const add = async (item: any) => {
     const itembody = { ...item, price: item?.price || 0 };
     if (itembody?.price <= 0) {
-      showToast("Price must be greater than 0", "error");
+      showToast(`${itembody?.name} Price must be greater than 0`, "error");
       return;
     }
     setCartItemLoading(true);
