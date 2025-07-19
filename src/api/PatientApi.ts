@@ -54,7 +54,14 @@ const PatientApi = {
     const response = await api.post("/profile/photo", formData);
     return response.data;
   },
-
+  uploadAppointmentDocuments: async (id: any, body: any) => {
+    const response = await api.post(`/patient/appointments/${id}/documents`, body);
+    return response.data;
+  },
+  deleteUploadAppointmentDocumentById: async (id: any, documentId: any) => {
+    const response = await api.delete(`/patient/appointments/${id}/documents/${documentId}`);
+    return response.data;
+  },
   updateAddressOnly: async (body: any) => {
     const response = await api.put("/profile/address", body);
     return response.data;
