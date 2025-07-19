@@ -16,6 +16,7 @@ import { getFormattedDateTime } from "../../../utils/dashboardUtils";
 import { IPrescription } from "../../../types/Interfaces";
 import UploadDocumentsModal from "../../../components/modal/UploadDocumentsModal";
 import { useToaster } from "../../../components/common/ToasterContext";
+import ConfirmModal from "../../../components/modal/ConfirmModal";
 
 interface Diagnosis {
   id?: string;
@@ -51,11 +52,14 @@ const ConsultationView = () => {
   const [selectedPrescription, setSelectedPrescription] = useState<IPrescription | null>(null);
   const [isModalOpenPrescription, setModalOpenPrescription] = useState(false);
   const [isModalOpenPrescriptionDownload, setModalOpenPrescriptionDownload] = useState(false);
-    const { showToast } = useToaster();
+    const [confirmOpen, setConfirmOpen] = useState(false);
+      const [selectedKey, setSelectedKey] = useState<string | null>(null);
+      const [loadingConfirm, setLoadingConfirm] = useState(false);
+  const { showToast } = useToaster();
   const fetchDocuments = async () => {
     try {
-      // const res = await PatientApi.getAppointmentsById(id);
-      // setDocuments(res.data || []);
+      const res = await PatientApi.getAppointmentsById(id);
+      setDocuments(res.data?.patientDocuments || []);
     } catch (error) {
       console.error("Error fetching documents", error);
     }
@@ -74,7 +78,8 @@ const ConsultationView = () => {
         if (diagnosisRes?.data) setDiagnosis(diagnosisRes.data);
         if (prescriptionRes?.data) setPrescriptions(prescriptionRes.data);
         fetchDocuments();
-        if (appointmentRes?.patientDocuments) setDocuments(appointmentRes.patientDocuments);
+        console.log(appointmentRes?.data?.patientDocuments)
+        if (appointmentRes?.data?.patientDocuments) setDocuments(appointmentRes.data.patientDocuments);
       } catch (err) {
         console.error(err);
         setError("Failed to load appointment data.");
@@ -85,6 +90,7 @@ const ConsultationView = () => {
 
     fetchData();
   }, [id]);
+
   const [loadingUpload, setloadingUpload] = useState(false)
   const handleUploadDocuments = async (formData: FormData) => {
     setloadingUpload(true)
@@ -96,19 +102,23 @@ const ConsultationView = () => {
     } catch (err) {
       console.error("Upload failed", err);
       showToast("Upload failed", "error");
-    }finally {
-       setloadingUpload(false)
+    } finally {
+      setloadingUpload(false)
     }
   };
 
-  const handleDeleteDocument = async (documentId: string) => {
+  const handleDeleteDocument = async () => {
+    if (!selectedKey) return;
+    setLoadingConfirm(true)
     try {
-      await PatientApi.deleteUploadAppointmentDocumentById(id, documentId);
+      await PatientApi.deleteUploadAppointmentDocumentById(id, selectedKey);
       fetchDocuments();
-       showToast("Document deleted successfully.", "success");
+      showToast("Document deleted successfully.", "success");
     } catch (err) {
       console.error("Delete failed", err);
       showToast("Delete failed", "error");
+    }finally{
+      setLoadingConfirm(false)
     }
   };
 
@@ -119,7 +129,10 @@ const ConsultationView = () => {
   const { formattedDate, formattedTime } = getFormattedDateTime(appointment?.scheduledDate);
   const doctor = appointment.doctor;
   const doctorUser = doctor?.user;
-
+    const triggerUploadConfirm = (key: string) => {
+    setSelectedKey(key);
+    setConfirmOpen(true);
+  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
       <div className="md:col-span-1 bg-white p-6 border border-gray-200 rounded-lg shadow">
@@ -154,11 +167,10 @@ const ConsultationView = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab as any)}
-              className={`capitalize px-4 py-2 -mb-px ${
-                activeTab === tab
+              className={`capitalize px-4 py-2 -mb-px ${activeTab === tab
                   ? "border-b-2 border-primary text-primary font-medium"
                   : "text-gray-500"
-              }`}
+                }`}
             >
               {tab}
             </button>
@@ -261,20 +273,44 @@ const ConsultationView = () => {
         {activeTab === "documents" && (
           <div className="space-y-4">
             <div className="flex justify-end">
-              <button  disabled={loadingUpload} onClick={() => setUploadModalOpen(true)} className="px-6 py-2 rounded bg-primary text-white text-xs hover:bg-primary-dark">
-               {loadingUpload ? "Uploading..." : " Upload Documents"}
+              <button disabled={loadingUpload} onClick={() => setUploadModalOpen(true)} className="px-6 py-2 rounded bg-primary text-white text-xs hover:bg-primary-dark">
+                {loadingUpload ? "Uploading..." : " Upload Documents"}
               </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {documents.map((doc) => (
-                <div key={doc.id} className="p-4 bg-white rounded shadow border">
-                  <h4 className="text-sm font-medium">{doc.name}</h4>
-                  <p className="text-xs text-gray-500">{doc.type}</p>
-                  <a href={doc.url} target="_blank" rel="noreferrer" className="text-blue-600 text-xs">View Document</a>
-                  <button onClick={() => handleDeleteDocument(doc.id)} className="text-xs text-red-500 mt-2">Delete</button>
+                <div key={doc.id} className="p-4 bg-white rounded shadow border border-gray-200">
+                  <div className="mb-2 w-40 h-40 overflow-hidden mx-auto">
+                    <img src={doc.url} alt="" className="w-full h-full object-contain" />
+                  </div>
+                  <div className=" mb-2">
+                    <h4 className="text-sm font-medium">Document Name</h4>
+                    <h4 className="text-xs text-gray-500">{doc.name}</h4>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium">Document Type</h4>
+                    <p className="text-xs text-gray-500">{doc.type}</p>
+                  </div>
+                  <div className="flex flex-row items-center justify-between mt-2">
+                    <a href={doc.url} target="_blank" rel="noreferrer" className="text-blue-600 text-xs">View Document</a>
+                    <button onClick={() => triggerUploadConfirm(doc.id)} className="text-xs text-red-500 ">Delete</button>
+                  </div>
                 </div>
               ))}
             </div>
+
+                <ConfirmModal
+                    open={confirmOpen}
+                    onClose={() => {
+                      setConfirmOpen(false);
+                      setSelectedKey(null);
+                    }}
+                    title="Confirm Delete"
+                    description={`Are you sure you want to delete this document?`}
+                    confirmText="Yes, Delete"
+                    loading={loadingConfirm}
+                    onConfirm={handleDeleteDocument}
+                  />
             <UploadDocumentsModal
               isOpen={isUploadModalOpen}
               onClose={() => setUploadModalOpen(false)}

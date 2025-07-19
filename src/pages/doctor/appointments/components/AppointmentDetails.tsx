@@ -15,7 +15,7 @@ import moment from "moment";
 import { getFormattedDateTime } from "../../../../utils/dashboardUtils";
 import ConfirmModal from "../../../../components/modal/ConfirmModal";
 import DoctorApi from "../../../../api/doctorApi";
-import { useState } from "react";
+import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { useToaster } from "../../../../components/common/ToasterContext";
 interface DoctorAppointmentsViewProps {
   handleNext: (e: string) => void;
@@ -172,6 +172,41 @@ function DoctorAppointmentsView({
           </div>
         </div>
       </main>
+
+      <div>
+        {appointment?.patientDocuments?.length > 0 ?
+        
+        <div>
+              <h4 className="text-sm md:text-2xl my-2">Patient Documents </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {appointment?.patientDocuments?.map((doc: { id: Key | null | undefined; url: string | undefined; name: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; type: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }) => (
+                <div key={doc.id} className="p-4 bg-white rounded shadow border border-gray-200">
+                  <div className="mb-2 w-40 h-40 overflow-hidden mx-auto">
+                    <img src={doc.url} alt="" className="w-full h-full object-contain" />
+                  </div>
+                  <div className=" mb-2">
+                    <h4 className="text-sm font-medium">Document Name</h4>
+                    <h4 className="text-xs text-gray-500">{doc.name}</h4>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium">Document Type</h4>
+                    <p className="text-xs text-gray-500">{doc.type}</p>
+                  </div>
+                  <div className="flex flex-row items-center justify-between mt-2">
+                    <a href={doc.url} target="_blank" rel="noreferrer" className="text-blue-600 text-xs">View Document</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+        </div>
+        : 
+        
+        <div className="flex flex-col items-center justify-center h-40"> 
+          No additional document from patient
+        </div>
+        }
+
+      </div>
 
       {/* Action Buttons */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
