@@ -1,9 +1,9 @@
-// let logo_url = 'http://res.cloudinary.com/dwirhx8kk/image/upload/v1742399951/cli/y0agkvfy6lgoq1ztybd7.png';
-import Logo from "../assets/images/logo-no-bg.png";
+let logo_url = 'http://res.cloudinary.com/dwirhx8kk/image/upload/v1742399951/cli/y0agkvfy6lgoq1ztybd7.png';
+// import Logo from "../assets/images/logo-no-bg.png";
 const website = {
-  logo: Logo,
-  name: 'C.Bennett Specialist Hospital',
-  square: true,
+  logo: logo_url,
+  name: "Lumina Medicals",
+  square: false,
   logoSquareSize :"w-20",
   logoRegularSize: "w-36 md:w-40",
   contact: {

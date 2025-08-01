@@ -51,45 +51,83 @@ export default function useCart() {
     }
   };
 
-  const addBulk = async (itemsToAdd: any[]) => {
-    setCartItemLoading(true);
-    try {
-      const results = await Promise.allSettled(
-        itemsToAdd.map(async (item) => {
-          if (!item?.requiresPrescription) {
-            return { item, allowed: true };
-          }
-          const check = await PatientApi.getMedicationsCheck(item.id);
-          return {
-            item,
-            allowed: !!check?.data?.hasPrescription,
-          };
-        })
-      );
-
-      let addedCount = 0;
-
-      results.forEach((result) => {
-        if (result.status === "fulfilled") {
-          const { item, allowed } = result.value;
-          if (allowed) {
-            dispatch(addToCart(item));
-            addedCount++;
-          } else {
-            showToast(`${item.name} requires prescription from a doctor`, "error");
-          }
-        }
-      });
-
-      if (addedCount > 0) {
-        showToast(`${addedCount} item(s) added to cart`, "success");
-      }
-    } catch (error) {
-      showToast("Bulk add failed", "error");
-    } finally {
-      setCartItemLoading(false);
+const addBulk = async (itemsToAdd: any[]) => {
+  setCartItemLoading(true);
+    const notAddedItems: string[] = [];
+  // Step 1: Filter out items with invalid price
+  const validItems = [];
+  for (const item of itemsToAdd) {
+    if (item?.price == null || item.price <= 0) {
+      showToast(`${item?.name || 'Item'} price must be greater than 0`, "error");
+       notAddedItems.push(item.name);
+    } else {
+      validItems.push(item);
     }
-  };
+  }
+
+  // Step 2: Exit early if no valid items
+  if (validItems.length === 0) {
+    setCartItemLoading(false);
+    return;
+  }
+
+  try {
+    // Step 3: Check prescription requirements
+    const results = await Promise.allSettled(
+      validItems.map(async (item) => {
+        if (!item?.requiresPrescription) {
+          return { item, allowed: true };
+        }
+        const check = await PatientApi.getMedicationsCheck(item.id);
+        return {
+          item,
+          allowed: !!check?.data?.hasPrescription,
+        };
+      })
+    );
+
+    let addedCount = 0;
+  
+
+    // Step 4: Process results
+    results.forEach((result) => {
+      if (result.status === "fulfilled") {
+        const { item, allowed } = result.value;
+        if (allowed) {
+          dispatch(addToCart(item));
+          addedCount++;
+        } else {
+          notAddedItems.push(item.name);
+          showToast(`${item.name} requires prescription from a doctor`, "error");
+        }
+      }
+    });
+
+    // Step 5: Show success toast if any added
+    if (addedCount > 0) {
+      showToast(`${addedCount} item(s) added to cart out of ${itemsToAdd.length}`, "success");
+    }
+
+    // Step 6: Delayed toast for non-added items due to prescription
+    if (notAddedItems.length > 0) {
+      setTimeout(() => {
+        const itemNames = notAddedItems.join(", ");
+        showToast(
+          `The following item(s) were not added: ${itemNames}. Contact your doctor for more info.`,
+          "error"
+        );
+        console.log("Not added items:", notAddedItems);
+      }, 2000); // Delay of 2 seconds
+    }
+  } catch (error) {
+    showToast("Bulk add failed", "error");
+  } finally {
+    setCartItemLoading(false);
+  }
+};
+
+
+
 
   const remove = (id: any) => dispatch(removeFromCart(id));
   const update = (id: any, quantity: any) =>
