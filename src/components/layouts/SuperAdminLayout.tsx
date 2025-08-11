@@ -34,7 +34,7 @@ function SuperAdminLayout() {
   if (authLoading) return <LoadingScreen />;
   return (
     <div>
-      <DashboardLayout links={navItemsSuperAdmin} bg={"bg-white"}>
+      <DashboardLayout links={navItemsSuperAdmin} >
         <Outlet />
       </DashboardLayout>
     </div>

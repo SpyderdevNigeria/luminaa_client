@@ -1,17 +1,20 @@
-// import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { RouterProvider } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import './index.css'
 import './theme.css'
-import App from './App'
+import AppRoutes from './App'
 import store from './store'
 import { ToasterProvider } from './components/common/ToasterContext'
+import ErrorBoundary from './components/error/ErrorBoundary'
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
-     <ToasterProvider>
-        <Provider store={store}>
-          <RouterProvider router={App}/>
-        </Provider>
-     </ToasterProvider>
+  <ToasterProvider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </Provider>
+    </ErrorBoundary>
+  </ToasterProvider>
 )

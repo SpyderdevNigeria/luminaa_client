@@ -63,7 +63,7 @@ function PharmacistLayout() {
   if (authLoading) return <LoadingScreen />;
 
   return (
-    <DashboardLayout links={navItemsPharmacy} bg="bg-white">
+    <DashboardLayout links={navItemsPharmacy}>
       <Outlet />
     </DashboardLayout>
   );

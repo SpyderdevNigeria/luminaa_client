@@ -62,7 +62,7 @@ function LabLayout() {
   if (authLoading) return <LoadingScreen />;
 
   return (
-    <DashboardLayout links={navItemsLab} bg="bg-white">
+    <DashboardLayout links={navItemsLab}>
       <Outlet />
     </DashboardLayout>
   );

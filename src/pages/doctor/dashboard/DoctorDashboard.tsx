@@ -89,7 +89,7 @@ function DoctorDashboard() {
   return (
     <div className="flex flex-col gap-4">
       <section className="flex flex-col gap-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           <DashboardCard title="Appointments" count={appointments.length} />
           <DashboardCard title="Patients" count={users?.length || 0} />
           <DashboardCard title="Upcoming" count={upcomingAppointments?.length} />

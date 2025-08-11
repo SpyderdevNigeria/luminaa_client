@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import routeLinks from "../../../utils/routes";
@@ -10,6 +10,7 @@ import { login } from "../../../reducers/authSlice";
 import { IPayload } from "../../../types/Interfaces";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import { returnMemberNavigationUrlLogic } from "../../../utils/dashboardUtils";
+
 
 const initialFormState = {
   email: "",
@@ -173,9 +174,9 @@ function Login() {
         {/* Footer */}
         <h5 className="text-text-secondary text-base text-center mt-4">
           Don't have an account?{" "}
-          <Link to={routeLinks?.auth?.register} className="text-primary">
+          <button onClick={()=>{navigate(routeLinks?.auth?.register)}} className="text-primary">
             Register
-          </Link>
+          </button>
         </h5>
       </form>
     </main>

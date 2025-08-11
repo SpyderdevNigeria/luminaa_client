@@ -61,7 +61,7 @@ function DoctorLayout() {
   if (authLoading) return <LoadingScreen />;
   return (
     <div>
-      <DashboardLayout links={navItemsDoctor} bg={"bg-white"}>
+      <DashboardLayout links={navItemsDoctor} >
         <Outlet />
       </DashboardLayout>
     </div>

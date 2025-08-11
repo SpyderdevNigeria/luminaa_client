@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import website from "../../../utils/website";
 import FeedbackMessage from "../../../components/common/FeedbackMessage";
 import AuthApi from "../../../api/authApi";
 import useFlatErrorList from "../../../hooks/useFlatErrorList";
+
 
 interface RegisterFormData {
   email: string;
@@ -22,7 +23,6 @@ function Register() {
   const [message, setMessage] = useState({ message: "", type: "" });
   const navigate = useNavigate();
   const { errors, setErrors, getFieldErrors } = useFlatErrorList();
-
   const dataFields: RegisterFormData = {
     email: "",
     password: "",
@@ -260,9 +260,9 @@ function Register() {
         {/* Login Link */}
         <h5 className="text-text-secondary text-base text-center my-4">
           Already have an account?{" "}
-          <Link to={routeLinks?.auth?.login} className="text-primary">
-            Log in
-          </Link>
+          <button onClick={() => { navigate(routeLinks?.auth?.login) }} className="text-primary">
+           Log in
+          </button>
         </h5>
       </form>
     </main>

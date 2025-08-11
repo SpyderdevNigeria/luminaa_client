@@ -6,10 +6,11 @@ import LoadingScreen from "../loading/LoadingScreen";
 import { returnPartnerNavigationUrlLogic } from "../../utils/dashboardUtils";
 import PartnerImage from "../../assets/images/auth/partnerAuth.png";
 import Multilingual from "../common/Multilingual";
+
 function PartnerAuthLayout() {
   const navigate = useNavigate();
   const { userProfile, authLoading } = usePartnerAuth();
-
+  
   useLayoutEffect(() => {
     if (userProfile && !authLoading) {
       const redirectUrl = returnPartnerNavigationUrlLogic(
@@ -39,7 +40,7 @@ function PartnerAuthLayout() {
 
         {/* Heading */}
         <div className="">
-          <h2 className="text-4xl xl:text-6xl 2xl:text-7xl font-bold text-gray-800 leading-18 tracking-tight  ">
+          <h2 className="text-6xl 2xl:text-7xl font-bold text-gray-800 leading-18 tracking-tight  ">
             Get started with
             <br />
             <span className="text-primary">{website?.name}</span>

@@ -34,7 +34,6 @@ const appReducer = combineReducers({
 // Wrap the combined reducer to handle logout reset
 const rootReducer = (state: any, action: any) => {
   if (action.type === "auth/logout") {
-    console.log("Resetting state on logout");
     state = undefined; 
   }
   return appReducer(state, action);

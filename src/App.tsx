@@ -1,4 +1,3 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
 import "./app.css";
 import routeLinks from "./utils/routes";
 import PatientAuthLayout from "./components/layouts/PatientAuthLayout";
@@ -87,537 +86,168 @@ import DoctorHelpCenter from "./pages/admin/HelpCenter/AdminHelpCenter";
 import LabHelpCenter from "./pages/lab/HelpCenter/LabHelpCenter";
 import PharmacyHelpCenter from "./pages/pharmacy/HelpCenter/PharmacyHelpCenter";
 import AdminHelpCenter from "./pages/admin/HelpCenter/AdminHelpCenter";
+import ErrorPage from "./components/error/ErrorPage";
+import { Routes, Route, Navigate } from "react-router-dom";
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
-const App = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: routeLinks?.auth?.path,
-    element: <PatientAuthLayout />,
-    children: [
-      {
-        path: routeLinks?.auth?.path,
-        element: <Navigate to={routeLinks?.auth?.login} />,
-      },
-      {
-        path: routeLinks?.auth?.login,
-        element: <Login />,
-      },
-      {
-        path: routeLinks?.auth?.register,
-        element: <Register />,
-      },
-    ],
-  },
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
 
-  // partner Authentication routers
-  {
-    path: routeLinks?.auth?.partnerAuth,
-    element: <PartnerAuthLayout />,
-    children: [
-      {
-        path: routeLinks?.auth?.partnerAuth,
-        element: <Navigate to={routeLinks?.auth?.partnerLogin} />,
-      },
-      {
-        path: routeLinks?.auth?.partnerLogin,
-        element: <PartnerLogin />,
-      },
-    ],
-  },
-  // VerifyEmail route
-  {
-    path: routeLinks?.auth?.emailVerification,
-    element: <EmailVerification />,
-  },
+      {/* Patient Auth */}
+      <Route path={routeLinks.auth.path} element={<PatientAuthLayout />}>
+        <Route index element={<Navigate to={routeLinks.auth.login} replace />} />
+        <Route path={routeLinks.auth.login} element={<Login />} />
+        <Route path={routeLinks.auth.register} element={<Register />} />
+      </Route>
 
-  {
-    path: routeLinks?.auth?.partnerEmailVerification,
-    element: <PartnerEmailVerification />,
-  },
+      {/* Partner Auth */}
+      <Route path={routeLinks.auth.partnerAuth} element={<PartnerAuthLayout />}>
+        <Route index element={<Navigate to={routeLinks.auth.partnerLogin} replace />} />
+        <Route path={routeLinks.auth.partnerLogin} element={<PartnerLogin />} />
+      </Route>
 
-  // Patient route for Onboarding
-  {
-    path: routeLinks?.patient?.onboarding,
-    element: <Onboarding />,
-  },
-  {
-    path: routeLinks?.patient?.appointment,
-    element: <Appointment />,
-  },
+      {/* Email verification */}
+      <Route path={routeLinks.auth.emailVerification} element={<EmailVerification />} />
+      <Route path={routeLinks.auth.partnerEmailVerification} element={<PartnerEmailVerification />} />
 
-  // Patient Routes for Dashboard
-  {
-    path: routeLinks?.patient?.path,
-    element: <PatientLayout />,
-    children: [
-      {
-        path: routeLinks?.patient?.path,
-        element: <Navigate to={routeLinks?.patient?.dashboard} />,
-      },
-      {
-        path:routeLinks?.patient?.helpCenter,
-        element:<PatientHelpCenter/>
-      },
-      {
-        path: routeLinks?.patient?.dashboard,
-        element: <DashboardHome />,
-      },
-      {
-        path: routeLinks?.patient?.consultations,
-        element: <Consultaion />,
-      },
-      {
-        path: routeLinks?.patient?.consultationsid,
-        element: <ConsultationView />,
-      },
-      {
-        path: routeLinks?.patient?.prescription,
-        element: <Prescriptions />,
-      },
-      {
-        path: routeLinks?.patient?.lab,
-        element: <Lab />,
-      },
-      {
-        path: routeLinks?.patient?.labDetails,
-        element: <LabDetails />,
-      },
-      {
-        path: routeLinks?.patient?.profile,
-        element: <Profile />,
-      },
-      {
-        path: routeLinks?.patient?.orders,
-        element: <Order />,
-      },
-            {
-        path: routeLinks?.patient?.orderDetails,
-        element: <PrescriptionOrderDetails />,
-      },
-      {
-        path:routeLinks?.patient?.checkout,
-        element:<PatientCheckout/>
-      },
-      {
-        path: routeLinks?.patient?.pharmacy,
-        element: <PatientMedications />,
-      },
-      {
-        path: routeLinks?.patient?.medicalHistory,
-        element: <MedicalHistory />,
-      },
-    ],
-  },
+      {/* Patient onboarding and appointment */}
+      <Route path={routeLinks.patient.onboarding} element={<Onboarding />} />
+      <Route path={routeLinks.patient.appointment} element={<Appointment />} />
 
-  // Doctor Routes
-  {
-    path: routeLinks?.doctor?.path,
-    element: <DoctorLayout />,
-    children: [
-      {
-        path: routeLinks?.doctor?.path,
-        element: <Navigate to={routeLinks?.doctor?.dashboard} />,
-      },
-      {
-        path: routeLinks?.doctor?.dashboard,
-        element: <DoctorDashboard />,
-      },
-      // Doctor Appointment Link start
-      {
-        path: routeLinks?.doctor?.appointment,
-        element: <DoctorAppointments />,
-      },
-      {
-        path: routeLinks?.doctor?.appointmentView,
-        element: <DoctorAppointmentsView />,
-      },
-      // Doctor Appointment Link End
+      {/* Patient Dashboard */}
+      <Route path={routeLinks.patient.path} element={<PatientLayout />}>
+        <Route index element={<Navigate to={routeLinks.patient.dashboard} replace />} />
+        <Route path={routeLinks.patient.helpCenter} element={<PatientHelpCenter />} />
+        <Route path={routeLinks.patient.dashboard} element={<DashboardHome />} />
+        <Route path={routeLinks.patient.consultations} element={<Consultaion />} />
+        <Route path={routeLinks.patient.consultationsid} element={<ConsultationView />} />
+        <Route path={routeLinks.patient.prescription} element={<Prescriptions />} />
+        <Route path={routeLinks.patient.lab} element={<Lab />} />
+        <Route path={routeLinks.patient.labDetails} element={<LabDetails />} />
+        <Route path={routeLinks.patient.profile} element={<Profile />} />
+        <Route path={routeLinks.patient.orders} element={<Order />} />
+        <Route path={routeLinks.patient.orderDetails} element={<PrescriptionOrderDetails />} />
+        <Route path={routeLinks.patient.checkout} element={<PatientCheckout />} />
+        <Route path={routeLinks.patient.pharmacy} element={<PatientMedications />} />
+        <Route path={routeLinks.patient.medicalHistory} element={<MedicalHistory />} />
+      </Route>
 
-      // Doctor Patient Link start
-      {
-        path: routeLinks?.doctor?.patients,
-        element: <DoctorPatients />,
-      },
-      {
-        path: routeLinks?.doctor?.patientView,
-        element: <DoctorPatientsDetails />,
-      },
+      {/* Doctor Routes */}
+      <Route path={routeLinks.doctor.path} element={<DoctorLayout />}>
+        <Route index element={<Navigate to={routeLinks.doctor.dashboard} replace />} />
+        <Route path={routeLinks.doctor.dashboard} element={<DoctorDashboard />} />
+        <Route path={routeLinks.doctor.appointment} element={<DoctorAppointments />} />
+        <Route path={routeLinks.doctor.appointmentView} element={<DoctorAppointmentsView />} />
+        <Route path={routeLinks.doctor.patients} element={<DoctorPatients />} />
+        <Route path={routeLinks.doctor.patientView} element={<DoctorPatientsDetails />} />
+        <Route path={routeLinks.doctor.allPatients} element={<DoctorAllPatients />} />
+        <Route path={routeLinks.doctor.allPatientsDetails} element={<DoctorAllPatientsDetails />} />
+        <Route path={routeLinks.doctor.profile} element={<DoctorProfile />} />
+        <Route path={routeLinks.doctor.schedule} element={<DoctorSchedule />} />
+        <Route path={routeLinks.doctor.labOrders} element={<DoctorOrder />} />
+        <Route path={routeLinks.doctor.labOrdersDetails} element={<DoctorLabOrderDetails />} />
+        <Route path={routeLinks.doctor.prescription} element={<DoctorPrescriptions />} />
+        <Route path={routeLinks.doctor.helpCenter} element={<DoctorHelpCenter />} />
+      </Route>
 
-            {
-        path: routeLinks?.doctor?.allPatients,
-        element: <DoctorAllPatients />,
-      },
-      {
-        path: routeLinks?.doctor?.allPatientsDetails,
-        element: <DoctorAllPatientsDetails />,
-      },
-      // Doctor Patient Link End
-      {
-        path: routeLinks?.doctor?.profile,
-        element: <DoctorProfile />,
-      },
-      {
-        path: routeLinks?.doctor?.schedule,
-        element: <DoctorSchedule />,
-      },
-      {
-        path: routeLinks?.doctor?.labOrders,
-        element: <DoctorOrder />,
-      },
-      {
-        path: routeLinks?.doctor?.labOrdersDetails,
-        element: <DoctorLabOrderDetails />,
-      },
-      
-      {
-        path: routeLinks?.doctor?.prescription,
-        element: <DoctorPrescriptions />,
-      },
-       {
-        path:routeLinks?.doctor?.helpCenter,
-        element:<DoctorHelpCenter/>
-      },
-    ],
-  },
+      {/* Lab Routes */}
+      <Route path={routeLinks.lab.path} element={<LabLayout />}>
+        <Route index element={<Navigate to={routeLinks.lab.dashboard} replace />} />
+        <Route path={routeLinks.lab.dashboard} element={<LabDashboard />} />
+        <Route path={routeLinks.lab.labRequests} element={<LabTestRequests />} />
+        <Route path={routeLinks.lab.labRequestsDetails} element={<LabTestRequestsDetails />} />
+        <Route path={routeLinks.lab.helpCenter} element={<LabHelpCenter />} />
+        <Route path={routeLinks.lab.profile} element={<LabProfile />} />
+      </Route>
 
-  //lab Routes
-  {
-    path: routeLinks?.lab?.path,
-    element: <LabLayout />,
-    children: [
-      {
-        path: routeLinks?.lab?.path,
-        element: <Navigate to={routeLinks?.lab?.dashboard} />,
-      },
-      {
-        path: routeLinks?.lab?.dashboard,
-        element: <LabDashboard />,
-      },
-      {
-        path: routeLinks?.lab?.labRequests,
-        element: <LabTestRequests />,
-      },
-      {
-        path: routeLinks?.lab?.labRequestsDetails,
-        element: <LabTestRequestsDetails />,
-      },
-            {
-        path:routeLinks?.lab?.helpCenter,
-        element:<LabHelpCenter/>
-      },
-      {
-        path: routeLinks?.lab?.profile,
-        element: <LabProfile />,
-      },
-    ],
-  },
+      {/* Pharmacist Routes */}
+      <Route path={routeLinks.pharmacist.path} element={<PharmacyLayout />}>
+        <Route index element={<Navigate to={routeLinks.pharmacist.dashboard} replace />} />
+        <Route path={routeLinks.pharmacist.dashboard} element={<PharmacyDashboard />} />
+        <Route path={routeLinks.pharmacist.medications} element={<PharmacyMedications />} />
+        <Route path={routeLinks.pharmacist.orders} element={<PharmacyOrder />} />
+        <Route path={routeLinks.pharmacist.orderDetails} element={<PharmacyOrderDetails />} />
+        <Route path={routeLinks.pharmacist.pharmacistInventory} element={<PharmacyInventory />} />
+        <Route path={routeLinks.pharmacist.pharmacistInventorySummary} element={<PharmacyInventorySummary />} />
+        <Route path={routeLinks.pharmacist.pharmacistInventoryDetails} element={<PharmacyInventoryDetails />} />
+        <Route path={routeLinks.pharmacist.pharmacistInventoryMedication} element={<PharmacyInventoryMedication />} />
+        <Route path={routeLinks.pharmacist.helpCenter} element={<PharmacyHelpCenter />} />
+        <Route path={routeLinks.pharmacist.profile} element={<PharmacyProfile />} />
+      </Route>
 
-  // Pharmacy Routes
-  {
-    path: routeLinks?.pharmacist?.path,
-    element: <PharmacyLayout />,
-    children: [
-      {
-        path: routeLinks?.pharmacist?.path,
-        element: <Navigate to={routeLinks?.pharmacist?.dashboard} />,
-      },
-      {
-        path: routeLinks?.pharmacist?.dashboard,
-        element: <PharmacyDashboard />,
-      },
-      {
-        path: routeLinks?.pharmacist?.medications,
-        element: <PharmacyMedications />,
-      },
-          {
-        path: routeLinks?.pharmacist?.orders,
-        element: <PharmacyOrder />,
-      },
-            {
-        path: routeLinks?.pharmacist?.orderDetails,
-        element: <PharmacyOrderDetails />,
-      },
+      {/* Admin Auth */}
+      <Route path={routeLinks.auth.adminAuth} element={<AdminAuthLayout />}>
+        <Route index element={<Navigate to={routeLinks.auth.adminLogin} replace />} />
+        <Route path={routeLinks.auth.adminLogin} element={<AdminLogin />} />
+      </Route>
 
-      {
-        path: routeLinks?.pharmacist?.pharmacistInventory,
-        element: <PharmacyInventory />,
-      },
-      {
-        path: routeLinks?.pharmacist?.pharmacistInventorySummary,
-        element: <PharmacyInventorySummary />,
-      },
+      {/* Admin Routes */}
+      <Route path={routeLinks.admin.path} element={<AdminLayout />}>
+        <Route index element={<Navigate to={routeLinks.admin.dashboard} replace />} />
+        <Route path={routeLinks.admin.dashboard} element={<AdminDashboard />} />
+        <Route path={routeLinks.admin.lab} element={<AdminLab />} />
+        <Route path={routeLinks.admin.labDetails} element={<AdminLabDetails />} />
+        <Route path={routeLinks.admin.users} element={<AdminUser />} />
+        <Route path={routeLinks.admin.usersDetails} element={<AdminUserDetails />} />
+        <Route path={routeLinks.admin.patients} element={<AdminPatients />} />
+        <Route path={routeLinks.admin.patientsDetails} element={<AdminPatientDetails />} />
+        <Route path={routeLinks.admin.patientsStats} element={<AdminPatientStats />} />
+        <Route path={routeLinks.admin.doctors} element={<AdminDoctors />} />
+        <Route path={routeLinks.admin.doctorsStats} element={<AdminDoctorsStats />} />
+        <Route path={routeLinks.admin.doctorsSpecialties} element={<AdminDoctorsSpecialties />} />
+        <Route path={routeLinks.admin.doctorDetails} element={<AdminDoctorsDetails />} />
+        <Route path={routeLinks.admin.pharmacists} element={<AdminPharmacists />} />
+        <Route path={routeLinks.admin.pharmacistsDetails} element={<AdminPharmacistsDetails />} />
+        <Route path={routeLinks.admin.medications} element={<AdminMedications />} />
+        <Route path={routeLinks.admin.adminInventory} element={<AdminInventory />} />
+        <Route path={routeLinks.admin.adminInventoryLogs} element={<AdminInventoryLogs />} />
+        <Route path={routeLinks.admin.adminInventorySummary} element={<AdminInventorySummary />} />
+        <Route path={routeLinks.admin.adminInventoryDetails} element={<AdminInventoryDetails />} />
+        <Route path={routeLinks.admin.adminInventoryMedication} element={<AdminInventoryMedication />} />
+        <Route path={routeLinks.admin.orders} element={<AdminOrder />} />
+        <Route path={routeLinks.admin.orderDetails} element={<AdminOrderDetails />} />
+        <Route path={routeLinks.admin.adminsDetails} element={<SuperAdminAdminsDetails />} />
+        <Route path={routeLinks.admin.helpCenter} element={<AdminHelpCenter />} />
+        <Route path={routeLinks.admin.profile} element={<AdminProfile />} />
+      </Route>
 
-      {
-        path: routeLinks?.pharmacist?.pharmacistInventoryDetails,
-        element: <PharmacyInventoryDetails />,
-      },
-      {
-        path: routeLinks?.pharmacist?.pharmacistInventoryMedication,
-        element: <PharmacyInventoryMedication />,
-      },
-                  {
-        path:routeLinks?.pharmacist?.helpCenter,
-        element:<PharmacyHelpCenter/>
-      },
-      {
-        path: routeLinks?.pharmacist?.profile,
-        element: <PharmacyProfile />,
-      },
-    ],
-  },
-  // Admin Routes
-  {
-    path: routeLinks?.auth?.adminAuth,
-    element: <AdminAuthLayout />,
-    children: [
-      {
-        path: routeLinks?.auth?.adminAuth,
-        element: <Navigate to={routeLinks?.auth?.adminLogin} />,
-      },
-      {
-        path: routeLinks?.auth?.adminLogin,
-        element: <AdminLogin />,
-      },
-    ],
-  },
-  {
-    path: routeLinks?.admin?.path,
-    element: <AdminLayout />,
-    children: [
-      {
-        path: routeLinks?.admin?.path,
-        element: <Navigate to={routeLinks?.admin?.dashboard} />,
-      },
-      {
-        path: routeLinks?.admin?.dashboard,
-        element: <AdminDashboard />,
-      },
-      {
-        path: routeLinks?.admin?.lab,
-        element: <AdminLab />,
-      },
-      {
-        path: routeLinks?.admin?.labDetails,
-        element: <AdminLabDetails />,
-      },
-         {
-        path: routeLinks?.admin?.users,
-        element: <AdminUser />,
-      },
-      {
-        path: routeLinks?.admin?.usersDetails,
-        element: <AdminUserDetails />,
-      },
-      {
-        path: routeLinks?.admin?.patients,
-        element: <AdminPatients />,
-      },
-      {
-        path: routeLinks?.admin?.patientsDetails,
-        element: <AdminPatientDetails />,
-      },
-         {
-        path: routeLinks?.admin?.usersDetails,
-        element: <AdminUserDetails />,
-      },
-         {
-        path: routeLinks?.admin?.patientsStats,
-        element: <AdminPatientStats />,
-      },
-      {
-        path: routeLinks?.admin?.doctors,
-        element: <AdminDoctors />,
-      },
-       {
-        path: routeLinks?.admin?.doctorsStats,
-        element: <AdminDoctorsStats />,
-      },
-          {
-        path: routeLinks?.admin?.doctorsSpecialties,
-        element: <AdminDoctorsSpecialties />,
-      },
-      {
-        path: routeLinks?.admin?.doctorDetails,
-        element: <AdminDoctorsDetails />,
-      },
-      {
-        path: routeLinks?.admin?.pharmacists,
-        element: <AdminPharmacists />,
-      },
-      {
-        path: routeLinks?.admin?.pharmacistsDetails,
-        element: <AdminPharmacistsDetails />,
-      },
-      {
-        path: routeLinks?.admin?.medications,
-        element: <AdminMedications />,
-      },
-      {
-        path: routeLinks?.admin?.adminInventory,
-        element: <AdminInventory />,
-      },
-      {
-        path: routeLinks?.admin?.adminInventoryLogs,
-        element: <AdminInventoryLogs />,
-      },
-      {
-        path: routeLinks?.admin?.adminInventorySummary,
-        element: <AdminInventorySummary />,
-      },
+      {/* SuperAdmin Routes */}
+      <Route path={routeLinks.superAdmin.path} element={<SuperAdminLayout />}>
+        <Route index element={<Navigate to={routeLinks.superAdmin.dashboard} replace />} />
+        <Route path={routeLinks.superAdmin.dashboard} element={<AdminDashboard />} />
+        <Route path={routeLinks.superAdmin.lab} element={<AdminLab />} />
+        <Route path={routeLinks.superAdmin.labDetails} element={<AdminLabDetails />} />
+        <Route path={routeLinks.superAdmin.users} element={<AdminUser />} />
+        <Route path={routeLinks.superAdmin.usersDetails} element={<AdminUserDetails />} />
+        <Route path={routeLinks.superAdmin.patients} element={<AdminPatients />} />
+        <Route path={routeLinks.superAdmin.patientsDetails} element={<AdminPatientDetails />} />
+        <Route path={routeLinks.superAdmin.patientsStats} element={<AdminPatientStats />} />
+        <Route path={routeLinks.superAdmin.doctors} element={<AdminDoctors />} />
+        <Route path={routeLinks.superAdmin.doctorsStats} element={<AdminDoctorsStats />} />
+        <Route path={routeLinks.superAdmin.doctorsSpecialties} element={<AdminDoctorsSpecialties />} />
+        <Route path={routeLinks.superAdmin.doctorDetails} element={<AdminDoctorsDetails />} />
+        <Route path={routeLinks.superAdmin.pharmacists} element={<AdminPharmacists />} />
+        <Route path={routeLinks.superAdmin.pharmacistsDetails} element={<AdminPharmacistsDetails />} />
+        <Route path={routeLinks.superAdmin.medications} element={<AdminMedications />} />
+        <Route path={routeLinks.superAdmin.adminInventory} element={<AdminInventory />} />
+        <Route path={routeLinks.superAdmin.adminInventoryLogs} element={<AdminInventoryLogs />} />
+        <Route path={routeLinks.superAdmin.adminInventorySummary} element={<AdminInventorySummary />} />
+        <Route path={routeLinks.superAdmin.adminInventoryDetails} element={<AdminInventoryDetails />} />
+        <Route path={routeLinks.superAdmin.adminInventoryMedication} element={<AdminInventoryMedication />} />
+        <Route path={routeLinks.superAdmin.orders} element={<AdminOrder />} />
+        <Route path={routeLinks.superAdmin.orderDetails} element={<AdminOrderDetails />} />
+        <Route path={routeLinks.superAdmin.admins} element={<SuperAdminAdmins />} />
+        <Route path={routeLinks.superAdmin.adminsDetails} element={<SuperAdminAdminsDetails />} />
+        <Route path={routeLinks.superAdmin.helpCenter} element={<AdminHelpCenter />} />
+        <Route path={routeLinks.superAdmin.profile} element={<AdminProfile />} />
+      </Route>
 
-      {
-        path: routeLinks?.admin?.adminInventoryDetails,
-        element: <AdminInventoryDetails />,
-      },
-      {
-        path: routeLinks?.admin?.adminInventoryMedication,
-        element: <AdminInventoryMedication />,
-      },
-         {
-        path: routeLinks?.admin?.orders,
-        element: <AdminOrder />,
-      },
-            {
-        path: routeLinks?.admin?.orderDetails,
-        element: <AdminOrderDetails />,
-      },
-      {
-        path: routeLinks?.admin?.adminsDetails,
-        element: <SuperAdminAdminsDetails />,
-      },
-                     {
-        path:routeLinks?.admin?.helpCenter,
-        element:<AdminHelpCenter/>
-      },
-      {
-        path: routeLinks?.admin?.profile,
-        element: <AdminProfile />,
-      },
-    ],
-  },
-  {
-    path: routeLinks?.superAdmin?.path,
-    element: <SuperAdminLayout />,
-    children: [
-      {
-        path: routeLinks?.superAdmin?.path,
-        element: <Navigate to={routeLinks?.superAdmin?.dashboard} />,
-      },
-      {
-        path: routeLinks?.superAdmin?.dashboard,
-        element: <AdminDashboard />,
-      },
-      {
-        path: routeLinks?.superAdmin?.lab,
-        element: <AdminLab />,
-      },
-      {
-        path: routeLinks?.superAdmin?.labDetails,
-        element: <AdminLabDetails />,
-      },
-      {
-        path: routeLinks?.superAdmin?.users,
-        element: <AdminUser />,
-      },
-      {
-        path: routeLinks?.superAdmin?.usersDetails,
-        element: <AdminUserDetails />,
-      },
-      {
-        path: routeLinks?.superAdmin?.patients,
-        element: <AdminPatients />,
-      },
-        {
-        path: routeLinks?.superAdmin?.patientsDetails,
-        element: <AdminPatientDetails />,
-      },
-         {
-        path: routeLinks?.superAdmin?.usersDetails,
-        element: <AdminUserDetails />,
-      },
-         {
-        path: routeLinks?.superAdmin?.patientsStats,
-        element: <AdminPatientStats />,
-      },
-      {
-        path: routeLinks?.superAdmin?.doctors,
-        element: <AdminDoctors />,
-      },
-         {
-        path: routeLinks?.superAdmin?.doctorsStats,
-        element: <AdminDoctorsStats />,
-      },
-          {
-        path: routeLinks?.superAdmin?.doctorsSpecialties,
-        element: <AdminDoctorsSpecialties />,
-      },
-      {
-        path: routeLinks?.superAdmin?.doctorDetails,
-        element: <AdminDoctorsDetails />,
-      },
-      {
-        path: routeLinks?.superAdmin?.pharmacists,
-        element: <AdminPharmacists />,
-      },
-      {
-        path: routeLinks?.superAdmin?.pharmacistsDetails,
-        element: <AdminPharmacistsDetails />,
-      },
-      {
-        path: routeLinks?.superAdmin?.medications,
-        element: <AdminMedications />,
-      },
-      {
-        path: routeLinks?.superAdmin?.adminInventory,
-        element: <AdminInventory />,
-      },
-      {
-        path: routeLinks?.superAdmin?.adminInventoryLogs,
-        element: <AdminInventoryLogs />,
-      },
-      {
-        path: routeLinks?.superAdmin?.adminInventorySummary,
-        element: <AdminInventorySummary />,
-      },
-
-      {
-        path: routeLinks?.superAdmin?.adminInventoryDetails,
-        element: <AdminInventoryDetails />,
-      },
-      {
-        path: routeLinks?.superAdmin?.adminInventoryMedication,
-        element: <AdminInventoryMedication />,
-      },
-        {
-        path: routeLinks?.superAdmin?.orders,
-        element: <AdminOrder />,
-      },
-            {
-        path: routeLinks?.superAdmin?.orderDetails,
-        element: <AdminOrderDetails />,
-      },
-      {
-        path: routeLinks?.superAdmin?.admins,
-        element: <SuperAdminAdmins />,
-      },
-      {
-        path: routeLinks?.superAdmin?.adminsDetails,
-        element: <SuperAdminAdminsDetails />,
-      },
-                         {
-        path:routeLinks?.superAdmin?.helpCenter,
-        element:<AdminHelpCenter/>
-      },
-      {
-        path: routeLinks?.superAdmin?.profile,
-        element: <AdminProfile />,
-      },
-    ],
-  },
-]);
+      {/* Catch all unmatched routes */}
+      <Route path="*" element={<ErrorPage />} />
+    </Routes>
+  );
+}
 
 export default App;
