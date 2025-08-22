@@ -1,97 +1,121 @@
 import "./app.css";
 import routeLinks from "./utils/routes";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { lazy, Suspense } from "react";
+
+// Layouts (keep as direct imports since they’re always used)
 import PatientAuthLayout from "./components/layouts/PatientAuthLayout";
-import Login from "./pages/patient/auth/Login";
-import Register from "./pages/patient/auth/Register";
-import Onboarding from "./pages/patient/onboarding/Onboarding";
-import Appointment from "./pages/patient/appointment/Appointment";
 import PatientLayout from "./components/layouts/PatientLayout";
-import DashboardHome from "./pages/patient/dashboard/DashboardHome";
-import Consultaion from "./pages/patient/consultation/Consultaion";
-import Prescriptions from "./pages/patient/prescriptions/Prescriptions";
-import Lab from "./pages/patient/lab/Lab";
-import Profile from "./pages/patient/profile/Profile";
-import Order from "./pages/patient/order/PatientOrder";
-import MedicalHistory from "./pages/patient/medical/MedicalHistory";
 import DoctorLayout from "./components/layouts/DoctorLayout";
-import DoctorDashboard from "./pages/doctor/dashboard/DoctorDashboard";
-import DoctorAppointments from "./pages/doctor/appointments/DoctorAppointments";
-import DoctorAppointmentsView from "./pages/doctor/appointments/DoctorAppointmentsDetails";
-import DoctorPatients from "./pages/doctor/patients/DoctorPatients";
-import DoctorProfile from "./pages/doctor/profile/DoctorProfile";
-import DoctorSchedule from "./pages/doctor/Schedule/DoctorSchedule";
-import DoctorPatientsDetails from "./pages/doctor/patients/DoctorPatientsDetails";
-import EmailVerification from "./pages/patient/auth/EmailVerification";
-import Home from "./pages/business/Home";
 import PartnerAuthLayout from "./components/layouts/PartnerAuthLayout";
-import PartnerLogin from "./pages/auth/PartnerLogin";
-import PartnerEmailVerification from "./pages/auth/PartnerEmailVerification";
-import ConsultationView from "./pages/patient/consultation/ConsultationView";
 import LabLayout from "./components/layouts/LabLayout";
-import LabDashboard from "./pages/lab/dashboard/LabDashboard";
-import LabTestRequests from "./pages/lab/test/LabTestRequests";
-import LabTestRequestsDetails from "./pages/lab/test/LabTestRequestsDetails";
-import LabProfile from "./pages/lab/profile/LabProfile";
-import DoctorPrescriptions from "./pages/doctor/prescriptions/DoctorPrescriptions";
 import AdminAuthLayout from "./components/layouts/AdminAuthLayout";
 import AdminLayout from "./components/layouts/AdminLayout";
-import AdminLogin from "./pages/admin/auth/AdminLogin";
-import AdminDashboard from "./pages/admin/dashboard/AdminDashboard";
-import AdminLab from "./pages/admin/lab/AdminLab";
-import AdminDoctors from "./pages/admin/doctors/AdminDoctors";
-import DoctorOrder from "./pages/doctor/order/DoctorLabOrder";
-import DoctorLabOrderDetails from "./pages/doctor/order/DoctorLabOrderDetails";
-import LabDetails from "./pages/patient/lab/LabDetails";
-import AdminPharmacists from "./pages/admin/pharmacists/AdminPharmacists";
-import AdminMedications from "./pages/admin/medications/AdminMedications";
-import PharmacyProfile from "./pages/pharmacy/profile/PharmacistProfile";
-import PharmacyDashboard from "./pages/pharmacy/dashboard/PharmacistDashboard";
-import PharmacyMedications from "./pages/pharmacy/medications/PharmacistMedications";
 import PharmacyLayout from "./components/layouts/PharmacistLayout";
 import SuperAdminLayout from "./components/layouts/SuperAdminLayout";
-import SuperAdminAdmins from "./pages/admin/superadmin/admins/SuperAdminAdmins";
-import AdminProfile from "./pages/admin/profile/AdminProfile";
-import AdminLabDetails from "./pages/admin/lab/AdminLabDetails";
-
-import AdminDoctorsDetails from "./pages/admin/doctors/AdminDoctorsDetails";
-import AdminPharmacistsDetails from "./pages/admin/pharmacists/AdminPharmacistsDetails";
-import SuperAdminAdminsDetails from "./pages/admin/superadmin/admins/SuperAdminAdminsDetails";
-import AdminInventory from "./pages/admin/inventories/AdminInventory";
-import AdminInventoryLogs from "./pages/admin/inventories/AdminInventoryLogs";
-import AdminInventorySummary from "./pages/admin/inventories/AdminInventorySummary";
-import AdminInventoryDetails from "./pages/admin/inventories/AdminInventoryDetails";
-import AdminInventoryMedication from "./pages/admin/inventories/AdminInventoryMedication";
-import PharmacyInventory from "./pages/pharmacy/inventories/PharmacyInventory";
-import PharmacyInventorySummary from "./pages/pharmacy/inventories/PharmacyInventorySummary";
-import PharmacyInventoryDetails from "./pages/pharmacy/inventories/PharmacyInventoryDetails";
-import PharmacyInventoryMedication from "./pages/pharmacy/inventories/PharmacyInventoryMedication";
-import PatientMedications from "./pages/patient/pharmacy/PatientMedications";
-import PatientCheckout from "./pages/patient/checkout/PatientCheckout";
-import PrescriptionOrderDetails from "./pages/patient/order/PatientOrderDetails";
-import AdminOrder from "./pages/admin/order/AdminOrder";
-import AdminOrderDetails from "./pages/admin/order/AdminOrderDetails";
-import PharmacyOrder from "./pages/pharmacy/order/PharmacyOrder";
-import PharmacyOrderDetails from "./pages/pharmacy/order/PharmacyOrderDetails";
-import AdminUser from "./pages/admin/users/AdminUser";
-import AdminUserDetails from "./pages/admin/users/AdminUserDetails";
-import AdminPatientStats from "./pages/admin/patients/AdminPatientStats";
-import AdminPatients from "./pages/admin/patients/AdminPatients";
-import AdminPatientDetails from "./pages/admin/patients/AdminPatientsDetails";
-import DoctorAllPatients from "./pages/doctor/allpatients/DoctorAllPatients";
-import DoctorAllPatientsDetails from "./pages/doctor/allpatients/DoctorAllPatientsDetails";
-import AdminDoctorsStats from "./pages/admin/doctors/AdminDoctorsStats";
-import AdminDoctorsSpecialties from "./pages/admin/doctors/AdminDoctorsSpecialties";
-import PatientHelpCenter from "./pages/patient/HelpCenter/PatientHelpCenter";
-import DoctorHelpCenter from "./pages/admin/HelpCenter/AdminHelpCenter";
-import LabHelpCenter from "./pages/lab/HelpCenter/LabHelpCenter";
-import PharmacyHelpCenter from "./pages/pharmacy/HelpCenter/PharmacyHelpCenter";
-import AdminHelpCenter from "./pages/admin/HelpCenter/AdminHelpCenter";
 import ErrorPage from "./components/error/ErrorPage";
-import { Routes, Route, Navigate } from "react-router-dom";
+import PartnerEmailVerification from "./pages/auth/PartnerEmailVerification";
+import PartnerLogin from "./pages/auth/PartnerLogin";
+import AdminUser from "./pages/admin/users/AdminUser";
+import website from "./utils/website";
+
+// Public / Business
+const Home = lazy(() => import("./pages/business/Home"));
+
+// Patient
+const Login = lazy(() => import("./pages/patient/auth/Login"));
+const Register = lazy(() => import("./pages/patient/auth/Register"));
+const EmailVerification = lazy(() => import("./pages/patient/auth/EmailVerification"));
+const Onboarding = lazy(() => import("./pages/patient/onboarding/Onboarding"));
+const Appointment = lazy(() => import("./pages/patient/appointment/Appointment"));
+const DashboardHome = lazy(() => import("./pages/patient/dashboard/DashboardHome"));
+const Consultaion = lazy(() => import("./pages/patient/consultation/Consultaion"));
+const ConsultationView = lazy(() => import("./pages/patient/consultation/ConsultationView"));
+const Prescriptions = lazy(() => import("./pages/patient/prescriptions/Prescriptions"));
+const Lab = lazy(() => import("./pages/patient/lab/Lab"));
+const LabDetails = lazy(() => import("./pages/patient/lab/LabDetails"));
+const Profile = lazy(() => import("./pages/patient/profile/Profile"));
+const Order = lazy(() => import("./pages/patient/order/PatientOrder"));
+const PrescriptionOrderDetails = lazy(() => import("./pages/patient/order/PatientOrderDetails"));
+const MedicalHistory = lazy(() => import("./pages/patient/medical/MedicalHistory"));
+const PatientMedications = lazy(() => import("./pages/patient/pharmacy/PatientMedications"));
+const PatientCheckout = lazy(() => import("./pages/patient/checkout/PatientCheckout"));
+const PatientHelpCenter = lazy(() => import("./pages/patient/HelpCenter/PatientHelpCenter"));
+
+// Doctor
+const DoctorDashboard = lazy(() => import("./pages/doctor/dashboard/DoctorDashboard"));
+const DoctorAppointments = lazy(() => import("./pages/doctor/appointments/DoctorAppointments"));
+const DoctorAppointmentsView = lazy(() => import("./pages/doctor/appointments/DoctorAppointmentsDetails"));
+const DoctorPatients = lazy(() => import("./pages/doctor/patients/DoctorPatients"));
+const DoctorPatientsDetails = lazy(() => import("./pages/doctor/patients/DoctorPatientsDetails"));
+const DoctorSchedule = lazy(() => import("./pages/doctor/Schedule/DoctorSchedule"));
+const DoctorProfile = lazy(() => import("./pages/doctor/profile/DoctorProfile"));
+const DoctorPrescriptions = lazy(() => import("./pages/doctor/prescriptions/DoctorPrescriptions"));
+const DoctorOrder = lazy(() => import("./pages/doctor/order/DoctorLabOrder"));
+const DoctorLabOrderDetails = lazy(() => import("./pages/doctor/order/DoctorLabOrderDetails"));
+const DoctorAllPatients = lazy(() => import("./pages/doctor/allpatients/DoctorAllPatients"));
+const DoctorAllPatientsDetails = lazy(() => import("./pages/doctor/allpatients/DoctorAllPatientsDetails"));
+const DoctorHelpCenter = lazy(() => import("./pages/admin/HelpCenter/AdminHelpCenter")); // double-check this path
+
+// Lab
+const LabDashboard = lazy(() => import("./pages/lab/dashboard/LabDashboard"));
+const LabTestRequests = lazy(() => import("./pages/lab/test/LabTestRequests"));
+const LabTestRequestsDetails = lazy(() => import("./pages/lab/test/LabTestRequestsDetails"));
+const LabProfile = lazy(() => import("./pages/lab/profile/LabProfile"));
+const LabHelpCenter = lazy(() => import("./pages/lab/HelpCenter/LabHelpCenter"));
+
+// Pharmacy
+const PharmacyDashboard = lazy(() => import("./pages/pharmacy/dashboard/PharmacistDashboard"));
+const PharmacyProfile = lazy(() => import("./pages/pharmacy/profile/PharmacistProfile"));
+const PharmacyMedications = lazy(() => import("./pages/pharmacy/medications/PharmacistMedications"));
+const PharmacyInventory = lazy(() => import("./pages/pharmacy/inventories/PharmacyInventory"));
+const PharmacyInventorySummary = lazy(() => import("./pages/pharmacy/inventories/PharmacyInventorySummary"));
+const PharmacyInventoryDetails = lazy(() => import("./pages/pharmacy/inventories/PharmacyInventoryDetails"));
+const PharmacyInventoryMedication = lazy(() => import("./pages/pharmacy/inventories/PharmacyInventoryMedication"));
+const PharmacyOrder = lazy(() => import("./pages/pharmacy/order/PharmacyOrder"));
+const PharmacyOrderDetails = lazy(() => import("./pages/pharmacy/order/PharmacyOrderDetails"));
+const PharmacyHelpCenter = lazy(() => import("./pages/pharmacy/HelpCenter/PharmacyHelpCenter"));
+
+// Admin
+const AdminLogin = lazy(() => import("./pages/admin/auth/AdminLogin"));
+const AdminDashboard = lazy(() => import("./pages/admin/dashboard/AdminDashboard"));
+const AdminProfile = lazy(() => import("./pages/admin/profile/AdminProfile"));
+const AdminLab = lazy(() => import("./pages/admin/lab/AdminLab"));
+const AdminLabDetails = lazy(() => import("./pages/admin/lab/AdminLabDetails"));
+const AdminDoctors = lazy(() => import("./pages/admin/doctors/AdminDoctors"));
+const AdminDoctorsDetails = lazy(() => import("./pages/admin/doctors/AdminDoctorsDetails"));
+const AdminDoctorsStats = lazy(() => import("./pages/admin/doctors/AdminDoctorsStats"));
+const AdminDoctorsSpecialties = lazy(() => import("./pages/admin/doctors/AdminDoctorsSpecialties"));
+const AdminPharmacists = lazy(() => import("./pages/admin/pharmacists/AdminPharmacists"));
+const AdminPharmacistsDetails = lazy(() => import("./pages/admin/pharmacists/AdminPharmacistsDetails"));
+const AdminMedications = lazy(() => import("./pages/admin/medications/AdminMedications"));
+const AdminInventory = lazy(() => import("./pages/admin/inventories/AdminInventory"));
+const AdminInventoryLogs = lazy(() => import("./pages/admin/inventories/AdminInventoryLogs"));
+const AdminInventorySummary = lazy(() => import("./pages/admin/inventories/AdminInventorySummary"));
+const AdminInventoryDetails = lazy(() => import("./pages/admin/inventories/AdminInventoryDetails"));
+const AdminInventoryMedication = lazy(() => import("./pages/admin/inventories/AdminInventoryMedication"));
+const AdminOrder = lazy(() => import("./pages/admin/order/AdminOrder"));
+const AdminOrderDetails = lazy(() => import("./pages/admin/order/AdminOrderDetails"));
+// const AdminUsers = lazy(() => import("./pages/admin/users/AdminUser"));
+const AdminUserDetails = lazy(() => import("./pages/admin/users/AdminUserDetails"));
+const AdminPatients = lazy(() => import("./pages/admin/patients/AdminPatients"));
+const AdminPatientDetails = lazy(() => import("./pages/admin/patients/AdminPatientsDetails"));
+const AdminPatientStats = lazy(() => import("./pages/admin/patients/AdminPatientStats"));
+const AdminHelpCenter = lazy(() => import("./pages/admin/HelpCenter/AdminHelpCenter"));
+
+// Super Admin
+const SuperAdminAdmins = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdmins"));
+const SuperAdminAdminsDetails = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdminsDetails"));
+
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
 function App() {
   return (
+    <Suspense fallback={    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
+      <p className="text-primary text-lg md:text-2xl font-medium tracking-wide animate-pulse">
+        {website?.name}
+      </p>
+    </div>}>
     <Routes>
       <Route path="/" element={<Home />} />
 
@@ -247,6 +271,7 @@ function App() {
       {/* Catch all unmatched routes */}
       <Route path="*" element={<ErrorPage />} />
     </Routes>
+    </Suspense>
   );
 }
 

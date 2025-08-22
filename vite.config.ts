@@ -7,6 +7,7 @@ export default defineConfig({
     codeInspectorPlugin({
       bundler: 'vite',
     }),
-    tailwindcss()
+    tailwindcss(),
+    
   ],
 });
