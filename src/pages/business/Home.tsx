@@ -75,7 +75,7 @@ export default function Home() {
                       <Link to={routeLinks?.auth?.adminLogin}  className="text-sm font-semibold text-gray-900">Admin</Link>
                   </div>
                   <div className="py-6">
-                    <a href="#" className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
+                    <Link to={routeLinks?.auth?.login} className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50">Log in</Link>
                   </div>
                 </div>
               </div>
