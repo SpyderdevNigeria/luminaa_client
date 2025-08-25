@@ -63,7 +63,7 @@ function MobileSidebar({
                       {item.to && item.to.trim() !== "" ? (
                         <Link
                           to={item.to}
-                          className={`flex items-center text-sm p-1 my-1 font-[400] ${isActive ? "text-primary  bg-primary/10 border-l-4 border-primary" : "text-inactive"
+                          className={`flex items-center hover:bg-primary/10  hover:text-primary text-sm p-1 my-1 font-[400] ${isActive ? "text-primary  bg-primary/10 border-l-4 border-primary" : "text-inactive"
                             }`}
                           onClick={() => setSidebarOpen(false)}
                         >
@@ -80,7 +80,7 @@ function MobileSidebar({
                         <button
                           type="button"
                           onClick={() => toggleDropdown(item.label)}
-                          className={`w-full flex items-center text-sm p-1 my-1  font-[400] ${isActive ? "text-primary  bg-primary/10 border-l-4 border-primary" : "text-inactive"
+                          className={`w-full flex items-center text-sm p-1 my-1  hover:bg-primary/10  hover:text-primary font-[400] ${isActive ? "text-primary  bg-primary/10 border-l-4 border-primary" : "text-inactive"
                             }`}
                         >
                           {item.icon && (

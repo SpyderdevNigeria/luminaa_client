@@ -65,7 +65,7 @@ function Sidebar({ links, active, type }: SidebarProps) {
                     <button
                       type="button"
                       onClick={() => toggleDropdown(item.id)}
-                      className={`w-full flex items-center text-sm p-1 rounded-lg mb-1 ${
+                      className={`w-full flex items-center text-sm p-1 hover:bg-primary/10  hover:text-primary  mb-1 ${
                         openDropdown === item.id ? "text-primary" : "text-inactive"
                       }`}
                     >
@@ -98,7 +98,7 @@ function Sidebar({ links, active, type }: SidebarProps) {
                       <NavLink
                         to={item.to}
                         className={({ isActive }) =>
-                          `flex items-center text-sm p-1 my-1 ${
+                          `flex items-center text-sm p-1 my-1 hover:bg-primary/10  hover:text-primary ${
                             isActive ? "text-primary  bg-primary/10 border-l-4 border-primary"  : "text-inactive"
                           }`
                         }
@@ -125,7 +125,7 @@ function Sidebar({ links, active, type }: SidebarProps) {
                             key={sub.id}
                             to={sub.to!}
                             className={({ isActive }) =>
-                              `text-sm py-1 px-2 rounded ${
+                              `text-sm py-1 px-2 rounded hover:bg-primary/10  hover:text-primary ${
                                 isActive ? "text-primary font-semibold" : "text-inactive"
                               }`
                             }
