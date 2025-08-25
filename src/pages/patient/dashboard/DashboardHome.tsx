@@ -14,7 +14,6 @@ function DashboardHome() {
   const {
     appointments,
     loadingAppointment,
-    setLoadingAppointment,
     page,
     totalPages,
     status,
@@ -28,10 +27,10 @@ function DashboardHome() {
   } = useAppointments(PatientApi);
 
   useEffect(() => {
-       if (appointments.length > 0 && status === "" && dataFrom === "" && dateTo === "" && page === 1 ) {
-      setLoadingAppointment(false);
-      return
-    }
+    //    if (appointments.length > 0 && status === "" && dataFrom === "" && dateTo === "" ) {
+    //   setLoadingAppointment(false);
+    //   return
+    // }
     getAppointments();
   }, [page, status, dataFrom, dateTo]);
 
@@ -76,6 +75,10 @@ function DashboardHome() {
     ],
     [navItemsPatient, routeLinks?.patient]
   );
+
+  
+
+
   return (
     <div>
       <h2 className="text-sm italic text-gray-500 mb-1">Welcome</h2>

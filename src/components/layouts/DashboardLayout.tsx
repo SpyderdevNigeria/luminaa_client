@@ -3,6 +3,7 @@ import { useLocation, matchPath } from "react-router-dom";
 import Sidebar, { LinkItem } from "./Sidebar";
 import Navbar from "./Navbar";
 import MobileSidebar from "./MobileSidebar";
+import { ThemeProvider } from "../common/ThemeProvider";
 type DashboardLayoutProps = {
   children: React.ReactNode;
   links: LinkItem[];
@@ -44,7 +45,7 @@ function DashboardLayout({ children, links, type }: DashboardLayoutProps) {
       lab_tech: "lab tech",
       pharmacist: "pharmacist",
       admin: "admin",
-      super_admin: "super_admin",
+      super_admin: "super admin",
     };
 
     if (type && roleMap[type]) {
@@ -52,6 +53,15 @@ function DashboardLayout({ children, links, type }: DashboardLayoutProps) {
     }
   
   }, [type]);
+
+  useEffect(() => {
+  if (type) {
+    document.documentElement.setAttribute("data-theme", type.toLowerCase());
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+}, [type]);
+
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -84,7 +94,8 @@ function DashboardLayout({ children, links, type }: DashboardLayoutProps) {
   }, [location.pathname, links]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+  <ThemeProvider>  
+    <div className="min-h-screen bg-gray-100 ">
       <Sidebar links={links} active={activeLink || { id: "", label: "" }} type={userType} />
       <MobileSidebar
         links={links}
@@ -112,6 +123,7 @@ function DashboardLayout({ children, links, type }: DashboardLayoutProps) {
         </main>
       </div>
     </div>
+    </ThemeProvider>
   );
 }
 

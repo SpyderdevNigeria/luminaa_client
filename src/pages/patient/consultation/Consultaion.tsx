@@ -11,7 +11,6 @@ function Consultaion() {
   const {
     appointments,
     loadingAppointment,
-    setLoadingAppointment,
     page,
     totalPages,
     status,
@@ -27,16 +26,16 @@ function Consultaion() {
   } = useAppointments(PatientApi);
 
   useEffect(() => {
-    if (
-      appointments.length > 0 &&
-      status === "" &&
-      dataFrom === "" &&
-      dateTo === "" &&
-      page === 1
-    ) {
-      setLoadingAppointment(false);
-      return;
-    }
+    // if (
+    //   appointments.length > 0 &&
+    //   status === "" &&
+    //   dataFrom === "" &&
+    //   dateTo === "" &&
+    //   page === 1
+    // ) {
+    //   setLoadingAppointment(false);
+    //   return;
+    // }
     getAppointments();
   }, [page, status, dataFrom, dateTo]);
 

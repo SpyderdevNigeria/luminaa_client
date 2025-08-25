@@ -9,6 +9,7 @@ import routeLinks from "../../utils/routes";
 import LogoutModal from "../modal/LogoutModal";
 import { logout } from "../../reducers/authSlice";
 import Multilingual from "../common/Multilingual";
+
 // import ThemeToggle from "../common/ThemeToggle";
 
 type NavbarProps = {
@@ -70,7 +71,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active, type}: NavbarProps) {
     <div>
       <header className="  px-4 2xl:px-18 py-4 bg-white   flex items-center justify-between">
         <div>
-          <h1 className="text-base md:text-2xl text-primary-text font-semibold uppercase">{type}</h1>
+          <h1 className="text-base md:text-2xl text-primary-text font-semibold text-primary uppercase">{type}</h1>
                 <h1 className="text-base md:text-sm text-primary-text ">
           <span className={`${active?.sublink && "font-light"}`}>
             {active?.title}
@@ -117,9 +118,6 @@ function Navbar({ sidebarOpen, setSidebarOpen, active, type}: NavbarProps) {
               </div>
             )}
           </div>
-          {/* <div className="relative hidden md:block" >
-             <ThemeToggle/>
-          </div> */}
           {/* Hamburger Menu */}
           <button
             className="md:hidden"

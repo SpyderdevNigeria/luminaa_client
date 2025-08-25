@@ -106,12 +106,11 @@ const AdminHelpCenter = lazy(() => import("./pages/admin/HelpCenter/AdminHelpCen
 // Super Admin
 const SuperAdminAdmins = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdmins"));
 const SuperAdminAdminsDetails = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdminsDetails"));
-import  { ThemeProvider } from "./components/common/ThemeProvider";
+
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
 function App() {
   return (
-    <ThemeProvider>
     <Suspense fallback={<div className="flex flex-col items-center justify-center min-h-screen bg-white ">
       <p className="text-primary text-lg md:text-2xl font-medium tracking-wide animate-pulse">
         {website?.name}
@@ -273,7 +272,7 @@ function App() {
       <Route path="*" element={<ErrorPage />} />
     </Routes>
     </Suspense>
-      </ThemeProvider>
+
   );
 }
 

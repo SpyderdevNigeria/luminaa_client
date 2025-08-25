@@ -30,7 +30,7 @@ function useAppointments(api: any) {
       if (status) params.append("status", status);
       if (dataFrom) params.append("dataFrom", dataFrom);
       if (dateTo) params.append("dateTo", dateTo);
-      params.append("page", page.toString());
+       if (page)  params.append("page", page.toString());
       params.append("limit", limit.toString());
 
       const query = `?${params.toString()}`;
@@ -42,7 +42,7 @@ function useAppointments(api: any) {
             data: res.data.data,
             total: res.data.total || 0,
             limit: res.data.limit || 10,
-            totalPages: res.data.totalPages || 1,
+            totalPages:  Math.ceil((res.data.total ?? 0) / res.data.limit) || 1,
             page: res.data.page || 1,
           })
         );

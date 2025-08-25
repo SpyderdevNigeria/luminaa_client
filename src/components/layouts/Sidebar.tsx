@@ -29,6 +29,7 @@ function Sidebar({ links, active, type }: SidebarProps) {
   };
 
   useEffect(() => {
+    setOpenDropdown(null)
     links.forEach((link) => {
       if (link.subLinks?.some((sub) => sub.id === active.id)) {
         setOpenDropdown(link.id);
@@ -37,7 +38,7 @@ function Sidebar({ links, active, type }: SidebarProps) {
   }, [active, links]);
 
   return (
-    <aside className="hidden md:flex w-63 fixed inset-y-0 left-0 z-40 bg-white  px-4 flex-col justify-between pb-2">
+    <aside className="hidden md:flex w-63 fixed inset-y-0 left-0 z-40 bg-white   px-4 flex-col justify-between pb-2">
       <div className="flex flex-col h-full">
         <div className="flex items-center justify-between py-4">
           <img
@@ -97,16 +98,17 @@ function Sidebar({ links, active, type }: SidebarProps) {
                       <NavLink
                         to={item.to}
                         className={({ isActive }) =>
-                          `flex items-center text-sm p-1 my-1 rounded-lg ${
-                            isActive ? "text-primary" : "text-inactive"
+                          `flex items-center text-sm p-1 my-1 ${
+                            isActive ? "text-primary  bg-primary/10 border-l-4 border-primary"  : "text-inactive"
                           }`
                         }
                       >
                         {item.icon && (
                           <item.icon
                             className={`w-6 h-6 mx-2 ${
-                              openDropdown === item.id ? "text-primary" : "text-inactive"
-                            }`}
+                              openDropdown === item.id ? "text-primary" : "text-inactive "
+                            } ${ active?.id === item.id ? "text-primary" : "text-inactive"}`}
+                            
                           />
                         )}
                         {item.label}

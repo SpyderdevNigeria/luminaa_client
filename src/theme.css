@@ -1,10 +1,7 @@
 @import "tailwindcss";
 
-/* =====================
-   Base Theme Variables
-   ===================== */
 @theme {
-  --color-primary: #042c52; 
+  --color-primary: #042c52;
   --color-secondary: #50e3c2;
   --color-text-primary: #1b1a1a;
   --color-text-secondary: #282828;
@@ -12,7 +9,35 @@
   --color-inactive: #bcbcbc;
   --color-gray-light: #cdcdcd;
   --color-blue-dark: #28303f;
-  --color-dashboard-gray: #E5E5E5;
+  --color-dashboard-gray: #e5e5e5;
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
+/* Patient Theme */
+[data-theme="patient"] {
+  --color-primary: #0f476c;
+}
+
+/* Doctor Theme */
+[data-theme="doctor"] {
+  --color-primary: #00ba8f;
+}
+
+/* Lab Tech Theme */
+[data-theme="lab_tech"] {
+  --color-primary: #00ba8f;
+}
+
+/* Pharmacist Theme */
+[data-theme="pharmacist"] {
+  --color-primary: #00BA8F;
+}
+
+/* Admin Theme */
+[data-theme="admin"] {
+  --color-primary: #2c3e50;
+}
+
+/* Super Admin Theme */
+[data-theme="super_admin"] {
+  --color-primary: #2c3e50;
+}
