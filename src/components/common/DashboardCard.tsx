@@ -46,7 +46,7 @@ function DashboardCard({ title, count }: DashboardCardProps) {
 
   return (
     <div>
-      <main   className="bg-white border border-gray-100 rounded-2xl p-10 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-row justify-between gap-6">
+      <main   className="bg-white  border border-gray-100 rounded-2xl p-10 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-row justify-between gap-6">
         {/* <img
                     src={CardImage}
                     alt=""

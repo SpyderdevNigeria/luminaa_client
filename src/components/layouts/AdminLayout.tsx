@@ -34,7 +34,7 @@ function AdminLayout() {
   if (authLoading) return <LoadingScreen />;
   return (
     <div>
-      <DashboardLayout links={navItemsAdmin}>
+      <DashboardLayout links={navItemsAdmin} type={userProfile?.user?.role || ""}>
         <Outlet />
       </DashboardLayout>
     </div>

@@ -165,7 +165,7 @@ const ProgressIndicator = ({ step }: { step: number }) => (
       className={`w-12 h-12 rounded-full flex items-center justify-center ${
         step >= 1
           ? "bg-primary text-white"
-          : "bg-white border border-primary text-primary"
+          : "bg-white  border border-primary text-primary"
       }`}
     >
       1
@@ -181,7 +181,7 @@ const ProgressIndicator = ({ step }: { step: number }) => (
       className={`w-12 h-12 rounded-full flex items-center justify-center ${
         step >= 2
           ? "bg-primary text-white"
-          : "bg-white border border-primary text-primary"
+          : "bg-white  border border-primary text-primary"
       }`}
     >
       2

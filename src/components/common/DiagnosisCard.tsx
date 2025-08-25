@@ -23,7 +23,7 @@ function DiagnosisCard({ diagnosis, onView, onEdit, onDelete }: DiagnosisCardPro
   const hasActions = onEdit || onDelete;
 
   return (
-    <main className="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white text-black flex flex-col gap-4">
+    <main className="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white  text-black flex flex-col gap-4">
       {/* Header */}
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-4">

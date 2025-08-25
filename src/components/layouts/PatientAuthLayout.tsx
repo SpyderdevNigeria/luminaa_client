@@ -6,6 +6,7 @@ import { useLayoutEffect } from "react";
 import LoadingScreen from "../loading/LoadingScreen";
 import { returnMemberNavigationUrlLogic } from "../../utils/dashboardUtils";
 import Multilingual from "../common/Multilingual";
+import ResetTheme from "../common/Resettheme";
 
 function PatientAuthLayout() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function PatientAuthLayout() {
   if (authLoading) return <LoadingScreen />;
 
   return (
+    <ResetTheme>
     <div
       className="min-h-screen bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${Background})` }}
@@ -42,6 +44,7 @@ function PatientAuthLayout() {
         <Outlet />
       </div>
     </div>
+    </ResetTheme>
   );
 }
 

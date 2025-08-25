@@ -84,7 +84,7 @@ const FileDropzone: React.FC<FileDropzoneProps> = ({
             )}
             <button
               type="button"
-              className="absolute top-2 right-2 bg-white rounded-full p-1 shadow hover:bg-red-500 hover:text-white transition"
+              className="absolute top-2 right-2 bg-white  rounded-full p-1 shadow hover:bg-red-500 hover:text-white transition"
               onClick={(e) => {
                 e.stopPropagation();
                 onDrop(null);

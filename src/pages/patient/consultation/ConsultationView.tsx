@@ -135,7 +135,7 @@ const ConsultationView = () => {
   };
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <div className="md:col-span-1 bg-white p-6 border border-gray-200 rounded-lg shadow">
+      <div className="md:col-span-1 bg-white  p-6 border border-gray-200 rounded-lg shadow">
         <div className="flex flex-col items-center">
           <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-primary">
             <img
@@ -158,7 +158,7 @@ const ConsultationView = () => {
         </div>
       </div>
 
-      <div className="md:col-span-3 bg-white p-6 border border-gray-200 rounded-lg shadow">
+      <div className="md:col-span-3 bg-white  p-6 border border-gray-200 rounded-lg shadow">
         <h1 className="text-xl font-semibold mb-6">Appointment Details</h1>
 
         {/* Tab Headers */}
@@ -279,7 +279,7 @@ const ConsultationView = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {documents.map((doc) => (
-                <div key={doc.id} className="p-4 bg-white rounded shadow border border-gray-200">
+                <div key={doc.id} className="p-4 bg-white  rounded shadow border border-gray-200">
                   <div className="mb-2 w-40 h-40 overflow-hidden mx-auto">
                     <img src={doc.url} alt="" className="w-full h-full object-contain" />
                   </div>

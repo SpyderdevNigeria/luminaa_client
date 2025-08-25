@@ -62,7 +62,7 @@ function LabLayout() {
   if (authLoading) return <LoadingScreen />;
 
   return (
-    <DashboardLayout links={navItemsLab}>
+    <DashboardLayout links={navItemsLab} type={userProfile?.user?.role || ""}>
       <Outlet />
     </DashboardLayout>
   );

@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
+/* =====================
+   Base Theme Variables
+   ===================== */
 @theme {
-  /* --color-primary: #0f476c; */
-  --color-primary:#042c52;
-  /* --color-primary:#053f8e; */
+  --color-primary: #042c52; 
   --color-secondary: #50e3c2;
   --color-text-primary: #1b1a1a;
   --color-text-secondary: #282828;
@@ -12,5 +13,6 @@
   --color-gray-light: #cdcdcd;
   --color-blue-dark: #28303f;
   --color-dashboard-gray: #E5E5E5;
-
 }
+
+@custom-variant dark (&:where(.dark, .dark *));

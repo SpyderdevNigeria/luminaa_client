@@ -111,7 +111,7 @@ const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose
         <FiArrowLeft /> Back to List
       </button>
 
-      <div className="bg-white p-6 rounded-lg max-w-4xl mx-auto">
+      <div className="bg-white  p-6 rounded-lg max-w-4xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">
           {admin ? "Edit Admin" : "Add Admin"}
         </h2>
@@ -153,7 +153,7 @@ const SuperAdminAdminsCreate: React.FC<Props> = ({ admin = null, onBack, onClose
 
               {/* Role update form */}
         {admin && (
-          <form onSubmit={handleRoleSubmit} className="mt-8 pt-6 bg-white p-6 rounded-lg max-w-4xl mx-auto">
+          <form onSubmit={handleRoleSubmit} className="mt-8 pt-6 bg-white  p-6 rounded-lg max-w-4xl mx-auto">
             <h3 className="text-lg font-medium mb-3">Update Role</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">

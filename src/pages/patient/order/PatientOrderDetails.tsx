@@ -39,7 +39,7 @@ const PrescriptionOrderDetails = () => {
       <h2 className="text-xl font-semibold mb-4">Prescription Order Details</h2>
 
       {/* Summary */}
-      <div className="bg-white p-4 rounded-xl border border-gray-300 grid md:grid-cols-2 gap-4 text-sm">
+      <div className="bg-white  p-4 rounded-xl border border-gray-300 grid md:grid-cols-2 gap-4 text-sm">
         <div><span className="font-semibold">Order No:</span> {order.orderNo}</div>
         <div><span className="font-semibold">Order Type:</span> {order.orderType}</div>
         <div><span className="font-semibold">Payment Method:</span> {order.paymentMethod}</div>
@@ -56,7 +56,7 @@ const PrescriptionOrderDetails = () => {
         <h3 className="text-lg font-semibold mb-2">Items</h3>
         <div className="grid gap-4">
           {order.items.map((item: any, index: number) => (
-            <div key={index} className="border  border-gray-300 rounded-xl p-4 flex items-center justify-between gap-4 bg-white">
+            <div key={index} className="border  border-gray-300 rounded-xl p-4 flex items-center justify-between gap-4 bg-white ">
               <div className="flex items-center gap-4">
                 <div className="bg-primary/10 text-primary rounded-full p-2">
                   <PiPillDuotone className="w-6 h-6" />

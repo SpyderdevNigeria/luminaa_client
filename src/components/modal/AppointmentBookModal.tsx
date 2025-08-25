@@ -52,7 +52,7 @@ const AppointmentBookModal = ({ open, onClose }: Props) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex justify-center items-center z-50">
-      <div className="w-full max-w-5xl bg-white rounded-lg overflow-hidden relative">
+      <div className="w-full max-w-5xl bg-white  rounded-lg overflow-hidden relative">
         <div className="flex min-h-[700px]  overflow-hidden">
           {/* Sidebar */}
           <div className="w-1/3 bg-[#F2F2F2] p-6">

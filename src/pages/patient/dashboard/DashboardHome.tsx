@@ -94,7 +94,7 @@ function DashboardHome() {
                 setIsModalOpen(true);
               }
             }}
-            className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col gap-6"
+            className="bg-white  border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col gap-6"
           >
             {/* Icon */}
             {i.icon && (
@@ -121,7 +121,7 @@ function DashboardHome() {
       />
       <div>
         {/* Appointments List */}
-        <section className="bg-white rounded-lg p-4">
+        <section className="bg-white  rounded-lg p-4">
           {loadingAppointment ? (
             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-4 w-full">
               {[...Array(4)].map((_, idx) => (

@@ -140,7 +140,7 @@ function PartnerEmailVerification() {
       </div>
 
       {/* Right - Form Area */}
-      <div className="md:flex items-center justify-center px-6 sm:px-16 py-12 bg-white">
+      <div className="md:flex items-center justify-center px-6 sm:px-16 py-12 bg-white ">
         {/* Logo for mobile */}
         <div className="mb-12 block md:hidden">
           <Link to="/" className="block">

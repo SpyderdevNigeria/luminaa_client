@@ -97,7 +97,7 @@ const AppointmentTab = ({
           {apps.map((app, index) => (
             <div
               key={index}
-              className="bg-white border border-[#E5E7EB] rounded-xl p-6 shadow-sm"
+              className="bg-white  border border-[#E5E7EB] rounded-xl p-6 shadow-sm"
             >
               {/* Title & Doctor */}
               <div className="text-sm text-gray-500 flex items-center gap-2">

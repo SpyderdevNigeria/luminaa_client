@@ -29,7 +29,7 @@ function PatientLayout() {
   
   return (
     <div>
-      <DashboardLayout links={navItemsPatient}>
+      <DashboardLayout links={navItemsPatient} type={userProfile?.user?.role || ""}>
         <Outlet />
       </DashboardLayout>
     </div>

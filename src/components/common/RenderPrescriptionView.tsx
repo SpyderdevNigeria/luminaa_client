@@ -64,7 +64,7 @@ const PrescriptionAppointmentView: React.FC<PrescriptionAppointmentViewProps> = 
         ← Back to all appointments
       </button>
 
-      <div className="bg-white">
+      <div className="bg-white ">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div>
             <h3 className="text-xl font-semibold text-gray-800">
@@ -80,7 +80,7 @@ const PrescriptionAppointmentView: React.FC<PrescriptionAppointmentViewProps> = 
       className={`px-4 py-1.5 text-sm rounded transition border ${
         allMedsInCart
           ? "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"
-          : "bg-white text-primary border-primary"
+          : "bg-white  text-primary border-primary"
       }`}
     >
       {allMedsInCart

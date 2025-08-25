@@ -45,7 +45,7 @@ function LabCard({
   const currentStatusIndex = STATUS_STEPS.indexOf(status);
 
   return (
-    <main className="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white text-black flex flex-col gap-6 relative">
+    <main className="border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition bg-white  text-black flex flex-col gap-6 relative">
       {/* Dropdown */}
       {(onEdit || onDelete) && (
         <div className="absolute top-4 right-4">

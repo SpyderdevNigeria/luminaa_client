@@ -59,7 +59,7 @@ const AdminInventoryDetails: React.FC = () => {
   } = inventory;
 
   return (
-    <div className=" mx-auto p-6 bg-white rounded-xl shadow">
+    <div className=" mx-auto p-6 bg-white  rounded-xl shadow">
       <Link to={userProfile?.user?.role === "admin" ? routeLinks?.admin?.adminInventory : routeLinks?.superAdmin?.adminInventory} className="text-sm text-primary flex items-center mb-4 hover:underline">
         <FiArrowLeft className="mr-1" /> Back to Inventory List
       </Link>

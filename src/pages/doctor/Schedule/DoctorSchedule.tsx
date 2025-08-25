@@ -134,7 +134,7 @@ const DoctorSchedule = () => {
                   className="sr-only peer"
                 />
                 <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-primary relative">
-                  <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"></div>
+                  <div className="absolute left-1 top-1 w-4 h-4 bg-white  rounded-full transition-transform peer-checked:translate-x-5"></div>
                 </div>
               </label>
               <span className={`text-base ${!workingDays[day].active ? 'text-gray-400' : ''}`}>{day}</span>

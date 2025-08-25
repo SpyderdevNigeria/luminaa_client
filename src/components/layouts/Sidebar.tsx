@@ -18,9 +18,10 @@ type SidebarProps = {
     label: string;
     id: string;
   };
+  type: string;
 };
 
-function Sidebar({ links, active }: SidebarProps) {
+function Sidebar({ links, active, type }: SidebarProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const toggleDropdown = (id: string) => {
@@ -36,7 +37,7 @@ function Sidebar({ links, active }: SidebarProps) {
   }, [active, links]);
 
   return (
-    <aside className="hidden md:flex w-63 fixed inset-y-0 left-0 z-40 bg-white px-4 flex-col justify-between pb-2">
+    <aside className="hidden md:flex w-63 fixed inset-y-0 left-0 z-40 bg-white  px-4 flex-col justify-between pb-2">
       <div className="flex flex-col h-full">
         <div className="flex items-center justify-between py-4">
           <img
@@ -49,7 +50,7 @@ function Sidebar({ links, active }: SidebarProps) {
             }`}
           />
         </div>
-        <h4 className="py-2 text-xs text-inactive font-medium">DASHBOARD</h4>
+        <h4 className="py-2 text-xs text-inactive font-medium uppercase">{type || "Dashboard"}</h4>
 
         {/* Scrollable nav */}
         <div className="flex-1 overflow-y-auto scrollbar-visible max-h-[calc(100vh-200px)] pr-1">

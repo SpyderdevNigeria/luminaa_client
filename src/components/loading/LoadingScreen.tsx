@@ -17,7 +17,7 @@ const LoadingScreen = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white ">
       {/* Logo / Icon */}
       {/* <div className="mb-6">
         <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center shadow-md">

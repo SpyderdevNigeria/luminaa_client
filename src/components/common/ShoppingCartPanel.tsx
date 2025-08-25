@@ -28,7 +28,7 @@ const ShoppingCartPanel: React.FC<Props> = ({ open, setOpen,  }) => {
   };
 
   return (
-    <div className="w-[400px] bg-white p-6 shadow-xl overflow-y-auto fixed top-0 right-0 h-full z-50 flex flex-col justify-between">
+    <div className="w-[400px] bg-white  p-6 shadow-xl overflow-y-auto fixed top-0 right-0 h-full z-50 flex flex-col justify-between">
       {/* Header */}
       <div>
         <div className="flex justify-between items-center mb-6">

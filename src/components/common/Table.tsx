@@ -165,7 +165,7 @@ const Table = <T extends object>({
             {data.map((item, rowIndex) => (
               <tr
                 key={rowIndex}
-                className="bg-white border-gray-100 hover:bg-gray-50"
+                className="bg-white  border-gray-100 hover:bg-gray-50"
               >
                 <td className="p-3">{(page - 1) * limit + rowIndex + 1}</td>
                 {columns.map((col, colIndex) => (

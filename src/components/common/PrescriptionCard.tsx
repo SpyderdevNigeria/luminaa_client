@@ -20,7 +20,7 @@ const PrescriptionCard: React.FC<PrescriptionCardProps> = ({
   onDelete,
 }) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 2xl:p-4 flex flex-col justify-between hover:shadow-md transition relative">
+    <div className="bg-white  border border-gray-200 rounded-xl shadow-sm p-4 2xl:p-4 flex flex-col justify-between hover:shadow-md transition relative">
       {/* Dropdown Menu */}
       { onEdit || onDelete ? (<div className="absolute top-3 right-3">
         <Dropdown showArrow={false} triggerLabel="" triggerIcon={<HiOutlineDotsVertical />}>

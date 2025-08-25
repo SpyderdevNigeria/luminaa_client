@@ -111,7 +111,7 @@ const PharmacistMedications = () => {
     },
   ];
   return (
-    <div className="bg-white p-6 min-h-screen">
+    <div className="bg-white  p-6 min-h-screen">
       <h2 className="text-xl font-semibold mb-4">All Medications</h2>
 
       <HeaderTab

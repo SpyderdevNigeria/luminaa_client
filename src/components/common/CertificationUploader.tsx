@@ -129,7 +129,7 @@ const CertificationUploader: React.FC<Props> = ({
 
   return (
     <>
-      <div className="bg-white rounded-lg border border-dashboard-gray max-w-6xl mx-auto">
+      <div className="bg-white  rounded-lg border border-dashboard-gray max-w-6xl mx-auto">
         <div className="flex items-center justify-between p-4 border-b border-dashboard-gray">
           <h3 className="text-xl font-semibold">Upload Certifications</h3>
           <IoClose className="text-2xl text-dashboard-gray cursor-pointer" onClick={handleClose} />

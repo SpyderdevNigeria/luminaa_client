@@ -45,7 +45,7 @@ function LabDashboard() {
 
       <section>
         <div className="gap-4">
-          <main className="bg-white p-2 lg:p-4 rounded-lg">
+          <main className="bg-white  p-2 lg:p-4 rounded-lg">
             <div className="flex items-center justify-between">
               <h4 className="text-sm 2xl:text-xl">Pending Test Requests</h4>
               <Link to={routeLinks?.lab?.labRequests} className="text-sm">

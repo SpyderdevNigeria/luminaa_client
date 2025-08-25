@@ -37,7 +37,7 @@ const InventoryCard: React.FC<InventoryCardProps> = ({
   const isLowStock = inventory.isLowStock;
 
   return (
-    <div className="rounded-xl p-4 bg-white shadow-md hover:shadow-lg transition-all relative">
+    <div className="rounded-xl p-4 bg-white  shadow-md hover:shadow-lg transition-all relative">
       {/* Top Section */}
       <div className="flex justify-between items-start mb-3">
         <div>

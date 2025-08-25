@@ -20,7 +20,7 @@
 
 
 .container-bd {
-  @apply bg-white rounded-lg p-2 md:p-6;
+  @apply bg-white  rounded-lg p-2 md:p-6;
 }
 
 /* .goog-logo-link,

@@ -3,10 +3,10 @@ import { useLocation, matchPath } from "react-router-dom";
 import Sidebar, { LinkItem } from "./Sidebar";
 import Navbar from "./Navbar";
 import MobileSidebar from "./MobileSidebar";
-
 type DashboardLayoutProps = {
   children: React.ReactNode;
   links: LinkItem[];
+  type: string;
 };
 
 type ActiveLink = {
@@ -32,10 +32,26 @@ function flattenLinks(
   });
 }
 
-function DashboardLayout({ children, links }: DashboardLayoutProps) {
+function DashboardLayout({ children, links, type }: DashboardLayoutProps) {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState<ActiveLink | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userType, setUserType] = useState("");
+  useEffect(() => {
+    const roleMap: Record<string, string> = {
+      patient: "patient",
+      doctor: "doctor",
+      lab_tech: "lab tech",
+      pharmacist: "pharmacist",
+      admin: "admin",
+      super_admin: "super_admin",
+    };
+
+    if (type && roleMap[type]) {
+      setUserType(roleMap[type]);
+    }
+  
+  }, [type]);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -69,12 +85,13 @@ function DashboardLayout({ children, links }: DashboardLayoutProps) {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Sidebar links={links} active={activeLink || { id: "", label: "" }} />
+      <Sidebar links={links} active={activeLink || { id: "", label: "" }} type={userType} />
       <MobileSidebar
         links={links}
         active={activeLink || { id: "", label: "" }}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
+        type={userType}
       />
       <div className="flex flex-col flex-1 md:ml-63 relative">
         <Navbar
@@ -85,6 +102,7 @@ function DashboardLayout({ children, links }: DashboardLayoutProps) {
               ? { title: activeLink.label, sublink: activeLink.sublink || "" }
               : { title: "", sublink: "" }
           }
+          type={userType}
         />
         <main
           className="flex-1 px-4 2xl:px-18 py-6 max-h-[90vh] overflow-y-scroll scrollbar-visible"

@@ -2,7 +2,7 @@ import { MdEdit } from "react-icons/md";
 
 const ResultCard = ({ result, onEdit }: any) => {
   return (
-    <div className="rounded-xl border border-gray-200 p-4 shadow-sm bg-white">
+    <div className="rounded-xl border border-gray-200 p-4 shadow-sm bg-white ">
       {/* Top Header */}
       <div className="flex items-start justify-between mb-3">
         <div>

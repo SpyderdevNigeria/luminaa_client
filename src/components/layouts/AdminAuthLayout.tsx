@@ -5,6 +5,7 @@ import { useLayoutEffect } from "react";
 import LoadingScreen from "../loading/LoadingScreen";
 import { returnAdminNavigationUrlLogic } from "../../utils/dashboardUtils";
 import Multilingual from "../common/Multilingual";
+import ResetTheme from "../common/Resettheme";
 // import PartnerInfoCarousel from "../common/PartnerInfoCarousel";
 function AdminAuthLayout() {
   const navigate = useNavigate();
@@ -22,7 +23,8 @@ function AdminAuthLayout() {
   if (authLoading) return <LoadingScreen />;
 
   return (
-    <div className="min-h-screen bg-white">
+    <ResetTheme>
+    <div className="min-h-screen bg-white ">
       {/* Left - Side*/}
       <div className="">
         <div className="p-4 md:p-8 flex flex-row items-center justify-between  ">
@@ -46,6 +48,7 @@ function AdminAuthLayout() {
       {/* Right - Image & Testimonial Swiper */}
       {/* <PartnerInfoCarousel/> */}
     </div>
+    </ResetTheme>
   );
 }
 

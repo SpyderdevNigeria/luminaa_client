@@ -116,7 +116,7 @@ const AdminPharmacistsCreate: React.FC<Props> = ({ pharmacist = null, onBack, on
       <button onClick={onBack} className="flex items-center gap-2 text-primary mb-4">
         <FiArrowLeft /> Back to List
       </button>
-      <div className="bg-white p-6 rounded-lg max-w-4xl mx-auto">
+      <div className="bg-white  p-6 rounded-lg max-w-4xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">
           {pharmacist ? "Edit Pharmacist" : "Add Pharmacist"}
         </h2>

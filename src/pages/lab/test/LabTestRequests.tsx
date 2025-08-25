@@ -74,7 +74,7 @@ function LabTestRequests() {
   ];
 
   return (
-    <div className="flex flex-col gap-4 bg-white">
+    <div className="flex flex-col gap-4 bg-white ">
       <div className="p-2 lg:p-4 rounded-lg">
         <HeaderTab
           title="laboratory "

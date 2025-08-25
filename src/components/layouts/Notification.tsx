@@ -44,7 +44,7 @@ function Notification() {
       </div>
 
       {open && (
-        <div className="absolute right-0 mt-2  min-w-sm bg-white shadow-lg rounded-md z-10">
+        <div className="absolute right-0 mt-2  min-w-sm bg-white  shadow-lg rounded-md z-10">
         <main className="py-2 px-6 border-b border-gray-100 shadow">
         <div className="flex flex-row items-center justify-between w-full py-4">
             <div className=" text-lg   flex flex-row items-center gap-2">Notifications  <div className="py-[3px] px-2 text-xs rounded-full text-white bg-green-500 font-[300]">1</div></div>

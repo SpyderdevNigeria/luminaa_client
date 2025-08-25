@@ -94,7 +94,7 @@ const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
     });
   }, [data]);
   return (
-    <main className="bg-white rounded-lg border border-dashboard-gray max-w-6xl mx-auto">
+    <main className="bg-white  rounded-lg border border-dashboard-gray max-w-6xl mx-auto">
       <div className="flex items-center justify-between p-4 border-b border-dashboard-gray">
         <h4 className="text-2xl 2xl:text-4xl">Update Medical Information</h4>
         <IoClose

@@ -77,7 +77,7 @@ function DoctorAllPatientsDetails() {
   return (
     <div>
       {/* Patient Info */}
-      <main className="bg-white rounded-lg">
+      <main className="bg-white  rounded-lg">
         <div className="flex flex-row items-center px-4 p-6 justify-between rounded-lg">
           <div className="flex items-center gap-2">
             <div className="w-15 h-15 2xl:w-22 2xl:h-22 overflow-hidden rounded-full">
@@ -101,25 +101,25 @@ function DoctorAllPatientsDetails() {
 
       {/* Patient Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-        <div className="bg-white p-4 rounded shadow-sm text-center">
+        <div className="bg-white  p-4 rounded shadow-sm text-center">
           <p className="text-xs text-inactive">Total Appointments</p>
           <p className="text-lg font-semibold">{user?.statistics.totalAppointments}</p>
         </div>
-        <div className="bg-white p-4 rounded shadow-sm text-center">
+        <div className="bg-white  p-4 rounded shadow-sm text-center">
           <p className="text-xs text-inactive">Last Appointment</p>
           <p className="text-lg font-semibold">
             {new Date(user?.statistics?.lastAppointmentDate || "").toLocaleDateString()}
           </p>
         </div>
-        <div className="bg-white p-4 rounded shadow-sm text-center">
+        <div className="bg-white  p-4 rounded shadow-sm text-center">
           <p className="text-xs text-inactive">Active Prescriptions</p>
           <p className="text-lg font-semibold">{user?.statistics.activePrescriptions}</p>
         </div>
-        <div className="bg-white p-4 rounded shadow-sm text-center">
+        <div className="bg-white  p-4 rounded shadow-sm text-center">
           <p className="text-xs text-inactive">Total Diagnoses</p>
           <p className="text-lg font-semibold">{user?.statistics.totalDiagnoses}</p>
         </div>
-        <div className="bg-white p-4 rounded shadow-sm text-center col-span-2 md:col-span-1">
+        <div className="bg-white  p-4 rounded shadow-sm text-center col-span-2 md:col-span-1">
           <p className="text-xs text-inactive">Unique Doctors</p>
           <p className="text-lg font-semibold">{user?.statistics.uniqueDoctors}</p>
         </div>
@@ -134,7 +134,7 @@ function DoctorAllPatientsDetails() {
               onClick={() => setActiveTab(t.label)}
               className={`cursor-pointer whitespace-nowrap rounded-t-md transition-all duration-200 ${
                 activeTab === t.label
-                  ? "text-primary font-semibold border-b-2 border-primary bg-white"
+                  ? "text-primary font-semibold border-b-2 border-primary bg-white "
                   : "text-inactive hover:text-primary"
               }`}
             >

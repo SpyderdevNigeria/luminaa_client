@@ -116,7 +116,7 @@ function DoctorAppointmentsView({
           Meeting Details
         </h5>
         <div className="flex items-center gap-2">
-          <button className="p-2 rounded-sm border border-dashboard-gray bg-white text-xs flex items-center">
+          <button className="p-2 rounded-sm border border-dashboard-gray bg-white  text-xs flex items-center">
             <TfiTimer className="mx-1 text-amber-400" />
             Send Reminder
           </button>
@@ -180,7 +180,7 @@ function DoctorAppointmentsView({
               <h4 className="text-sm md:text-2xl my-2">Patient Documents </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {appointment?.patientDocuments?.map((doc: { id: Key | null | undefined; url: string | undefined; name: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; type: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }) => (
-                <div key={doc.id} className="p-4 bg-white rounded shadow border border-gray-200">
+                <div key={doc.id} className="p-4 bg-white  rounded shadow border border-gray-200">
                   <div className="mb-2 w-40 h-40 overflow-hidden mx-auto">
                     <img src={doc.url} alt="" className="w-full h-full object-contain" />
                   </div>

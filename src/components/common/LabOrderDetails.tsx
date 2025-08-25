@@ -209,7 +209,7 @@ const LabOrderDetails = ({
       {activeTab === "Test" && (
         <div className="space-y-6">
           {/* Test Overview Section */}
-          <section className="bg-white rounded-xl space-y-4">
+          <section className="bg-white  rounded-xl space-y-4">
             <h2 className="text-2xl font-semibold text-primary mb-2">
               Test Overview
             </h2>
@@ -349,7 +349,7 @@ const LabOrderDetails = ({
           {/* Patient & Doctor Info */}
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Patient Info */}
-            <div className="flex-1 bg-white rounded-xl">
+            <div className="flex-1 bg-white  rounded-xl">
               <h2 className="text-xl font-semibold mb-2 text-primary">
                 Patient Info
               </h2>
@@ -368,7 +368,7 @@ const LabOrderDetails = ({
 
             {/* Doctor Info */}
             {doctor && (
-              <div className="flex-1 bg-white rounded-xl">
+              <div className="flex-1 bg-white  rounded-xl">
                 <h2 className="text-xl font-semibold mb-2 text-primary">
                   Doctor Info
                 </h2>
@@ -392,7 +392,7 @@ const LabOrderDetails = ({
 
           {/* Doctor's Note */}
           {type !== "patient" && (
-            <div className="bg-white rounded-xl">
+            <div className="bg-white  rounded-xl">
               <h3 className="text-xl font-semibold text-primary mb-2">
                 Doctor's Note
               </h3>

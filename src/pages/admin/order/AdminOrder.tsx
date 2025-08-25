@@ -90,7 +90,7 @@ const orderColumns: Column<any>[] = [
   return (
     <div className="mt-5 container-bd">
       {/* Wallet Balance */}
-      {/* <div className="bg-white rounded-xl flex items-center justify-between mb-6 relative">
+      {/* <div className="bg-white  rounded-xl flex items-center justify-between mb-6 relative">
         <div className="p-6">
           <p className="text-sm mb-2">
             Wallet Balance <AiOutlineEye className="inline w-4 h-4 ml-2" />
@@ -169,7 +169,7 @@ const orderColumns: Column<any>[] = [
       {/* Order Details Modal */}
     {loadingOrders ? <div>
         loading Orders ...
-        </div> : orders.length === 0 ?  <div className="h-[500px] flex flex-col items-center justify-center bg-white ">
+        </div> : orders.length === 0 ?  <div className="h-[500px] flex flex-col items-center justify-center bg-white  ">
           you don't have any order 
         </div> : 
     

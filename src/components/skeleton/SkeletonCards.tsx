@@ -1,6 +1,6 @@
 export function LabCardSkeleton() {
   return (
-    <main className="border border-gray-200 p-6 rounded-xl shadow-sm bg-white text-black flex flex-col gap-6 relative animate-pulse">
+    <main className="border border-gray-200 p-6 rounded-xl shadow-sm bg-white  text-black flex flex-col gap-6 relative animate-pulse">
       {/* Dropdown Placeholder */}
       <div className="absolute top-4 right-4 w-6 h-6 bg-gray-200 rounded-full" />
 
@@ -68,7 +68,7 @@ export function TestDetailsSkeleton() {
         <div className="grid grid-cols-1 lg:grid-cols-7 gap-4">
           {/* Test Overview Skeleton */}
           <section className="lg:col-span-4 lg:row-span-2">
-            <main className="w-full space-y-4 rounded-lg p-4 bg-white">
+            <main className="w-full space-y-4 rounded-lg p-4 bg-white ">
               <div className="h-6 bg-gray-300 rounded w-40" />
               <div className="grid grid-cols-2 gap-4 pt-4">
                 {Array.from({ length: 8 }).map((_, i) => (
@@ -115,7 +115,7 @@ export function TestDetailsSkeleton() {
 
           {/* Doctor Note Skeleton */}
           <section className="lg:col-span-7">
-            <div className="w-full space-y-4 rounded-lg p-4 bg-white">
+            <div className="w-full space-y-4 rounded-lg p-4 bg-white ">
               <div className="h-6 w-48 bg-gray-300 rounded" />
               <div className="h-24 bg-gray-200 rounded" />
             </div>
@@ -150,7 +150,7 @@ export function TestDetailsSkeleton() {
 
         {/* Result Note Skeleton */}
         <section className="lg:col-span-7">
-          <div className="w-full space-y-4 rounded-lg p-4 bg-white">
+          <div className="w-full space-y-4 rounded-lg p-4 bg-white ">
             <div className="h-6 w-48 bg-gray-300 rounded" />
             <div className="h-28 bg-gray-200 rounded" />
             <div className="flex justify-end">
@@ -165,7 +165,7 @@ export function TestDetailsSkeleton() {
 
 export function AppointmentCardSkeleton() {
   return (
-    <div className="bg-white border border-[#E5E7EB] rounded-xl p-6 shadow-sm animate-pulse">
+    <div className="bg-white  border border-[#E5E7EB] rounded-xl p-6 shadow-sm animate-pulse">
       {/* Title & Patient */}
       <div className="flex items-center gap-2 text-sm text-gray-500">
         <div className="w-10 h-10 rounded-full bg-gray-200" />
@@ -209,7 +209,7 @@ export function AppointmentCardSkeleton() {
 
 export function MedicationCardSkeleton() {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col justify-between hover:shadow-md transition relative animate-pulse">
+    <div className="bg-white  border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col justify-between hover:shadow-md transition relative animate-pulse">
       {/* Top: Icon + Medication Name */}
       <div className="flex items-center space-x-3">
         <div className="bg-gray-200 p-3 rounded-full w-10 h-10" />

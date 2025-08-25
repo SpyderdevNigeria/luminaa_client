@@ -29,7 +29,7 @@ const MedicationCard: React.FC<MedicationCardProps> = ({
   const isAlreadyAdded = findMedicationInPrescription(medication?.id);
 
   return (
-    <div className="bg-white border  border-gray-300 rounded-xl shadow p-4 flex flex-col relative group hover:shadow-md transition">
+    <div className="bg-white  border  border-gray-300 rounded-xl shadow p-4 flex flex-col relative group hover:shadow-md transition">
       {/* Dropdown Menu */}
       {(onView || onAddPrescription) && !prescriptions && (
         <div className="absolute top-3 right-3 z-10">

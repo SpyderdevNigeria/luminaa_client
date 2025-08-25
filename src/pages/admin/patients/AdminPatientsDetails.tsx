@@ -72,7 +72,7 @@ function AdminPatientDetails() {
   if (loading || !user) return <p>Loading patient...</p>;
   if (!user) return <p>Patient not found</p>;
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-lg p-6 space-y-8">
+    <div className="max-w-4xl mx-auto bg-white  rounded-lg p-6 space-y-8">
       <h2 className="text-2xl font-semibold mb-2">Patient Details</h2>
       <section>
         <h4 className="text-lg font-medium mb-2">Profile Image</h4>

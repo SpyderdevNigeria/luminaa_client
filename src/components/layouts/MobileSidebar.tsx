@@ -13,12 +13,14 @@ type MobileSidebarProps = {
     label: string;
     id?: string; 
   };
+  type: string
 };
 
 function MobileSidebar({
   active,
   links,
   sidebarOpen,
+  type,
   setSidebarOpen,
 }: MobileSidebarProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -32,7 +34,7 @@ function MobileSidebar({
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/50 z-40">
           <aside
-            className={`fixed top-0 left-0 h-full w-full sm:w-64 bg-white shadow-md z-40 transform transition-transform duration-300 ease-in-out px-4 flex flex-col justify-between pb-2`}
+            className={`fixed top-0 left-0 h-full w-full sm:w-64 bg-white  shadow-md z-40 transform transition-transform duration-300 ease-in-out px-4 flex flex-col justify-between pb-2`}
           >
             <div>
               <div className="flex items-center justify-between py-4">
@@ -50,7 +52,7 @@ function MobileSidebar({
                 </div>
               </div>
 
-              <h4 className="py-2 text-xs text-inactive font-medium">DASHBOARD</h4>
+              <h4 className="py-2 text-xs text-inactive font-medium uppercase">{type || "Dashboard"}</h4>
 
               <nav className="flex flex-col gap-1 font-medium">
            {links.map((item, idx) => {

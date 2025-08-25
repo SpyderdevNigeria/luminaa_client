@@ -146,7 +146,7 @@ const handleChange = (
       >
         <FiArrowLeft /> Back to List
       </button>
-      <div className="bg-white p-6 rounded-lg max-w-4xl mx-auto">
+      <div className="bg-white  p-6 rounded-lg max-w-4xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">
           {lab ? "Edit Lab Technician" : "Add Lab Technician"}
         </h2>

@@ -36,7 +36,7 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
   }, [isInCart]);
   return (
     <>
-      <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md transition flex flex-col justify-between relative">
+      <div className="bg-white  border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md transition flex flex-col justify-between relative">
         {/* Image */}
         <div className="w-full h-[150px] rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center mb-4">
           {medication?.image?.url ? (
@@ -86,7 +86,7 @@ const PatientMedicationCard: React.FC<PatientMedicationCardProps> = ({
             className={`w-full text-sm font-medium border py-1 px-4 rounded-md transition ${
               isInCart
                 ? "bg-gray-100 text-gray-500 border-gray-300 cursor-not-allowed"
-                : "bg-white text-primary border-primary hover:bg-primary hover:text-white"
+                : "bg-white  text-primary border-primary hover:bg-primary hover:text-white"
             }`}
           >
            {loading && activeId === medication?.id ? "Loading..." : isInCart ? "Already Added" : buttonText}

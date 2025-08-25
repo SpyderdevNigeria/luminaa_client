@@ -40,7 +40,7 @@ const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
 
   return (
     <>
-      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-all p-4 flex flex-col items-center">
+      <div className="bg-white  border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-all p-4 flex flex-col items-center">
         {/* Profile Picture */}
         <div className="w-20 h-20 rounded-full overflow-hidden shadow-md mb-3">
           <img

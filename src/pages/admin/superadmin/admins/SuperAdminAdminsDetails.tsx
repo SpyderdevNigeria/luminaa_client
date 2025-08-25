@@ -58,7 +58,7 @@ function SuperAdminAdminsDetails() {
   if (loading || !user) return <p>Loading user...</p>;
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-lg p-6 space-y-6">
+    <div className="max-w-4xl mx-auto bg-white  rounded-lg p-6 space-y-6">
       <h2 className="text-2xl font-semibold mb-4">User Details</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">

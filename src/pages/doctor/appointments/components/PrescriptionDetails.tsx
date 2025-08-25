@@ -115,7 +115,7 @@ const PrescriptionDetails = ({ appointmentId, handleBack }: PrescriptionDetailsP
   }, [activeTab, medicationSearch, medicationsPage]);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white ">
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={handleBack}

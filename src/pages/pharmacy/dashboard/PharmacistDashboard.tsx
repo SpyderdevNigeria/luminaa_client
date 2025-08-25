@@ -110,7 +110,7 @@ function PharmacistDashboard() {
 
       {/* Recent Medications Section */}
       <section>
-        <main className="bg-white p-2 lg:p-4 rounded-lg">
+        <main className="bg-white  p-2 lg:p-4 rounded-lg">
           <div className="flex items-center justify-between">
             <h4 className="text-sm 2xl:text-xl">Recent Medications</h4>
             <Link

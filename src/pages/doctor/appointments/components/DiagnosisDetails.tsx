@@ -78,7 +78,7 @@ const DiagnosisDetails = ({ appointmentId, handleBack }: DiagnosisDetailsProps) 
   }, [appointmentId]);
 
   return (
-    <div className="bg-white p-6">
+    <div className="bg-white  p-6">
       {showForm ? (
         <>
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">

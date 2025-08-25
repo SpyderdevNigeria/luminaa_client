@@ -27,7 +27,7 @@ const Modal = ({
       <AlertDialog.Overlay className="modal_overlay z-70 " />
 
       <AlertDialog.Content className={`modal_content z-80  ${style}`}>
-        <div className="bg-white p-8 rounded-lg">
+        <div className="bg-white  p-8 rounded-lg">
           {!hideCancel && (
             <div className="flex justify-center items-center">
               <AlertDialog.Title className="text-xl font-medium mb-2">

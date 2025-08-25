@@ -143,7 +143,7 @@ function Prescriptions() {
             ([appointmentId, { appointment, doctor, prescriptions }]) => (
               <div
                 key={appointmentId}
-                className="rounded-xl border border-gray-200 bg-white p-6 transition-all duration-300  hover:shadow-md"
+                className="rounded-xl border border-gray-200 bg-white  p-6 transition-all duration-300  hover:shadow-md"
               >
                 <div className="flex flex-col justify-between h-full gap-4">
                   {/* Doctor Info */}

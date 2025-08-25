@@ -70,7 +70,7 @@ const PatientMedications = () => {
 
   return (
     <div className="bg-gray-50 p-4 md:p-6 min-h-screen">
-   <div className="bg-white p-4 rounded-xl shadow mb-6">
+   <div className="bg-white  p-4 rounded-xl shadow mb-6">
   <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4">
     {/* Search Input */}
     <div className="flex flex-col md:col-span-3">
@@ -218,7 +218,7 @@ const PatientMedications = () => {
       {/* Price Modal */}
       {priceModalOpen && (
         <div className="fixed inset-0 bg-black/20  bg-opacity/10 z-50 flex items-center justify-center px-4">
-          <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full space-y-4">
+          <div className="bg-white  p-6 rounded-xl shadow-lg max-w-md w-full space-y-4">
             <h2 className="text-lg font-bold">Set Price Range</h2>
             <div className="space-y-2">
            <div>

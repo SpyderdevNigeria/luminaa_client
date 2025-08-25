@@ -9,6 +9,8 @@ import routeLinks from "../../utils/routes";
 import LogoutModal from "../modal/LogoutModal";
 import { logout } from "../../reducers/authSlice";
 import Multilingual from "../common/Multilingual";
+// import ThemeToggle from "../common/ThemeToggle";
+
 type NavbarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
@@ -16,9 +18,10 @@ type NavbarProps = {
     title: string;
     sublink?: string;
   };
+  type:string
 };
 
-function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
+function Navbar({ sidebarOpen, setSidebarOpen, active, type}: NavbarProps) {
   const userProfile = useAppSelector((state) => state.auth.user);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -65,13 +68,17 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
   };
   return (
     <div>
-      <header className="  px-4 2xl:px-18 py-6 bg-white  flex items-center justify-between">
-        <h1 className="text-base md:text-2xl text-primary-text font-semibold">
+      <header className="  px-4 2xl:px-18 py-4 bg-white   flex items-center justify-between">
+        <div>
+          <h1 className="text-base md:text-2xl text-primary-text font-semibold uppercase">{type}</h1>
+                <h1 className="text-base md:text-sm text-primary-text ">
           <span className={`${active?.sublink && "font-light"}`}>
             {active?.title}
           </span>{" "}
           {active?.sublink}
         </h1>
+        </div>
+
 
         <div className="flex items-center gap-4">
           <Multilingual/>
@@ -94,7 +101,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
               onClick={() => setDropdownOpen(!dropdownOpen)}
             />
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
+              <div className="absolute right-0 mt-2 w-40 bg-white  rounded-md shadow-lg z-50">
                 <button
                   onClick={handleNavigate}
                   className="w-full px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
@@ -110,7 +117,9 @@ function Navbar({ sidebarOpen, setSidebarOpen, active }: NavbarProps) {
               </div>
             )}
           </div>
-
+          {/* <div className="relative hidden md:block" >
+             <ThemeToggle/>
+          </div> */}
           {/* Hamburger Menu */}
           <button
             className="md:hidden"

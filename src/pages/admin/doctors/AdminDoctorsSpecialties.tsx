@@ -30,7 +30,7 @@ function AdminDoctorsSpecialties() {
   if (loading) return <p className="text-gray-500 text-sm">Loading specialties...</p>;
   if (specialties?.length === 0) return <p className="text-gray-500 text-sm">No specialties found.</p>;
   return (
-    <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
+    <div className="bg-white  rounded-2xl shadow-md border border-gray-100 p-6">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">Doctor Specialties</h2>
       <ul className="space-y-3">
         {specialties.map(({ specialty, doctorCount }) => (

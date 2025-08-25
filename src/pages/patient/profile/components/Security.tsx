@@ -67,7 +67,7 @@ function Security() {
   };
 
   return (
-    <section className="bg-white rounded-lg p-6 text-gray-600 text-sm">
+    <section className="bg-white  rounded-lg p-6 text-gray-600 text-sm">
       <div className="max-w-xl my-10">
         <h1 className="text-2xl">Update Password</h1>
         <form onSubmit={handleSubmit} className="mt-6">

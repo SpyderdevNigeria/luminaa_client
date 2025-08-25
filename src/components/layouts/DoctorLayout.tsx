@@ -61,7 +61,7 @@ function DoctorLayout() {
   if (authLoading) return <LoadingScreen />;
   return (
     <div>
-      <DashboardLayout links={navItemsDoctor} >
+      <DashboardLayout links={navItemsDoctor} type={userProfile?.user?.role || ""} >
         <Outlet />
       </DashboardLayout>
     </div>

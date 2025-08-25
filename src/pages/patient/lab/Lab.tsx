@@ -76,7 +76,7 @@ function Lab() {
 
           <form
             onSubmit={handleSubmit}
-            className="bg-white w-full max-w-2xl my-16 mx-auto grid grid-cols-1 md:grid-cols-2 gap-4"
+            className="bg-white  w-full max-w-2xl my-16 mx-auto grid grid-cols-1 md:grid-cols-2 gap-4"
           >
             <CommonFormField
               type="text"

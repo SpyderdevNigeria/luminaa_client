@@ -119,7 +119,7 @@ const LabOrderDocuments = ({
           {documents.map((doc) => (
             <li
               key={doc.id}
-              className="bg-white  rounded-lg p-4 shadow-sm flex items-start justify-between gap-4"
+              className="bg-white   rounded-lg p-4 shadow-sm flex items-start justify-between gap-4"
             >
               <div className="flex gap-3 items-start">
                 <FaFileAlt className="text-gray-500 text-xl mt-1" />
@@ -180,13 +180,13 @@ const LabOrderDocuments = ({
                 <input
                   type="text"
                   placeholder="Document Name"
-                  className="p-2 rounded-md bg-white shadow-sm"
+                  className="p-2 rounded-md bg-white  shadow-sm"
                   value={doc.name}
                   onChange={(e) =>
                     handleFieldChange(idx, "name", e.target.value)
                   }
                 />
-                <label className="flex items-center justify-center p-4 bg-white rounded-md shadow-sm border-2 border-dashed border-gray-300 cursor-pointer text-sm text-gray-600 hover:bg-gray-50">
+                <label className="flex items-center justify-center p-4 bg-white  rounded-md shadow-sm border-2 border-dashed border-gray-300 cursor-pointer text-sm text-gray-600 hover:bg-gray-50">
                   <input
                     type="file"
                     onChange={(e) =>
@@ -202,7 +202,7 @@ const LabOrderDocuments = ({
                 </label>
                 <textarea
                   placeholder="Description"
-                  className="p-2 rounded-md bg-white shadow-sm"
+                  className="p-2 rounded-md bg-white  shadow-sm"
                   value={doc.description}
                   rows={7}
                   onChange={(e) =>

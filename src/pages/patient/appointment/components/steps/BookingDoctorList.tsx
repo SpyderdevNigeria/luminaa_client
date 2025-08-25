@@ -235,7 +235,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {data?.type === "A Specialist" && (
           <aside className={`${showSpecialtyList ? "block" : "hidden"} md:block`}>
-            <div className="bg-white rounded-md p-4 shadow-sm border border-gray-200">
+            <div className="bg-white  rounded-md p-4 shadow-sm border border-gray-200">
               <h5 className="text-xl font-semibold mb-3">Specialties</h5>
               <ul className="space-y-2">
                 <li
@@ -251,7 +251,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
                     className={`cursor-pointer flex justify-between items-center px-4 py-2 rounded-md ${specialty.toLowerCase() === name.toLowerCase() ? "bg-primary text-white" : "hover:bg-primary hover:text-white"}`}
                   >
                     <span>{name}</span>
-                    <span className="text-sm bg-white text-primary font-semibold rounded-full px-2 py-0.5 border border-primary">
+                    <span className="text-sm bg-white  text-primary font-semibold rounded-full px-2 py-0.5 border border-primary">
                       {doctorCount}
                     </span>
                   </li>
@@ -266,7 +266,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="p-6 bg-white rounded-xl shadow-sm animate-pulse space-y-4">
+                <div key={i} className="p-6 bg-white  rounded-xl shadow-sm animate-pulse space-y-4">
                   <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto" />
                   <div className="h-4 bg-gray-100 rounded w-3/4 mx-auto" />
                   <div className="h-3 bg-gray-100 rounded w-1/2 mx-auto" />
@@ -381,7 +381,7 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
                     className={`p-2 rounded-lg border ${
                       typeTime === time
                         ? "bg-primary text-white"
-                        : "bg-white text-black border-gray-300"
+                        : "bg-white  text-black border-gray-300"
                     }`}
                   >
                     {time}

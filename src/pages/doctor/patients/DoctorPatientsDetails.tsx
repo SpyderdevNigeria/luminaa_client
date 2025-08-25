@@ -57,7 +57,7 @@ function DoctorPatientsDetails() {
   return (
     <div>
       {/* Patient Info */}
-      <main className="bg-white rounded-lg">
+      <main className="bg-white  rounded-lg">
         <div className="flex flex-row items-center px-4 p-6 justify-between rounded-lg">
           <div className="flex items-center gap-2">
             <div className="w-15 h-15 2xl:w-22 2xl:h-22 overflow-hidden rounded-full">
@@ -90,7 +90,7 @@ function DoctorPatientsDetails() {
               onClick={() => setActiveTab(t.label)}
               className={`cursor-pointer whitespace-nowrap rounded-t-md transition-all duration-200 ${
                 activeTab === t.label
-                  ? "text-primary font-semibold border-b-2 border-primary bg-white"
+                  ? "text-primary font-semibold border-b-2 border-primary bg-white "
                   : "text-inactive hover:text-primary"
               }`}
             >

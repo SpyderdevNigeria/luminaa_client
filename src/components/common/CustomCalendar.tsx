@@ -84,7 +84,7 @@ const CustomCalendar = ({ selected, onChange, isDateDisabled }: CustomCalendarPr
   };
 
   return (
-    <div className={`w-full mx-auto p-4 bg-white rounded-lg border ${selected !== "" ? 'border-dashboard-gray' : ''}`}>
+    <div className={`w-full mx-auto p-4 bg-white  rounded-lg border ${selected !== "" ? 'border-dashboard-gray' : ''}`}>
       {/* Header */}
       <div className="w-full flex items-center justify-between mb-4">
         <button onClick={prevMonth} className="text-xl font-bold">

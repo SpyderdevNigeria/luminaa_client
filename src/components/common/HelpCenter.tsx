@@ -70,7 +70,7 @@ function HelpCenter() {
         {filteredTopics.map((topic) => (
           <div key={topic.category}>
             <h3 className="text-lg font-bold mb-2">{topic.category}</h3>
-            <ul className="space-y-3 border border-gray-300 rounded-md p-4 bg-white shadow-sm">
+            <ul className="space-y-3 border border-gray-300 rounded-md p-4 bg-white  shadow-sm">
               {topic.items.map((item, index) => (
                 <li key={index}>
                   <p className="font-medium">{item.question}</p>

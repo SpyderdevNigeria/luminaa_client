@@ -96,7 +96,7 @@ const ProfilePage = () => {
 
       <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
         {/* Sidebar */}
-        <div className="md:w-1/4 w-full bg-white rounded-lg p-4 mb-4 md:mb-0 md:mr-6">
+        <div className="md:w-1/4 w-full bg-white  rounded-lg p-4 mb-4 md:mb-0 md:mr-6">
           <ul className="flex md:flex-col gap-4 justify-between md:justify-start text-sm md:text-base">
             {tabs.map((tab) => (
               <li
@@ -117,7 +117,7 @@ const ProfilePage = () => {
           {!modalContent && activeTab === "My Profile" && (
             <div className="space-y-6">
               {/* Profile Header */}
-              <div className="bg-white rounded-lg p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div className="bg-white  rounded-lg p-4 md:p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="flex items-center gap-4">
                   <img
                     src={userProfile?.user?.profilePicture?.url || "ee"}
@@ -241,12 +241,12 @@ const ProfilePage = () => {
           )}
 
           {activeTab === "Notification" && (
-            <div className="bg-white rounded-lg p-6 text-gray-600 text-sm">
+            <div className="bg-white  rounded-lg p-6 text-gray-600 text-sm">
               Notification Sound
             </div>
           )}
           {modalContent && activeTab === "My Profile" ? 
-          <div className="bg-white rounded-lg p-6 text-sm">
+          <div className="bg-white  rounded-lg p-6 text-sm">
             <button className="text-base mb-3 flex items-center gap-2"
             onClick={()=>{setModalContent(null )}}
             > <FaArrowLeftLong /> Back </button>
@@ -273,7 +273,7 @@ const Section = ({
   children: React.ReactNode;
   onEdit?: () => void;
 }) => (
-  <div className="bg-white rounded-lg p-4 md:p-6">
+  <div className="bg-white  rounded-lg p-4 md:p-6">
     <div className="flex justify-between items-center mb-4">
       <h4 className="font-medium text-base">{title}</h4>
       {onEdit && (

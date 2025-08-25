@@ -17,7 +17,7 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="bg-white w-full shadow-lg rounded-2xl border border-gray-100 p-5 flex items-center justify-between hover:shadow-xl transition">
+    <div className="bg-white  w-full shadow-lg rounded-2xl border border-gray-100 p-5 flex items-center justify-between hover:shadow-xl transition">
       <div>
         <h4 className="text-sm text-gray-500">{title}</h4>
         <p className="text-2xl font-bold text-gray-900">{value}</p>
@@ -60,7 +60,7 @@ const AdminDoctorsStats = () => {
 
       {/* Gender Distribution */}
       {stats.genderDistribution && (
-        <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
+        <div className="bg-white  rounded-2xl shadow-md border border-gray-100 p-6">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">Gender Distribution</h3>
           <ul className="space-y-3">
             {Object.entries(stats.genderDistribution).map(([gender, count]) => (
@@ -80,7 +80,7 @@ const AdminDoctorsStats = () => {
 
       {/* Specialization Distribution */}
       {stats.specializationDistribution && (
-        <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
+        <div className="bg-white  rounded-2xl shadow-md border border-gray-100 p-6">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">Specialization Distribution</h3>
           <ul className="space-y-3">
             {Object.entries(stats.specializationDistribution).map(([specialty, count]) => (

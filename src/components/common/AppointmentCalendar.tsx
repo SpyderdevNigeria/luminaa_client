@@ -111,7 +111,7 @@ const AppointmentCalendar = ({ appointments, selectedDate, onDateSelect, link }:
   }, [appointments, filterDay, filterMonth, filterYear]);
 
   return (
-    <div className="w-full rounded-xl bg-white md:p-6  transition">
+    <div className="w-full rounded-xl bg-white  md:p-6  transition">
       {/* Header */}
       <HeaderTab
         title={'Calendar'}

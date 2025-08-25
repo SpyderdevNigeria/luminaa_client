@@ -139,7 +139,7 @@ const AdminPatientsCreate: React.FC<Props> = ({ patient = null, onBack, onClose 
       <button onClick={onBack} className="flex items-center gap-2 text-primary mb-4">
         <FiArrowLeft /> Back to List
       </button>
-      <div className="bg-white p-6 rounded-lg max-w-6xl mx-auto">
+      <div className="bg-white  p-6 rounded-lg max-w-6xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">{patient ? "Edit Patient" : "Add Patient"}</h2>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">

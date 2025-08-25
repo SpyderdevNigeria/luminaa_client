@@ -67,7 +67,7 @@ function AdminDashboard() {
 
         {/* Inventory Summary */}
         {/* {inventorySummary && (
-          <div className="bg-white rounded-xl p-5 shadow-md space-y-2">
+          <div className="bg-white  rounded-xl p-5 shadow-md space-y-2">
             <h3 className="text-lg font-semibold text-gray-800">Inventory Summary</h3>
             <div className="text-sm text-gray-700">
               <p>Total Items: <span className="font-bold">{inventorySummary.totalItems}</span></p>
@@ -80,7 +80,7 @@ function AdminDashboard() {
 
         {/* Patient Stats */}
         {/* {patientStats && (
-          <div className="bg-white rounded-xl p-5 shadow-md space-y-4">
+          <div className="bg-white  rounded-xl p-5 shadow-md space-y-4">
             <h3 className="text-lg font-semibold text-gray-800">
               Patient Stats
             </h3>
@@ -148,7 +148,7 @@ function AdminDashboard() {
           </div>
         )} */}
 
-        <div className="bg-white rounded-xl p-5 shadow-md">
+        <div className="bg-white  rounded-xl p-5 shadow-md">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">
             Total Medications
           </h3>
@@ -158,7 +158,7 @@ function AdminDashboard() {
 
       {/* 👇 Doctors by Specialty Section */}
       {doctorSpecialties?.length > 0 && (
-        <section className="bg-white rounded-xl p-6 shadow-md">
+        <section className="bg-white  rounded-xl p-6 shadow-md">
           <h3 className="text-xl font-bold text-gray-800 mb-4">
             Doctors by Specialty
           </h3>
