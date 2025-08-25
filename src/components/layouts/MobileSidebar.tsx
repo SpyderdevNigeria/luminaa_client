@@ -119,7 +119,7 @@ function MobileSidebar({
                                 key={subIdx}
                                 to={sub.to!}
                                 onClick={() => setSidebarOpen(false)}
-                                className={`text-sm py-1 px-2 rounded ${active?.label === sub.label
+                                className={`text-sm py-1 px-2  ${active?.label === sub.label
                                     ? "text-primary font-semibold"
                                     : "text-inactive"
                                   }`}
