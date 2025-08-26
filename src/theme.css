@@ -67,3 +67,30 @@ select option:hover {
 [data-theme="super_admin"] {
   --color-primary: #037347;
 }
+
+
+/* swiper-overrides.css */
+
+.swiper-button-next,
+.swiper-button-prev {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 0px !important; /* fully rounded */
+  background: rgba(0, 0, 0, 0.3) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+  transition: background 0.3s ease-in-out;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 0px !important; /* remove Swiper’s default arrow */
+  content: none !important;
+}

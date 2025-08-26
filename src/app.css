@@ -23,11 +23,21 @@
   @apply bg-white  rounded-lg p-2 md:p-6;
 }
 
+.business-container {
+  @apply mx-auto px-4 sm:px-6 lg:px-8 
+      w-full max-w-[640px] sm:max-w-[769px]
+      md:max-w-[1024px] lg:max-w-[1280px] ;
+}
 /* .goog-logo-link,
 .goog-te-gadget span {
   display: none !important;
 } */
-
+.partner-image{
+width: 70%;
+aspect-ratio: 3/2;
+object-fit: contain;
+mix-blend-mode: color-burn;
+}
 #google_translate_element {
   font-size: 0 !important;
   margin: 0;

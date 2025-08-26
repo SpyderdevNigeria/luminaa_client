@@ -18,10 +18,11 @@ import PartnerEmailVerification from "./pages/auth/PartnerEmailVerification";
 import PartnerLogin from "./pages/auth/PartnerLogin";
 import AdminUser from "./pages/admin/users/AdminUser";
 import website from "./utils/website";
+import BusinessLayout from "./components/layouts/business/BusinessLayout";
 
 // Public / Business
-const Home = lazy(() => import("./pages/business/Home"));
-
+const Second = lazy(() => import("./pages/business/second"));
+const AboutUs = lazy(() => import("./pages/business/AboutUs"));
 // Patient
 const Login = lazy(() => import("./pages/patient/auth/Login"));
 const Register = lazy(() => import("./pages/patient/auth/Register"));
@@ -107,6 +108,7 @@ const AdminHelpCenter = lazy(() => import("./pages/admin/HelpCenter/AdminHelpCen
 const SuperAdminAdmins = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdmins"));
 const SuperAdminAdminsDetails = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdminsDetails"));
 
+const Home = lazy(() => import("./pages/business/Home"));
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
 // Route
 function App() {
@@ -117,8 +119,11 @@ function App() {
       </p>
     </div>}>
     <Routes>
+      <Route path="/" element={<BusinessLayout />} >
       <Route path="/" element={<Home />} />
-
+      <Route  path="/about" element={<AboutUs />} />
+       <Route path="/second" element={<Second />} />
+       </Route>
       {/* Patient Auth */}
       <Route path={routeLinks.auth.path} element={<PatientAuthLayout />}>
         <Route index element={<Navigate to={routeLinks.auth.login} replace />} />
