@@ -28,8 +28,9 @@ function PartnerAuthLayout() {
     <ResetTheme>
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
       {/* Left - Logo + Image + Description */}
+      {/* bg-[#E9F6FF] */}
       <div
-        className="bg-[#E9F6FF]   hidden lg:block relative overflow-hidden bg-no-repeat bg-bottom bg-cover"
+        className="bg-primary/10    hidden lg:block relative overflow-hidden bg-no-repeat bg-bottom bg-cover"
         style={{ backgroundImage: `url(${PartnerImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
       >
      <section className="max-w-md 2xl:max-w-xl mx-auto mt-18 2xl:mt-28  ">

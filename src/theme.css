@@ -34,10 +34,10 @@
 
 /* Admin Theme */
 [data-theme="admin"] {
-  --color-primary: #2c3e50;
+  --color-primary: #037347;
 }
 
 /* Super Admin Theme */
 [data-theme="super_admin"] {
-  --color-primary: #2c3e50;
+  --color-primary: #037347;
 }
