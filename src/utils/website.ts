@@ -1,8 +1,8 @@
-let logo_url = 'http://res.cloudinary.com/dwirhx8kk/image/upload/v1742399951/cli/y0agkvfy6lgoq1ztybd7.png';
-// import Logo from "../assets/images/logo-no-bg.png";
+// let logo_url = 'http://res.cloudinary.com/dwirhx8kk/image/upload/v1742399951/cli/y0agkvfy6lgoq1ztybd7.png';
+import Logo from "../assets/images/oak-logo-rm.png";
 const website = {
-  logo: logo_url,
-  name: "Lumina Medicals",
+  logo: Logo,
+  name: "Oak Endoscopy Centre",
   square: false,
   logoSquareSize :"w-20",
   logoRegularSize: "w-36 md:w-40",

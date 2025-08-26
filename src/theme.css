@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #042c52;
+  --color-primary: #037347;
   --color-secondary: #50e3c2;
   --color-text-primary: #1b1a1a;
   --color-text-secondary: #282828;
@@ -14,17 +14,17 @@
 
 /* Patient Theme */
 [data-theme="patient"] {
-  --color-primary: #0f476c;
+  --color-primary: #037347;
 }
 
 /* Doctor Theme */
 [data-theme="doctor"] {
-  --color-primary: #00ba8f;
+  --color-primary: #037347;
 }
 
 /* Lab Tech Theme */
 [data-theme="lab_tech"] {
-  --color-primary: #00ba8f;
+  --color-primary: #037347;
 }
 
 /* Pharmacist Theme */
