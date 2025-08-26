@@ -91,7 +91,7 @@ const PatientMedications = () => {
       <select
         value={medicationCategory}
         onChange={(e) => setMedicationCategory(e.target.value)}
-        className="form-input focus:outline-primary"
+        className="form-input focus:outline-none focus:ring-2 focus:ring-primary text-white"
       >
         <option value="">All</option>
         {medicationCategoryOptions.map((opt) => (

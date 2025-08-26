@@ -116,7 +116,7 @@ function DashboardLayout({ children, links, type }: DashboardLayoutProps) {
           type={userType}
         />
         <main
-          className="flex-1 px-4 2xl:px-18 py-6 max-h-[90vh] overflow-y-scroll scrollbar-visible"
+          className="flex-1 px-4 2xl:px-10 py-6 max-h-[90vh] overflow-y-scroll scrollbar-visible"
           id="scroll-container"
         >
           {children}

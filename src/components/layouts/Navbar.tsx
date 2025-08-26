@@ -69,7 +69,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active, type}: NavbarProps) {
   };
   return (
     <div>
-      <header className="  px-4 2xl:px-18 py-4 bg-white   flex items-center justify-between">
+      <header className="  px-4 2xl:px-10 py-4 bg-white   flex items-center justify-between">
         <div>
           <h1 className="text-base md:text-2xl text-primary-text font-semibold text-primary uppercase">{type}</h1>
                 <h1 className="text-base md:text-sm text-primary-text ">

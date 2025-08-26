@@ -12,6 +12,32 @@
   --color-dashboard-gray: #e5e5e5;
 }
 
+select {
+  background-color: white;
+  color: black;
+}
+
+select option {
+  background-color: white;
+  color: black;
+}
+select:focus {
+  outline: none; 
+  border-color:  #037347;
+  box-shadow: 0 0 5px  #fff;
+}
+
+
+select option:checked {
+  background-color: #037347; 
+  color: white;
+}
+select option:hover {
+  box-shadow: 0 0 10px 100px #e6f2ff inset;
+  color: #333;
+}
+
+
 /* Patient Theme */
 [data-theme="patient"] {
   --color-primary: #037347;
