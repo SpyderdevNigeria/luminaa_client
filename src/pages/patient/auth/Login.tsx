@@ -91,11 +91,11 @@ function Login() {
 
   return (
     <main className="max-w-[500px] w-full mx-auto px-2 md:px-4 ">
-      <div className="text-center my-8">
-        <h5 className="text-2xl md:text-3xl px-20 md:px-28 text-text-secondary">
+      <div className="text-start my-8">
+        <h5 className="text-2xl md:text-3xl  text-primary font-bold ">
           Welcome Back
         </h5>
-        <p className="mt-4 px-4 text-text-primary leading-5">
+        <p className="mt-4  text-text-primary leading-5">
           Please enter your email and password to get started with your medical
           account
         </p>
@@ -105,10 +105,10 @@ function Login() {
         <FeedbackMessage type={message.type} message={message.message} />
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Email Field */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="email" className="form-label text-primary">
+        <div className="md:col-span-2">
+          <label htmlFor="email" className="">
             Email
           </label>
           <input
@@ -128,8 +128,8 @@ function Login() {
         </div>
 
         {/* Password Field */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="password" className="form-label text-primary">
+        <div className="md:col-span-2">
+          <label htmlFor="password" className="">
             Password
           </label>
           <div className="mb-4 relative">
@@ -161,18 +161,18 @@ function Login() {
         </div>
 
         {/* Submit Button */}
-        <div className="w-full">
+        <div className="w-full md:col-span-2">
           <button
             type="submit"
             disabled={isLoading}
-            className="form-primary-button bg-primary mt-4"
+            className="form-primary-button bg-primary"
           >
             {isLoading ? "Loading..." : "Continue"}
           </button>
         </div>
 
         {/* Footer */}
-        <h5 className="text-text-secondary text-base text-center mt-4">
+        <h5 className="text-text-secondary text-base text-center mt-4 md:col-span-2">
           Don't have an account?{" "}
           <button onClick={()=>{navigate(routeLinks?.auth?.register)}} className="text-primary">
             Register

@@ -102,8 +102,8 @@ function EmailVerification() {
       </div>
 
       <div className="rounded-xl w-full max-w-[500px] p-8 text-center">
-        <h2 className="text-xl md:text-3xl px-20 md:px-28 text-text-secondary">
-          OTP verification
+        <h2 className="text-xl md:text-3xl px-20 md:px-28 text-primary">
+          Verify OTP
         </h2>
         <p className="mt-4 px-4 text-text-primary leading-5">
           Please enter the OTP sent to your registered email to complete your

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import website from "../../../utils/website";
+// import website from "../../../utils/website";
 import FeedbackMessage from "../../../components/common/FeedbackMessage";
 import AuthApi from "../../../api/authApi";
 import useFlatErrorList from "../../../hooks/useFlatErrorList";
@@ -91,12 +91,13 @@ function Register() {
   };
 
   return (
-    <main className="max-w-[500px] w-full mx-auto px-2 md:px-4">
-      <div className="text-center mb-8">
-        <h5 className="text-2xl md:text-3xl px-20 md:px-24 text-text-secondary">
-          Welcome to {website?.name}
+    <main className="max-w-[550px] w-full mx-auto px-2 md:px-4">
+      <div className="text-start mb-2 ">
+        <h5 className="text-2xl md:text-3xl  text-primary font-bold">
+          {/* Welcome to {website?.name} */}
+          Create an account
         </h5>
-        <p className="my-4 px-4 text-text-primary leading-5">
+        <p className="my-4  text-text-primary leading-5">
           Please enter your email, Phone Number and password to get started with
           your medical account
         </p>
@@ -106,10 +107,10 @@ function Register() {
         <FeedbackMessage type={message.type} message={message.message} />
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}  className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* First Name */}
-        <div className="col-span-2">
-          <label htmlFor="firstName" className="form-label text-primary">
+        <div className="">
+          <label htmlFor="firstName" className="">
             First Name
           </label>
           <input
@@ -129,8 +130,8 @@ function Register() {
         </div>
 
         {/* Last Name */}
-        <div className="col-span-2 mt-4">
-          <label htmlFor="lastName" className="form-label text-primary">
+        <div className="">
+          <label htmlFor="lastName" className="">
             Last Name
           </label>
           <input
@@ -150,8 +151,8 @@ function Register() {
         </div>
 
         {/* Email */}
-        <div className="mb-4 col-span-2 mt-4">
-          <label htmlFor="email" className="form-label text-primary">
+        <div className="md:col-span-2">
+          <label htmlFor="email" className="">
             Email
           </label>
           <input
@@ -171,11 +172,11 @@ function Register() {
         </div>
 
         {/* Password */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="password" className="form-label text-primary">
+        <div className="md:col-span-2">
+          <label htmlFor="password" className="">
             Password
           </label>
-          <div className="mb-4 relative">
+          <div className=" relative">
             <input
               type={data.eye ? "text" : "password"}
               name="password"
@@ -209,8 +210,8 @@ function Register() {
         </div>
 
         {/* Confirm Password */}
-        <div className="mb-4 col-span-2">
-          <label htmlFor="confirmPassword" className="form-label text-primary">
+        <div className="md:col-span-2">
+          <label htmlFor="confirmPassword" className="">
             Confirm Password
           </label>
           <div className="mb-4 relative">
@@ -247,9 +248,9 @@ function Register() {
         </div>
 
         {/* Submit Button */}
-        <div className="w-full">
+        <div className="w-full md:col-span-2">
           <button
-            className="form-primary-button bg-primary mt-4"
+            className="form-primary-button bg-primary "
             disabled={isLoading}
             type="submit"
           >
@@ -258,7 +259,7 @@ function Register() {
         </div>
 
         {/* Login Link */}
-        <h5 className="text-text-secondary text-base text-center my-4">
+        <h5 className="text-text-secondary text-base text-center md:col-span-2 ">
           Already have an account?{" "}
           <button onClick={() => { navigate(routeLinks?.auth?.login) }} className="text-primary">
            Log in
