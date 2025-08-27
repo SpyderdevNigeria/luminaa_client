@@ -178,7 +178,7 @@ const Navigation = () => {
                     </button>
 
                     {servicesOpen && (
-                      <div className="mt-2 pl-4 grid grid-cols-1 gap-4">
+                      <div className="mt-2 pl-4 grid grid-cols-1 gap-4 max-h-[200px] overflow-y-scroll scrollbar-visible ">
                         {Object.entries(serviceCategories).map(
                           ([category, details]) => (
                             <div key={category}>

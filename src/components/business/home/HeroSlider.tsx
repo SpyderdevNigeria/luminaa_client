@@ -82,7 +82,7 @@ export default function HeroSlider() {
                   {slide.id === 2 && (
                     <div className="flex gap-6 space-x-8 mt-5">
                       {slide2Icons.map((item) => (
-                        <img src={item.icon} alt="images" key={item.id} />
+                        <img src={item.icon} alt="images" key={item.id} className="w-10 h-10" />
                       ))}
                     </div>
                   )}
