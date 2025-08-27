@@ -9,7 +9,7 @@ export default function FAQPage() {
     <div className="relative py-16">
       <div className="business-container mx-auto flex flex-col lg:flex-row gap-8">
         {/* FAQ Section */}
-        <div className="lg:w-2/3 w-full p-8">
+        <div className="lg:w-2/3 w-full md:p-8">
           <div className="mb-6">
             <h5 className="text-3xl md:text-4xl font-bold mt-2 mb-4">
               Frequently Asked Questions
@@ -49,7 +49,7 @@ export default function FAQPage() {
 
         {/* Submit Question Form */}
         <div className="lg:w-1/3 w-full">
-          <div className="lg:sticky lg:top-32 bg-gray-100 p-6 rounded-md shadow-md">
+          <div className="lg:sticky lg:top-32 bg-gray-100 p-4 md:p-6 rounded-md shadow-md">
             <div className="mb-6 text-center">
               <h2 className="text-xl font-semibold mb-2">Submit Question</h2>
               <p className="text-gray-700 text-sm">
