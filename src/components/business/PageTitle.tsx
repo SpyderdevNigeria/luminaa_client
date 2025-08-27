@@ -1,5 +1,5 @@
 import React from "react";
-
+import Background from "../../assets/images/business/pagetitle/pagetitle-bg.jpg";
 interface PageTitleProps {
   title: string;
   breadcrumb?: { name: string; href?: string }[];
@@ -7,15 +7,24 @@ interface PageTitleProps {
 
 const PageTitle: React.FC<PageTitleProps> = ({ title, breadcrumb }) => {
   return (
-    <div className="bg-gray-100 py-12">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center">
-          {/* Title */}
-          <h2 className="text-3xl font-bold mb-2">{title}</h2>
+    <div
+      className="relative w-full bg-cover bg-center bg-no-repeat h-[240px] "
+      style={{ backgroundImage: `url(${Background})` }}
+    >
+      <div className="absolute inset-0 bg-black/40 z-0"></div>
+      <div className="business-container  h-full relative z-10 mt-20">
+        <div className="flex flex-col items-start justify-center text-center h-full">
+          {/* Title with left bar */}
+          <div className="relative inline-block mb-3">
+            <h2 className="text-3xl md:text-4xl font-bold text-white pl-6 relative">
+              {title}
+            </h2>
+            <span className="absolute left-0 top-0 h-full w-1 bg-primary"></span>
+          </div>
 
           {/* Breadcrumb */}
           {breadcrumb && breadcrumb.length > 0 && (
-            <div className="flex space-x-2 text-gray-600 text-sm">
+            <div className="flex space-x-2 text-gray-200 text-sm">
               {breadcrumb.map((item, index) => (
                 <React.Fragment key={index}>
                   {item.href ? (

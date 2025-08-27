@@ -58,9 +58,9 @@ export default function HeroSlider() {
             >
               <Section>
                 <div className="flex flex-col items-start justify-center h-[700px]">
-                  <h1 className="text-4xl md:text-7xl font-bold text-primary mb-4 max-w-[680px]">
+                  <h1 className="text-4xl md:text-7xl font-bold  mb-4 max-w-[680px]">
                     {slide.title}{" "}
-                    <span className="text-secondary">{slide.subtitle}</span>
+                    <span className="text-primary">{slide.subtitle}</span>
                   </h1>
                   <p className="text-xl text-gray-700 mb-6">
                     {slide.description}
@@ -73,7 +73,7 @@ export default function HeroSlider() {
                         title="Learn More"
                         link={routeLinks?.auth?.login}
                       />
-                      <button className="flex items-center gap-2 bg-secondary text-white px-5 py-3 shadow-lg hover:bg-secondary/80 transition">
+                      <button className="flex items-center gap-2 bg-primary text-white px-5 py-3 shadow-lg hover:bg-primary/80 transition">
                         <FiPlayCircle size={24} /> View Video
                       </button>
                     </div>

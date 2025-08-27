@@ -23,6 +23,10 @@ import BusinessLayout from "./components/layouts/business/BusinessLayout";
 // Public / Business
 const Second = lazy(() => import("./pages/business/second"));
 const AboutUs = lazy(() => import("./pages/business/AboutUs"));
+const Team = lazy(() => import("./pages/business/Team"));
+const Services = lazy(() => import("./pages/business/Services"));
+const Faq = lazy(() => import("./pages/business/Faq"));
+const Contact = lazy(() => import("./pages/business/ContactUs"));
 // Patient
 const Login = lazy(() => import("./pages/patient/auth/Login"));
 const Register = lazy(() => import("./pages/patient/auth/Register"));
@@ -122,7 +126,11 @@ function App() {
       <Route path="/" element={<BusinessLayout />} >
       <Route path="/" element={<Home />} />
       <Route  path="/about" element={<AboutUs />} />
+      <Route path="/team/:memberName" element={<Team />} />
+      <Route path="/services/:category" element={<Services />} />
        <Route path="/second" element={<Second />} />
+       <Route path="/Faq" element={<Faq />} />
+       <Route path="/Contact" element={<Contact />} />
        </Route>
       {/* Patient Auth */}
       <Route path={routeLinks.auth.path} element={<PatientAuthLayout />}>

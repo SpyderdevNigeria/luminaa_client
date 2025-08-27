@@ -44,7 +44,7 @@ export default function AboutUs() {
 
         {/* Right Content */}
         <div>
-          <h5 className="text-secondary font-semibold uppercase">About Us</h5>
+          <h5 className="text-primary font-semibold uppercase">About Us</h5>
           <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">
             We Employ The Latest Research Technology &amp; Expertise
           </h2>
@@ -63,13 +63,13 @@ export default function AboutUs() {
         {/* Timeline Icon + Line */}
         <div className="relative flex flex-col items-center">
           {/* Icon */}
-          <div className="z-10 flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white">
-            {item.icon}
+          <div className="z-10 flex items-center justify-center w-10 h-10 text-primary font-bold rounded-full bg-white border border-primary">
+           0{index + 1}
           </div>
 
           {/* Vertical Line (hidden for last item) */}
           {index !== features.length - 1 && (
-            <div className="absolute top-10 left-1/2 w-0.5 h-25 bg-gray-300"></div>
+            <div className="absolute top-10 left-1/2 w-0.5 h-25 bg-primary"></div>
           )}
         </div>
 

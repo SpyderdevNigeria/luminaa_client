@@ -14,45 +14,15 @@ import TopBar from "./TopBar";
 import website from "../../../utils/website";
 import Button from "../../common/Button";
 import routeLinks from "../../../utils/routes";
+import { serviceCategories } from "../../../utils/businessUtils";
 
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About Us", path: "/about" },
   { name: "Services", path: "/services" }, // Dropdown
-  { name: "Resources", path: "/resources" },
-  { name: "Consultation", path: "/consultation" },
+  { name: "FAQ", path: "/Faq" },
+  { name: "Contact", path: "/Contact" },
 ];
-
-const serviceCategories: Record<string, string[]> = {
-  "Endoscopy Clinic": [
-    "Oesophagoscopy",
-    "Gastroscopy",
-    "Duodenoscopy",
-    "Colonoscopy",
-    "Sigmoidoscopy",
-    "Proctoscopy",
-    "Laparoscopy",
-    "Hysteroscopy",
-    "Cystoscopy",
-    "Laryngoscopy",
-    "Bronchoscopy",
-  ],
-  Radiology: [
-    "Ultrasound",
-    "ECHO cardiography",
-    "Doppler Studies",
-    "Plain x-ray",
-    "Fluoroscopy",
-    "Mammography",
-  ],
-  "Executive Health Services": [
-    "Outpatient medical consultation",
-    "Cardiological assessment",
-    "ECG/ECHO",
-    "Spirometry",
-    "Ancillary care",
-  ],
-};
 
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -78,7 +48,7 @@ const Navigation = () => {
       <header
         className={`w-full bg-white ${
           isScrolled ? "shadow-md top-0" : "top-10"
-        } fixed  left-0 z-50 transition-all duration-0`}
+        } fixed left-0 z-50 transition-all duration-0`}
       >
         <div className="business-container flex justify-between items-center h-20 md:h-24">
           {/* Logo */}
@@ -113,10 +83,10 @@ const Navigation = () => {
                   </button>
 
                   {servicesOpen && (
-                    <div className="absolute left-[-400px] top-full mt-2 bg-white shadow-lg rounded-lg p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-[800px] z-50">
+                    <div className="absolute left-[-400px] top-full  bg-white shadow-lg  p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-[800px] z-50">
                       {Object.entries(serviceCategories).map(
-                        ([category, items]) => (
-                          <div key={category}>
+                        ([category, details]) => (
+                          <div key={category} className="">
                             <h4
                               className="font-bold text-primary text-lg cursor-pointer hover:underline"
                               onClick={() =>
@@ -130,21 +100,21 @@ const Navigation = () => {
                               {category}
                             </h4>
                             <ul className="mt-2 space-y-1">
-                              {items.map((item) => (
+                              {details.services.map((item) => (
                                 <li
-                                  key={item}
+                                  key={item.name}
                                   className="cursor-pointer hover:text-primary text-sm"
                                   onClick={() =>
                                     navigate(
                                       `/services/${category
                                         .toLowerCase()
-                                        .replace(/\s+/g, "-")}/${item
+                                        .replace(/\s+/g, "-")}?service=${item.name
                                         .toLowerCase()
                                         .replace(/\s+/g, "-")}`
                                     )
                                   }
                                 >
-                                  {item}
+                                  {item.name}
                                 </li>
                               ))}
                             </ul>
@@ -210,7 +180,7 @@ const Navigation = () => {
                     {servicesOpen && (
                       <div className="mt-2 pl-4 grid grid-cols-1 gap-4">
                         {Object.entries(serviceCategories).map(
-                          ([category, items]) => (
+                          ([category, details]) => (
                             <div key={category}>
                               <h4
                                 className="font-bold text-primary cursor-pointer hover:underline"
@@ -226,22 +196,22 @@ const Navigation = () => {
                                 {category}
                               </h4>
                               <ul className="mt-1 space-y-1">
-                                {items.map((item) => (
+                                {details.services.map((item) => (
                                   <li
-                                    key={item}
+                                    key={item.name}
                                     className="cursor-pointer hover:text-primary text-sm"
                                     onClick={() => {
                                       navigate(
                                         `/services/${category
                                           .toLowerCase()
-                                          .replace(/\s+/g, "-")}/${item
+                                          .replace(/\s+/g, "-")}?service=${item.name
                                           .toLowerCase()
                                           .replace(/\s+/g, "-")}`
                                       );
                                       setMenuOpen(false);
                                     }}
                                   >
-                                    {item}
+                                    {item.name}
                                   </li>
                                 ))}
                               </ul>

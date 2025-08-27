@@ -3,7 +3,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Navigation } from "swiper/modules";
-
+import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FiEye } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 interface TeamMember {
   name: string;
@@ -30,8 +32,8 @@ const TeamSection: React.FC<TeamSectionProps> = ({
   members,
 }) => {
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section className="py-20">
+      <div className="business-container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
           <h5 className="text-gray-700 uppercase">{title}</h5>
@@ -55,48 +57,61 @@ const TeamSection: React.FC<TeamSectionProps> = ({
         >
           {members.map((member, idx) => (
             <SwiperSlide key={idx}>
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden text-center">
-                <div className="relative group">
+              <div className="bg-primary/10 shadow-lg overflow-hidden text-center group transition-all duration-300 border-b-4 border-transparent hover:border-primary  hover:shadow-2xl relative">
+                <div className="relative">
+                  {/* Member Image */}
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-72 object-cover"
+                    className="w-full h-82 object-fill"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 flex flex-col justify-center items-center transition-opacity duration-300">
-                    <a
-                      href="#"
-                      className="text-white text-2xl mb-2 p-2 rounded-full hover:bg-skincolor"
-                    >
-                      <i className="ti ti-plus"></i>
-                    </a>
-                    <div className="flex space-x-3">
-                      {member.socials?.facebook && (
-                        <a
-                          href={member.socials.facebook}
-                          className="text-white hover:text-skincolor"
-                        >
-                          <i className="ti ti-facebook"></i>
-                        </a>
-                      )}
-                      {member.socials?.twitter && (
-                        <a
-                          href={member.socials.twitter}
-                          className="text-white hover:text-skincolor"
-                        >
-                          <i className="ti ti-twitter-alt"></i>
-                        </a>
-                      )}
-                      {member.socials?.instagram && (
-                        <a
-                          href={member.socials.instagram}
-                          className="text-white hover:text-skincolor"
-                        >
-                          <i className="ti ti-instagram"></i>
-                        </a>
-                      )}
-                    </div>
+
+                  {/* Eye Icon (top-right) */}
+                  <Link
+                    to={`/team/${member.name.replace(/\s+/g, "-").toLowerCase()}`}
+                    className="absolute top-2 right-2 text-white bg-primary p-3 rounded-full text-xl shadow-md 
+                               transform -translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100
+                               transition-all duration-300"
+                  >
+                    <FiEye />
+                  </Link>
+
+                  {/* Social Icons (left-side vertical) */}
+                  <div className="absolute top-1/2 -translate-y-1/2 left-2 flex flex-col space-y-2">
+                    {member.socials?.facebook && (
+                      <a
+                        href={member.socials.facebook}
+                        className="bg-primary text-white p-3 rounded-full shadow-md 
+                                   transform -translate-x-8 opacity-0 group-hover:translate-x-0 group-hover:opacity-100
+                                   transition-all duration-300"
+                      >
+                        <FaFacebookF />
+                      </a>
+                    )}
+                    {member.socials?.twitter && (
+                      <a
+                        href={member.socials.twitter}
+                   className="bg-primary text-white p-3 rounded-full shadow-md 
+                                   transform -translate-x-8 opacity-0 group-hover:translate-x-0 group-hover:opacity-100
+                                   transition-all duration-300"
+                      >
+                        <FaTwitter />
+                      </a>
+                    )}
+                    {member.socials?.instagram && (
+                      <a
+                        href={member.socials.instagram}
+                  className="bg-primary text-white p-3 rounded-full shadow-md 
+                                   transform -translate-x-8 opacity-0 group-hover:translate-x-0 group-hover:opacity-100
+                                   transition-all duration-300"
+                      >
+                        <FaInstagram />
+                      </a>
+                    )}
                   </div>
                 </div>
+
+                {/* Member Info */}
                 <div className="p-4">
                   <h5 className="font-semibold text-lg">{member.name}</h5>
                   <p className="text-gray-500">{member.position}</p>

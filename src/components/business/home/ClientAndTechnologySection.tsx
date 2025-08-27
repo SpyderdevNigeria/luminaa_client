@@ -8,6 +8,8 @@ import Client3 from "../../../assets/images/business/partners/client-03.png";
 import Client4 from "../../../assets/images/business/partners/client-04.png";
 import Client6 from "../../../assets/images/business/partners/client-06.png";
 import TechnologyImage from "../../../assets/images/business/technology/bg.jpg";
+import { faqs } from "../../../utils/businessUtils";
+
 // Client logos
 const clients = [
     { id: 1, img: Client1, },
@@ -20,29 +22,7 @@ const clients = [
 
 
 // Accordion items
-const faqs = [
-    {
-        id: 1,
-        question: "How should I believe about your services?",
-        answer:
-            "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        img: "/images/blog/blog-three-100x95.jpg",
-    },
-    {
-        id: 2,
-        question: "What are laboratory tests?",
-        answer:
-            "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        img: "/images/blog/blog-three-100x95.jpg",
-    },
-    {
-        id: 3,
-        question: "Who performs the testing on laboratory specimens?",
-        answer:
-            "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-        img: "/images/blog/blog-three-100x95.jpg",
-    },
-];
+
 
 export default function ClientAndTechnologySection() {
     const [activeIndex, setActiveIndex] = useState(3);
@@ -92,7 +72,7 @@ export default function ClientAndTechnologySection() {
                 </div>
 
 
-                {/* Technology Section */}
+                                     {/* Technology Section */}
                 <section className="relative py-24 bg-cover bg-center" style={{ backgroundImage: `url(${TechnologyImage})` }}>
                     <div className="business-container mx-auto flex justify-end">
                         <div className="bg-white shadow-lg p-8 max-w-2xl">
@@ -120,7 +100,7 @@ export default function ClientAndTechnologySection() {
                                         </button>
                                         {activeIndex === i && (
                                             <div className={`flex gap-4 text-sm text-gray-600 p-4  ${activeIndex === i ? "bg-primary/10" : ""}`}>
-                                                <img src={faq.img} alt="faq" className="w-24 h-20 object-cover" />
+                                                {/* <img src={faq.img} alt="faq" className="w-24 h-20 object-cover" /> */}
                                                 <p>{faq.answer}</p>
                                             </div>
                                         )}

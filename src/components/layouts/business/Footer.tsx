@@ -4,39 +4,8 @@ import CardImage from "../../../assets/images/business/card-shape.svg";
 import website from "../../../utils/website";
 
 import { Link } from "react-router-dom";
-import { FaArrowRight, FaTwitter, FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa6";
-
-// Service categories
-const serviceCategories: Record<string, string[]> = {
-  "Endoscopy Clinic": [
-    "Oesophagoscopy",
-    "Gastroscopy",
-    "Duodenoscopy",
-    "Colonoscopy",
-    "Sigmoidoscopy",
-    "Proctoscopy",
-    "Laparoscopy",
-    "Hysteroscopy",
-    "Cystoscopy",
-    "Laryngoscopy",
-    "Bronchoscopy",
-  ],
-  Radiology: [
-    "Ultrasound",
-    "ECHO cardiography",
-    "Doppler Studies",
-    "Plain x-ray",
-    "Fluoroscopy",
-    "Mammography",
-  ],
-  "Executive Health Services": [
-    "Outpatient consultation",
-    "Cardiological assessment",
-    "ECG/ECHO",
-    "Spirometry",
-    "Ancillary care",
-  ],
-};
+import {  FaTwitter, FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa6";
+import { serviceCategories } from "../../../utils/businessUtils";
 
 function Footer() {
   const navLinks = [
@@ -51,21 +20,13 @@ function Footer() {
   return (
     <footer className="bg-primary relative z-2 text-white">
       <Section>
-        <div className="theme-container mx-auto pt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-9 gap-10"
-        >
+        <div className="theme-container mx-auto pt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-10 gap-8">
+
           {/* Column 1: Logo + About */}
-          <div className="text-white rounded-2xl max-w-sm lg:col-span-2">
-            <div className="flex justify-center mb-4">
-              <img
-                src={FooterImage}
-                alt="Logo"
-                className="w-20 h-20 object-contain"
-              />
-            </div>
-            <h2 className="text-2xl font-bold text-center mb-3">
-              We’re Here for You
-            </h2>
-            <p className="text-center text-sm text-gray-200">
+          <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
+            <img src={FooterImage} alt="Logo" className="w-20 h-20 object-contain" />
+            <h2 className="text-2xl font-bold">We’re Here for You</h2>
+            <p className="text-sm text-gray-200">
               Providing trusted services with a commitment to excellence.
               Reach out to us anytime for assistance or a custom quote.
             </p>
@@ -73,7 +34,7 @@ function Footer() {
 
           {/* Column 2: Quick Links */}
           <div className="lg:col-span-2">
-            <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
+            <h3 className="font-semibold text-lg mb-4 text-nowrap">Quick Links</h3>
             <ul className="space-y-2">
               {navLinks.map((link, index) => (
                 <li key={index}>
@@ -81,29 +42,27 @@ function Footer() {
                     to={`#${link.toLowerCase().replace(/\s/g, "-")}`}
                     className="flex items-center gap-2 text-white/70 hover:text-white transition text-sm"
                   >
-                    <FaArrowRight size={12} /> {link}
+                    {link}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 3: Services in grid (2 columns) */}
-          <div className="lg:col-span-3">
-            <h3 className="font-semibold text-lg mb-4 md:col-span-2">Our Services</h3>
-            <div className="grid grid-cols-2 gap-6">
-              {Object.entries(serviceCategories).map(([category, items]) => (
+          {/* Column 3: Services */}
+          <div className="lg:col-span-4">
+            <h3 className="font-semibold text-lg mb-4">Our Services</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+              {Object.entries(serviceCategories).map(([category, data]) => (
                 <div key={category}>
-                  <h4 className="font-semibold text-sm text-white mb-2">
-                    {category}
-                  </h4>
-                  <ul className="space-y-1">
-                    {items.slice(0, 4).map((item, i) => (
+                  <h4 className="font-semibold text-sm text-white mb-2">{category}</h4>
+                  <ul className="list-disc pl-5 space-y-1">
+                    {data.services.slice(0, 4).map((service) => (
                       <li
-                        key={i}
-                        className="text-white/60 text-sm hover:text-white cursor-pointer"
+                        key={service.name}
+                        className="text-white/70 cursor-pointer hover:text-white text-sm"
                       >
-                        {item}
+                        {service.name}
                       </li>
                     ))}
                   </ul>
@@ -115,42 +74,23 @@ function Footer() {
           {/* Column 4: Contact & Socials */}
           <div className="lg:col-span-2">
             <h3 className="font-semibold text-lg mb-4">Contact Us</h3>
-            <p className="text-white/70 text-sm mb-3">{website?.address}</p>
-            <p className="text-white/70 text-sm mb-3">
-              {website?.contact?.phone1}
-            </p>
-            <p className="text-white/70 text-sm mb-6">
-              {website?.contact?.email}
-            </p>
+            <p className="text-white/70 text-sm mb-2">{website?.address}</p>
+            <p className="text-white/70 text-sm mb-2">{website?.contact?.phone1}</p>
+            <p className="text-white/70 text-sm mb-4">{website?.contact?.email}</p>
 
-            {/* Socials with icons */}
             <div className="flex gap-3">
-              <a
-                href="#"
-                className="w-10 h-10 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-primary transition"
-              >
-                <FaFacebookF />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-primary transition"
-              >
-                <FaTwitter />
-              </a>
-                            <a
-                href="#"
-                className="w-10 h-10 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-primary transition"
-              >
-                <FaInstagram />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-primary transition"
-              >
-                <FaLinkedinIn />
-              </a>
+              {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="w-10 h-10 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-primary transition"
+                >
+                  <Icon />
+                </a>
+              ))}
             </div>
           </div>
+
         </div>
       </Section>
 
