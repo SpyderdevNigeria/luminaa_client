@@ -6,6 +6,7 @@ import website from "../../../utils/website";
 import { Link } from "react-router-dom";
 import { FaTwitter, FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa6";
 import { serviceCategories } from "../../../utils/businessUtils";
+import { BsArrowRightCircleFill } from "react-icons/bs";
 
 
 const socialLinks = [
@@ -35,27 +36,30 @@ function Footer() {
   return (
     <footer className="bg-primary relative z-2 text-white">
       <Section>
-        <div className="theme-container mx-auto pt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-10 gap-8">
+        <div className="theme-container mx-auto pt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-10 gap-4 md:gap-y-0 md:gap-x-6">
+          <div className="sm:col-span-2 lg:col-span-10">
+                        <img src={FooterImage} alt="Logo" className="w-24 h-24 object-contain" />
+          </div>
           {/* Column 1: Logo + About */}
           <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
-            <img src={FooterImage} alt="Logo" className="w-20 h-20 object-contain" />
+
             <h2 className="text-2xl font-bold">We’re Here for You</h2>
             <p className="text-sm text-gray-200">
-              Providing trusted services with a commitment to excellence.
-              Reach out to us anytime for assistance or a custom quote.
-            </p>
+              At  {website?.name}, we are committed to providing state-of-the-art healthcare services, bringing advanced minimal access surgery and modern diagnostic techniques closer to the Humanity 
+              </p>
           </div>
 
           {/* Column 2: Quick Links */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 lg:pl-6">
             <h3 className="font-semibold text-lg mb-4 text-nowrap">Quick Links</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2 ">
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <Link
                     to={`#${link.toLowerCase().replace(/\s/g, "-")}`}
                     className="flex items-center gap-2 text-white/70 hover:text-white transition text-sm"
                   >
+                    <BsArrowRightCircleFill />
                     {link}
                   </Link>
                 </li>
@@ -64,7 +68,7 @@ function Footer() {
           </div>
 
           {/* Column 3: Services */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <h3 className="font-semibold text-lg mb-4">Our Services</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
               {displayedCategories.map(([category, data]) => (
@@ -98,7 +102,7 @@ function Footer() {
           </div>
 
           {/* Column 4: Contact & Socials */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <h3 className="font-semibold text-lg mb-4">Contact Us</h3>
             <p className="text-white/70 text-sm mb-2">{website?.address}</p>
             <p className="text-white/70 text-sm mb-2">{website?.contact?.phone1}</p>

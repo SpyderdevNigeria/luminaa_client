@@ -853,7 +853,7 @@ export const states = [
 
 export const labRequestPriority = ["low", "medium", "high"];
 export const returnMemberNavigationUrlLogic = (user: any) => {
-  if (!user.isEmailVerified) {
+  if (!user?.user?.isEmailVerified) {
     return routeLinks?.auth?.emailVerification;
   }
 

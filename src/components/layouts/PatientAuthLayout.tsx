@@ -12,9 +12,10 @@ function PatientAuthLayout() {
   const navigate = useNavigate();
   // const { userProfile, authLoading } = useAuth();
   const {user} = useSelector((state: any) => state.auth);
-  console.log(user);
+  // console.log(user);
   useLayoutEffect(() => {
     if (user) {
+      console.log(user);
       const redirectUrl = returnMemberNavigationUrlLogic(user);
       navigate(redirectUrl);
     }
