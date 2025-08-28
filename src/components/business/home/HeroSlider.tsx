@@ -80,9 +80,9 @@ export default function HeroSlider() {
               title="Get Started"
               link={routeLinks?.auth?.register}
             />
-            <button className="flex items-center gap-2 bg-primary text-white px-5 py-3 shadow-lg hover:bg-primary/80 transition">
+            <a href="https://www.youtube.com/watch?v=Ei0IcbweAn4"  target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-primary text-white px-5 py-3 shadow-lg hover:bg-primary/80 transition">
               <FiPlayCircle size={24} /> Watch Overview
-            </button>
+            </a>
           </div>
         )}
 

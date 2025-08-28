@@ -65,7 +65,7 @@ export default function ContactUs() {
                 <div className="flex items-center gap-3">
                   <FaEnvelope className="text-2xl mt-1" />
                   <p>
-                    <a href={`mailto:${website?.contact?.email}`} className="underline">i{website?.contact?.email}</a><br />
+                    <a href={`mailto:${website?.contact?.email}`} className="underline">{website?.contact?.email}</a><br />
                     {/* <a href="mailto:info@Laboratory.com" className="underline">info@Laboratory.com</a> */}
                   </p>
                 </div>

@@ -32,7 +32,7 @@ const AboutUsSection: React.FC<AboutUsProps> = ({
   return (
     <section className="py-20">
       <div className="business-container">
-        <div className="flex flex-col lg:flex-row items-center gap-5">
+        <div className="flex flex-col lg:flex-row items-center gap-5 md:gap-8">
           
           {/* Left Column - Image + Special Offer */}
           <div className="lg:w-1/2 w-full flex justify-center mb-10 lg:mb-0">
@@ -59,7 +59,7 @@ const AboutUsSection: React.FC<AboutUsProps> = ({
               </div>
 
               {/* Vision */}
-              <div className="flex items-start mt-6 space-x-4">
+              <div className="md:flex items-start mt-6 space-y-4 md:space-y-0 space-x-4">
                 <img src={VisionIcon} alt="Vision icon" className="w-10 h-10" />
                 <div>
                   <h5 className="font-semibold">{visionTitle}</h5>
@@ -68,26 +68,30 @@ const AboutUsSection: React.FC<AboutUsProps> = ({
               </div>
 
               {/* Mission */}
-              <div className="flex items-start mt-6 space-x-4 w-full">
+              <div className="md:flex items-start mt-6 space-y-4 md:space-y-0 space-x-4 w-full">
                 <img src={MissionIcon} alt="Mission icon" className="w-10 h-10" />
                 <div>
                   <h5 className="font-semibold">{missionTitle}</h5>
                   <p className="text-gray-700">{missionDesc}</p>
 
                   {/* Two-column list */}
-                  <div className="flex mt-4 space-x-4 text-sm w-full ">
-                    <ul className="space-y-2 w-1/2">
+                  <div className="md:flex mt-4 space-x-4 text-sm w-full ">
+                    <ul className="space-y-2 md:w-1/2">
                       {listLeft.map((item, idx) => (
                         <li key={idx} className="flex items-start">
+                          <div>
                           <FaArrowCircleRight className="text-primary mt-1 mr-2" />
+                          </div>
                           <span className="md:flex-nowrap">{item}</span>
                         </li>
                       ))}
                     </ul>
-                    <ul className="space-y-2 w-1/2">
+                    <ul className="space-y-2 mt-2 md:mt-0 md:w-1/2">
                       {listRight.map((item, idx) => (
                         <li key={idx} className="flex items-start w-full">
-                         <FaArrowCircleRight  className="text-primary mt-1 mr-2"/>
+                          <div>
+                         <FaArrowCircleRight  className="text-primary mt-1 mr-2  " />
+                          </div>
                           <span className="md:flex-nowrap">{item}</span>
                         </li>
                       ))}

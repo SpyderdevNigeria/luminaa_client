@@ -41,7 +41,7 @@ function Footer() {
                         <img src={FooterImage} alt="Logo" className="w-24 h-24 object-contain" />
           </div>
           {/* Column 1: Logo + About */}
-          <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
+          <div className="lg:col-span-3 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
 
             <h2 className="text-2xl font-bold">We’re Here for You</h2>
             <p className="text-sm text-gray-200">
@@ -50,7 +50,7 @@ function Footer() {
           </div>
 
           {/* Column 2: Quick Links */}
-          <div className="lg:col-span-2 lg:pl-6">
+          <div className="lg:col-span-1 lg:pl-6">
             <h3 className="font-semibold text-lg mb-4 text-nowrap">Quick Links</h3>
             <ul className="space-y-2 ">
               {navLinks.map((link, index) => (
@@ -68,7 +68,7 @@ function Footer() {
           </div>
 
           {/* Column 3: Services */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-4 lg:pl-18">
             <h3 className="font-semibold text-lg mb-4">Our Services</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
               {displayedCategories.map(([category, data]) => (
@@ -102,7 +102,7 @@ function Footer() {
           </div>
 
           {/* Column 4: Contact & Socials */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <h3 className="font-semibold text-lg mb-4">Contact Us</h3>
             <p className="text-white/70 text-sm mb-2">{website?.address}</p>
             <p className="text-white/70 text-sm mb-2">{website?.contact?.phone1}</p>
