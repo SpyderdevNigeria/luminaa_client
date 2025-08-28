@@ -198,13 +198,13 @@ export default function PortfolioSection() {
               <p className="text-gray-700 mb-4">{selectedItem.intro}</p>
 
               {selectedItem.modules ? (
-                <ul className="list-disc pl-5 text-gray-600 space-y-1 mb-4 max-h-[150px] md:max-h-[300px] overflow-y-auto">
+                <ul className="list-disc pl-5 text-gray-600 space-y-1 text-sm mb-4 max-h-[150px] md:max-h-[300px] overflow-y-auto">
                   {selectedItem.modules.map((module, idx) => (
                     <li key={idx}>{module}</li>
                   ))}
                 </ul>
               ) : (
-                <p className="italic text-gray-500 flex flex-col items-center justify-center mb-4 h-full max-h-[150px] md:max-h-[300px]">
+                <p className="italic text-gray-500 flex flex-col items-center justify-center mb-4 h-full ">
                   No modules available yet
                 </p>
               )}

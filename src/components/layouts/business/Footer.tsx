@@ -28,7 +28,7 @@ const socialLinks = [
     },
 ]
 function Footer() {
-  const navLinks = ["Home", "About", "FAQ", "Contact", "Get Started"];
+  const navLinks = ["Home", "About", "FAQ", "Contact", ];
 
   // Convert object to array and take first 2 categories
   const displayedCategories = Object.entries(serviceCategories).slice(0, 2);
@@ -56,7 +56,7 @@ function Footer() {
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <Link
-                    to={`#${link.toLowerCase().replace(/\s/g, "-")}`}
+                    to={`${link.toLowerCase().replace(/\s/g, "-")}`}
                     className="flex items-center gap-2 text-white/70 hover:text-white transition text-sm"
                   >
                     <BsArrowRightCircleFill />
