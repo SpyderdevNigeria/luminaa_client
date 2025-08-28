@@ -7,7 +7,7 @@ import Client2 from "../../../assets/images/business/partners/client-02.png";
 import Client3 from "../../../assets/images/business/partners/client-03.png";
 import Client4 from "../../../assets/images/business/partners/client-04.png";
 import Client6 from "../../../assets/images/business/partners/client-06.png";
-import TechnologyImage from "../../../assets/images/business/technology/bg.jpg";
+import TechnologyImage from "../../../assets/images/business/technology/bg.webp";
 import { faqs } from "../../../utils/businessUtils";
 
 // Client logos

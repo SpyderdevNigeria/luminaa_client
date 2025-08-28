@@ -31,10 +31,18 @@ const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // ✅ Single scroll handler
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 1);
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    handleScroll(); // Run once on mount
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const isActive = (path: string) =>
@@ -47,8 +55,8 @@ const Navigation = () => {
       {/* Fixed Header */}
       <header
         className={`w-full bg-white ${
-          isScrolled ? "shadow-md top-0" : "top-10"
-        } fixed left-0 z-50 transition-all duration-0`}
+          isScrolled ? "shadow-md top-0" : ""
+        } fixed left-0 z-50 transition-all duration-600`}
       >
         <div className="business-container flex justify-between items-center h-20 md:h-24">
           {/* Logo */}
@@ -83,10 +91,10 @@ const Navigation = () => {
                   </button>
 
                   {servicesOpen && (
-                    <div className="absolute left-[-400px] top-full  bg-white shadow-lg  p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-[800px] z-50">
+                    <div className="absolute left-[-400px] top-full bg-white shadow-lg p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-[800px] z-50">
                       {Object.entries(serviceCategories).map(
                         ([category, details]) => (
-                          <div key={category} className="">
+                          <div key={category}>
                             <h4
                               className="font-bold text-primary text-lg cursor-pointer hover:underline"
                               onClick={() =>
@@ -99,7 +107,7 @@ const Navigation = () => {
                             >
                               {category}
                             </h4>
-                            <ul className="mt-2 space-y-1">
+                            <ul className="mt-2 space-y-1 list-disc list-inside marker:text-primary">
                               {details.services.map((item) => (
                                 <li
                                   key={item.name}
@@ -155,16 +163,14 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden bg-white p-4 md:px-6 pb-6 pt-2 shadow-md">
+          <div className="md:hidden bg-white p-4 md:px-6 pb-6 pt-2 shadow-md max-h-[80vh] overflow-y-auto">
             <nav className="flex flex-col gap-4 text-sm font-medium">
               {navLinks.map((link, index) =>
                 link.name === "Services" ? (
                   <div key={index}>
                     <button
-                      className={`w-full flex items-center justify-between py-2 font-semibold transition relative after:content-[''] after:absolute after:left-0 after:-bottom-[1px] after:h-[3px] after:bg-primary after:transition-all after:duration-300 ${
-                        isActive("/services")
-                          ? "text-primary after:w-full"
-                          : "hover:text-primary after:w-0 hover:after:w-full"
+                      className={`w-full flex items-center justify-between py-2 font-semibold transition ${
+                        isActive("/services") ? "text-primary" : ""
                       }`}
                       onClick={() => setServicesOpen(!servicesOpen)}
                     >
@@ -178,7 +184,7 @@ const Navigation = () => {
                     </button>
 
                     {servicesOpen && (
-                      <div className="mt-2 pl-4 grid grid-cols-1 gap-4 max-h-[200px] overflow-y-scroll scrollbar-visible ">
+                      <div className="mt-2 pl-4 grid grid-cols-1 gap-4 max-h-[200px] overflow-y-auto">
                         {Object.entries(serviceCategories).map(
                           ([category, details]) => (
                             <div key={category}>
@@ -195,7 +201,7 @@ const Navigation = () => {
                               >
                                 {category}
                               </h4>
-                              <ul className="mt-1 space-y-1">
+                              <ul className="mt-1 space-y-1 list-disc list-inside marker:text-primary">
                                 {details.services.map((item) => (
                                   <li
                                     key={item.name}
@@ -225,10 +231,8 @@ const Navigation = () => {
                   <Link
                     key={index}
                     to={link.path}
-                    className={`py-2 font-semibold transition relative after:content-[''] after:absolute after:left-0 after:-bottom-[1px] after:h-[3px] after:bg-primary after:transition-all after:duration-300 ${
-                      isActive(link.path)
-                        ? "text-primary after:w-full"
-                        : "hover:text-primary after:w-0 hover:after:w-full"
+                    className={`py-2 font-semibold transition ${
+                      isActive(link.path) ? "text-primary" : ""
                     }`}
                     onClick={() => setMenuOpen(false)}
                   >

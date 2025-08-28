@@ -23,23 +23,21 @@ function AboutUs() {
         {/* <!--introduction-section--> */}
         <AboutUsSection
           sectionTitle="About Us"
-          subtitle="We Employ The Latest Research Technology & Company"
-          description="Paramedical healthcare field attracts to save lives & helping people..."
+          subtitle="Redefining Quality Healthcare with Innovation and Compassion"
+          description="Oak Endoscopy Centre is a state of the art health centre offering quality health care to affording clients. In this twenty-first century, technological advancement has evolved a sub-specialty of medicine called Minimal Access Surgery. The telescopic visualization with video-monitor display of images in the diagnosis and treatment of various diseases is routinely practiced in advanced countries but yet to be common practice in Port Harcourt metropolis. An early detection of abnormal growth is a vital step towards effective treatment of cancer."
           listLeft={[
-            "Engage - marketing automation",
-            "Learn from customer feedback"
+            "Exceeding the prevailing standard of health care.",
+            "Offering premium health care in minimal access surgery"
           ]}
           listRight={[
-            "Acquire live chat enables sales",
-            "Customer support"
+            "Prevention, early diagnosis and treatment of cancer.",
+            "Providing compassionate, patient-centered care through innovation and excellence."
           ]}
           mainImage={AboutUsImage}
           visionTitle="Our Vision"
-          visionDesc="Our excellent team is ready to be part of your team to work into the different areas of diagnoses. Scientists helping scientists."
+          visionDesc="To be a premier endoscopy, imaging, and cancer care centre, providing advanced diagnostics and compassionate care that improves lives."
           missionTitle="Our Mission"
-          missionDesc="Exceeding the prevailing standard of health care.
-          Offering premium health care in minimal access surgery.
-          Prevention, early diagnosis and treatment of cancer."
+          missionDesc="Our mission is to exceed the prevailing standards of healthcare by delivering premium services in minimal access surgery, and advancing the prevention, early diagnosis, and treatment of cancer."
         />
 
     <ServicesSection/>

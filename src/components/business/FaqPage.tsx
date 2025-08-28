@@ -15,7 +15,7 @@ export default function FAQPage() {
               Frequently Asked Questions
             </h5>
             <p className="text-gray-600 mt-2">
-              Below you’ll find answers to some of the most frequently asked questions at Tectxon. 
+              Below you’ll find answers to some of the most frequently asked questions at {website?.name}. 
               We are constantly adding more questions to this page, so if you don’t see your answer, 
               feel free to email us at{" "}
               <a href={`mailto:${website?.contact?.email}`} className="text-primary underline">
@@ -49,7 +49,7 @@ export default function FAQPage() {
 
         {/* Submit Question Form */}
         <div className="lg:w-1/3 w-full">
-          <div className="lg:sticky lg:top-32 bg-gray-100 p-4 md:p-6 rounded-md shadow-md">
+          <div className="lg:sticky lg:top-32 bg-gray-100 p-4 md:p-6  shadow-md">
             <div className="mb-6 text-center">
               <h2 className="text-xl font-semibold mb-2">Submit Question</h2>
               <p className="text-gray-700 text-sm">
@@ -93,7 +93,7 @@ export default function FAQPage() {
               <div>
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white py-3 rounded-md font-medium hover:bg-primary-dark transition"
+                  className="w-full bg-primary text-white py-3  font-medium hover:bg-primary-dark transition"
                 >
                   Submit
                 </button>

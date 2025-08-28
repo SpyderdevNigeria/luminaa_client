@@ -47,7 +47,7 @@ console.log(memberName)
           <h2 className="text-2xl lg:text-3xl font-bold mb-6 text-primary">Personal Information</h2>
           <ul className="space-y-3 mb-6">
             <li className="flex">
-              <h5 className="font-semibold w-40 lg:w-48">Doctor Name:</h5>
+              <h5 className="font-semibold w-40 lg:w-48">Name:</h5>
               <span>{member.name}</span>
             </li>
             <li className="flex">

@@ -7,25 +7,26 @@ const features = [
   {
     id: 1,
     icon: SearchAnalysis,
-    title: "The Introductory step",
-    desc: "It focuses on issues involving family relationships. Like adoption, divorce, child custody etc.",
+    title: "Comprehensive Evaluation",
+    desc: "We provide thorough diagnostic assessments to ensure accurate detection and early intervention.",
     active: false,
   },
   {
     id: 2,
     icon: Immunity,
     title: "A Safer Health System",
-    desc: "We are expand funding of the research, training, and the education of safe practices as appropriate",
+    desc: "Committed to patient safety through continuous research, staff training, and adherence to global best practices.",
     active: true,
   },
   {
     id: 3,
     icon: Observation,
-    title: "Follow NABL regulations",
-    desc: "Autonomous society providing technical competence of testing, accreditation, medical laboratory.",
+    title: "Accredited Standards",
+    desc: "We follow internationally recognized regulations and quality standards for reliable medical services.",
     active: false,
   },
 ];
+
 
 export default function FeaturesSection() {
   return (

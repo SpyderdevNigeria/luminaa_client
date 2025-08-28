@@ -1,5 +1,5 @@
 import { FaMinus, FaPhoneAlt, FaFlask } from "react-icons/fa";
-import ServiceImg1 from "../../../assets/images/business/single-img-four.jpg";
+import ServiceImg1 from "../../../assets/images/business/single-img-four.webp";
 import ServiceImg2 from "../../../assets/images/business/single-img-five.jpg";
 
 export default function ServicesSection() {
@@ -15,8 +15,9 @@ export default function ServicesSection() {
             Explore Our Main Services
           </h2>
           <p className="text-gray-600">
-            Our excellent team is ready to be part of your team to work into the
-            different areas of diagnoses. Scientists helping scientists.
+            At Oak Endoscopy Centre, we combine advanced technology and expert
+            care to provide accurate diagnosis, early detection, and effective
+            treatment in a safe and comfortable environment.
           </p>
         </div>
 
@@ -25,21 +26,22 @@ export default function ServicesSection() {
           {/* Text */}
           <div>
             <h4 className="text-2xl font-semibold mb-4">
-              We Are Laboratory Technologies
+              Endoscopy & Minimal Access Surgery
             </h4>
             <p className="text-gray-600 mb-6">
-              Our scientists and engineers focus their extreme curiosity on
-              national & health related challenges. Learn more about the
-              Laboratory’s work below segment.
+              We specialize in minimally invasive procedures that ensure early
+              detection, accurate diagnosis, and faster recovery for our
+              patients. Our advanced endoscopic technology brings global best
+              practices to Port Harcourt.
             </p>
 
             {/* List */}
             <ul className="space-y-3 mb-6">
               {[
-                "Analytical Balances and Proper Weighing Practices",
-                "Solutions for Cannabis Sample Preparation and Analysis",
-                "Three Steps to Better Reproducibility in Research Labs",
-                "Analytical Balances and Proper Weighing Practices",
+                "Upper & Lower GI Endoscopy",
+                "Diagnostic & Therapeutic Laparoscopy",
+                "Hysteroscopy & Cystoscopy",
+                "Cancer Screening & Preventive Care",
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start text-gray-700">
                   <FaMinus className="text-primary mt-1 mr-2" />
@@ -56,15 +58,15 @@ export default function ServicesSection() {
                   <FaFlask />
                 </div>
                 <div>
-                  <h5 className="text-lg font-semibold">20 Years</h5>
-                  <p className="text-gray-600 text-sm">Of Lab Experience</p>
+                  <h5 className="text-lg font-semibold">20+ Years</h5>
+                  <p className="text-gray-600 text-sm">Of Medical Expertise</p>
                 </div>
               </div>
               {/* Phone Box */}
               <div className="pl-8 border-l">
                 <p className="text-gray-600 text-sm">Call To Ask Any Questions</p>
                 <h5 className="text-lg font-semibold flex items-center">
-                  <FaPhoneAlt className="mr-2 text-primary" /> +123-456-7890
+                  <FaPhoneAlt className="mr-2 text-primary" /> +234 812 631 0488
                 </h5>
               </div>
             </div>
@@ -74,8 +76,8 @@ export default function ServicesSection() {
           <div>
             <img
               src={ServiceImg1}
-              alt="Lab Service 1"
-              className="rounded-lg shadow-lg w-full"
+              alt="Endoscopy Service"
+              className="shadow-lg w-full"
             />
           </div>
         </div>
@@ -86,30 +88,31 @@ export default function ServicesSection() {
           <div>
             <img
               src={ServiceImg2}
-              alt="Lab Service 2"
-              className="rounded-lg shadow-lg w-full"
+              alt="Imaging Service"
+              className=" shadow-lg w-full"
             />
           </div>
 
           {/* Text with Progress Bars */}
           <div>
             <h4 className="text-2xl font-semibold mb-4">
-              The Lab Trusted Experts
+              Imaging & Cancer Care
             </h4>
             <p className="text-gray-600 mb-6">
-              We know how to bring the security you need. With an experience in
-              a wide range of fields and devices.
+              Our centre is equipped with advanced imaging facilities and a
+              dedicated oncology team, ensuring precise diagnosis, early cancer
+              detection, and comprehensive treatment planning.
             </p>
 
             {/* Progress Bars */}
             {[
-              { title: "Sample Preparation", percent: 78 },
-              { title: "Environmental Testing", percent: 92 },
-              { title: "Advanced Microscopy", percent: 70 },
-              { title: "Environmental Testing", percent: 92 },
+              { title: "Ultrasound & X-Ray Imaging", percent: 90 },
+              { title: "Cancer Screening & Diagnosis", percent: 95 },
+              { title: "Chemotherapy & Oncology Support", percent: 85 },
+              { title: "Palliative & Preventive Care", percent: 88 },
             ].map((bar, idx) => (
               <div key={idx} className="mb-4">
-                <div className="flex justify-between  mb-1">
+                <div className="flex justify-between mb-1">
                   <span>{bar.title}</span>
                   <span>{bar.percent}%</span>
                 </div>

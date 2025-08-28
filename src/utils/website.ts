@@ -7,11 +7,22 @@ const website = {
   logoSquareSize :"w-20",
   logoRegularSize: "w-36 md:w-40",
   contact: {
-    email: 'email@mail.com',
-    phone1: '+1 234 567 890',
-    phone2: '+1 234 567 891',
+    email: ' info@oakendoscopy.com',
+    phone1: '+2348126310488',
+    phone2: '+2348091473322',
+    phone3:'+2348126310482',
+    city : 'Port Harcourt',
+    state : 'Rivers',
+    country : 'Nigeria'
   },
-  address:'47 W 13th St, New York, NY 10011, USA'
+  socialMedias: {
+    facebook: "http://facebook.com/oakendoscopycentre",
+    twitter: "#",
+    instagram: "#",
+    linkedin: "#",
+    youtube: "#",
+  },
+  address:'Plot 150 Tom Inko Tariah Avenue Rumuogba Estate'
 }
 
 export default website

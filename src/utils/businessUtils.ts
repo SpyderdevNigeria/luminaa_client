@@ -1,4 +1,5 @@
 
+import Team1 from "../assets/images/business/team/PP2.jpg"
 interface TeamMember {
   name: string;
   position: string;
@@ -15,7 +16,7 @@ export const members: TeamMember[] = [
   {
     name: "Dr. E. Ray-Offor",
     position: "Medical Director",
-    image: "http://oakendoscopycentre.com/img/PP2.jpg",
+    image: Team1,
     socials: {
       facebook: "#",
       twitter: "#",

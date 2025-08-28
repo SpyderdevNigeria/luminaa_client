@@ -4,24 +4,38 @@ import CardImage from "../../../assets/images/business/card-shape.svg";
 import website from "../../../utils/website";
 
 import { Link } from "react-router-dom";
-import {  FaTwitter, FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa6";
+import { FaTwitter, FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa6";
 import { serviceCategories } from "../../../utils/businessUtils";
 
+
+const socialLinks = [
+    {
+        icon: <FaTwitter />,
+        link: website.socialMedias.twitter,
+    },
+    {
+        icon: <FaFacebookF />,
+        link: website.socialMedias.facebook,
+    },
+    {
+        icon: <FaLinkedinIn />,
+        link: website.socialMedias.linkedin,
+    },    
+    {
+        icon: <FaInstagram />,
+        link: website.socialMedias.instagram,
+    },
+]
 function Footer() {
-  const navLinks = [
-    "Home",
-    "About Us",
-    "Products",
-    "Benefits",
-    "Testimonial",
-    "Contact Us",
-  ];
+  const navLinks = ["Home", "About", "FAQ", "Contact", "Get Started"];
+
+  // Convert object to array and take first 2 categories
+  const displayedCategories = Object.entries(serviceCategories).slice(0, 2);
 
   return (
     <footer className="bg-primary relative z-2 text-white">
       <Section>
         <div className="theme-container mx-auto pt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-10 gap-8">
-
           {/* Column 1: Logo + About */}
           <div className="lg:col-span-2 flex flex-col items-center lg:items-start text-center lg:text-left space-y-4">
             <img src={FooterImage} alt="Logo" className="w-20 h-20 object-contain" />
@@ -53,7 +67,7 @@ function Footer() {
           <div className="lg:col-span-4">
             <h3 className="font-semibold text-lg mb-4">Our Services</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-              {Object.entries(serviceCategories).map(([category, data]) => (
+              {displayedCategories.map(([category, data]) => (
                 <div key={category}>
                   <h4 className="font-semibold text-sm text-white mb-2">{category}</h4>
                   <ul className="list-disc pl-5 space-y-1">
@@ -69,6 +83,18 @@ function Footer() {
                 </div>
               ))}
             </div>
+
+            {/* View More Button */}
+            {displayedCategories.length > 0 && (
+              <div className="mt-4">
+                <Link
+                  to={`/services/${displayedCategories[0][0].toLowerCase().replace(/\s/g, "-")}`}
+                  className="text-white hover:text-white text-sm underline"
+                >
+                  View More
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Column 4: Contact & Socials */}
@@ -79,18 +105,17 @@ function Footer() {
             <p className="text-white/70 text-sm mb-4">{website?.contact?.email}</p>
 
             <div className="flex gap-3">
-              {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map((Icon, i) => (
+              {socialLinks.map((i, index) => (
                 <a
-                  key={i}
-                  href="#"
+                  key={index}
+                  href={i.link}
                   className="w-10 h-10 flex items-center justify-center border border-white/20 rounded-full hover:bg-white hover:text-primary transition"
                 >
-                  <Icon />
+                 {i.icon}
                 </a>
               ))}
             </div>
           </div>
-
         </div>
       </Section>
 

@@ -49,8 +49,8 @@ const AboutUsSection: React.FC<AboutUsProps> = ({
           </div>
 
           {/* Right Column - Text Content */}
-          <div className="lg:w-1/2 w-full">
-            <div className="pt-8 lg:pt-0">
+          <div className="lg:w-1/2 w-full h-full">
+            <div className="pt-8 lg:pt-0 space-y-12">
               {/* Section Title */}
               <div className="mb-6">
                 <h5 className="text-primary uppercase">{sectionTitle}</h5>

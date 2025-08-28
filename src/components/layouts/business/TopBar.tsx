@@ -36,10 +36,11 @@ function TopBar() {
           <div className="md:flex gap-12 items-center hidden">
                       <div className="flex items-center gap-2">
               <FaRegClock />
-              <p>Working Hours-: Mon-Fri:8.00 - 18.30</p>
+              <p>Working Hours-: Mon-Sat:8.00am - 5.00pm</p>
             </div>
             <div className="flex items-center space-x-3">
-              <FaFacebookF />
+              <a href={website?.socialMedias?.facebook} target="_blank" rel="noopener noreferrer">
+               <FaFacebookF /></a>
               <FaTwitter />
               <BsInstagram />
               <FaLinkedinIn />

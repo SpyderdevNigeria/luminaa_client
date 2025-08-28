@@ -3,7 +3,7 @@ import { FaExpand, FaLink } from "react-icons/fa";
 import Image1 from "../../../assets/images/business/portfolio/01.jpg";
 import Image2 from "../../../assets/images/business/portfolio/02.jpg";
 import Image3 from "../../../assets/images/business/portfolio/03.jpg";
-import Image4 from "../../../assets/images/business/portfolio/04.jpg";
+import Image4 from "../../../assets/images/business/portfolio/04.webp";
 import Image5 from "../../../assets/images/business/portfolio/05.jpg";
 import Image6 from "../../../assets/images/business/portfolio/06.jpg";
 // Example portfolio data
