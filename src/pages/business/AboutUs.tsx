@@ -2,10 +2,10 @@
 import PageTitle from '../../components/business/PageTitle'
 
 import AboutUsSection from '../../components/business/about/AboutUsSection'
-import ServicesSection from "../../components/business/home/ServicesSection"
+// import ServicesSection from "../../components/business/home/ServicesSection"
 import TeamSection from '../../components/business/about/TeamSection'
 import AboutUsImage from '../../assets/images/business/about/single-img-eight.jpg'
-import TestimonialSection from '../../components/business/home/TestimonialSection'
+// import TestimonialSection from '../../components/business/home/TestimonialSection'
 import { members } from '../../utils/businessUtils'
 function AboutUs() {
   return (
@@ -40,9 +40,9 @@ function AboutUs() {
           missionDesc="Our mission is to exceed the prevailing standards of healthcare by delivering premium services in minimal access surgery, and advancing the prevention, early diagnosis, and treatment of cancer."
         />
 
-    <ServicesSection/>
+    {/* <ServicesSection/>
 
-    <TestimonialSection/>
+    <TestimonialSection/> */}
 
         {/* <!--team-section--> */}
         <TeamSection

@@ -41,8 +41,8 @@ const AboutUsSection: React.FC<AboutUsProps> = ({
               <div className="absolute top-5 left-5 bg-primary text-white p-5 rounded shadow-lg flex items-center space-x-4">
                 <img src={Observation} alt="Lab icon" className="w-8 h-8" />
                 <div>
-                  <p className="text-sm">Special Offer</p>
-                  <h4 className="font-bold text-lg mb-0">Get A Free Medical Checkup</h4>
+<p className="text-sm">Exclusive Offer</p>
+<h4 className="font-bold text-lg mb-0">Enjoy a Complimentary Health Checkup</h4>
                 </div>
               </div>
             </div>

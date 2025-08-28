@@ -7,8 +7,9 @@ import Client2 from "../../../assets/images/business/partners/client-02.png";
 import Client3 from "../../../assets/images/business/partners/client-03.png";
 import Client4 from "../../../assets/images/business/partners/client-04.png";
 import Client6 from "../../../assets/images/business/partners/client-06.png";
-import TechnologyImage from "../../../assets/images/business/technology/bg.webp";
+import TechnologyImage from "../../../assets/images/business/technology/bg.jpg";
 import { faqs } from "../../../utils/businessUtils";
+import { Link } from "react-router-dom";
 
 // Client logos
 const clients = [
@@ -25,19 +26,19 @@ const clients = [
 
 
 export default function ClientAndTechnologySection() {
-    const [activeIndex, setActiveIndex] = useState(3);
+    const [activeIndex, setActiveIndex] = useState(0);
 
     return (
         <div>
             {/* Clients Section */}
             <section className=" relative">
                 <div className=" business-container bg-white flex justify-end absolute 
-  top-[-32px] 
-  right-0 
-  md:left-1/2 md:-translate-x-1/2 md:right-auto 
-  xl:right-[-32px] xl:translate-x-0 xl:left-auto 
-  z-40
-"
+                    top-[-32px] 
+                    right-0 
+                    md:left-1/2 md:-translate-x-1/2 md:right-auto 
+                    xl:right-[-32px] xl:translate-x-0 xl:left-auto 
+                    z-40
+                    "
                 >
                     <Swiper
                         modules={[Autoplay]}
@@ -72,8 +73,8 @@ export default function ClientAndTechnologySection() {
                 </div>
 
 
-                                     {/* Technology Section */}
-                <section className="relative py-24 bg-cover bg-center" style={{ backgroundImage: `url(${TechnologyImage})` }}>
+                {/* Technology Section */}
+                <section className="relative py-24 bg-cover bg-left  bg-no-repeat" style={{ backgroundImage: `url(${TechnologyImage})` }}>
                     <div className="business-container mx-auto flex justify-end">
                         <div className="bg-white shadow-lg p-8 max-w-2xl">
                             {/* Section Title */}
@@ -86,7 +87,7 @@ export default function ClientAndTechnologySection() {
 
                             {/* Accordion */}
                             <div className="space-y-2">
-                                {faqs.map((faq, i) => (
+                                {faqs.slice(0, 4).map((faq, i) => (
                                     <div
                                         key={faq.id}
                                         className="border-b border-gray-200 "
@@ -106,6 +107,13 @@ export default function ClientAndTechnologySection() {
                                         )}
                                     </div>
                                 ))}
+                                <div>
+                                    <Link to={'/faq'} className="flex flex-row items-center justify-center text-primary hover:underline" >
+                                        <button className="btn btn-primary w-full">
+                                            Read More
+                                        </button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>

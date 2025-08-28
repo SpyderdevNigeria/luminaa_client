@@ -1,24 +1,26 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import website from "../../utils/website";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 import { useLayoutEffect } from "react";
-import LoadingScreen from "../loading/LoadingScreen";
+// import LoadingScreen from "../loading/LoadingScreen";
 import { returnMemberNavigationUrlLogic } from "../../utils/dashboardUtils";
 import Multilingual from "../common/Multilingual";
 import ResetTheme from "../common/Resettheme";
 import PatientImage from "../../assets/images/auth/auth-bg.jpg";
+import { useSelector } from "react-redux";
 function PatientAuthLayout() {
   const navigate = useNavigate();
-  const { userProfile, authLoading } = useAuth();
-
+  // const { userProfile, authLoading } = useAuth();
+  const {user} = useSelector((state: any) => state.auth);
+  console.log(user);
   useLayoutEffect(() => {
-    if (userProfile && !authLoading) {
-      const redirectUrl = returnMemberNavigationUrlLogic(userProfile);
+    if (user) {
+      const redirectUrl = returnMemberNavigationUrlLogic(user);
       navigate(redirectUrl);
     }
-  }, [userProfile, authLoading, navigate]);
+  }, [user, navigate]);
 
-  if (authLoading) return <LoadingScreen />;
+  // if (authLoading) return <LoadingScreen />;
 
   return (
     <ResetTheme>

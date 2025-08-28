@@ -51,13 +51,13 @@ export const serviceCategories: Record<string, CategoryDetails> = {
         name: "Oesophagoscopy",
         description:
           "Oesophagoscopy is a procedure to examine the esophagus using a flexible tube with a camera. It helps detect inflammation, tumors, ulcers, and swallowing disorders. This procedure is essential for early detection of esophageal cancer and other digestive issues.",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRafx8LtoB2m_jmk0heh_0mdGdsPTyip2E4JHTm_CXmom9DIdNWcdbKCtxsk3PJuHkForA&usqp=CAU",
+        image: "https://media.springernature.com/lw685/springer-static/image/chp%3A10.1007%2F978-3-031-36593-5_2/MediaObjects/372427_1_En_2_Fig2b_HTML.png",
       },
       {
         name: "Gastroscopy",
         description:
           "Gastroscopy allows doctors to view the stomach lining and duodenum to detect ulcers, gastritis, tumors, or bleeding. It is crucial for patients with persistent stomach pain, heartburn, or unexplained weight loss.",
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUDq13SxjP0joLpcIYwMN18qiZJ9dW1BMSVw&s",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBf2va26eAqLDVuR0JqdTB0J4Ljt6yv_7WDTK11wiauIMiiyuydXtcG1mQBX662nBFD5c&usqp=CAU",
       },
       {
         name: "Duodenoscopy",
@@ -119,7 +119,7 @@ export const serviceCategories: Record<string, CategoryDetails> = {
   "Radiology": {
     description:
       "Our Radiology Department provides advanced imaging services to accurately diagnose medical conditions. From routine X-rays to detailed MRI and Ultrasound scans, our radiologists ensure high-quality imaging for effective treatment planning.",
-    defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYI8z81ul1DnWJ2l5M4o9WJU7z8SW4yGP_8g&s",
+    defaultImage: "https://radiology-sonography.ir/wp-content/uploads/2024/10/Types-of-radiology1.jpg",
     services: [
       {
         name: "Ultrasound",

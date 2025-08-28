@@ -129,7 +129,7 @@ function App() {
       <Route path="/team/:memberName" element={<Team />} />
       <Route path="/services/:category" element={<Services />} />
        <Route path="/second" element={<Second />} />
-       <Route path="/Faq" element={<Faq />} />
+       <Route path="/faq" element={<Faq />} />
        <Route path="/Contact" element={<Contact />} />
        </Route>
       {/* Patient Auth */}

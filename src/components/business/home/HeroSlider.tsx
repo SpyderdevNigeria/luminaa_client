@@ -78,7 +78,7 @@ export default function HeroSlider() {
           <div className="flex gap-4">
             <Button
               title="Get Started"
-              link={routeLinks?.auth?.login}
+              link={routeLinks?.auth?.register}
             />
             <button className="flex items-center gap-2 bg-primary text-white px-5 py-3 shadow-lg hover:bg-primary/80 transition">
               <FiPlayCircle size={24} /> Watch Overview

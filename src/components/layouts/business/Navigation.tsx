@@ -19,8 +19,8 @@ import { serviceCategories } from "../../../utils/businessUtils";
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About Us", path: "/about" },
-  { name: "Services", path: "/services" }, // Dropdown
-  { name: "FAQ", path: "/Faq" },
+  { name: "Services", path: "/services" },
+  { name: "FAQ", path: "/faq" },
   { name: "Contact", path: "/Contact" },
 ];
 
@@ -149,7 +149,7 @@ const Navigation = () => {
 
             {/* Get a Quote Button */}
             <div className="hidden md:block ml-4">
-              <Button title={"Get Started"} link={routeLinks?.auth?.login} />
+              <Button title={"Get Started"} link={routeLinks?.auth?.register} />
             </div>
           </nav>
 
@@ -249,7 +249,7 @@ const Navigation = () => {
                 <FaLinkedinIn />
               </div>
 
-              <Button title={"Get Started"} link={routeLinks?.auth?.login} />
+              <Button title={"Get Started"} link={routeLinks?.auth?.register} />
             </nav>
           </div>
         )}

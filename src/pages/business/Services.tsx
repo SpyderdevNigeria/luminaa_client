@@ -142,12 +142,12 @@ function Services() {
                                     <img
                                         src={selectedService.image}
                                         alt={selectedService.name}
-                                        className="w-full h-64 object-cover rounded"
+                                        className="w-full h-64  md:h-[500px] object-cover rounded"
                                     />
                                 )}
                             </div>
                         ) : categoryData ? (
-                            <div className="bg-white p-6 space-y-4 ">
+                            <div className="bg-white  space-y-4 ">
                                 <h2 className="text-2xl font-bold text-primary">{categoryKey}</h2>
                                 <p className="text-gray-700 leading-relaxed">{categoryData.description}</p>
 
@@ -155,7 +155,7 @@ function Services() {
                                     <img
                                         src={categoryData.defaultImage}
                                         alt={categoryKey}
-                                        className="w-full h-64 object-cover rounded "
+                                        className="w-full h-64  md:h-[500px] object-cover rounded "
                                     />
                                 )}
 
