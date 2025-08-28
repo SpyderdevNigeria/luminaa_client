@@ -216,7 +216,7 @@ export default function PortfolioSection() {
               {/* Close Button */}
               <button
                 onClick={() => setSelectedItem(null)}
-                className="mt-4 text-red-500 hover:underline text-sm"
+                className="mt-4 text-primary hover:underline text-sm"
               >
                 Close
               </button>

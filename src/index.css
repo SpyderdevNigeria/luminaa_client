@@ -159,3 +159,7 @@ button {
   border-radius: 4px;
 }
 
+
+html {
+  scroll-behavior: smooth;
+}
