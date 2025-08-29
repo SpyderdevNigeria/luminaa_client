@@ -152,7 +152,7 @@ export default function FAQPage() {
               <div>
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white py-3 font-medium hover:bg-primary-dark transition rounded-lg"
+                  className="w-full bg-primary text-white py-3 font-medium hover:bg-primary-dark transition "
                 >
                   Submit
                 </button>

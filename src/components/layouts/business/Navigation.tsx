@@ -176,7 +176,7 @@ const Navigation = () => {
 
             {/* Get a Quote Button */}
             <div className="hidden md:block ml-4">
-              <Button title={"Get Started"} link={routeLinks?.auth?.register} />
+              <Button title={"Book An Appointment"} link={routeLinks?.auth?.register} />
             </div>
           </nav>
 
@@ -276,7 +276,7 @@ const Navigation = () => {
                 <FaLinkedinIn />
               </div>
 
-              <Button title={"Get Started"} link={routeLinks?.auth?.register} />
+              <Button title={"Book An Appointment"} link={routeLinks?.auth?.register} />
             </nav>
           </div>
         )}

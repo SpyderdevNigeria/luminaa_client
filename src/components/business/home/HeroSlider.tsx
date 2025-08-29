@@ -94,7 +94,7 @@ export default function HeroSlider() {
                       className="flex gap-4"
                     >
                       <Button
-                        title="Get Started"
+                        title="Book An Appointment"
                         link={routeLinks?.auth?.register}
                       />
                       <a
