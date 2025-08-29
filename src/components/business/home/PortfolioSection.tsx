@@ -4,7 +4,7 @@ import Image1 from "../../../assets/images/business/portfolio/01.jpg";
 import Image2 from "../../../assets/images/business/portfolio/02.jpg";
 import Image3 from "../../../assets/images/business/portfolio/03.jpg";
 import Image4 from "../../../assets/images/business/portfolio/04.webp";
-
+import { motion, } from "framer-motion";
 // Types
 type PortfolioItem = {
   id: number;
@@ -82,7 +82,12 @@ export default function PortfolioSection() {
 
   return (
     <section className="py-16 bg-white">
-      <div className="business-container mx-auto px-4">
+      <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+      className="business-container mx-auto px-4">
         {/* Section Title */}
         <div className="max-w-2xl mx-auto text-center mb-12">
           <h5 className="text-primary font-semibold tracking-wide">
@@ -96,9 +101,17 @@ export default function PortfolioSection() {
         </div>
 
         {/* Filter Tabs */}
-        <ul className="flex flex-wrap justify-center gap-4 mb-10">
+        <motion.ul className="flex flex-wrap justify-center gap-4 mb-10"
+          initial="hidden"
+          whileInView="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
+          viewport={{ once: true }}
+        >
           {categories.map((cat) => (
-            <li key={cat}>
+            <motion.li key={cat}>
               <button
                 onClick={() => setActiveCategory(cat)}
                 className={`px-5 py-2 border text-sm font-medium transition ${
@@ -109,16 +122,29 @@ export default function PortfolioSection() {
               >
                 {cat}
               </button>
-            </li>
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
 
         {/* Portfolio Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        
+        initial="hidden"
+          whileInView="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}
+          viewport={{ once: true }}
+        >
           {filteredItems.map((item) => (
-            <div
+            <motion.div
               key={item.id}
               className="relative group overflow-hidden shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
             >
               <img
                 src={item.image}
@@ -171,10 +197,10 @@ export default function PortfolioSection() {
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Modal */}
       {selectedItem && (

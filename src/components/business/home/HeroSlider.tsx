@@ -3,6 +3,7 @@ import { Autoplay, Navigation, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import { FiChevronLeft, FiChevronRight, FiPlayCircle } from "react-icons/fi";
+import { motion } from "framer-motion";
 import Slider1 from "../../../assets/images/business/slider-1.jpg";
 import Slider2 from "../../../assets/images/business/slider-2.jpg";
 import Section from "../../layouts/business/Section";
@@ -33,7 +34,6 @@ export default function HeroSlider() {
     },
   ];
 
-  // 👇 icons for slide 2 with titles & subtitles
   const slide2Icons = [
     { id: 1, icon: Image1, title: "Global Reach", subtitle: "Trusted Locations", link: "#" },
     { id: 2, icon: Image2, title: "Happy Clients", subtitle: "Customer Support", link: "#" },
@@ -54,64 +54,92 @@ export default function HeroSlider() {
         className="w-full h-full"
       >
         {slides.map((slide) => (
-        <SwiperSlide key={slide.id}>
-  <div
-    className="relative w-full h-full bg-cover bg-center bg-no-repeat opacity-100"
-    style={{ backgroundImage: `url(${slide.image})` }}
-  >
-    {/* 🔹 Black overlay */}
-    <div className="absolute inset-0 bg-black/80"></div>
+          <SwiperSlide key={slide.id}>
+            <div
+              className="relative w-full h-full bg-cover bg-center bg-no-repeat opacity-100"
+              style={{ backgroundImage: `url(${slide.image})` }}
+            >
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/80"></div>
 
-    {/* Content above overlay */}
-    <Section>
-      <div className="relative z-10 flex flex-col items-start justify-center h-[700px] text-white">
-        <h1 className="text-4xl md:text-7xl font-bold mb-4 max-w-[680px]">
-          {slide.title}{" "}
-          <span className="text-primary">{slide.subtitle}</span>
-        </h1>
-        <p className="text-xl text-gray-200 mb-6 max-w-[650px]">
-          {slide.description}
-        </p>
+              {/* Content */}
+              <Section>
+                <div className="relative z-10 flex flex-col items-start justify-center h-[700px] text-white">
+                  {/* Animated Title */}
+                  <motion.h1
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="text-4xl md:text-7xl font-bold mb-4 max-w-[680px]"
+                  >
+                    {slide.title} <span className="text-primary">{slide.subtitle}</span>
+                  </motion.h1>
 
-        {/* Slide-specific content */}
-        {slide.id === 1 && (
-          <div className="flex gap-4">
-            <Button
-              title="Get Started"
-              link={routeLinks?.auth?.register}
-            />
-            <a href="https://www.youtube.com/watch?v=Ei0IcbweAn4"  target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-primary text-white px-5 py-3 shadow-lg hover:bg-primary/80 transition">
-              <FiPlayCircle size={24} /> Watch Overview
-            </a>
-          </div>
-        )}
+                  {/* Animated Description */}
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.3 }}
+                    className="text-xl text-gray-200 mb-6 max-w-[650px]"
+                  >
+                    {slide.description}
+                  </motion.p>
 
-        {slide.id === 2 && (
-          <div className="flex gap-10 mt-5">
-            {slide2Icons.map((item) => (
-              <div key={item.id} className="flex flex-col items-center group cursor-pointer">
-                <div className="relative flex flex-col items-center">
-                  <img
-                    src={item.icon}
-                    alt={item.title}
-                    className="w-10 h-10"
-                  />
-                  <span className="absolute -top-10 opacity-0 text-nowrap group-hover:opacity-100 transition bg-black text-white text-xs rounded px-2 py-1">
-                    {item.title}
-                  </span>
+                  {/* Buttons */}
+                  {slide.id === 1 && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.7, delay: 0.6 }}
+                      className="flex gap-4"
+                    >
+                      <Button
+                        title="Get Started"
+                        link={routeLinks?.auth?.register}
+                      />
+                      <a
+                        href="https://www.youtube.com/watch?v=Ei0IcbweAn4"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 bg-primary text-white px-5 py-3 shadow-lg hover:bg-primary/80 transition"
+                      >
+                        <FiPlayCircle size={24} /> Watch Overview
+                      </a>
+                    </motion.div>
+                  )}
+
+                  {slide.id === 2 && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.8, delay: 0.5 }}
+                      className="flex gap-10 mt-5"
+                    >
+                      {slide2Icons.map((item, index) => (
+                        <motion.div
+                          key={item.id}
+                          initial={{ opacity: 0, y: 30 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, delay: 0.7 + index * 0.2 }}
+                          className="flex flex-col items-center group cursor-pointer"
+                        >
+                          <div className="relative flex flex-col items-center">
+                            <img src={item.icon} alt={item.title} className="w-10 h-10" />
+                            <span className="absolute -top-10 opacity-0 text-nowrap group-hover:opacity-100 transition bg-black text-white text-xs rounded px-2 py-1">
+                              {item.title}
+                            </span>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </Section>
-  </div>
-</SwiperSlide>
-
+              </Section>
+            </div>
+          </SwiperSlide>
         ))}
 
-        {/* Navigation Buttons */}
+        {/* Nav Buttons */}
         <div className="swiper-button-prev">
           <FiChevronLeft size={24} />
         </div>

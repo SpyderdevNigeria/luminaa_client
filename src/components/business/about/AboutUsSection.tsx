@@ -1,9 +1,11 @@
 import React from "react";
+import { motion } from "framer-motion";
 
-import VisionIcon from '../../../assets/images/business/about/vision.png';
-import MissionIcon from '../../../assets/images/business/about/mission.png';
+import VisionIcon from "../../../assets/images/business/about/vision.png";
+import MissionIcon from "../../../assets/images/business/about/mission.png";
 import { FaArrowCircleRight } from "react-icons/fa";
 import Observation from "../../../assets/images/business/observation.png";
+
 interface AboutUsProps {
   sectionTitle: string;
   subtitle: string;
@@ -33,76 +35,124 @@ const AboutUsSection: React.FC<AboutUsProps> = ({
     <section className="py-20">
       <div className="business-container">
         <div className="flex flex-col lg:flex-row items-center gap-5 md:gap-8">
-          
-          {/* Left Column - Image + Special Offer */}
-          <div className="lg:w-1/2 w-full flex justify-center mb-10 lg:mb-0">
+          {/* Left Column - Image */}
+          <motion.div
+            className="lg:w-1/2 w-full flex justify-center mb-10 lg:mb-0"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
             <div className="relative">
-              <img src={mainImage} alt="About us" className=" shadow-lg" />
-              <div className="absolute top-5 left-5 bg-primary text-white p-5 rounded shadow-lg flex items-center space-x-4">
+              <img src={mainImage} alt="About us" className="shadow-lg" />
+              <motion.div
+                className="absolute top-5 left-5 bg-primary text-white p-5 rounded shadow-lg flex items-center space-x-4"
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                viewport={{ once: true }}
+              >
                 <img src={Observation} alt="Lab icon" className="w-8 h-8" />
                 <div>
-<p className="text-sm">Exclusive Offer</p>
-<h4 className="font-bold text-lg mb-0">Enjoy a Complimentary Health Checkup</h4>
+                  <p className="text-sm">Exclusive Offer</p>
+                  <h4 className="font-bold text-lg mb-0">
+                    Enjoy a Complimentary Health Checkup
+                  </h4>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column - Text Content */}
+          {/* Right Column - Text */}
           <div className="lg:w-1/2 w-full h-full">
             <div className="pt-8 lg:pt-0 space-y-12">
               {/* Section Title */}
-              <div className="mb-6">
+              <motion.div
+                className="mb-6"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
                 <h5 className="text-primary uppercase">{sectionTitle}</h5>
                 <h2 className="text-3xl md:text-4xl font-bold">{subtitle}</h2>
                 <p className="mt-4 text-gray-700">{description}</p>
-              </div>
+              </motion.div>
 
               {/* Vision */}
-              <div className="md:flex items-start mt-6 space-y-4 md:space-y-0 space-x-4">
+              <motion.div
+                className="md:flex items-start mt-6 space-y-4 md:space-y-0 space-x-4"
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
                 <img src={VisionIcon} alt="Vision icon" className="w-10 h-10" />
                 <div>
                   <h5 className="font-semibold">{visionTitle}</h5>
                   <p className="text-gray-700">{visionDesc}</p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Mission */}
-              <div className="md:flex items-start mt-6 space-y-4 md:space-y-0 space-x-4 w-full">
+              <motion.div
+                className="md:flex items-start mt-6 space-y-4 md:space-y-0 space-x-4 w-full"
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
                 <img src={MissionIcon} alt="Mission icon" className="w-10 h-10" />
                 <div>
                   <h5 className="font-semibold">{missionTitle}</h5>
                   <p className="text-gray-700">{missionDesc}</p>
 
                   {/* Two-column list */}
-                  <div className="md:flex mt-4 space-x-4 text-sm w-full ">
+                  <motion.div
+                    className="md:flex mt-4 space-x-4 text-sm w-full"
+                    initial="hidden"
+                    whileInView="visible"
+                    variants={{
+                      hidden: {},
+                      visible: {
+                        transition: { staggerChildren: 0.15 },
+                      },
+                    }}
+                    viewport={{ once: true }}
+                  >
                     <ul className="space-y-2 md:w-1/2">
                       {listLeft.map((item, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <div>
+                        <motion.li
+                          key={idx}
+                          className="flex items-start"
+                          initial={{ opacity: 0, y: 20 }}
+                          variants={{ visible: { opacity: 1, y: 0 } }}
+                          transition={{ duration: 0.5 }}
+                        >
                           <FaArrowCircleRight className="text-primary mt-1 mr-2" />
-                          </div>
-                          <span className="md:flex-nowrap">{item}</span>
-                        </li>
+                          <span>{item}</span>
+                        </motion.li>
                       ))}
                     </ul>
                     <ul className="space-y-2 mt-2 md:mt-0 md:w-1/2">
                       {listRight.map((item, idx) => (
-                        <li key={idx} className="flex items-start w-full">
-                          <div>
-                         <FaArrowCircleRight  className="text-primary mt-1 mr-2  " />
-                          </div>
-                          <span className="md:flex-nowrap">{item}</span>
-                        </li>
+                        <motion.li
+                          key={idx}
+                          className="flex items-start w-full"
+                          initial={{ opacity: 0, y: 20 }}
+                          variants={{ visible: { opacity: 1, y: 0 } }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <FaArrowCircleRight className="text-primary mt-1 mr-2" />
+                          <span>{item}</span>
+                        </motion.li>
                       ))}
                     </ul>
-                  </div>
-
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

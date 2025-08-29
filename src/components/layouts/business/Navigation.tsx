@@ -15,7 +15,7 @@ import website from "../../../utils/website";
 import Button from "../../common/Button";
 import routeLinks from "../../../utils/routes";
 import { serviceCategories } from "../../../utils/businessUtils";
-
+import { easeInOut, motion, Variants } from "framer-motion";
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About Us", path: "/about" },
@@ -23,6 +23,31 @@ const navLinks = [
   { name: "FAQ", path: "/faq" },
   { name: "Contact", path: "/Contact" },
 ];
+
+
+
+const dropdownVariants: Variants = {
+  hidden: { opacity: 0, y: -20, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.3,
+      ease: easeInOut, // ✅ FIX: use imported easing function
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -20,
+    scale: 0.95,
+    transition: {
+      duration: 0.2,
+      ease: easeInOut,
+    },
+  },
+};
+
 
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -91,45 +116,47 @@ const Navigation = () => {
                   </button>
 
                   {servicesOpen && (
-                    <div className="absolute left-[-400px] top-full bg-white shadow-lg p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-[800px] z-50">
-                      {Object.entries(serviceCategories).map(
-                        ([category, details]) => (
-                          <div key={category}>
-                            <h4
-                              className="font-bold text-primary text-lg cursor-pointer hover:underline"
-                              onClick={() =>
-                                navigate(
-                                  `/services/${category
-                                    .toLowerCase()
-                                    .replace(/\s+/g, "-")}`
-                                )
-                              }
-                            >
-                              {category}
-                            </h4>
-                            <ul className="mt-2 space-y-1 list-disc list-inside marker:text-primary">
-                              {details.services.map((item) => (
-                                <li
-                                  key={item.name}
-                                  className="cursor-pointer hover:text-primary text-sm"
-                                  onClick={() =>
-                                    navigate(
-                                      `/services/${category
-                                        .toLowerCase()
-                                        .replace(/\s+/g, "-")}?service=${item.name
-                                        .toLowerCase()
-                                        .replace(/\s+/g, "-")}`
-                                    )
-                                  }
-                                >
-                                  {item.name}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )
-                      )}
-                    </div>
+               <motion.div
+                className="absolute left-[-400px] top-full bg-white shadow-lg p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-[800px] z-50"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={dropdownVariants}
+>
+  {Object.entries(serviceCategories).map(([category, details]) => (
+    <div key={category}>
+      <h4
+        className="font-bold text-primary text-lg cursor-pointer hover:underline"
+        onClick={() =>
+          navigate(
+            `/services/${category.toLowerCase().replace(/\s+/g, "-")}`
+          )
+        }
+      >
+        {category}
+      </h4>
+      <ul className="mt-2 space-y-1 list-disc list-inside marker:text-primary">
+        {details.services.map((item) => (
+          <li
+            key={item.name}
+            className="cursor-pointer hover:text-primary text-sm"
+            onClick={() =>
+              navigate(
+                `/services/${category
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}?service=${item.name
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`
+              )
+            }
+          >
+            {item.name}
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</motion.div>
                   )}
                 </div>
               ) : (

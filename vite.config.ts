@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { defineConfig } from 'vite'
+import { codeInspectorPlugin } from 'code-inspector-plugin'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
@@ -8,6 +8,9 @@ export default defineConfig({
       bundler: 'vite',
     }),
     tailwindcss(),
-    
   ],
-});
+
+  optimizeDeps: {
+    include: ['framer-motion'],
+  },
+})
