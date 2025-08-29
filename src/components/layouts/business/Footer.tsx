@@ -56,7 +56,7 @@ function Footer() {
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <Link
-                    to={`${link.toLowerCase().replace(/\s/g, "-")}`}
+                    to={`${link === 'Home' ? '/' : `/${link.toLowerCase().replace(/\s/g, "-")}`}`}
                     className="flex items-center gap-2 text-white/70 hover:text-white transition text-sm"
                   >
                     <BsArrowRightCircleFill />
