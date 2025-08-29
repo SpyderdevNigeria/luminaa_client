@@ -129,7 +129,9 @@ const AboutUsSection: React.FC<AboutUsProps> = ({
                           variants={{ visible: { opacity: 1, y: 0 } }}
                           transition={{ duration: 0.5 }}
                         >
+                          <div>
                           <FaArrowCircleRight className="text-primary mt-1 mr-2" />
+                          </div>
                           <span>{item}</span>
                         </motion.li>
                       ))}
@@ -143,7 +145,9 @@ const AboutUsSection: React.FC<AboutUsProps> = ({
                           variants={{ visible: { opacity: 1, y: 0 } }}
                           transition={{ duration: 0.5 }}
                         >
+                          <div>
                           <FaArrowCircleRight className="text-primary mt-1 mr-2" />
+                          </div>
                           <span>{item}</span>
                         </motion.li>
                       ))}
