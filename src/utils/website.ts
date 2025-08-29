@@ -4,8 +4,9 @@ const website = {
   logo: Logo,
   name: "Oak Endoscopy Centre",
   square: false,
+  // logoSquareSize :"w-20",
   logoSquareSize :"w-20",
-  logoRegularSize: "w-36 md:w-40",
+  logoRegularSize: "w-36 md:w-45",
   contact: {
     email: ' info@oakendoscopy.com',
     phone1: '+2348126310488',

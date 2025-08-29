@@ -66,7 +66,6 @@ function PatientAuthLayout() {
 
   {/* RIGHT SIDE (auth forms) */}
   <div className="flex-1 flex flex-col justify-center lg:ml-[500px]">
-    {/* 👆 margin-left = sidebar width */}
     {/* Header */}
     <div className="p-4 md:px-8 flex flex-row items-center justify-between">
       {/* Logo (mobile) */}
