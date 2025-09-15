@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import useAdminAuth from "../../../hooks/useAdminAuth";
 import UploadCsvModal from "../../../components/modal/UploadCsvModal";
+import UploadErrorModal from "../../../components/modal/UploadErrorModal";
 
 function AdminMedications() {
   const {
@@ -46,7 +47,7 @@ function AdminMedications() {
     setMedicationManufacturer,
     getMedications,
   } = useMedications(AdminApi);
-
+  
   const [showForm, setShowForm] = useState(false);
   const [editMedication, setEditMedication] = useState<any>(null);
   const [viewMedication, setViewMedication] = useState<any>(null);
@@ -59,6 +60,10 @@ function AdminMedications() {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const navigate = useNavigate();
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
+
+      const [uploadErrors, setUploadErrors] = useState<{ row: number; error: string }[]>([]);
+const [errorModalOpen, setErrorModalOpen] = useState(false);
+
   const { userProfile } = useAdminAuth();
   useEffect(() => {
     getMedications();
@@ -131,10 +136,20 @@ function AdminMedications() {
     try {
       const formData = new FormData();
       formData.append("file", file);
-       await AdminApi.uploadMedicationCSV(formData);
-         getMedications();
+      const res = await AdminApi.uploadMedicationCSV(formData);
+        if (res.status === false) {
+      console.error("Upload errors:", res.data.errors);
+
+      // Save errors in state
+      setUploadErrors(res.data.errors || []);
+      setErrorModalOpen(true);
+
+      showToast(res.message || "Some rows failed to upload", "error");
+    } else {
+        await getMedications();
       setUploadModalOpen(false);
         showToast("Medications uploaded successfully", "success");
+    }
     } catch (error) {
       console.error("Upload failed", error);
       showToast("Upload Failed.", "error");
@@ -402,6 +417,13 @@ function AdminMedications() {
           onUpload={handleUpload}
           loadingUpload={loadingUpload}
         />
+
+        
+      <UploadErrorModal
+        open={errorModalOpen}
+        onClose={() => setErrorModalOpen(false)}
+        errors={uploadErrors}
+      />
       </section>
     </div>
   );

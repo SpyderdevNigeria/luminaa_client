@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiPlus, FiEye, FiEdit, FiUpload } from "react-icons/fi";
+import { FiPlus, FiEye, FiEdit,  } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import useAdmin from "../../../hooks/useAdmin";
 import AdminApi from "../../../api/adminApi";
@@ -165,12 +165,12 @@ function AdminPharmacists() {
           Add Pharmacist
         </button>
 
-               <button
+               {/* <button
                     className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
                     onClick={() => setUploadModalOpen(true)}
                   >
                     <FiUpload /> Upload Pharmacists
-                  </button>
+                  </button> */}
                      </div>
       </div>
 

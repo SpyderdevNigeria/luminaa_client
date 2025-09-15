@@ -13,6 +13,7 @@ import AdminPatientsCreate from "./component/AdminPatientsCreate";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
 import { useToaster } from "../../../components/common/ToasterContext";
 import UploadCsvModal from "../../../components/modal/UploadCsvModal";
+import UploadErrorModal from "../../../components/modal/UploadErrorModal";
 
 function AdminPatients() {
   const {
@@ -45,6 +46,8 @@ function AdminPatients() {
   const [confirmMessage, setConfirmMessage] = useState("");
   const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [uploadErrors, setUploadErrors] = useState<{ row: number; error: string }[]>([]);
+const [errorModalOpen, setErrorModalOpen] = useState(false);
   useEffect(() => {
     getPatients();
   }, [
@@ -165,22 +168,35 @@ function AdminPatients() {
       />
     );
   }
-  const handleUpload = async (file: File) => {
-      setLoadingUpload(true)
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-       await AdminApi.uploadPatientsCSV(formData);
-       getPatients();
+const handleUpload = async (file: File) => {
+  setLoadingUpload(true);
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await AdminApi.uploadPatientsCSV(formData);
+
+    if (res.status === false) {
+      console.error("Upload errors:", res.data.errors);
+
+      // Save errors in state
+      setUploadErrors(res.data.errors || []);
+      setErrorModalOpen(true);
+
+      showToast(res.message || "Some rows failed to upload", "error");
+    } else {
+      await getPatients();
       setUploadModalOpen(false);
-        showToast("Patients uploaded successfully", "success");
-    } catch (error) {
-      console.error("Upload failed", error);
-      showToast("Upload Failed.", "error");
-    }finally{
-      setLoadingUpload(false)
+      showToast("Patients uploaded successfully", "success");
     }
-  };
+  } catch (error) {
+    console.error("Upload failed", error);
+    showToast("Upload Failed.", "error");
+  } finally {
+    setLoadingUpload(false);
+  }
+};
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -267,6 +283,13 @@ function AdminPatients() {
         onUpload={handleUpload}
         loadingUpload={loadingUpload}
       />
+
+      <UploadErrorModal
+        open={errorModalOpen}
+        onClose={() => setErrorModalOpen(false)}
+        errors={uploadErrors}
+      />
+
     </div>
   );
 }
