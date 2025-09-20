@@ -30,7 +30,6 @@ function AdminMedications() {
     medicationsPage,
     medicationsLimit,
     medicationsTotal,
-    medicationsTotalPages,
     medicationsLoading,
     medicationSearch,
     medicationCategory,
@@ -396,7 +395,7 @@ const [errorModalOpen, setErrorModalOpen] = useState(false);
               page={medicationsPage}
               total={medicationsTotal}
               limit={medicationsLimit}
-              totalPages={medicationsTotalPages}
+              totalPages={Math.ceil(medicationsTotal / medicationsLimit)}
               setPage={setMedicationsPage}
             />
           )}
