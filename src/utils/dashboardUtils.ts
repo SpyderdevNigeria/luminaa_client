@@ -7,6 +7,7 @@ import {
   FaUser,
   FaUserDoctor,
   FaUserInjured,
+  FaUserNurse,
 } from "react-icons/fa6";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -18,7 +19,7 @@ import { HiMiniUsers, HiUsers } from "react-icons/hi2";
 import { RxDashboard } from "react-icons/rx";
 import { CiViewList } from "react-icons/ci";
 import { ImLab } from "react-icons/im";
-import { MdInventory, MdMedication } from "react-icons/md";
+import {  MdInventory, MdMedication } from "react-icons/md";
 import moment from "moment";
 
 export const navItemsPatient = [
@@ -210,6 +211,23 @@ export const navItemsDoctor = [
     ],
   },
   {
+    id: "procedures",
+    label: "Procedures",
+    title: "Procedures",
+    icon: LiaStethoscopeSolid,
+    to: routeLinks.doctor.procedures ?? '',
+    subLinks: [ 
+      {
+        id: "procedures-details",
+        label: "Procedure Details",
+        title: "Procedures / Procedure Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.doctor.proceduresDetails ?? '',
+        visible:false,
+      },
+    ],
+  },
+  {
     id: "profile-management",
     label: "Profile Management",
     title: "Profile Management",
@@ -251,6 +269,23 @@ export const navItemsLab = [
     to: routeLinks.lab.profile ?? '',
   },
 ];
+
+export const navItemsNurse = [
+  {
+    id: "dashboard",
+    label: "Dashboard",
+    title: "Dashboard",
+    icon: RxDashboard,
+    to: routeLinks.nurse.dashboard ?? '',
+  },
+  {
+    id: "profile-management",
+    label: "Profile Management",
+    title: "Profile Management",
+    icon: FaRegCircleUser,
+    to: routeLinks.nurse.profile ?? '',
+  },
+]
 
 export const navItemsAdmin = [
   {
@@ -324,6 +359,13 @@ export const navItemsAdmin = [
         visible: true,
       },
     ],
+  },
+  {
+    id: "nurses",
+    label: "Nurses",
+    title: "Nurses",
+    icon: FaUserNurse,
+    to: routeLinks.admin.nurses ?? '',
   },
   {
     id: "lab-radiology-scientists",
@@ -415,6 +457,41 @@ export const navItemsAdmin = [
       },
     ],
   },
+    {
+    id: "procedures",
+    label: "Procedures",
+    title: "Procedures",
+    icon: LiaStethoscopeSolid,
+    to: routeLinks.admin.procedures ?? '',
+    subLinks: [ 
+      {
+        id: "procedures-details",
+        label: "Procedure Details",
+        title: "Procedures / Procedure Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.admin.proceduresDetails ?? '',
+        visible:false,
+      },
+    ],
+  },
+  //   {
+  //   id: 'vitals',
+  //   label: 'Vitals',
+  //   title: 'Vitals',
+  //   icon: MdHealthAndSafety,
+  //   to: routeLinks.admin.vitals ?? '',
+  //   subLinks: [
+      
+  //     {
+  //       id: "vitals-details",
+  //       label: "Vitals Details",
+  //       title: "Vitals / Vitals Details",
+  //       icon: IoCalendarClearOutline,
+  //       to: routeLinks.admin.vitalDetails ?? '',
+  //       visible: false,
+  //     },
+  //   ]
+  // },
   {
     id: "orders",
     label: "Orders",
@@ -514,6 +591,13 @@ export const navItemsSuperAdmin = [
       },
     ],
   },
+    {
+    id: "nurses",
+    label: "Nurses",
+    title: "Nurses",
+    icon: FaUserNurse,
+    to: routeLinks.superAdmin.nurses ?? '',
+  },
   {
     id: "lab-radiology-scientists",
     label: "Lab/Radiology Scientists",
@@ -604,6 +688,41 @@ export const navItemsSuperAdmin = [
       },
     ],
   },
+      {
+    id: "procedures",
+    label: "Procedures",
+    title: "Procedures",
+    icon: LiaStethoscopeSolid,
+    to: routeLinks.superAdmin.procedures ?? '',
+    subLinks: [ 
+      {
+        id: "procedures-details",
+        label: "Procedure Details",
+        title: "Procedures / Procedure Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.superAdmin.proceduresDetails ?? '',
+        visible:false,
+      },
+    ],
+  },
+  // {
+  //   id: 'vitals',
+  //   label: 'Vitals',
+  //   title: 'Vitals',
+  //   icon: MdHealthAndSafety,
+  //   to: routeLinks.superAdmin.vitals ?? '',
+  //   subLinks: [
+      
+  //     {
+  //       id: "vitals-details",
+  //       label: "Vitals Details",
+  //       title: "Vitals / Vitals Details",
+  //       icon: IoCalendarClearOutline,
+  //       to: routeLinks.superAdmin.vitalDetails ?? '',
+  //       visible: false,
+  //     },
+  //   ]
+  // },
   {
     id: "admins",
     label: "Admins",
@@ -850,7 +969,9 @@ export const states = [
   "Sokoto", "Taraba", "Yobe", "Zamfara", "FCT - Abuja"
 ];
 
-
+export const procedureStatus = ["initiated", "payment_pending", "payment_partial", "payment_complete", "scheduled", "in_progress", "completed", "cancelled"];
+export const procedureType = ["surgery", "colonoscopy", "endoscopy", "biopsy"];
+export const procedurePaymentStatus = ["pending", "partial", "complete", "refunded"];
 export const labRequestPriority = ["low", "medium", "high"];
 export const returnMemberNavigationUrlLogic = (user: any) => {
   if (!user?.user?.isEmailVerified) {
@@ -917,7 +1038,9 @@ export const returnPartnerNavigationUrlLogic = (
     if (partnerType === "pharmacist") {
       return routeLinks?.pharmacist?.dashboard;
     }
-
+    if (partnerType === "nurse") {
+      return routeLinks?.nurse?.dashboard;
+    }
     if (partnerType === "sponsor") {
       return "/sponsor/dashboard";
     }

@@ -17,6 +17,7 @@ import ConfirmModal from "../../../../components/modal/ConfirmModal";
 import DoctorApi from "../../../../api/doctorApi";
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { useToaster } from "../../../../components/common/ToasterContext";
+
 interface DoctorAppointmentsViewProps {
   handleNext: (e: string) => void;
   appointment: any;
@@ -34,11 +35,14 @@ function DoctorAppointmentsView({
   const patientName = `${patient?.user?.firstName || ""} ${
     patient?.user?.lastName || ""
   }`;
+
   const patientImage = patient?.user?.profilePicture?.url || UserProfile;
   const { formattedDate, formattedTime } = getFormattedDateTime(scheduledDate);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confrimLoading, setStartLoading] = useState(false);
   const { showToast } = useToaster();
+
+  // State for procedures modal
   const onConfirm = async () => {
     try {
       setStartLoading(true);
@@ -58,6 +62,8 @@ function DoctorAppointmentsView({
   };
 
   const confirmMessage = "Are you sure you want to finish this consultation?";
+
+
 
   return (
     <section className="flex flex-col gap-4">
@@ -132,7 +138,7 @@ function DoctorAppointmentsView({
       </main>
 
       {/* Meeting & General Info */}
-      <main className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+      <main className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 p-4">
         <div className="w-full">
           <h4 className="text-sm md:text-2xl my-2">Meeting Info </h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
@@ -207,43 +213,64 @@ function DoctorAppointmentsView({
         }
 
       </div>
+{/* Action Buttons Section */}
+<section className="mt-6 bg-white shadow-sm border border-gray-100 rounded-2xl p-6">
+  <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+    <GrCircleInformation className="text-blue-500 text-xl" />
+    Consultation Actions
+  </h2>
 
-      {/* Action Buttons */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <button
-          className="py-3 flex flex-row items-center justify-center text-[#4976F4] border-2 border-dashed border-[#4976F4] bg-blue-50 rounded-lg"
-          onClick={() => {
-            handleNext("DiagnosisDetails");
-          }}
-        >
-          <PiNotepadDuotone className="text-2xl mx-2" /> Diagnosis
-        </button>
-        <button
-          onClick={() => {
-            handleNext("PrescriptionDetails");
-          }}
-          className="py-3 flex flex-row items-center justify-center text-[#0091FF] border-2 border-[#0091FF1A] bg-[#0091FF1A] rounded-lg"
-        >
-          Prescriptions <IoExitOutline className="text-2xl mx-2" />
-        </button>
-        <button
-          className="py-3 flex flex-row items-center justify-center text-white border-2 bg-primary rounded-lg col-span-2"
-          onClick={() => {
-            handleNext("OrderDetails");
-          }}
-        >
-          Order Tests
-        </button>
-        <button 
-        onClick={() => setConfirmOpen(true)}
-        className="py-3 flex flex-row items-center justify-center text-gray-700 border-2 border-dashboard-gray bg-dashboard-gray rounded-lg col-span-2">
-          Finish Consultation
-        </button>
-        <h1 className="py-3 flex flex-row items-center justify-center col-span-2 text-gray-700">
-          <GrCircleInformation className="text-2xl mx-2" /> Please add Medical
-          records to finish this treatment
-        </h1>
-      </section>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+    {/* Diagnosis */}
+    <button
+      onClick={() => handleNext("DiagnosisDetails")}
+      className="flex items-center justify-center w-full md:w-auto gap-2 py-3 rounded-lg text-[#4976F4] border-2 border-dashed border-[#4976F4] bg-blue-50 hover:bg-blue-100 transition"
+    >
+      <PiNotepadDuotone className="text-xl" />
+      <span className="font-medium">Diagnosis</span>
+    </button>
+
+    {/* Prescriptions */}
+    <button
+      onClick={() => handleNext("PrescriptionDetails")}
+      className="flex items-center justify-center gap-2 py-3  w-full md:w-auto rounded-lg border border-cyan-200 text-cyan-600 bg-cyan-50 hover:bg-cyan-100 transition"
+    >
+      <IoExitOutline className="text-xl" />
+      <span className="font-medium">Prescriptions</span>
+    </button>
+
+    {/* Order Tests */}
+    <button
+      onClick={() => handleNext("OrderDetails")}
+      className="md:col-span-2 flex items-center justify-center gap-2 py-3 rounded-lg bg-primary text-white hover:bg-primary/90 transition"
+    >
+      <span className="font-medium">Order Tests</span>
+    </button>
+
+    {/* Add Procedure */}
+    <button
+      onClick={() => handleNext('ProcedureDetails')}
+      className="md:col-span-2 flex items-center justify-center gap-2 py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-blue-600 text-white hover:opacity-90 transition"
+    >
+      <span className="font-medium">Procedures</span>
+    </button>
+
+    {/* Finish Consultation */}
+    <button
+      onClick={() => setConfirmOpen(true)}
+      className="md:col-span-2 flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
+    >
+      <span className="font-medium">Finish Consultation</span>
+    </button>
+  </div>
+
+  {/* Info Note */}
+  <p className="mt-4 text-center text-sm text-gray-500 flex items-center justify-center gap-2">
+    <GrCircleInformation className="text-base text-gray-400" />
+    Please add medical records before finishing this treatment.
+  </p>
+</section>
+
       {/* Confirm Modal */}
       <ConfirmModal
         open={confirmOpen}
@@ -255,6 +282,8 @@ function DoctorAppointmentsView({
         }}
         loading={confrimLoading}
       />
+
+
     </section>
   );
 }

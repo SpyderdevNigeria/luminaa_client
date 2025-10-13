@@ -29,7 +29,7 @@ function DoctorAppointments() {
     handleSetPage,
   } = useAppointments(doctorApi);
 
-  const [calendarView, setCalendarView] = useState(true);
+  const [calendarView, setCalendarView] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {

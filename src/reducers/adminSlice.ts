@@ -38,6 +38,18 @@ const initialState = {
     loading: false,
     error: null,
   },
+  nurses: {
+    data: [],
+    page: 1,
+    limit: 10,
+    status: "",
+    department: "",
+    specialization: "",
+     search: '',
+    total: 0,
+    loading: false,
+    error: null,
+  },
   labs: {
     data: [],
     page: 1,
@@ -164,6 +176,40 @@ const adminSlice = createSlice({
       state.doctors.error = action.payload;
     },
 
+
+
+        // Nurses
+    setNursesLoading(state, action) {
+      state.nurses.loading = action.payload;
+    },
+    setNurses(state, action) {
+      const { data, total, page } = action.payload;
+      state.nurses.data = data;
+      state.nurses.page = page;
+      state.nurses.total = total;
+    },
+    setNursesPagination(state, action) {
+      state.nurses.page = action.payload.page;
+      state.nurses.limit = action.payload.limit;
+    },
+    setNursesSearch(state, action) {
+      state.nurses.search = action.payload;
+    },
+    setNursesDepartment(state, action) {
+      state.nurses.department = action.payload;
+    },
+    setNursesSpecialization(state, action) {
+      state.nurses.specialization = action.payload;
+    },
+    setNursesStatus(state, action) {
+      state.nurses.status = action.payload;
+    },
+    setNursesError(state, action) {
+      state.nurses.error = action.payload;
+    },
+
+
+
     // Labs
     setLabsLoading(state, action) {
       state.labs.loading = action.payload;
@@ -256,7 +302,7 @@ export const {
   setUsersRole,
   setUsersIsActive,
 
-  // Patients (new)
+  // Patients 
   setPatientsLoading,
   setPatients,
   setPatientsPagination,
@@ -275,6 +321,16 @@ export const {
   setDoctorsStatus,
   setDoctorsError,
   setDoctorsSearch,
+
+  // Nurses
+  setNursesLoading,
+  setNurses,
+  setNursesPagination,
+  setNursesDepartment,
+  setNursesSpecialization,
+  setNursesStatus,
+  setNursesError,
+  setNursesSearch,
 
   // Labs
   setLabsLoading,

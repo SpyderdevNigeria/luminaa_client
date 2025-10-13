@@ -62,11 +62,6 @@ function PatientDiagnosis() {
       render: (item) => <span className="text-xs">#{item?.id?.slice(0, 8)}</span>,
     },
     {
-      key: "diagnosis",
-      label: "Diagnosis",
-      render: (item) => <span className="text-sm">{item?.diagnosis || "—"}</span>,
-    },
-    {
       key: "primaryDiagnosis",
       label: "Reason for the Appointment",
       render: (item) => (

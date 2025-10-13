@@ -19,7 +19,7 @@ import {
   setPatientsCity,
   setPatientsIsBioDataCompleted,
   setPatientsIsMedicalHistoryCompleted,
-
+  // Doctors
   setDoctors,
   setDoctorsLoading,
   setDoctorsError,
@@ -27,12 +27,24 @@ import {
   setDoctorsSpecialty,
   setDoctorsStatus,
   setDoctorsSearch,
+
+  //Nurses
+    setNursesLoading,
+  setNurses,
+  setNursesPagination,
+  setNursesDepartment,
+  setNursesSpecialization,
+  setNursesStatus,
+  setNursesError,
+  setNursesSearch,
+  // Labs
   setLabs,
   setLabsLoading,
   setLabsError,
   setLabsPagination,
   setLabsDepartment,
   setLabsSearch,
+  // Pharmacists
   setPharmacists,
   setPharmacistsLoading,
   setPharmacistsError,
@@ -55,7 +67,7 @@ import {
 
 function useAdmin(api: any) {
   const dispatch = useDispatch<AppDispatch>();
-  const { users, patients, doctors, labs, pharmacists, medications } = useSelector(
+  const { users, patients, doctors, nurses, labs, pharmacists, medications } = useSelector(
     (state: RootState) => state.admin
   );
 
@@ -122,6 +134,30 @@ function useAdmin(api: any) {
       dispatch(setDoctorsError("Failed to fetch doctors"));
     } finally {
       dispatch(setDoctorsLoading(false));
+    }
+  };
+
+  
+  // Fetch Nurses
+  const getNurses = async () => {
+    dispatch(setNursesLoading(true));
+    dispatch(setNursesError(null));
+    try {
+      const params = new URLSearchParams();
+      params.append("page", nurses.page.toString());
+      params.append("limit", nurses.limit.toString());
+      if (nurses.search) params.append("search", nurses.search);
+      if (nurses.department) params.append("department", nurses.department);
+      if (nurses.specialization) params.append("specialization", nurses.specialization);
+      if (nurses.status) params.append("status", nurses.status);
+
+      const res = await api.getNurses(`?${params.toString()}`);
+      console.log(res)
+      dispatch(setNurses({ data: res.data, page: res.page, total: res.total ?? 0 }));
+    } catch (err) {
+      dispatch(setNursesError("Failed to fetch nurses"));
+    } finally {
+      dispatch(setNursesLoading(false));
     }
   };
 
@@ -245,6 +281,25 @@ function useAdmin(api: any) {
     setDoctorsSpecialty: (val: string) => dispatch(setDoctorsSpecialty(val)),
     setDoctorsStatus: (val: string) => dispatch(setDoctorsStatus(val)),
     getDoctors,
+
+    //Nurses
+    nurses: nurses.data,
+    nursesPage: nurses.page,
+    nursesLimit: nurses.limit,
+    nursesTotal: nurses.total,
+    nursesLoading: nurses.loading,
+    nursesError: nurses.error,
+    nursesDepartment: nurses.department,
+    nursesSpecialization: nurses.specialization,
+    nursesStatus: nurses.status,
+    nursesSearch: nurses.search,
+    setNursesSearch: (val: string) => dispatch(setNursesSearch(val)),
+    setNursesPage: (val: number) => dispatch(setNursesPagination({ page: val, limit: nurses.limit })),
+    setNursesLimit: (val: number) => dispatch(setNursesPagination({ page: nurses.page, limit: val })),
+    setNursesDepartment: (val: string) => dispatch(setNursesDepartment(val)),
+    setNursesSpecialization: (val: string) => dispatch(setNursesSpecialization(val)),
+    setNursesStatus: (val: string) => dispatch(setNursesStatus(val)),
+    getNurses,
 
     // Labs
     labs: labs.data,

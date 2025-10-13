@@ -1,15 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo,  } from "react";
 import { Link } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import { navItemsPatient } from "../../../utils/dashboardUtils";
 import AppointmentTab from "../../../components/common/AppointmentTab";
-import AppointmentBookModal from "../../../components/modal/AppointmentBookModal";
+
 import { useAppSelector } from "../../../hooks/reduxHooks";
 import PatientApi from "../../../api/PatientApi";
 import useAppointments from "../../../hooks/useAppointments";
 import { AppointmentCardSkeleton } from "../../../components/skeleton/SkeletonCards";
 function DashboardHome() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const userProfile = useAppSelector((state) => state.auth.user);
   const {
     appointments,
@@ -92,11 +92,6 @@ function DashboardHome() {
           <Link
             to={i?.link}
             key={i?.name}
-            onClick={() => {
-              if (i?.name.toLowerCase() === "book a consultation") {
-                setIsModalOpen(true);
-              }
-            }}
             className="bg-white  border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col gap-6"
           >
             {/* Icon */}
@@ -115,13 +110,7 @@ function DashboardHome() {
         ))}
       </div>
 
-      {/* Appointment Booking Modal */}
-      <AppointmentBookModal
-        open={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-        }}
-      />
+
       <div>
         {/* Appointments List */}
         <section className="bg-white  rounded-lg p-4">

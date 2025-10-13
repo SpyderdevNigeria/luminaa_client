@@ -217,6 +217,23 @@ const DoctorApi = {
     const response = await api.get(`/doctor/patients/${id}/attending-doctors${query}`);
     return response.data;
   },
+
+   getProcedures: async (options?: { params?: Record<string, any> }) => {
+    const response = await  api.get("/doctor/procedures", {
+      params: options?.params || {}, 
+    }); 
+    return response.data;
+  },
+
+  createProcedure: async (body: any) => {
+    const response = await api.post("/doctor/procedures", body);
+    return response.data;
+  },
+getProcedureById: async (id: string) => {
+  const response = await api.get(`/doctor/procedures/${id}`);
+  return response.data;
+},
+
 }
 
 export default DoctorApi;

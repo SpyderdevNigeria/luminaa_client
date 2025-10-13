@@ -214,6 +214,122 @@ const AdminApi = {
     const response = await api.patch(`/admin/orders/${id}/status`, body);
     return response.data;
   },
+
+  //Nurses Enpoints 
+
+  getNurses: async (query: any) => {
+    const response = await api.get(`/admin/nurses${query}`);
+    return response.data;
+  },
+  getNurseById: async (id: any) => {
+    const response = await api.get(`/admin/nurses/${id}`);
+    return response.data;
+  }, 
+  createNurses: async (body: any) => {
+    const response = await api.post(`/admin/nurses`, body);
+    return response.data;
+  },
+  updateNurses: async (id: string, body: any) => {
+    const response = await api.put(`/admin/nurses/${id}`, body);
+    return response.data;
+  },
+  deleteNurse: async (id: string) => {
+    const response = await api.delete(`/admin/nurses/${id}`);
+    return response.data;
+  },
+  updateNursesStatus: async (id: string, body: any) => {
+    const response = await api.put(`/admin/nurses/${id}/status`, body );
+    return response.data;
+  },
+  updateNursesMatronStatus: async (id: string, body: any) => {
+    const response = await api.put(`/admin/nurses/${id}/matron-status`, body);
+    return response.data;
+  },
+
+
+  // Procedures Endpoints 
+   scheduleProcedure: async (id: string, scheduledDate: string) => {
+    const response = await api.patch(`/admin/procedures/${id}/schedule`, {
+      scheduledDate,
+    });
+    return response.data;
+  },
+
+  updateProcedurePayment: async (id: string, paymentStatus: string) => {
+    const response = await api.patch(`/admin/procedures/${id}/payment-status`, {
+      paymentStatus,
+    });
+    return response.data;
+  },
+
+  updateProcedureStatus: async (
+    id: string,
+    status: string,
+    note?: string
+  ) => {
+    const response = await api.patch(`/admin/procedures/${id}/status`, {
+      status,
+      note,
+    });
+    return response.data;
+  },
+
+  uploadConsentForm: async (id: string, files: FileList, note?: string) => {
+    const formData = new FormData();
+    Array.from(files).forEach((file) => {
+      formData.append("files", file);
+    });
+    if (note) formData.append("note", note);
+
+    const response = await api.post(
+      `/admin/procedures/${id}/consent-form`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    return response.data;
+  },
+
+  //vitals 
+  getVitals: async (filters: any) => {
+  const response = await api.get("/admin/vitals/list", { params: filters });
+  return response.data;
+},
+
+createVital: async (data: any) => {
+  const response = await api.post("/admin/vitals/add", data);
+  return response.data;
+},
+
+getVitalById: async (id: any) => {
+  const response = await api.get(`/admin/vitals/${id}`);
+  return response.data; 
+},
+updateVital: async (id: string, data: any) => {
+  const response = await api.patch(`/admin/vitals/${id}`, data);
+  return response.data;
+},
+
+deleteVital: async (id: string) => {
+  const response = await api.delete(`/admin/vitals/${id}`);
+  return response.data;
+},
+   getProcedures: async (options?: { params?: Record<string, any> }) => {
+    const response = await  api.get("/admin/procedures", {
+      params: options?.params || {}, 
+    }); 
+    return response.data;
+  },
+  getProcedureById: async (id: string) => {
+  const response = await api.get(`/admin/procedures/${id}`);
+  return response.data;
+},
+
+  verifyPaitentHmo: async (id: string, body: any) => {
+    const response = await api.put(`/admin/patients/${id}/verify-hmo`, body);
+    return response.data;
+  },
 };
 
 export default AdminApi;

@@ -1,6 +1,6 @@
 import Modal from "./modal";
 import { FaFilePdf } from "react-icons/fa6";
-import StatusBadge from "../common/StatusBadge";
+// import StatusBadge from "../common/StatusBadge";
 import moment from "moment";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -95,11 +95,17 @@ function MedicalReportModal({
             </h3>
           </div>
 
-          <div className="space-y-1">
+          {/* <div className="space-y-1">
             <h4 className="text-sm text-text-secondary font-[300]">Status</h4>
             <StatusBadge status={diagnosis?.severity} />
-          </div>
+          </div> */}
 
+   <div className="space-y-1">
+            <h4 className="text-sm text-text-secondary font-[300]">Diagnosis Code</h4>
+            <h3 className="text-sm text-text-primary">
+              {diagnosis?.diagnosisCode || "No code available."}
+            </h3>
+          </div>
           <div className="space-y-1">
             <h4 className="text-sm text-text-secondary font-[300]">
               Doctor&apos;s Note
@@ -109,7 +115,7 @@ function MedicalReportModal({
             </h3>
           </div>
 
-          <div className="space-y-1">
+          {/* <div className="space-y-1">
             <h4 className="text-sm text-text-secondary font-[300]">
               Examination Findings
             </h4>
@@ -124,7 +130,7 @@ function MedicalReportModal({
             <h3 className="text-sm text-text-primary">
               {diagnosis?.diagnosis || "None"}
             </h3>
-          </div>
+          </div> */}
           {type === "patient" && <div className="space-y-1 print:hidden">
             <h4 className="text-sm text-text-secondary font-[300]">
               Attachment
@@ -248,18 +254,22 @@ function MedicalReportModal({
                   <td className="font-semibold px-4 py-2 border-r">Patient Symptoms</td>
                   <td className="px-4 py-2">{diagnosis?.symptoms || "—"}</td>
                 </tr>
-                <tr className="border-b">
+                 <tr className="border-b">
+                  <td className="font-semibold px-4 py-2 border-r">Diagnosis Code</td>
+                  <td className="px-4 py-2">{diagnosis?.diagnosisCode || "—"}</td>
+                </tr>
+                <tr className="">
                   <td className="font-semibold px-4 py-2 border-r">Doctor's Note</td>
                   <td className="px-4 py-2">{diagnosis?.notes || "No note available."}</td>
                 </tr>
-                <tr className="border-b">
+                {/* <tr className="border-b">
                   <td className="font-semibold px-4 py-2 border-r">Examination Findings</td>
                   <td className="px-4 py-2">{diagnosis?.additionalRecommendations || "None"}</td>
                 </tr>
                 <tr >
                   <td className="font-semibold px-4 py-2 border-r">Diagnosis</td>
                   <td className="px-4 py-2">{diagnosis?.diagnosis || "None"}</td>
-                </tr>
+                </tr> */}
               </tbody>
             </table>
           </div>

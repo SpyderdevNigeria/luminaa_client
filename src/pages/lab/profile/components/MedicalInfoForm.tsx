@@ -70,10 +70,10 @@ const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
         />
       </div>
 
-      <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="p-4 flex flex-col-reverse md:flex-row gap-6 md:gap-24">
         {/* Left: Info Fields */}
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4 w-full" onSubmit={handleSubmit} >
           {/* First Name (Disabled) */}
           {feedback.message && (
             <FeedbackMessage type={feedback.type} message={feedback.message} />

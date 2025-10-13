@@ -1,6 +1,6 @@
 import { FiEdit, FiEye, FiTrash2 } from "react-icons/fi";
 import { MdMedicalServices } from "react-icons/md";
-import StatusBadge from "./StatusBadge";
+// import StatusBadge from "./StatusBadge";
 import Dropdown from "../dropdown/dropdown";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import moment from "moment";
@@ -11,6 +11,7 @@ interface DiagnosisCardProps {
     primaryDiagnosis: string;
     severity?: string;
     createdAt?: string;
+    symptoms?: string;
   };
   onView?: () => void;
   onEdit?: () => void;
@@ -18,7 +19,7 @@ interface DiagnosisCardProps {
 }
 
 function DiagnosisCard({ diagnosis, onView, onEdit, onDelete }: DiagnosisCardProps) {
-  const { primaryDiagnosis, createdAt, severity } = diagnosis;
+  const { primaryDiagnosis, createdAt, symptoms } = diagnosis;
 
   const hasActions = onEdit || onDelete;
 
@@ -75,9 +76,15 @@ function DiagnosisCard({ diagnosis, onView, onEdit, onDelete }: DiagnosisCardPro
       </div>
 
       {/* Status */}
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <span className="text-sm text-gray-600">Severity:</span>
         <StatusBadge status={severity || "pending"} />
+      </div> */}
+      <div>
+        <span className="text-sm ">Symptoms:</span>
+        <div>
+          <p className="text-xs text-gray-600 line-clamp-3">{symptoms || "No symptoms available."}</p>
+        </div>
       </div>
        {!hasActions && (
       <button

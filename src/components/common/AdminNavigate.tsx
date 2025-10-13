@@ -4,7 +4,7 @@ import useAdminAuth from "../../hooks/useAdminAuth";
 import routeLinks from "../../utils/routes";
 
 interface AdminNavigateProps {
-  role: "admin" | "doctor" | "patient" | "lab_tech" | "pharmacist" | "super_admin";
+  role: "admin" | "doctor" | "procedure" | "nurse" | "patient" | "lab_tech" | "pharmacist" | "super_admin" | "vital";
   id: string;
   children: ReactNode;
   type?: string;
@@ -29,6 +29,15 @@ function AdminNavigate({ role, id, children, type }: AdminNavigateProps) {
     } else if (role === "pharmacist") {
       url = type === "true" ? `${routeLinks.superAdmin.pharmacists}/${id}` : `${routeLinks.superAdmin.users}/${id}`;
     }
+    else if (role === 'nurse') {
+      url = type === "true" ? `${routeLinks.superAdmin.nurses}/${id}` : `${routeLinks.superAdmin.users}/${id}`
+    }
+     else if (role === 'vital') {
+      url = type === "true" ? `${routeLinks.superAdmin.vitals}/${id}` : `${routeLinks.superAdmin.users}/${id}`
+    }
+    else if (role === 'procedure') {
+      url = type === "true" ? `${routeLinks.superAdmin.procedures}/${id}` : `${routeLinks.superAdmin.users}/${id}`
+    }
   } else {
     if (role === "admin") {
       url = type === "true" ? `${routeLinks.admin.admin}/${id}` : `${routeLinks.admin.users}/${id}`;
@@ -40,6 +49,14 @@ function AdminNavigate({ role, id, children, type }: AdminNavigateProps) {
       url = type === "true" ? `${routeLinks.admin.lab}/${id}` : `${routeLinks.admin.users}/${id}`;
     } else if (role === "pharmacist") {
       url = type === "true" ? `${routeLinks.admin.pharmacists}/${id}` : `${routeLinks.admin.users}/${id}`;
+    }else if (role === 'nurse') {
+      url = type === "true" ? `${routeLinks.admin.nurses}/${id}` : `${routeLinks.admin.users}/${id}`
+    }
+     else if (role === 'vital') {
+      url = type === "true" ? `${routeLinks.admin.vitals}/${id}` : `${routeLinks.admin.users}/${id}`
+    }
+    else if (role === 'procedure') {
+      url = type === "true" ? `${routeLinks.admin.procedures}/${id}` : `${routeLinks.admin.users}/${id}`
     }
   }
 

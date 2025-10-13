@@ -11,6 +11,7 @@ export default defineConfig({
   ],
 
   optimizeDeps: {
-    include: ['framer-motion'],
+    //  force: true,
+    include: ['framer-motion',]
   },
 })

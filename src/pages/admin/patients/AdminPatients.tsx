@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FiEye, FiEdit, FiTrash2, FiUpload } from "react-icons/fi";
+import { FiEye, FiTrash2, FiUpload } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
 import useAdmin from "../../../hooks/useAdmin";
@@ -59,10 +59,10 @@ const [errorModalOpen, setErrorModalOpen] = useState(false);
     isMedicalHistoryCompleted,
   ]);
 
-  const handleEdit = (patient: any) => {
-    setEditPatient(patient);
-    setShowForm(true);
-  };
+  // const handleEdit = (patient: any) => {
+  //   setEditPatient(patient);
+  //   setShowForm(true);
+  // };
 
   const confirmDelete = (patientId: string) => {
     setSelectedPatientId(patientId);
@@ -111,6 +111,16 @@ const [errorModalOpen, setErrorModalOpen] = useState(false);
       render: (patient) => <span>{patient?.city || "N/A"}</span>,
     },
     {
+      key: "hmoNumber",
+      label: "HMO Number",
+      render: (patient) => <span>{patient?.hmoNumber || "N/A"}</span>,
+    },
+    {
+      key: "hmoStatus",
+      label: "HMO Status",
+      render: (patient) => <span>{patient?.hmoStatus || "N/A"}</span>,  
+    },
+    {
       key: "isBioDataCompleted",
       label: "BioData Completed",
       render: (patient) => (
@@ -133,12 +143,12 @@ const [errorModalOpen, setErrorModalOpen] = useState(false);
             <AdminNavigate role={"patient"} id={patient?.id} type="true">
               <FiEye /> View
             </AdminNavigate>
-            <li
+            {/* <li
               onClick={() => handleEdit(patient)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
             >
               <FiEdit /> Edit
-            </li>
+            </li> */}
             <li
               onClick={() => confirmDelete(patient?.id)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"

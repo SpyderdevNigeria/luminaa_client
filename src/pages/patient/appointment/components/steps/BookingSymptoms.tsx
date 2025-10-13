@@ -44,6 +44,7 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
 
         location: form.location,
         patientNote: form.symptoms,
+        isInitialConsultation: true,
       };
       console.log(payload);
       const response = await PatientApi.createAppointment(payload);

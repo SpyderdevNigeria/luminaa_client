@@ -5,9 +5,11 @@ import userSlice from "./userSlice";
 import orderSlice from "./orderSlice";
 import cartSlice from './cartSlice';
 import adminSlice from "./adminSlice";
+import vitalSlice from "./vitalSlice";
 import patientSlice from './patientSlice';
 import inventorySlice from "./InventorySlice";
 import diagnosisSlice from "./DiagnosisSlice";
+import procedureSlice from "./procedureSlice";
 import superAdminSlice from "./superAdminSlice";
 import medicationSlice from "./medicationSlice";
 import appointmentSlice from "./appointmentSlice";
@@ -21,9 +23,11 @@ const appReducer = combineReducers({
   users: userSlice,
   admin: adminSlice,
   orders: orderSlice,
+  vitals : vitalSlice,
   patients: patientSlice,
   diagnosis: diagnosisSlice,
   inventory: inventorySlice,
+  procedures: procedureSlice,
   superAdmin: superAdminSlice,
   medications: medicationSlice,
   appointments: appointmentSlice,

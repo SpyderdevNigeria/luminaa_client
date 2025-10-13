@@ -48,6 +48,14 @@ const routeLinks = {
     appointmentView : '/doctor/appointments/:id',
     patientView : '/doctor/patients/:id',
       helpCenter:'/doctor/helpcenter',
+      procedures:'/doctor/procedures',
+      proceduresDetails:'/doctor/procedures/:id',
+},
+nurse : {
+  path: '/nurse',
+  dashboard: '/nurse/dashboard',
+  profile: '/nurse/profile',
+  helpCenter:'/nurse/helpcenter',
 },
 
 lab: { 
@@ -96,6 +104,12 @@ admin: {
   adminInventorySummary: '/admin/inventory-summary',
    adminInventoryMedication: '/admin/inventory/medication/:id',
    helpCenter:'/admin/helpcenter',
+  nurses : '/admin/nurses',
+  nurseDetails : '/admin/nurses/:id',
+  vitals : '/admin/vitals',
+  vitalDetails : '/admin/vitals/:id',
+  procedures: '/admin/procedures',
+  proceduresDetails: '/admin/procedures/:id',
 },
 superAdmin: {
   path:'/super-admin',
@@ -133,6 +147,12 @@ superAdmin: {
   adminInventorySummary: '/super-admin/inventory-summary',
   adminInventoryMedication: '/super-admin/inventory/medication/:id',
   helpCenter:'/super-admin/helpcenter',
+  nurses: '/super-admin/nurses',
+  nurseDetails : '/super-admin/nurses/:id',
+  vitals : '/super-admin/vitals',
+  vitalDetails : '/super-admin/vitals/:id',
+  procedures: '/super-admin/procedures',
+  proceduresDetails: '/super-admin/procedures/:id',
 },
 pharmacist: {
   path:'/pharmacist',

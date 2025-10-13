@@ -138,6 +138,7 @@ const DiagnosisDetails = ({ appointmentId, handleBack }: DiagnosisDetailsProps) 
                   onView={() => {
                     setSelectedDiagnosis(diagnosis);
                     setModalOpen(true);
+                    console.log(diagnosis)
                   }}
                   onEdit={() => {
                     setEditingDiagnosis(diagnosis);

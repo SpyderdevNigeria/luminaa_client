@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import getAllCountries from "countries-states-cities";
-import getStatesOfCountry from "countries-states-cities";
+import { Country, State } from "country-state-city";
 import {
   formatDate,
   getMaxDateFor18YearsOld,
   nigerianStates,
 } from "../../../../utils/dashboardUtils";
+import { FiInfo } from "react-icons/fi";
 
 type BioDataProps = {
   submitform: (e: React.FormEvent) => void;
@@ -22,6 +22,7 @@ type BioDataProps = {
     emergencyContactName: string;
     emergencyContactPhone: string;
     stateOfOrigin: string;
+    hmoNumber: string;
   };
 };
 
@@ -31,8 +32,8 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
 
   // Load countries and set default country to Nigeria
   useEffect(() => {
-    const allCountries = getAllCountries.getAllCountries();
-    setCountries(allCountries.map((country: any) => country.name));
+    const allCountries = Country.getAllCountries();
+    setCountries(allCountries.map((c) => c.name));
 
     if (!data.country) {
       const event = {
@@ -45,20 +46,18 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
     }
   }, []);
 
-  // Load states based on country
+  // Load states based on selected country
   useEffect(() => {
     if (data.country === "Nigeria") {
-      setStates(nigerianStates.slice(1)); // Skip "Select State"
+      // Use your Nigerian states list
+      setStates(nigerianStates.slice(1));
     } else if (data.country) {
-      const allCountries = getAllCountries.getAllCountries();
-      const selectedCountry = allCountries.find(
-        (country: any) => country.name === data.country
+      const selectedCountry = Country.getAllCountries().find(
+        (c) => c.name === data.country
       );
       if (selectedCountry) {
-        const countryStates = getStatesOfCountry.getStatesOfCountry(
-          selectedCountry.id
-        );
-        setStates(countryStates.map((state: any) => state.name));
+        const countryStates = State.getStatesOfCountry(selectedCountry.isoCode);
+        setStates(countryStates.map((s) => s.name));
       } else {
         setStates([]);
       }
@@ -180,10 +179,7 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
           {/* State of Origin */}
           {data.country && (
             <div className="col-span-2">
-              <label
-                htmlFor="stateOfOrigin"
-                className="form-label text-primary"
-              >
+              <label htmlFor="stateOfOrigin" className="form-label text-primary">
                 State of Origin
               </label>
               <select
@@ -260,6 +256,37 @@ function BioData({ submitform, handleChange, data }: BioDataProps) {
               className="form-input focus:outline-primary border border-gray-light"
             />
           </div>
+
+
+          {/* HMO Number */}
+          <div className="col-span-2 relative">
+            <label htmlFor="hmoNumber" className="form-label text-primary flex items-center gap-2">
+              HMO Number
+              <span className="text-xs text-gray-500">(optional)</span>
+              <div className="relative group cursor-pointer">
+                <FiInfo className="text-gray-500 hover:text-primary" />
+                <div className="absolute left-6 top-1/2 -translate-y-1/2 w-64 bg-gray-800 text-white text-xs rounded-md p-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                  Your HMO (Health Maintenance Organization) number identifies your health insurance provider.
+                  Enter it if you have one for verification and claim purposes.
+                </div>
+              </div>
+            </label>
+
+            <input
+              type="text"
+              name="hmoNumber"
+              id="hmoNumber"
+              onChange={handleChange}
+              value={data.hmoNumber}
+              placeholder="Enter HMO number"
+              className="form-input focus:outline-primary border border-gray-light"
+            />
+
+            <p className="text-xs text-gray-500 mt-1">
+              If you don’t have an HMO, you can leave this field empty.
+            </p>
+          </div>
+
         </div>
 
         <button

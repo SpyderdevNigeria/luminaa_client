@@ -6,6 +6,7 @@ import PrescriptionDetails from "./components/PrescriptionDetails";
 import doctorApi from "../../../api/doctorApi";
 import OrderDetails from "./components/OrderDetails";
 import { useSearchParams } from "react-router-dom";
+import ProcedureDetails from "./components/ProcedureDetails";
 
 function DoctorAppointmentsDetails() {
   const [step, setStep] = useState('AppointmentDetails');
@@ -56,7 +57,11 @@ function DoctorAppointmentsDetails() {
       {step === "PrescriptionDetails" && (
       <PrescriptionDetails  appointmentId={id || ""}  handleBack={handleBack}/>
      )}
-
+      {
+         step === "ProcedureDetails" && (
+       <ProcedureDetails  appointment={appointment}  handleBack={handleBack}/>
+     )
+      }
          {step === "OrderDetails" && (
        <OrderDetails  appointmentId={id || ""} patientId={appointment?.patient?.id || ""}  handleBack={handleBack}/>
      )}

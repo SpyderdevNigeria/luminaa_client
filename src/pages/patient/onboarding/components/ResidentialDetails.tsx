@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import getAllCountries from "countries-states-cities";
-import getStatesOfCountry from "countries-states-cities";
+import { Country, State } from "country-state-city";
 import { nigerianStates } from "../../../../utils/dashboardUtils";
 
 interface ResidentialDetailsProps {
@@ -26,34 +25,31 @@ function ResidentialDetails({
 }: ResidentialDetailsProps) {
   const [countries, setCountries] = useState<string[]>([]);
   const [states, setStates] = useState<string[]>([]);
+
+  // Load countries (set default to Nigeria)
   useEffect(() => {
-    const allCountries = getAllCountries.getAllCountries();
-    setCountries(allCountries.map((country: any) => country.name));
+    const allCountries = Country.getAllCountries();
+    setCountries(allCountries.map((c) => c.name));
+
     if (!data.country) {
       const event = {
-        target: {
-          name: "country",
-          value: "Nigeria",
-        },
+        target: { name: "country", value: "Nigeria" },
       } as React.ChangeEvent<HTMLSelectElement>;
-
       handleChange(event);
     }
   }, []);
 
+  // Load states based on selected country
   useEffect(() => {
     if (data.country === "Nigeria") {
-      setStates(nigerianStates.slice(1));
+      setStates(nigerianStates.slice(1)); // use your Nigeria list
     } else if (data.country) {
-      const allCountries = getAllCountries.getAllCountries();
-      const selectedCountry = allCountries.find(
-        (country: any) => country.name === data.country
+      const selectedCountry = Country.getAllCountries().find(
+        (c) => c.name === data.country
       );
       if (selectedCountry) {
-        const countryStates = getStatesOfCountry.getStatesOfCountry(
-          selectedCountry.id
-        );
-        setStates(countryStates.map((state: any) => state.name));
+        const countryStates = State.getStatesOfCountry(selectedCountry.isoCode);
+        setStates(countryStates.map((s) => s.name));
       } else {
         setStates([]);
       }

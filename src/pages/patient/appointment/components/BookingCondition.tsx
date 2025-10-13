@@ -35,6 +35,7 @@ function BookingCondition({userProfile}: { userProfile: any }) {
     LiverDisease: "",
     Epilepsy: "",
     SickleCellDisease: "",
+    
   });
   const dispatch = useAppDispatch();
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -144,7 +145,7 @@ function BookingCondition({userProfile}: { userProfile: any }) {
           {/* Dynamic Dropdown Fields */}
           {[
             { id: "PastBloodTransfusion", label: "Past Blood Transfusion" },
-            { id: "PastDelivery", label: "Past Delivery", options: ["", "None", "1", "2-3", "4+"] },
+            { id: "PastDelivery", label: "Past Delivery", options: [ "None", "1", "2-3", "4+"] },
             { id: "PastHospitalAdmission", label: "Past Hospital Admission" },
             { id: "Hypertension", label: "Hypertension" },
             { id: "Diabetes", label: "Diabetes" },

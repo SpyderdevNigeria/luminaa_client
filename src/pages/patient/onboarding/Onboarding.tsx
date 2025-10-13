@@ -27,6 +27,7 @@ const initialData = {
   country: "",
   zipCode: "",
   stateOfOrigin: "",
+  hmoNumber: "",
 };
 
 function Onboarding() {

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import AdminApi from "../../../api/adminApi";
 import { format } from "date-fns";
 import StatusBadge from "../../../components/common/StatusBadge";
+import { FiArrowLeft } from "react-icons/fi";
 
 function AdminDoctorsDetails() {
   const { id } = useParams();
@@ -59,60 +60,70 @@ function AdminDoctorsDetails() {
   );
 
   return (
-    <div className="max-w-4xl mx-auto bg-white  rounded-lg p-6 space-y-6">
-      <h2 className="text-2xl font-semibold mb-4">Doctor Details</h2>
+    <div>
+      <button
+        onClick={() => window.history.back()}
+        className="flex items-center gap-2 text-primary mb-4"
+      >
+        <FiArrowLeft /> Back
+      </button>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-        <div>
-          <strong>Name:</strong> {user.firstName} {user.lastName}
-        </div>
-        <div>
-          <strong>Email:</strong> {user.email}
-        </div>
-        <div>
-          <strong>Specialty:</strong> {specialty}
-        </div>
-        <div>
-          <strong>Status:</strong>{" "}
-          <StatusBadge status={doctor.isActive ? "Active" : "Inactive"} />
-        </div>
-        <div>
-          <strong>Disabled:</strong>{" "}
-          <StatusBadge status={user.isDisabled ? "Disabled" : "Enabled"} />
-        </div>
-        <div>
-          <strong>Email Verified:</strong> {user.isEmailVerified ? "Yes" : "No"}
-        </div>
-        <div>
-          <strong>Last Login:</strong>{" "}
-          {user.lastLogin ? format(new Date(user.lastLogin), "PPPppp") : "N/A"}
-        </div>
-        <div>
-          <strong>Profile Created:</strong>{" "}
-          {user.createdAt ? format(new Date(user.createdAt), "PPPppp") : "N/A"}
-        </div>
-        <div className="col-span-2">
-          <strong>Availability:</strong>
-          <ul className="list-disc list-inside">
-            {availability?.data?.length > 0 ? (
-              availability.data.map((slot: any, index: number) => (
-                <li key={index}>
-                  {slot.dayOfWeek}: {slot.startTime} - {slot.endTime}
-                </li>
-              ))
-            ) : (
-              <p>No availability set</p>
-            )}
-          </ul>
-        </div>
-      </div>
+      <div className="max-w-4xl mx-auto bg-white  rounded-lg p-6 space-y-6">
+        <h2 className="text-2xl font-semibold mb-4">Doctor Details</h2>
 
-      <div className="space-y-4">
-        {licenseDocument && renderDocument(licenseDocument, "License Document")}
-        {graduationCertificate &&
-          renderDocument(graduationCertificate, "Graduation Certificate")}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div>
+            <strong>Name:</strong> {user.firstName} {user.lastName}
+          </div>
+          <div>
+            <strong>Email:</strong> {user.email}
+          </div>
+          <div>
+            <strong>Specialty:</strong> {specialty}
+          </div>
+          <div>
+            <strong>Status:</strong>{" "}
+            <StatusBadge status={doctor.isActive ? "Active" : "Inactive"} />
+          </div>
+          <div>
+            <strong>Disabled:</strong>{" "}
+            <StatusBadge status={user.isDisabled ? "Disabled" : "Enabled"} />
+          </div>
+          <div>
+            <strong>Email Verified:</strong> {user.isEmailVerified ? "Yes" : "No"}
+          </div>
+          <div>
+            <strong>Last Login:</strong>{" "}
+            {user.lastLogin ? format(new Date(user.lastLogin), "PPPppp") : "N/A"}
+          </div>
+          <div>
+            <strong>Profile Created:</strong>{" "}
+            {user.createdAt ? format(new Date(user.createdAt), "PPPppp") : "N/A"}
+          </div>
+          <div className="col-span-2">
+            <strong>Availability:</strong>
+            <ul className="list-disc list-inside">
+              {availability?.data?.length > 0 ? (
+                availability.data.map((slot: any, index: number) => (
+                  <li key={index}>
+                    {slot.dayOfWeek}: {slot.startTime} - {slot.endTime}
+                  </li>
+                ))
+              ) : (
+                <p>No availability set</p>
+              )}
+            </ul>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {licenseDocument && renderDocument(licenseDocument, "License Document")}
+          {graduationCertificate &&
+            renderDocument(graduationCertificate, "Graduation Certificate")}
+        </div>
       </div>
     </div>
+
   );
 }
 
