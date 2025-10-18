@@ -56,6 +56,8 @@ nurse : {
   dashboard: '/nurse/dashboard',
   profile: '/nurse/profile',
   helpCenter:'/nurse/helpcenter',
+  reports: '/nurse/reports',
+  reportsDetails: '/nurse/reports/:id',
 },
 
 lab: { 

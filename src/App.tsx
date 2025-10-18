@@ -125,7 +125,8 @@ const SuperAdminAdminsDetails = lazy(() => import("./pages/admin/superadmin/admi
 // Nurse
 const NurseDashboard = lazy(() => import("./pages/nurse/dashboard/NurseDashboard"));
 const NurseProfile = lazy(() => import("./pages/nurse/profile/NurseProfile"));
-
+const NurseReports = lazy(() => import("./pages/nurse/reports/NurseReport"));
+const NurseReportsDetails = lazy(() => import("./pages/nurse/reports/NurseReportDetails"));
 // Business
 const Home = lazy(() => import("./pages/business/Home"));
 // import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
@@ -221,6 +222,8 @@ function App() {
         <Route index element={<Navigate to={routeLinks.nurse.dashboard} replace />} />
         <Route path={routeLinks.nurse.dashboard} element={<NurseDashboard />} />
         <Route path={routeLinks.nurse.profile} element={<NurseProfile />} />
+        <Route path={routeLinks?.nurse?.reports} element={<NurseReports />} />
+        <Route path={routeLinks?.nurse?.reportsDetails} element={<NurseReportsDetails />} />
       </Route>
 
       {/* Pharmacist Routes */}

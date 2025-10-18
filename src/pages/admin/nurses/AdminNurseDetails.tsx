@@ -4,11 +4,24 @@ import AdminApi from "../../../api/adminApi";
 import { format } from "date-fns";
 import StatusBadge from "../../../components/common/StatusBadge";
 import { FiArrowLeft } from "react-icons/fi";
+import { useReports } from "../../../hooks/useReports";
+import Table, { Column } from "../../../components/common/Table";
+import { reportTypeOptions } from "../../../utils/dashboardUtils";
+import HeaderTab from "../../../components/common/HeaderTab";
 
 function AdminNurseDetails() {
   const { id } = useParams();
   const [nurse, setNurse] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+      const {
+      data: reports,
+      loading : loadingReports,
+      total,
+      filters,
+      updateFilters,
+      fetchReports,
+    } = useReports(AdminApi);
+
 
   const fetchNurse = async () => {
     try {
@@ -23,11 +36,42 @@ function AdminNurseDetails() {
     }
   };
 
+
   useEffect(() => {
     fetchNurse();
   }, [id]);
-  console.log(nurse)
+
+    useEffect(() => {
+    if (id) {
+      fetchReports(id);
+    }
+  }, [filters.page, filters.limit, filters.search, filters.reportType, filters.month]);
+
+
   if (loading || !nurse) return <p>Loading nurse...</p>;
+
+  const columns: Column<any>[] = [
+    {
+      key: "reportType",
+      label: "Report Type",
+      render: (report) => <span>{report?.reportType || "N/A"}</span>,
+    },
+    {
+      key: "content",
+      label: "Content",
+      render: (report) => (
+        <span className="line-clamp-1" title={report?.content}>
+          {report?.content || "N/A"}
+        </span>
+      ),
+    },
+    {
+      key: "month",
+      label: "Month",
+      render: (report) => <span>{report?.month || "N/A"}</span>,
+    },
+
+  ];
 
   return (
 
@@ -86,7 +130,64 @@ function AdminNurseDetails() {
               {nurse.isProfileVerified ? "Yes" : "No"}
             </span>
           </div>
+
+
+
         </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto bg-white rounded-lg p-6 space-y-6">
+                 <HeaderTab
+        title="Nurse Reports"
+        showSearch={false}
+        dropdowns={[
+          {
+            label: "Report Type",
+            options: reportTypeOptions,
+            value: filters.reportType || "",
+            onChange: (value) =>
+              updateFilters({ reportType: value || null }),
+          },
+        ]}
+        searches={[
+          {
+            label: "",
+            placeholder: "Search report...",
+            value: filters.nurseId || "",
+            onChange: (value) => updateFilters({ search: value || null }),
+          },
+          {
+            label: "",
+            placeholder: "YYYY-MM",
+            value: filters.month || "",
+            onChange: (value) => updateFilters({ month: value || null }),
+          },
+        ]}
+        dateFrom={filters.startDate || ""}
+        onDateFromChange={(value) =>
+         updateFilters({ startDate: value || null })
+        }
+        dateTo={filters.endDate || ""}
+        onDateToChange={(value) =>
+          updateFilters({ endDate: value || null })
+        }
+      />
+
+
+            <div>
+        {loadingReports ? (
+          <p>Loading Nurse's Report...</p>
+        ) : (
+          <Table
+            data={reports}
+            columns={columns}
+            page={filters.page}
+            total={total}
+            limit={filters.limit}
+            setPage={(page) => updateFilters({ page })}
+          />
+        )}
+      </div>
       </div>
     </div>
 

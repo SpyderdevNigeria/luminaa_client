@@ -11,6 +11,9 @@ import Doctor from "./tab/Doctor";
 import Appointment from "./tab/Appointment";
 import ActionVitalsCreate from "./form/ActionVitalsCreate";
 import { BiArrowBack } from "react-icons/bi";
+import ProcedureReport from "./form/ProcedureReport";
+import DrugChart from "../DrugChart";
+import MedicalHistorySection from "../MedicalHistorySection";
 
 
 interface ProcedureDetailsProps {
@@ -37,7 +40,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
   const [noteForConsent, setNoteForConsent] = useState("");
   const [consentFiles, setConsentFiles] = useState<FileList | null>(null);
   const { showToast } = useToaster();
-  const [tab, setTab] = useState<"status" | "payment" | "schedule" | "consent" | "vitals">("schedule");
+  const [tab, setTab] = useState<"status" | "payment" | "schedule" | "consent" | "vitals" | "report">("schedule");
 const [editingVital, setEditingVital] = useState<any>(null);
 const [addNewVital, setAddNewVital] = useState(false);
 
@@ -136,8 +139,9 @@ const [addNewVital, setAddNewVital] = useState(false);
       </button>
       {/* ---- TOP TAB NAVIGATION ---- */}
       <div className="flex flex-wrap border-b border-gray-200 mb-4 bg-white ">
-        {["overview", "patient", "appointment"]
+        {["overview", "patient", "appointment", 'drugchart']
           .concat(type === "admin" ? [ "doctor", "actions", ] : [])
+          .concat(type === "doctor" ? [ "medicalHistory", ] : [])
           .map((tab) => (
             <button
               key={tab}
@@ -172,11 +176,23 @@ const [addNewVital, setAddNewVital] = useState(false);
 
         )}
 
+        {activeTab === "medicalHistory" && 
+        (
+          <MedicalHistorySection procedure={procedure} type={'doctor'}  fetchProcedure={onUpdated}/>
+        )}
+
         {/* --- APPOINTMENT --- */}
         {activeTab === "appointment" && (
             <Appointment procedure={procedure} />
         )}
-            
+        {activeTab === "drugchart" && (
+         <DrugChart 
+        patientId={procedure?.patient?.id}
+        procedureId={procedure?.id}
+         type={type}
+        />
+
+      )}
         {/* --- ADMIN ACTIONS (Modal inside) --- */}
        {activeTab === "actions" && (
         <div className="flex flex-col md:flex-row gap-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
@@ -184,7 +200,7 @@ const [addNewVital, setAddNewVital] = useState(false);
         <div className="w-full md:w-1/4 border-r border-gray-200">
           <h2 className="text-base font-semibold text-gray-700 mb-3 px-2">Actions</h2>
           <div className="flex md:flex-col overflow-x-auto md:overflow-visible">
-            {(["payment", "schedule",  "status", "consent", "vitals"] as const).map((t) => (
+            {(["payment", "schedule",  "status", "consent", "vitals", "report"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => setTab(t)}
@@ -329,6 +345,17 @@ const [addNewVital, setAddNewVital] = useState(false);
 
             </div>
  )}
+
+      {tab === "report" && (
+        <ProcedureReport
+          procedure={procedure}
+          procedureId={procedure?.id}
+          fetchProcedure={onUpdated}
+        />
+      )}
+
+
+
         </div>
       </div>
         )}

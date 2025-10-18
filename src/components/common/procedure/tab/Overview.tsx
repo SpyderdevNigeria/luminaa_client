@@ -130,6 +130,19 @@ const Overview: React.FC<OverviewProps> = ({ procedure }) => {
           ))}
         </ol>
       </div>
+
+       <div className="mt-8">
+          <h3 className="text-base font-semibold text-gray-700 mb-3">
+           Procedure Report
+          </h3>
+          <div>
+            {procedure?.procedureReport && (
+              <div className="p-4 bg-gray-100 rounded-md">
+                <p className="text-gray-700">{procedure?.procedureReport}</p>
+              </div>
+            )}
+          </div>
+        </div>
     </Section>
   );
 };

@@ -279,6 +279,23 @@ export const navItemsNurse = [
     to: routeLinks.nurse.dashboard ?? '',
   },
   {
+    id:"reports",
+    label:"Reports",
+    title:"Reports",
+    icon:IoCalendarClearOutline,
+    to:routeLinks.nurse.reports ?? '',
+    subLinks: [
+      {
+        id: "reports-view",
+        label: "Report Details",
+        title: "Reports / Report Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.nurse.reportsDetails ?? '',
+        visible: false,
+      }
+    ]
+  },
+  {
     id: "profile-management",
     label: "Profile Management",
     title: "Profile Management",
@@ -1088,7 +1105,7 @@ export function numberWithCommas(x: number | string): string {
     maximumFractionDigits: 2,
   });
 }
-
+export const reportTypeOptions = ["DAILY", "WEEKLY", "MONTHLY"];
 
 export const nigerianStates = [
   "Select State", // Placeholder

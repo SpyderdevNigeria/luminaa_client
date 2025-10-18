@@ -22,7 +22,45 @@ const NurseApi = {
     return response.data;
   },
 
+ getReports: async (params: {
+    page?: number;
+    limit?: number;
+    reportType?: string | null;
+    nurseId?: string | null;
+    month?: string | null;
+    startDate?: string | null;
+    endDate?: string | null;
+    search?: string;
+  }) => {
+    const response = await api.get("/nurse/reports", { params });
+    return response.data;
+  },
 
+   createReport: async (data: {
+    reportType: string;
+    content: string;
+    month: string;
+  }) => {
+    const response = await api.post("/nurse/reports", data);
+    return response.data;
+  },
+
+  updateReport: async (
+    id: string,
+    data: { reportType: string; content: string; month: string }
+  ) => {
+    const response = await api.put(`/nurse/reports/${id}`, data);
+    return response.data;
+  },
+
+  deleteReport: async (id: string) => {
+    const response = await api.delete(`/nurse/reports/${id}`);
+    return response.data;
+  },
+  getReportById: async (id: string) => {
+    const response = await api.get(`/nurse/reports/${id}`);
+    return response.data;
+  },
 }
 
 export default NurseApi;

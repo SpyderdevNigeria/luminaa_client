@@ -330,6 +330,24 @@ deleteVital: async (id: string) => {
     const response = await api.put(`/admin/patients/${id}/verify-hmo`, body);
     return response.data;
   },
+ getReports: async (params: {
+    page?: number;
+    limit?: number;
+    reportType?: string | null;
+    nurseId?: string | null;
+    month?: string | null;
+    startDate?: string | null;
+    endDate?: string | null;
+    search?: string;
+  }) => {
+    const response = await api.get("/admin/nurse-reports", { params });
+    return response.data;
+  },
+
+  createProcedureReport: async (id: string, data: { procedureReport: string }) => {
+  const response = await api.post(`/admin/procedures/${id}/procedure-report`, data);
+  return response.data;
+},
 };
 
 export default AdminApi;
