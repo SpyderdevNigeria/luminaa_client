@@ -129,8 +129,7 @@ const NurseReports = lazy(() => import("./pages/nurse/reports/NurseReport"));
 const NurseReportsDetails = lazy(() => import("./pages/nurse/reports/NurseReportDetails"));
 // Business
 const Home = lazy(() => import("./pages/business/Home"));
-// import AdminMedicationsDetails from "./pages/admin/medications/AdminMedicationsDetails";
-// Route
+
 function App() {
   return (
     <Suspense fallback={<div className="flex flex-col items-center justify-center min-h-screen bg-white ">
