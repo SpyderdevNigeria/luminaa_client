@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import NurseApi from "../../../api/nurseApi";
 import { FiArrowLeft } from "react-icons/fi";
 import moment from "moment";
+import { removeHTMLTags } from "../../../utils/dashboardUtils";
 
 function NurseReportDetails() {
   const { id } = useParams<{ id: string }>();
@@ -103,7 +104,7 @@ function NurseReportDetails() {
         <p className="text-sm text-gray-500 mb-2">Report Content</p>
         <div className="border border-gray-200 rounded-md p-4 bg-gray-50">
           <p className="text-gray-800 whitespace-pre-line">
-            {report?.content || "No content available."}
+            {removeHTMLTags(report?.content) || "No content available."}
           </p>
         </div>
       </div>

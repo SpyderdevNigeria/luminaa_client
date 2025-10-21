@@ -21,7 +21,7 @@ interface ProcedureDetailsProps {
   isLoading: boolean;
   error: string | null;
   onUpdated?: () => void;
-  type?: string; // e.g., "admin" or "doctor"
+  type?: string;
 }
 
 const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
@@ -139,8 +139,9 @@ const [addNewVital, setAddNewVital] = useState(false);
       </button>
       {/* ---- TOP TAB NAVIGATION ---- */}
       <div className="flex flex-wrap border-b border-gray-200 mb-4 bg-white ">
-        {["overview", "patient", "appointment", 'drugchart']
-          .concat(type === "admin" ? [ "doctor", "actions", ] : [])
+        {["overview", "patient", "appointment", ]
+          .concat(type === "nurse" ? [ "doctor", 'drugchart', "actions", ] : [])
+           .concat(type === "admin" ? [ "doctor", "actions", ] : [])
           .concat(type === "doctor" ? [ "medicalHistory", ] : [])
           .map((tab) => (
             <button
@@ -200,10 +201,12 @@ const [addNewVital, setAddNewVital] = useState(false);
         <div className="w-full md:w-1/4 border-r border-gray-200">
           <h2 className="text-base font-semibold text-gray-700 mb-3 px-2">Actions</h2>
           <div className="flex md:flex-col overflow-x-auto md:overflow-visible">
-            {(["payment", "schedule",  "status", "consent", "vitals", "report"] as const).map((t) => (
+            {["payment", "schedule",  "status",] 
+             .concat(type === "nurse" ? [ "consent", "vitals", "report",] : [])
+            .map((t) => (
               <button
                 key={t}
-                onClick={() => setTab(t)}
+                onClick={() => setTab(t as "status" | "payment" | "schedule" | "consent" | "vitals" | "report")}
                 className={`flex items-center justify-start gap-2 px-3 py-2 text-sm font-medium capitalize transition-all duration-150  mb-1
                   ${
                     tab === t
@@ -227,6 +230,7 @@ const [addNewVital, setAddNewVital] = useState(false);
               handleSchedule={handleSchedule}
               loading={loadingAction === "schedule"}
               procedure={procedure}
+              type={type}
             />
           )}
 
@@ -238,6 +242,7 @@ const [addNewVital, setAddNewVital] = useState(false);
               handlePaymentStatus={handlePaymentStatus}
               loading={loadingAction === "payment"}
               procedure={procedure}
+              type={type}
             />
           )}
 
@@ -251,6 +256,7 @@ const [addNewVital, setAddNewVital] = useState(false);
               handleStatusUpdate={handleStatusUpdate}
               loading={loadingAction === "status"}
               procedure={procedure}
+              type={type}
             />
           )}
 

@@ -19,7 +19,7 @@ import { HiMiniUsers, HiUsers } from "react-icons/hi2";
 import { RxDashboard } from "react-icons/rx";
 import { CiViewList } from "react-icons/ci";
 import { ImLab } from "react-icons/im";
-import {  MdInventory, MdMedication } from "react-icons/md";
+import {  MdHealthAndSafety, MdInventory, MdMedication } from "react-icons/md";
 import moment from "moment";
 
 export const navItemsPatient = [
@@ -277,6 +277,143 @@ export const navItemsNurse = [
     title: "Dashboard",
     icon: RxDashboard,
     to: routeLinks.nurse.dashboard ?? '',
+  },
+      {
+    id: 'vitals',
+    label: 'Vitals',
+    title: 'Vitals',
+    icon: MdHealthAndSafety,
+    to: routeLinks.nurse.vitals ?? '',
+    subLinks: [
+      
+      {
+        id: "vitals-details",
+        label: "Vitals Details",
+        title: "Vitals / Vitals Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.nurse.vitalsDetails ?? '',
+        visible: false,
+      },
+    ]
+  },
+      {
+    id: "procedures",
+    label: "Procedures",
+    title: "Procedures",
+    icon: LiaStethoscopeSolid,
+    to: routeLinks.nurse.procedures ?? '',
+    subLinks: [ 
+      {
+        id: "procedures-details",
+        label: "Procedure Details",
+        title: "Procedures / Procedure Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.nurse.proceduresDetails ?? '',
+        visible:false,
+      },
+    ],
+  },
+  {
+    id:"reports",
+    label:"Reports",
+    title:"Reports",
+    icon:IoCalendarClearOutline,
+    to:routeLinks.nurse.reports ?? '',
+    subLinks: [
+      {
+        id: "reports-view",
+        label: "Report Details",
+        title: "Reports / Report Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.nurse.reportsDetails ?? '',
+        visible: false,
+      },
+
+            {
+        id: "reports-add",
+        label: "Report Add",
+        title: "Reports / Report Add",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.nurse.reportsAdd ?? '',
+        visible: false,
+      },
+      {
+        id: "reports-edit",
+        label: "Report Edit",
+        title: "Reports / Report Edit",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.nurse.reportsEdit ?? '',
+        visible: false,
+      }
+    ]
+  },
+  {
+    id: "profile-management",
+    label: "Profile Management",
+    title: "Profile Management",
+    icon: FaRegCircleUser,
+    to: routeLinks.nurse.profile ?? '',
+  },
+]
+
+export const navItemsMatron = [
+  {
+    id: "dashboard",
+    label: "Dashboard",
+    title: "Dashboard",
+    icon: RxDashboard,
+    to: routeLinks.nurse.dashboard ?? '',
+  },
+      {
+    id: 'vitals',
+    label: 'Vitals',
+    title: 'Vitals',
+    icon: MdHealthAndSafety,
+    to: routeLinks.nurse.vitals ?? '',
+    subLinks: [
+      
+      {
+        id: "vitals-details",
+        label: "Vitals Details",
+        title: "Vitals / Vitals Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.nurse.vitalsDetails ?? '',
+        visible: false,
+      },
+            {
+        id: "reports-add",
+        label: "Report Add",
+        title: "Reports / Report Add",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.matron.reportsAdd ?? '',
+        visible: false,
+      },
+      {
+        id: "reports-edit",
+        label: "Report Edit",
+        title: "Reports / Report Edit",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.matron.reportsEdit ?? '',
+        visible: false,
+      }
+    ]
+  },
+      {
+    id: "procedures",
+    label: "Procedures",
+    title: "Procedures",
+    icon: LiaStethoscopeSolid,
+    to: routeLinks.nurse.procedures ?? '',
+    subLinks: [ 
+      {
+        id: "procedures-details",
+        label: "Procedure Details",
+        title: "Procedures / Procedure Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.nurse.proceduresDetails ?? '',
+        visible:false,
+      },
+    ],
   },
   {
     id:"reports",
@@ -1147,3 +1284,6 @@ export const nigerianStates = [
   "Zamfara State",
   "Abuja (FCT) State"
 ];
+export const removeHTMLTags = (str: string) => {
+  return str.replace(/<\/?[^>]+(>|$)/g, "");
+};

@@ -5,7 +5,8 @@ const ActionSchedule = ({
   setScheduledDate,
   handleSchedule,
   loading,
-  procedure
+  procedure,
+  type,
 }: any) => {
 
   const [edit, setEdit] = useState(false);
@@ -13,7 +14,7 @@ const ActionSchedule = ({
     if (procedure?.scheduledDate) {
       setScheduledDate(procedure.scheduledDate);
       setEdit(false);
-    }else{
+    } else {
       setEdit(true);
     }
   }, [procedure?.scheduledDate])
@@ -27,34 +28,42 @@ const ActionSchedule = ({
               <span>
                 {procedure?.scheduledDate
                   ? new Date(procedure?.scheduledDate).toLocaleString()
-              : ""}
-    </span>
-   </div>
+                  : ""}
+              </span>
+            </div>
 
-   <button onClick={() => setEdit(true)}>Edit</button>
-</div>
-      )
-    }
-  {edit && (
-    
-<div>
-      <label className="text-sm text-gray-600">Schedule Date</label>
-    <input
-      type="datetime-local"
-      className="w-full  form-input rounded p-2 mt-1"
-      value={scheduledDate}
-      onChange={(e) => setScheduledDate(e.target.value)}
-    />
-    <button
-      onClick={handleSchedule}
-      className="mt-3 px-4 py-2 bg-primary text-white rounded w-full"
-      disabled={loading}
-    >
-      {loading ? "Scheduling..." : procedure?.scheduledDate ? "Reschedule Procedure" : "Schedule Procedure"}
-    </button>
-</div>
-  )}
-  </div> )
+            {type === "admin" && (
+              <button
+                onClick={() => setEdit(true)}
+                className="text-primary hover:underline"
+              >
+                Edit
+              </button>
+            )}
+
+          </div>
+        )
+      }
+      {edit && type === "admin" ?(
+
+        <div>
+          <label className="text-sm text-gray-600">Schedule Date</label>
+          <input
+            type="datetime-local"
+            className="w-full  form-input rounded p-2 mt-1"
+            value={scheduledDate}
+            onChange={(e) => setScheduledDate(e.target.value)}
+          />
+          <button
+            onClick={handleSchedule}
+            className="mt-3 px-4 py-2 bg-primary text-white rounded w-full"
+            disabled={loading}
+          >
+            {loading ? "Scheduling..." : procedure?.scheduledDate ? "Reschedule Procedure" : "Schedule Procedure"}
+          </button>
+        </div>
+      ) : ""}
+    </div>)
 };
 
 

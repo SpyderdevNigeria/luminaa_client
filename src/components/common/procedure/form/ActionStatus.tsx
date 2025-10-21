@@ -8,6 +8,7 @@ const ActionStatus = ({
   handleStatusUpdate,
   loading,
   procedure,
+  type,
 }: any) => {
   const [edit, setEdit] = useState(false);
 
@@ -32,16 +33,18 @@ const ActionStatus = ({
               <p className="text-gray-500 text-sm mt-1">{procedure.note}</p>
             )}
           </div>
-          <button
+         {type === "admin" &&  (
+           <button
             onClick={() => setEdit(true)}
             className="text-blue-600 hover:underline"
           >
             Edit
           </button>
+          )}
         </div>
       )}
 
-      {edit && (
+      {edit && type === "admin" ? (
         <div className="flex flex-col gap-2">
           <label className="text-sm text-gray-600">Procedure Status</label>
           <select
@@ -75,7 +78,7 @@ const ActionStatus = ({
             {loading ? "Updating..." : "Update Status"}
           </button>
         </div>
-      )}
+      ) : ""}
     </div>
   );
 };

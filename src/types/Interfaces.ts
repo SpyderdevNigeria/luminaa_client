@@ -44,6 +44,7 @@ export interface IUser {
   isBioDataCompleted: boolean;
   isMedicalHistoryCompleted: boolean;
   licenseNumber:string;
+  isMatron:string|boolean|undefined|null;
   user: {
     id: string;
     createdAt: string;
@@ -51,6 +52,7 @@ export interface IUser {
     firstName: string;
     lastName: string;
     email: string;
+    isMatron:string|boolean|undefined|null;
     password: string;
     role: string;
     isActive: boolean;

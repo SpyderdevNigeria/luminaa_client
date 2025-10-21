@@ -6,7 +6,7 @@ import StatusBadge from "../../../components/common/StatusBadge";
 import { FiArrowLeft } from "react-icons/fi";
 import { useReports } from "../../../hooks/useReports";
 import Table, { Column } from "../../../components/common/Table";
-import { reportTypeOptions } from "../../../utils/dashboardUtils";
+import { removeHTMLTags, reportTypeOptions } from "../../../utils/dashboardUtils";
 import HeaderTab from "../../../components/common/HeaderTab";
 
 function AdminNurseDetails() {
@@ -61,7 +61,7 @@ function AdminNurseDetails() {
       label: "Content",
       render: (report) => (
         <span className="line-clamp-1" title={report?.content}>
-          {report?.content || "N/A"}
+          {removeHTMLTags(report?.content) || "N/A"}
         </span>
       ),
     },

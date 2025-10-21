@@ -9,7 +9,7 @@ import Dropdown from "../../../components/dropdown/dropdown";
 import NurseReportModal from "../../../components/modal/NurseReportModal";
 import HeaderTab from "../../../components/common/HeaderTab";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
-import { reportTypeOptions } from "../../../utils/dashboardUtils";
+import { removeHTMLTags, reportTypeOptions } from "../../../utils/dashboardUtils";
 import { Link } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import { BsEye } from "react-icons/bs";
@@ -37,15 +37,15 @@ function NurseReports() {
   } = useReports(NurseApi);
   // Fetch on filter change
   useEffect(() => {
-    if (user?.id) {
-      fetchReports(user?.id);
-    }
+    // if (user?.id) {
+      fetchReports(null);
+    // }
   }, [filters.page, filters.limit, filters.search, filters.reportType, filters.month]);
 
-  const handleEdit = (report: any) => {
-    setEditReport(report);
-    setShowForm(true);
-  };
+  // const handleEdit = (report: any) => {
+  //   setEditReport(report);
+  //   setShowForm(true);
+  // };
 
   const handleDelete = (reportId: string) => {
     setSelectedReportId(reportId);
@@ -72,6 +72,13 @@ function NurseReports() {
 
   const columns: Column<any>[] = [
     {
+      key: "nurse",
+      label: "Nurse",
+      render: (report) => <span>     {report?.nurse?.user?.firstName
+              ? `${report?.nurse?.user?.firstName} ${report?.nurse?.user?.lastName}`
+              : "N/A"}</span>,
+    },
+    {
       key: "reportType",
       label: "Report Type",
       render: (report) => <span>{report?.reportType || "N/A"}</span>,
@@ -81,7 +88,7 @@ function NurseReports() {
       label: "Content",
       render: (report) => (
         <span className="line-clamp-1" title={report?.content}>
-          {report?.content || "N/A"}
+          {removeHTMLTags(report?.content) || "N/A"}
         </span>
       ),
     },
@@ -102,17 +109,19 @@ function NurseReports() {
           <ul className="space-y-2 text-sm">
             <li>
             <Link
-          to={`${routeLinks.nurse.reports}/${report?.id}`}
+          to={`${user?.isMatron ? routeLinks.matron.reports : routeLinks.nurse.reports}/${report?.id}`}
          className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
         >
             <BsEye/> View
         </Link>
             </li>
-            <li
-              onClick={() => handleEdit(report)}
+            <li>
+                  <Link
+              to={`${user?.isMatron ? routeLinks.matron.reports : routeLinks.nurse.reports}/edit/${report?.id}`}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
             >
               <FiEdit2 /> Edit
+            </Link>
             </li>
             <li
               onClick={() => handleDelete(report?.id)}
@@ -132,12 +141,12 @@ function NurseReports() {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Nurse Reports</h1>
-        <button
+        <Link
+          to={`${user?.isMatron ? routeLinks.matron.reports : routeLinks.nurse.reports}/create`}
           className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
-          onClick={() => setShowForm(true)}
         >
           <FiPlus /> Add Report
-        </button>
+        </Link>
       </div>
 
        <HeaderTab
@@ -221,3 +230,5 @@ function NurseReports() {
 }
 
 export default NurseReports;
+
+

@@ -10,7 +10,7 @@ const ConsentFormSection = ({ procedure }: { procedure: any }) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
+      <div className="flex flex-col lg:flex-row items-start md:items-center gap-4 bg-gray-50 p-4 rounded-lg border border-gray-200">
          <a
                     href={procedure?.consentForm?.url}
                     target="_blank"

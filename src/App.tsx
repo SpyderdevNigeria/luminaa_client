@@ -21,6 +21,7 @@ import website from "./utils/website";
 import BusinessLayout from "./components/layouts/business/BusinessLayout";
 import NurseLayout from "./components/layouts/NurseLayout";
 import Appointment from "./pages/patient/appointment/Appointment";
+import MatronLayout from "./components/layouts/MatronLayout";
 
 // Public / Business
 const Second = lazy(() => import("./pages/business/second"));
@@ -113,10 +114,12 @@ const AdminPatientStats = lazy(() => import("./pages/admin/patients/AdminPatient
 const AdminHelpCenter = lazy(() => import("./pages/admin/HelpCenter/AdminHelpCenter"));
 const AdminNurses = lazy(() => import("./pages/admin/nurses/AdminNurses"));
 const AdminNursesDetails = lazy(() => import("./pages/admin/nurses/AdminNurseDetails"));
-// const AdminVitals = lazy(() => import("./pages/admin/vitals/AdminVitals")); 
-// const AdminVitalsDetails = lazy(() => import("./pages/admin/vitals/AdminVitalsDetails")); 
+const NurseVitals = lazy(() => import("./pages/nurse/vitals/NurseVitals")); 
+const NurseVitalsDetails = lazy(() => import("./pages/nurse/vitals/NurseVitalsDetails")); 
 const AdminProcedures = lazy(() => import("./pages/admin/procedures/AdminProcedure"));
 const AdminProceduresDetails = lazy(() => import("./pages/admin/procedures/AdminProcedureDetails"));
+const NurseProcedures = lazy(() => import("./pages/nurse/procedures/NursesProcedure"));
+const NurseProceduresDetails = lazy(() => import("./pages/nurse/procedures/NursesProcedureDetails"));
 
 // Super Admin
 const SuperAdminAdmins = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdmins"));
@@ -127,6 +130,7 @@ const NurseDashboard = lazy(() => import("./pages/nurse/dashboard/NurseDashboard
 const NurseProfile = lazy(() => import("./pages/nurse/profile/NurseProfile"));
 const NurseReports = lazy(() => import("./pages/nurse/reports/NurseReport"));
 const NurseReportsDetails = lazy(() => import("./pages/nurse/reports/NurseReportDetails"));
+const NurseReportsCreateEdit = lazy(() => import("./pages/nurse/reports/NurseReportCreateEdit"));
 // Business
 const Home = lazy(() => import("./pages/business/Home"));
 
@@ -223,6 +227,27 @@ function App() {
         <Route path={routeLinks.nurse.profile} element={<NurseProfile />} />
         <Route path={routeLinks?.nurse?.reports} element={<NurseReports />} />
         <Route path={routeLinks?.nurse?.reportsDetails} element={<NurseReportsDetails />} />
+        <Route path={routeLinks.nurse.vitals} element={<NurseVitals />} />
+        <Route path={routeLinks.nurse.vitalsDetails} element={<NurseVitalsDetails />} />
+        <Route path={routeLinks.nurse.procedures} element={<NurseProcedures />} />
+        <Route path={routeLinks.nurse.proceduresDetails} element={<NurseProceduresDetails />} />
+        <Route path={routeLinks.nurse.reportsAdd} element={<NurseReportsCreateEdit />}/>
+         <Route path={routeLinks.nurse.reportsEdit} element={<NurseReportsCreateEdit />}/>
+      </Route>
+
+            {/* Nurse Routes */}
+      <Route path={routeLinks.matron.path} element={<MatronLayout />}>
+        <Route index element={<Navigate to={routeLinks.matron.dashboard} replace />} />
+        <Route path={routeLinks.matron.dashboard} element={<NurseDashboard />} />
+        <Route path={routeLinks.matron.profile} element={<NurseProfile />} />
+        <Route path={routeLinks?.matron?.reports} element={<NurseReports />} />
+        <Route path={routeLinks?.matron?.reportsDetails} element={<NurseReportsDetails />} />
+        <Route path={routeLinks.matron.vitals} element={<NurseVitals />} />
+        <Route path={routeLinks.matron.vitalsDetails} element={<NurseVitalsDetails />} />
+        <Route path={routeLinks.matron.procedures} element={<NurseProcedures />} />
+        <Route path={routeLinks.matron.proceduresDetails} element={<NurseProceduresDetails />} />
+                <Route path={routeLinks.matron.reportsAdd} element={<NurseReportsCreateEdit />}/>
+         <Route path={routeLinks.matron.reportsEdit} element={<NurseReportsCreateEdit />}/>
       </Route>
 
       {/* Pharmacist Routes */}
