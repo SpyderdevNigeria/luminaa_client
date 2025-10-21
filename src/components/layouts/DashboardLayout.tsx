@@ -46,6 +46,8 @@ function DashboardLayout({ children, links, type }: DashboardLayoutProps) {
       pharmacist: "pharmacist",
       admin: "admin",
       super_admin: "super admin",
+      nurse: "nurse",
+      matron : "matron",
     };
 
     if (type && roleMap[type]) {

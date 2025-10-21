@@ -62,7 +62,7 @@ function MatronLayout() {
   if (authLoading) return <LoadingScreen />;
   return (
     <div>
-      <DashboardLayout links={navItemsMatron} type={userProfile?.user?.role || ""} >
+      <DashboardLayout links={navItemsMatron} type={"matron"} >
         <Outlet />
       </DashboardLayout>
     </div>

@@ -138,7 +138,7 @@ function NurseReports() {
 
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-4 bg-white ">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Nurse Reports</h1>
         <Link
