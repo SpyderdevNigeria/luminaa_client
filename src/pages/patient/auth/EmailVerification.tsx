@@ -41,7 +41,7 @@ function EmailVerification() {
       setErrMsg("Please enter a valid 6-digit OTP.");
       return;
     }
-    console.log(userProfile);
+    ;
 
     if (!userProfile?.user?.email) {
       setErrMsg("User email not found.");
@@ -69,7 +69,7 @@ function EmailVerification() {
   };
 
   const handleResendOtp = async () => {
-    console.log(userProfile);
+    ;
 
     if (!userProfile?.user?.email) {
       setErrMsg("User email not found.");

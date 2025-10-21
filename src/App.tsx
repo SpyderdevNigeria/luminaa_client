@@ -22,6 +22,7 @@ import BusinessLayout from "./components/layouts/business/BusinessLayout";
 import NurseLayout from "./components/layouts/NurseLayout";
 import Appointment from "./pages/patient/appointment/Appointment";
 import MatronLayout from "./components/layouts/MatronLayout";
+import NurseHelpCenter from "./pages/nurse/HelpCenter/NurseHelpCenter";
 
 // Public / Business
 const Second = lazy(() => import("./pages/business/second"));
@@ -237,6 +238,7 @@ function App() {
          <Route path={routeLinks.nurse.reportsEdit} element={<NurseReportsCreateEdit />}/>
          <Route path={routeLinks.nurse.patient} element={<NursePatient />} />
           <Route path={routeLinks.nurse.patientDetails} element={<NursePatientDetails />} />
+        <Route path={routeLinks.nurse.helpCenter} element={<NurseHelpCenter />} />
       </Route>
 
             {/* Matron Routes */}
@@ -254,6 +256,7 @@ function App() {
          <Route path={routeLinks.matron.reportsEdit} element={<NurseReportsCreateEdit />}/>
           <Route path={routeLinks.matron.patient} element={<NursePatient />} />
           <Route path={routeLinks.matron.patientDetails} element={<NursePatientDetails />} />
+            <Route path={routeLinks.matron.helpCenter} element={<NurseHelpCenter />} />
       </Route>
 
       {/* Pharmacist Routes */}

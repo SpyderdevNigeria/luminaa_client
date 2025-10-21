@@ -47,7 +47,7 @@ function PartnerEmailVerification() {
       setErrMsg("Please enter a valid 6-digit OTP.");
       return;
     }
-    console.log(userProfile);
+    ;
 
     if (!userProfile?.user?.email) {
       setErrMsg("User email not found.");
@@ -85,7 +85,7 @@ function PartnerEmailVerification() {
   };
 
   const handleResendOtp = async () => {
-    console.log(userProfile);
+    ;
 
     if (!userProfile?.user?.email) {
       setErrMsg("User email not found.");

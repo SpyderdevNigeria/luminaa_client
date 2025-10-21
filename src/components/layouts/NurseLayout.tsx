@@ -45,7 +45,7 @@ function NurseLayout() {
      if (userProfile?.isMatron === true) {
       navigate(routeLinks?.matron?.dashboard);
     }
-    console.log(userProfile)
+    
   }, [authLoading, userProfile, navigate]);
 
 

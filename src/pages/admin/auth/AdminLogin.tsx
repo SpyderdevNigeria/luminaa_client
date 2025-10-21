@@ -44,7 +44,7 @@ function AdminLogin() {
     try {
       const response = await AuthApi.login(email, password);
       const { accessToken, user, refreshToken } = response.data.data;
-      console.log(response.data.data);
+      
       const payload: IPayload = {
         token: accessToken,
         refreshToken: refreshToken,

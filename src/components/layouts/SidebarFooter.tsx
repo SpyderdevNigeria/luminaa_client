@@ -38,6 +38,13 @@ function SidebarFooter() {
       case "pharmacist":
         url = routeLinks.pharmacist?.helpCenter;
         break;
+      case "nurse":
+        if (userProfile?.isMatron) {
+          url = routeLinks.matron?.helpCenter;
+        } else {
+          url = routeLinks.nurse?.helpCenter;
+        }
+        break;
       case "lab_tech":
         url = routeLinks.lab?.helpCenter;
         break;

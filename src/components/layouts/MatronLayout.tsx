@@ -32,8 +32,13 @@ function MatronLayout() {
       navigate(routeLinks?.auth?.partnerEmailVerification);
       return;
     }
-   if (user.role !== "nurse" && userProfile?.isMatron === true) {
+   if (user.role !== "nurse" ) {
       dispatch(logout());
+      navigate(routeLinks?.auth?.partnerLogin);
+      return;
+    }
+    if ( userProfile?.isMatron !== true) {
+        dispatch(logout());
       navigate(routeLinks?.auth?.partnerLogin);
       return;
     }
