@@ -9,6 +9,7 @@ import routeLinks from "../../../utils/routes";
 import { Link } from "react-router-dom";
 import { useReports } from "../../../hooks/useReports";
 import { useSelector } from "react-redux";
+import { removeHTMLTags } from "../../../utils/dashboardUtils";
 function NurseDashboard() {
   const {
     data: reports,
@@ -48,7 +49,7 @@ function NurseDashboard() {
       label: "Content",
       render: (report) => (
         <span className="line-clamp-1" title={report?.content}>
-          {report?.content || "N/A"}
+          {removeHTMLTags(report?.content) || "N/A"}
         </span>
       ),
     },
@@ -69,7 +70,7 @@ function NurseDashboard() {
       label: "View",
       render: (report) => (
         <Link
-          to={`${routeLinks.nurse.reports}/${report?.id}`}
+          to={`${user?.isMatron ? routeLinks.matron.reports : routeLinks.nurse.reports}/${report?.id}`}
           className="underline text-primary"
         >
           View
