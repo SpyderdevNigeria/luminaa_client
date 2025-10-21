@@ -61,6 +61,18 @@ const NurseApi = {
     const response = await api.get(`/nurse/reports/${id}`);
     return response.data;
   },
+
+  
+  getPatientById: async (id: any) => {
+    const response = await api.get(`/nurse/patients/${id}`);
+    return response.data;
+  },
+
+
+  getPatients: async (query: any) => {
+    const response = await api.get(`/nurse/patients${query}`);
+    return response.data;
+  },
 }
 
 export default NurseApi;

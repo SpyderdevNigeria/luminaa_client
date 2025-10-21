@@ -64,6 +64,8 @@ nurse : {
   vitalsDetails: '/nurse/vitals/:id',
   procedures : '/nurse/procedures',
   proceduresDetails : '/nurse/procedures/:id',
+  patient : '/nurse/patients',
+  patientDetails : '/nurse/patients/:id',
 },
 matron : {
   path: '/matron',
@@ -78,6 +80,8 @@ matron : {
   vitalsDetails: '/matron/vitals/:id',
    procedures : '/matron/procedures',
   proceduresDetails : '/matron/procedures/:id',
+  patient : '/matron/patients',
+  patientDetails : '/matron/patients/:id',
 },
 lab: { 
     path:'/lab',

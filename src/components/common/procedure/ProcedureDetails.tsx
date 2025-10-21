@@ -14,6 +14,9 @@ import { BiArrowBack } from "react-icons/bi";
 import ProcedureReport from "./form/ProcedureReport";
 import DrugChart from "../DrugChart";
 import MedicalHistorySection from "../MedicalHistorySection";
+import ProcedureDocuments from "./form/ProcedureDocuments";
+import ProcedureResults from "./form/ProcedureResults";
+import InputOutput from "../input-output/InputOutput";
 
 
 interface ProcedureDetailsProps {
@@ -40,21 +43,21 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
   const [noteForConsent, setNoteForConsent] = useState("");
   const [consentFiles, setConsentFiles] = useState<FileList | null>(null);
   const { showToast } = useToaster();
-  const [tab, setTab] = useState<"status" | "payment" | "schedule" | "consent" | "vitals" | "report">("schedule");
-const [editingVital, setEditingVital] = useState<any>(null);
-const [addNewVital, setAddNewVital] = useState(false);
+  const [tab, setTab] = useState<"status" | "payment" | "schedule" | "consent" | "vitals" | "report" | "documents" | "results">("schedule");
+  const [editingVital, setEditingVital] = useState<any>(null);
+  const [addNewVital, setAddNewVital] = useState(false);
 
   useEffect(() => {
-  if (data?.data) {
-    setScheduledDate( data?.data?.scheduledDate || "");
-    setPaymentStatus(data?.data?.paymentStatus || "");
-    setStatus(data?.data?.status || "");
-    setNote(data?.data?.note || "");
-    setNoteForConsent(data?.data?.note || "");
-    setConsentFiles(null);
-  }
+    if (data?.data) {
+      setScheduledDate(data?.data?.scheduledDate || "");
+      setPaymentStatus(data?.data?.paymentStatus || "");
+      setStatus(data?.data?.status || "");
+      setNote(data?.data?.note || "");
+      setNoteForConsent(data?.data?.note || "");
+      setConsentFiles(null);
+    }
 
-}, [data?.data]);
+  }, [data?.data]);
 
   if (isLoading) return <div className="p-6 text-center">Loading...</div>;
   if (error) return <div className="p-6 text-red-500 text-center">{error}</div>;
@@ -81,8 +84,8 @@ const [addNewVital, setAddNewVital] = useState(false);
       );
       showToast("Procedure scheduled successfully", "success");
       onUpdated?.();
-    } catch (error:any) {
-      showToast( error?.response?.message || error?.response?.data?.message || "Failed to schedule procedure", "error");
+    } catch (error: any) {
+      showToast(error?.response?.message || error?.response?.data?.message || "Failed to schedule procedure", "error");
     } finally {
       setLoadingAction(null);
     }
@@ -95,8 +98,8 @@ const [addNewVital, setAddNewVital] = useState(false);
       await AdminApi.updateProcedurePayment(procedureId, paymentStatus);
       showToast("Payment status updated successfully", "success");
       onUpdated?.();
-    } catch (error:any) {
-      showToast( error?.response?.data?.message || error?.response?.message || "Failed to update payment status", "error");
+    } catch (error: any) {
+      showToast(error?.response?.data?.message || error?.response?.message || "Failed to update payment status", "error");
     } finally {
       setLoadingAction(null);
     }
@@ -109,9 +112,9 @@ const [addNewVital, setAddNewVital] = useState(false);
       await AdminApi.updateProcedureStatus(procedureId, status, note);
       showToast("Status updated successfully", "success");
       onUpdated?.();
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error?.response?.data)
-      showToast( error?.response?.message || error?.response?.data?.message || "Failed to update status", "error");
+      showToast(error?.response?.message || error?.response?.data?.message || "Failed to update status", "error");
     } finally {
       setLoadingAction(null);
     }
@@ -124,9 +127,9 @@ const [addNewVital, setAddNewVital] = useState(false);
       await AdminApi.uploadConsentForm(procedureId, consentFiles, noteForConsent);
       showToast("Consent form uploaded successfully", "success");
       onUpdated?.();
-    } catch (error:any) {
+    } catch (error: any) {
 
-      showToast( error?.response?.message || error?.response?.data?.message || "Failed to upload consent form", "error");
+      showToast(error?.response?.message || error?.response?.data?.message || "Failed to upload consent form", "error");
     } finally {
       setLoadingAction(null);
     }
@@ -135,23 +138,22 @@ const [addNewVital, setAddNewVital] = useState(false);
   return (
     <div className=" rounded-b-lg">
       <button className="mb-4 text-sm text-primary flex flex-row gap-2 items-center" onClick={() => window.history.back()}>
-        <BiArrowBack/> back
+        <BiArrowBack /> back
       </button>
       {/* ---- TOP TAB NAVIGATION ---- */}
       <div className="flex flex-wrap border-b border-gray-200 mb-4 bg-white ">
-        {["overview", "patient", "appointment", ]
-          .concat(type === "nurse" ? [ "doctor", 'drugchart', "actions", ] : [])
-           .concat(type === "admin" ? [ "doctor", "actions", ] : [])
-          .concat(type === "doctor" ? [ "medicalHistory", ] : [])
+        {["overview", "patient", "appointment",]
+          .concat(type === "nurse" ? ["doctor", 'drugchart', "actions",] : [])
+          .concat(type === "admin" ? ["doctor", "input-output" ,"actions",] : [])
+          .concat(type === "doctor" ? ["medicalHistory", "input-output" ,] : [])
           .map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 text-sm font-medium capitalize border-b-2  transition-all duration-200 ${
-                activeTab === tab
+              className={`px-4 py-2 text-sm font-medium capitalize border-b-2  transition-all duration-200 ${activeTab === tab
                   ? "border-primary text-primary"
                   : "border-transparent text-gray-500 hover:text-primary"
-              }`}
+                }`}
             >
               {tab}
             </button>
@@ -161,209 +163,227 @@ const [addNewVital, setAddNewVital] = useState(false);
       {/* ---- TAB CONTENT ---- */}
       <div className="space-y-6">
         {/* --- OVERVIEW --- */}
-    {activeTab === "overview" && procedure && (
-      <Overview procedure={procedure} />
-    )}
+        {activeTab === "overview" && procedure && (
+          <Overview procedure={procedure} />
+        )}
         {/* --- PATIENT INFO --- */}
         {activeTab === "patient" && (
-           <Patient procedure={procedure} />
-    
+          <Patient procedure={procedure} />
+
         )}
 
         {/* --- DOCTOR INFO --- */}
         {activeTab === "doctor" && (
-            
+
           <Doctor procedure={procedure} />
 
         )}
 
-        {activeTab === "medicalHistory" && 
-        (
-          <MedicalHistorySection procedure={procedure} type={'doctor'}  fetchProcedure={onUpdated}/>
+        {activeTab === "input-output" && (
+          <InputOutput procedure={procedure} type={type} />
         )}
+
+        {activeTab === "medicalHistory" &&
+          (
+            <MedicalHistorySection procedure={procedure} type={'doctor'} fetchProcedure={onUpdated} />
+          )}
 
         {/* --- APPOINTMENT --- */}
         {activeTab === "appointment" && (
-            <Appointment procedure={procedure} />
+          <Appointment procedure={procedure} />
         )}
         {activeTab === "drugchart" && (
-         <DrugChart 
-        patientId={procedure?.patient?.id}
-        procedureId={procedure?.id}
-         type={type}
-        />
+          <DrugChart
+            patientId={procedure?.patient?.id}
+            procedureId={procedure?.id}
+            type={type}
+          />
 
-      )}
+        )}
         {/* --- ADMIN ACTIONS (Modal inside) --- */}
-       {activeTab === "actions" && (
-        <div className="flex flex-col md:flex-row gap-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-        {/* Left Tabs Section */}
-        <div className="w-full md:w-1/4 border-r border-gray-200">
-          <h2 className="text-base font-semibold text-gray-700 mb-3 px-2">Actions</h2>
-          <div className="flex md:flex-col overflow-x-auto md:overflow-visible">
-            {["payment", "schedule",  "status",] 
-             .concat(type === "nurse" ? [ "consent", "vitals", "report",] : [])
-            .map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t as "status" | "payment" | "schedule" | "consent" | "vitals" | "report")}
-                className={`flex items-center justify-start gap-2 px-3 py-2 text-sm font-medium capitalize transition-all duration-150  mb-1
-                  ${
-                    tab === t
-                      ? "bg-primary/10 text-primary border-s-4 border-primary"
-                      : "text-gray-600 hover:text-primary hover:bg-gray-50"
-                  }`}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-        </div>
+        {activeTab === "actions" && (
+          <div className="flex flex-col md:flex-row gap-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+            {/* Left Tabs Section */}
+            <div className="w-full md:w-1/4 border-r border-gray-200">
+              <h2 className="text-base font-semibold text-gray-700 mb-3 px-2">Actions</h2>
+              <div className="flex md:flex-col overflow-x-auto md:overflow-visible">
+                {["payment", "schedule", "status",]
+                  .concat(type === "nurse" ? ["consent", "vitals", "report", "documents", "results" ] : [])
+                  .map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setTab(t as "status" | "payment" | "schedule" | "consent" | "vitals" | "report")}
+                      className={`flex items-center justify-start gap-2 px-3 py-2 text-sm font-medium capitalize transition-all duration-150  mb-1
+                        ${tab === t
+                          ? "bg-primary/10 text-primary border-s-4 border-primary"
+                          : "text-gray-600 hover:text-primary hover:bg-gray-50"
+                        }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+              </div>
+            </div>
 
-        {/* Right Content Section */}
-        <div className="w-full md:w-3/4 p-2">
-          {/* Schedule */}
-          {tab === "schedule" && (
-            <ActionSchedule
-              scheduledDate={scheduledDate}
-              setScheduledDate={setScheduledDate}
-              handleSchedule={handleSchedule}
-              loading={loadingAction === "schedule"}
-              procedure={procedure}
-              type={type}
-            />
-          )}
+            {/* Right Content Section */}
+            <div className="w-full md:w-3/4 p-2">
+              {/* Schedule */}
+              {tab === "schedule" && (
+                <ActionSchedule
+                  scheduledDate={scheduledDate}
+                  setScheduledDate={setScheduledDate}
+                  handleSchedule={handleSchedule}
+                  loading={loadingAction === "schedule"}
+                  procedure={procedure}
+                  type={type}
+                />
+              )}
 
-          {/* Payment */}
-          {tab === "payment" && (
-            <ActionPayment
-              paymentStatus={paymentStatus}
-              setPaymentStatus={setPaymentStatus}
-              handlePaymentStatus={handlePaymentStatus}
-              loading={loadingAction === "payment"}
-              procedure={procedure}
-              type={type}
-            />
-          )}
+              {/* Payment */}
+              {tab === "payment" && (
+                <ActionPayment
+                  paymentStatus={paymentStatus}
+                  setPaymentStatus={setPaymentStatus}
+                  handlePaymentStatus={handlePaymentStatus}
+                  loading={loadingAction === "payment"}
+                  procedure={procedure}
+                  type={type}
+                />
+              )}
 
-          {/* Status */}
-          {tab === "status" && (
-            <ActionStatus
-              status={status}
-              setStatus={setStatus}
-              note={note}
-              setNote={setNote}
-              handleStatusUpdate={handleStatusUpdate}
-              loading={loadingAction === "status"}
-              procedure={procedure}
-              type={type}
-            />
-          )}
+              {/* Status */}
+              {tab === "status" && (
+                <ActionStatus
+                  status={status}
+                  setStatus={setStatus}
+                  note={note}
+                  setNote={setNote}
+                  handleStatusUpdate={handleStatusUpdate}
+                  loading={loadingAction === "status"}
+                  procedure={procedure}
+                  type={type}
+                />
+              )}
 
-          {/* Consent */}
-          {tab === "consent" && (
-            <ActionConsent
-              consentFiles={consentFiles}
-              setConsentFiles={setConsentFiles}
-              note={noteForConsent}
-              setNote={setNoteForConsent}
-              handleConsentUpload={handleConsentUpload}
-              loading={loadingAction === "consent"}
-              procedure={procedure}
-            />
-          )}
+              {/* Consent */}
+              {tab === "consent" && (
+                <ActionConsent
+                  consentFiles={consentFiles}
+                  setConsentFiles={setConsentFiles}
+                  note={noteForConsent}
+                  setNote={setNoteForConsent}
+                  handleConsentUpload={handleConsentUpload}
+                  loading={loadingAction === "consent"}
+                  procedure={procedure}
+                />
+              )}
 
-          {tab === "vitals" && (
-            <div>
+              {tab === "vitals" && (
+                <div>
 
-              {/* Vitals Section */}
-{procedure?.vitals?.length > 0 && (
-  <div className="mt-8">
-    <h3 className="text-base font-semibold text-gray-700 mb-3">
-      Vitals
-    </h3>
-    <div className="overflow-x-auto border border-gray-200 rounded-lg p-4 bg-gray-50">
-      <table className="min-w-full text-sm text-gray-700">
-        <thead className="bg-gray-100 border-b border-gray-200">
-          <tr>
-            <th className="px-3 py-2 text-left font-medium">Temperature</th>
-            <th className="px-3 py-2 text-left font-medium">Pulse</th>
-            <th className="px-3 py-2 text-left font-medium">BP (Sys/Dia)</th>
-            <th className="px-3 py-2 text-left font-medium">Heart Rate</th>
-            <th className="px-3 py-2 text-left font-medium">Resp. Rate</th>
-            <th className="px-3 py-2 text-left font-medium">O₂ Sat</th>
-            <th className="px-3 py-2 text-left font-medium">Weight</th>
-            <th className="px-3 py-2 text-left font-medium">Height</th>
-            <th className="px-3 py-2 text-left font-medium">Notes</th>
-            {/* <th className="px-3 py-2 text-left font-medium">Actions</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {procedure?.vitals.map((v: any) => (
-            <tr key={v?.id} className="border-b border-gray-200">
-              <td className="px-3 py-2">{v?.temperature || "—"}</td>
-              <td className="px-3 py-2">{v?.pulse || "—"}</td>
-              <td className="px-3 py-2">{v?.systolicBP}/{v?.diastolicBP}</td>
-              <td className="px-3 py-2">{v?.heartRate || "—"}</td>
-              <td className="px-3 py-2">{v?.respiratoryRate || "—"}</td>
-              <td className="px-3 py-2">{v?.oxygenSaturation || "—"}</td>
-              <td className="px-3 py-2">{v?.weight || "—"}</td>
-              <td className="px-3 py-2">{v?.height || "—"}</td>
-              <td className="px-3 py-2">{v?.notes || "—"}</td>
-              {/* <td className="px-3 py-2">
-                <button
-                  onClick={() => setEditingVital(v)}
-                  className="text-blue-600 hover:underline text-sm"
-                >
-                  Edit
-                </button>
-              </td> */}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-)}
- <button
-      onClick={() => setAddNewVital(true)}
-      className="mt-3 px-4 py-2 bg-primary text-white rounded"
-    >
-      Add Vital
-    </button>
+                  {/* Vitals Section */}
+                  {procedure?.vitals?.length > 0 && (
+                    <div className="mt-8">
+                      <h3 className="text-base font-semibold text-gray-700 mb-3">
+                        Vitals
+                      </h3>
+                      <div className="overflow-x-auto border border-gray-200 rounded-lg p-4 bg-gray-50">
+                        <table className="min-w-full text-sm text-gray-700">
+                          <thead className="bg-gray-100 border-b border-gray-200">
+                            <tr>
+                              <th className="px-3 py-2 text-left font-medium">Temperature</th>
+                              <th className="px-3 py-2 text-left font-medium">Pulse</th>
+                              <th className="px-3 py-2 text-left font-medium">BP (Sys/Dia)</th>
+                              <th className="px-3 py-2 text-left font-medium">Heart Rate</th>
+                              <th className="px-3 py-2 text-left font-medium">Resp. Rate</th>
+                              <th className="px-3 py-2 text-left font-medium">O₂ Sat</th>
+                              <th className="px-3 py-2 text-left font-medium">Weight</th>
+                              <th className="px-3 py-2 text-left font-medium">Height</th>
+                              <th className="px-3 py-2 text-left font-medium">Notes</th>
+                              {/* <th className="px-3 py-2 text-left font-medium">Actions</th> */}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {procedure?.vitals.map((v: any) => (
+                              <tr key={v?.id} className="border-b border-gray-200">
+                                <td className="px-3 py-2">{v?.temperature || "—"}</td>
+                                <td className="px-3 py-2">{v?.pulse || "—"}</td>
+                                <td className="px-3 py-2">{v?.systolicBP}/{v?.diastolicBP}</td>
+                                <td className="px-3 py-2">{v?.heartRate || "—"}</td>
+                                <td className="px-3 py-2">{v?.respiratoryRate || "—"}</td>
+                                <td className="px-3 py-2">{v?.oxygenSaturation || "—"}</td>
+                                <td className="px-3 py-2">{v?.weight || "—"}</td>
+                                <td className="px-3 py-2">{v?.height || "—"}</td>
+                                <td className="px-3 py-2">{v?.notes || "—"}</td>
+                                {/* <td className="px-3 py-2">
+                        <button
+                          onClick={() => setEditingVital(v)}
+                          className="text-blue-600 hover:underline text-sm"
+                        >
+                          Edit
+                        </button>
+                      </td> */}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                  <button
+                    onClick={() => setAddNewVital(true)}
+                    className="mt-3 px-4 py-2 bg-primary text-white rounded"
+                  >
+                    Add Vital
+                  </button>
 
-    {/* AdminVitalsCreate form for add/edit */}
-    {(editingVital || addNewVital) && (
-      <ActionVitalsCreate
-        vital={editingVital}
-        patientId={procedure.patientId}
-        appointmentId={procedure.appointmentId}
-        procedureId={procedure.id}
-        onClose={() => {
-          setEditingVital(null);
-          setAddNewVital(false);
-          onUpdated?.();
-        }}
-        back={false}
-      />
-)}
+                  {/* AdminVitalsCreate form for add/edit */}
+                  {(editingVital || addNewVital) && (
+                    <ActionVitalsCreate
+                      vital={editingVital}
+                      patientId={procedure.patientId}
+                      appointmentId={procedure.appointmentId}
+                      procedureId={procedure.id}
+                      onClose={() => {
+                        setEditingVital(null);
+                        setAddNewVital(false);
+                        onUpdated?.();
+                      }}
+                      back={false}
+                    />
+                  )}
+
+
+                </div>
+              )}
+
+              {tab === "report" && (
+                <ProcedureReport
+                  procedure={procedure}
+                  procedureId={procedure?.id}
+                  fetchProcedure={onUpdated}
+                />
+              )}
+
+              {tab === "documents" && (
+                <ProcedureDocuments
+                  procedure={procedure}
+                  procedureId={procedure?.id}
+                  fetchProcedure={onUpdated}
+                />
+              )}
+
+              {tab === "results" && (
+                <ProcedureResults
+                  procedure={procedure}
+                  procedureId={procedure?.id}
+                  fetchProcedure={onUpdated}
+                />
+              )}
 
 
             </div>
- )}
-
-      {tab === "report" && (
-        <ProcedureReport
-          procedure={procedure}
-          procedureId={procedure?.id}
-          fetchProcedure={onUpdated}
-        />
-      )}
-
-
-
-        </div>
-      </div>
+          </div>
         )}
 
       </div>

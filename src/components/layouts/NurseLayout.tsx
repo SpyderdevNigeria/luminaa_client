@@ -25,7 +25,7 @@ function NurseLayout() {
       return;
     }
 
-     const { user, licenseNumber } = userProfile;
+     const { user, licenseNumber,  } = userProfile;
 
      if (!user.isEmailVerified) {
       navigate(routeLinks?.auth?.partnerEmailVerification);
@@ -36,11 +36,16 @@ function NurseLayout() {
       navigate(routeLinks?.auth?.partnerLogin);
       return;
     }
+
   if (!licenseNumber && !hasFetchedProfile.current) {
       hasFetchedProfile.current = true;
       fetchProfile();
     }
-    
+
+     if (userProfile?.isMatron === true) {
+      navigate(routeLinks?.matron?.dashboard);
+    }
+    console.log(userProfile)
   }, [authLoading, userProfile, navigate]);
 
 

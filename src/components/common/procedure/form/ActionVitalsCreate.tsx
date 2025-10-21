@@ -12,6 +12,7 @@ interface Props {
   back?: boolean;
 }
 
+
 function AdminVitalsCreate({
   vital,
   patientId,
@@ -58,10 +59,10 @@ function AdminVitalsCreate({
   };
 
   const handleSubmit = async () => {
-    if (!form.patientId || !form.appointmentId || !form.procedureId) {
-      showToast("Missing required reference IDs", "error");
-      return;
-    }
+    // if (!form.patientId || !form.appointmentId || !form.procedureId) {
+    //   showToast("Missing required reference IDs", "error");
+    //   return;
+    // }
     if (
       !form.systolicBP ||
       !form.diastolicBP ||

@@ -348,6 +348,60 @@ deleteVital: async (id: string) => {
   const response = await api.post(`/admin/procedures/${id}/procedure-report`, data);
   return response.data;
 },
+
+
+createProcedureResults: async (id: string, data: { procedureResults: {
+  findings: string;
+  recommendations: string;
+  biopsyTaken: boolean;
+  complications: string;
+} }) => {
+  const response = await api.post(`/admin/procedures/${id}/procedure-results`, data);
+  return response.data;
+},
+
+
+uploadProcedureDocument: async (id: string, formData: FormData) => {
+  const response = await api.post(`/admin/procedures/${id}/documents`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+},
+
+getInputOutputById: async (id: string) => {
+  const response = await api.get(`/admin/input-output/${id}`);
+  return response.data;
+},
+
+deleteProcedureDocument: async (id: string, documentId: string) => {
+  const response = await api.delete(`/admin/procedures/${id}/documents/${documentId}`);
+  return response.data;
+},
+
+updateInputOutput: async (id: string, data: any) => {
+  const response = await api.patch(`/admin/input-output/${id}`, data);
+  return response.data;
+},
+getTotalInputOutput: async (filters: any) => {
+  const response = await api.get("/admin/input-output/total", {
+    params: filters,
+  });
+  return response.data;
+},
+createInputOutput: async (data: any) => {
+  const response = await api.post("/admin/input-output/add", data);
+  return response.data;
+},
+getInputOutputs: async (filters: any) => {
+  const response = await api.get("/admin/input-output/list", { params: filters });
+  return response.data;
+},
+  deleteInputOutput: async (id: string) => {
+    const response = await api.delete(`/admin/input-output/${id}`);
+    return response.data;
+  },
 };
 
 export default AdminApi;

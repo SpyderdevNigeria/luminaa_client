@@ -279,6 +279,31 @@ export const navItemsNurse = [
     to: routeLinks.nurse.dashboard ?? '',
   },
       {
+    id: "patients",
+    label: "Patients",
+    title: "Patients",
+    icon: FaUserInjured,
+    to: undefined,
+    subLinks: [
+      {
+        id: "patients-main",
+        label: "Patients List",
+        title: "Patients List",
+        icon: FaUserInjured,
+        to: routeLinks.nurse.patient ?? '',
+        visible: true,
+      },
+            {
+        id: "patients-view",
+        label: "Patients View",
+        title: "Patients View",
+        icon: FaUserInjured,
+        to: routeLinks.nurse.patientDetails ?? '',
+        visible: false,
+      },
+    ],
+  },
+      {
     id: 'vitals',
     label: 'Vitals',
     title: 'Vitals',
@@ -362,14 +387,41 @@ export const navItemsMatron = [
     label: "Dashboard",
     title: "Dashboard",
     icon: RxDashboard,
-    to: routeLinks.nurse.dashboard ?? '',
+    to: routeLinks.matron.dashboard ?? '',
   },
+
+    {
+    id: "patients",
+    label: "Patients",
+    title: "Patients",
+    icon: FaUserInjured,
+    to: undefined,
+    subLinks: [
+      {
+        id: "patients-main",
+        label: "Patients List",
+        title: "Patients List",
+        icon: FaUserInjured,
+        to: routeLinks.matron.patient ?? '',
+        visible: true,
+      },
+            {
+        id: "patients-view",
+        label: "Patients View",
+        title: "Patients View",
+        icon: FaUserInjured,
+        to: routeLinks.matron.patientDetails ?? '',
+        visible: false,
+      },
+    ],
+  },
+
       {
     id: 'vitals',
     label: 'Vitals',
     title: 'Vitals',
     icon: MdHealthAndSafety,
-    to: routeLinks.nurse.vitals ?? '',
+    to: routeLinks.matron.vitals ?? '',
     subLinks: [
       
       {
@@ -377,7 +429,7 @@ export const navItemsMatron = [
         label: "Vitals Details",
         title: "Vitals / Vitals Details",
         icon: IoCalendarClearOutline,
-        to: routeLinks.nurse.vitalsDetails ?? '',
+        to: routeLinks.matron.vitalsDetails ?? '',
         visible: false,
       },
             {
@@ -403,14 +455,14 @@ export const navItemsMatron = [
     label: "Procedures",
     title: "Procedures",
     icon: LiaStethoscopeSolid,
-    to: routeLinks.nurse.procedures ?? '',
+    to: routeLinks.matron.procedures ?? '',
     subLinks: [ 
       {
         id: "procedures-details",
         label: "Procedure Details",
         title: "Procedures / Procedure Details",
         icon: IoCalendarClearOutline,
-        to: routeLinks.nurse.proceduresDetails ?? '',
+        to: routeLinks.matron.proceduresDetails ?? '',
         visible:false,
       },
     ],
@@ -420,14 +472,14 @@ export const navItemsMatron = [
     label:"Reports",
     title:"Reports",
     icon:IoCalendarClearOutline,
-    to:routeLinks.nurse.reports ?? '',
+    to:routeLinks.matron.reports ?? '',
     subLinks: [
       {
         id: "reports-view",
         label: "Report Details",
         title: "Reports / Report Details",
         icon: IoCalendarClearOutline,
-        to: routeLinks.nurse.reportsDetails ?? '',
+        to: routeLinks.matron.reportsDetails ?? '',
         visible: false,
       }
     ]
@@ -437,7 +489,7 @@ export const navItemsMatron = [
     label: "Profile Management",
     title: "Profile Management",
     icon: FaRegCircleUser,
-    to: routeLinks.nurse.profile ?? '',
+    to: routeLinks.matron.profile ?? '',
   },
 ]
 
@@ -1192,12 +1244,17 @@ export const returnPartnerNavigationUrlLogic = (
     if (partnerType === "pharmacist") {
       return routeLinks?.pharmacist?.dashboard;
     }
+    if (partnerType === "nurse" && partnerProfile?.isMatron === true) {
+      return routeLinks?.matron?.dashboard;
+    }
     if (partnerType === "nurse") {
       return routeLinks?.nurse?.dashboard;
     }
     if (partnerType === "sponsor") {
       return "/sponsor/dashboard";
     }
+
+ 
   }
   return routeLinks?.auth?.partnerLogin;
 };
@@ -1286,4 +1343,16 @@ export const nigerianStates = [
 ];
 export const removeHTMLTags = (str: string) => {
   return str.replace(/<\/?[^>]+(>|$)/g, "");
+};
+
+export const toDatetimeLocal = (date: Date) => {
+  const pad = (num: number) => String(num).padStart(2, "0");
+
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
 };

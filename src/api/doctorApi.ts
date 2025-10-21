@@ -234,6 +234,40 @@ getProcedureById: async (id: string) => {
   return response.data;
 },
 
+
+
+getInputOutputById: async (id: string) => {
+  const response = await api.get(`/doctor/input-output/${id}`);
+  return response.data;
+},
+
+deleteProcedureDocument: async (id: string, documentId: string) => {
+  const response = await api.delete(`/doctor/procedures/${id}/documents/${documentId}`);
+  return response.data;
+},
+
+updateInputOutput: async (id: string, data: any) => {
+  const response = await api.patch(`/doctor/input-output/${id}`, data);
+  return response.data;
+},
+getTotalInputOutput: async (filters: any) => {
+  const response = await api.get("/doctor/input-output/total", {
+    params: filters,
+  });
+  return response.data;
+},
+createInputOutput: async (data: any) => {
+  const response = await api.post("/doctor/input-output/add", data);
+  return response.data;
+},
+getInputOutputs: async (filters: any) => {
+  const response = await api.get("/doctor/input-output/list", { params: filters });
+  return response.data;
+},
+  deleteInputOutput: async (id: string) => {
+    const response = await api.delete(`/doctor/input-output/${id}`);
+    return response.data;
+  },
 }
 
 export default DoctorApi;

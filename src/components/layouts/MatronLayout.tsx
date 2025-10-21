@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import DashboardLayout from "./DashboardLayout";
-import {  navItemsNurse } from "../../utils/dashboardUtils";
+import {  navItemsMatron } from "../../utils/dashboardUtils";
 import usePartnerAuth from "../../hooks/usePartnerAuth";
 import { useLayoutEffect, useRef } from "react";
 import routeLinks from "../../utils/routes";
@@ -26,13 +26,13 @@ function MatronLayout() {
       return;
     }
 
-     const { user, licenseNumber, isMatron } = userProfile;
+     const { user, licenseNumber, } = userProfile;
 
      if (!user.isEmailVerified) {
       navigate(routeLinks?.auth?.partnerEmailVerification);
       return;
     }
-   if (user.role !== "nurse" && isMatron !== true) {
+   if (user.role !== "nurse" && userProfile?.isMatron === true) {
       dispatch(logout());
       navigate(routeLinks?.auth?.partnerLogin);
       return;
@@ -62,7 +62,7 @@ function MatronLayout() {
   if (authLoading) return <LoadingScreen />;
   return (
     <div>
-      <DashboardLayout links={navItemsNurse} type={userProfile?.user?.role || ""} >
+      <DashboardLayout links={navItemsMatron} type={userProfile?.user?.role || ""} >
         <Outlet />
       </DashboardLayout>
     </div>

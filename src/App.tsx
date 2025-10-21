@@ -131,6 +131,8 @@ const NurseProfile = lazy(() => import("./pages/nurse/profile/NurseProfile"));
 const NurseReports = lazy(() => import("./pages/nurse/reports/NurseReport"));
 const NurseReportsDetails = lazy(() => import("./pages/nurse/reports/NurseReportDetails"));
 const NurseReportsCreateEdit = lazy(() => import("./pages/nurse/reports/NurseReportCreateEdit"));
+const NursePatient = lazy(() => import("./pages/nurse/patients/NursesPatients"));
+const NursePatientDetails = lazy(() => import("./pages/nurse/patients/NursesPatientsDetails"));
 // Business
 const Home = lazy(() => import("./pages/business/Home"));
 
@@ -233,9 +235,11 @@ function App() {
         <Route path={routeLinks.nurse.proceduresDetails} element={<NurseProceduresDetails />} />
         <Route path={routeLinks.nurse.reportsAdd} element={<NurseReportsCreateEdit />}/>
          <Route path={routeLinks.nurse.reportsEdit} element={<NurseReportsCreateEdit />}/>
+         <Route path={routeLinks.nurse.patient} element={<NursePatient />} />
+          <Route path={routeLinks.nurse.patientDetails} element={<NursePatientDetails />} />
       </Route>
 
-            {/* Nurse Routes */}
+            {/* Matron Routes */}
       <Route path={routeLinks.matron.path} element={<MatronLayout />}>
         <Route index element={<Navigate to={routeLinks.matron.dashboard} replace />} />
         <Route path={routeLinks.matron.dashboard} element={<NurseDashboard />} />
@@ -248,6 +252,8 @@ function App() {
         <Route path={routeLinks.matron.proceduresDetails} element={<NurseProceduresDetails />} />
                 <Route path={routeLinks.matron.reportsAdd} element={<NurseReportsCreateEdit />}/>
          <Route path={routeLinks.matron.reportsEdit} element={<NurseReportsCreateEdit />}/>
+          <Route path={routeLinks.matron.patient} element={<NursePatient />} />
+          <Route path={routeLinks.matron.patientDetails} element={<NursePatientDetails />} />
       </Route>
 
       {/* Pharmacist Routes */}

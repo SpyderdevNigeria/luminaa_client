@@ -19,7 +19,7 @@ const ConsentFormSection = ({ procedure }: { procedure: any }) => {
                     <img
                       src={procedure?.consentForm?.url}
                       alt="Consent Form"
-                      className="rounded-xl shadow-md max-w-xs mt-2"
+                      className="rounded-xl shadow-md w-40 h-40 mt-2"
                     />
                   </a>
         <div className="flex-1">
