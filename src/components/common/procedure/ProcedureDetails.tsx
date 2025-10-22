@@ -282,7 +282,16 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                 <div>
 
                   {/* Vitals Section */}
-                  {procedure?.vitals?.length > 0 && (
+
+                  <button
+                    onClick={() => setAddNewVital(!addNewVital)}
+                    className="mt-3 px-4 py-2 bg-primary text-white rounded"
+                  >
+                    {!addNewVital ? "Add Vital" : "Cancel"} 
+                  </button>
+
+                  {!editingVital && !addNewVital ? 
+              procedure?.vitals?.length > 0 && (
                     <div className="mt-8">
                       <h3 className="text-base font-semibold text-gray-700 mb-3">
                         Vitals
@@ -329,20 +338,15 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                         </table>
                       </div>
                     </div>
-                  )}
-                  <button
-                    onClick={() => setAddNewVital(true)}
-                    className="mt-3 px-4 py-2 bg-primary text-white rounded"
-                  >
-                    Add Vital
-                  </button>
-
+                  ) : null
+                  }
+                  {console.log(procedure)}
                   {/* AdminVitalsCreate form for add/edit */}
                   {(editingVital || addNewVital) && (
                     <ActionVitalsCreate
                       vital={editingVital}
-                      patientId={procedure.patientId}
-                      appointmentId={procedure.appointmentId}
+                      patientId={procedure?.patient?.id}
+                      appointmentId={procedure?.appointment?.id}
                       procedureId={procedure.id}
                       onClose={() => {
                         setEditingVital(null);

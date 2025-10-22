@@ -54,7 +54,7 @@ function DoctorAppointmentsDetails() {
       <DiagnosisDetails  appointmentId={id || ""}  handleBack={handleBack}/>
      )}
 
-      {step === "PrescriptionDetails" && (
+      {step === "MedicalHistory" && (
       <MedicalHistorySection  procedure={appointment || ""} type={"doctor"} fetchProcedure={() => fetchAppointment()}  handleBack={handleBack}/>
      )}
      

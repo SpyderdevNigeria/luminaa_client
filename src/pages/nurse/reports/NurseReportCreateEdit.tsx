@@ -27,8 +27,11 @@ export default function NurseReportCreateEdit() {
   });
 
   useEffect(() => {
-    const fetchReport = async () => {
-      if (!id) return;
+       if (!id) return;
+    fetchReport();
+  }, [id, defaultReportType]);
+
+      const fetchReport = async () => {
       setFetching(true);
       try {
         const res = await NurseApi.getReportById(id);
@@ -47,15 +50,13 @@ export default function NurseReportCreateEdit() {
       }
     };
 
-    fetchReport();
-  }, [id, defaultReportType]);
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+ 
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -73,7 +74,7 @@ export default function NurseReportCreateEdit() {
         await NurseApi.createReport(payload);
         showToast("Report created successfully", "success");
       }
-      navigate("/nurse/reports");
+      navigate(-1);
     } catch (error) {
       console.error(error);
       showToast("Failed to save report", "error");
@@ -90,12 +91,12 @@ export default function NurseReportCreateEdit() {
     );
   }
 
-  if (error) {
+  if (error ) {
     return (
       <div className="p-6 text-center">
         <p className="text-red-500">{error}</p>
         <button
-          onClick={() => navigate("/nurse/reports")}
+          onClick={() => navigate(-1)}
           className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-md"
         >
           Back
@@ -132,6 +133,18 @@ export default function NurseReportCreateEdit() {
           </p>
         </div>
 
+                {/* Month (date input for month) */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Month</label>
+          <input
+            type="date"
+            name="month"
+            value={formData.month}
+            onChange={handleChange}
+            className="border border-gray-300 p-2 rounded-md w-full"
+          />
+        </div>
+
         {/* Content (Jodit Editor) */}
         <div>
           <label className="block text-sm font-medium mb-1">Content</label>
@@ -144,17 +157,6 @@ export default function NurseReportCreateEdit() {
           />
         </div>
 
-        {/* Month (date input for month) */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Month</label>
-          <input
-            type="date"
-            name="month"
-            value={formData.month}
-            onChange={handleChange}
-            className="border border-gray-300 p-2 rounded-md w-full"
-          />
-        </div>
       </div>
 
       {/* Buttons */}

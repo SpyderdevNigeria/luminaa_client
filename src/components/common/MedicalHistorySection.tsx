@@ -87,7 +87,7 @@ const MedicalHistorySection = ({
       );
 
       await api.patch(
-        `/doctor/procedures/${procedure?.id}/medical-history`,
+        `/doctor/appointments/${procedure?.id}/medical-history`,
         cleanedData
       );
 
@@ -164,7 +164,7 @@ const MedicalHistorySection = ({
               onChange={(e) =>
                 handleChange("presentingComplaint", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -175,7 +175,7 @@ const MedicalHistorySection = ({
               onChange={(e) =>
                 handleChange("historyOfPresentingComplaint", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -186,7 +186,7 @@ const MedicalHistorySection = ({
               onChange={(e) =>
                 handleChange("pastMedicalAndSurgicalHistory", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -195,7 +195,7 @@ const MedicalHistorySection = ({
             <textarea
               value={formData.drugHistory}
               onChange={(e) => handleChange("drugHistory", e.target.value)}
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -204,7 +204,7 @@ const MedicalHistorySection = ({
             <textarea
               value={formData.socialHistory}
               onChange={(e) => handleChange("socialHistory", e.target.value)}
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -215,7 +215,7 @@ const MedicalHistorySection = ({
               onChange={(e) =>
                 handleChange("generalPhysicalExamination", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -226,7 +226,7 @@ const MedicalHistorySection = ({
               onChange={(e) =>
                 handleChange("abdominalExamination", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -237,7 +237,7 @@ const MedicalHistorySection = ({
               onChange={(e) =>
                 handleChange("cardiovascularSystemExam", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -248,7 +248,7 @@ const MedicalHistorySection = ({
               onChange={(e) =>
                 handleChange("respiratorySystemExam", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -259,18 +259,18 @@ const MedicalHistorySection = ({
               onChange={(e) =>
                 handleChange("musculoskeletalSystemExam", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col md:col-span-2">
             <label>Urogenital System Exam</label>
             <textarea
               value={formData.urogenitalSystemExam}
               onChange={(e) =>
                 handleChange("urogenitalSystemExam", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 
@@ -281,7 +281,7 @@ const MedicalHistorySection = ({
               onChange={(e) =>
                 handleChange("centralNervousSystemExam", e.target.value)
               }
-              className="border p-2 rounded"
+              className="border p-2 rounded border-gray-200"
             />
           </div>
 

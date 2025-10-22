@@ -142,7 +142,7 @@ function NurseReports() {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Nurse Reports</h1>
         <Link
-          to={`${user?.isMatron ? routeLinks.matron.reports : routeLinks.nurse.reports}/create`}
+          to={`${user?.isMatron ? routeLinks.matron.reportsAdd : routeLinks.nurse.reportsAdd}`}
           className="bg-primary text-white px-6 py-2 text-sm rounded-md flex items-center gap-2"
         >
           <FiPlus /> Add Report

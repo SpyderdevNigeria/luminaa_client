@@ -249,7 +249,7 @@ function DoctorAppointmentsView({
 
     {/* Medical History */}
       <button
-      onClick={() => handleNext('medicalHistory')}
+      onClick={() => handleNext('MedicalHistory')}
       className="md:col-span-2 flex items-center justify-center gap-2 py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-blue-600 text-white hover:opacity-90 transition"
     >
       <span className="font-medium">Medical History</span>

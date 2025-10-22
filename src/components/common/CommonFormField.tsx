@@ -12,7 +12,8 @@ export interface CommonFormFieldProps {
   value: any;
   required?: boolean;
   max?: string; 
-  options?: SelectOption[]; // updated to support value-label pairs
+  options?: SelectOption[]; 
+  col?: string;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => void;
@@ -27,9 +28,10 @@ const CommonFormField: React.FC<CommonFormFieldProps> = ({
   required = false,
   options = [],
   onChange,
+  col,
 }) => {
   return (
-    <div key={name}>
+    <div key={name} className={`${col}`}>
       {type !== "checkbox" && (
         <label htmlFor={name} className="form-label !text-base !font-light block mb-1">
           {label}

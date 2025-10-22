@@ -112,8 +112,8 @@ if (item) {
     { name: "amount", label: "Amount", required: true },
     { name: "route", label: "Route", required: true },
     { name: "flowRate", label: "Flow Rate", required: true },
-    { name: "remark", label: "Remark", type: "textarea", required: false },
     { name: "timestamp", label: "Timestamp", type: "datetime-local", required: true },
+    { name: "remark", label: "Remark", type: "textarea", required: false, cols: "col-span-2" },
   ];
 
   return (
@@ -146,6 +146,7 @@ if (item) {
               required={field.required}
               onChange={handleChange}
               options={field.options?.map((opt) => ({ value: opt, label: opt })) || []}
+              col={field.cols}
             />
           ))}
 

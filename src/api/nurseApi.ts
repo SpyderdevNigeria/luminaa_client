@@ -37,9 +37,9 @@ const NurseApi = {
   },
 
    createReport: async (data: {
-    reportType: string;
-    content: string;
-    month: string;
+    reportType: string | undefined;
+    content: string | undefined;
+    month: string | undefined;
   }) => {
     const response = await api.post("/nurse/reports", data);
     return response.data;
@@ -57,7 +57,7 @@ const NurseApi = {
     const response = await api.delete(`/nurse/reports/${id}`);
     return response.data;
   },
-  getReportById: async (id: string) => {
+  getReportById: async (id: string | null | undefined) => {
     const response = await api.get(`/nurse/reports/${id}`);
     return response.data;
   },

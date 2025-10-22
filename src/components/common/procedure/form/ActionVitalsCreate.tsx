@@ -40,6 +40,24 @@ function AdminVitalsCreate({
     recordedAt: vital?.recordedAt || new Date().toISOString(),
   });
 
+  useEffect(()=> {
+    setForm({
+    patientId: vital?.patientId || patientId || "",
+    appointmentId: vital?.appointmentId || appointmentId || "",
+    procedureId: vital?.procedureId || procedureId || "",
+    systolicBP: vital?.systolicBP || "",
+    diastolicBP: vital?.diastolicBP || "",
+    pulse: vital?.pulse || "",
+    weight: vital?.weight || "",
+    height: vital?.height || "",
+    respiratoryRate: vital?.respiratoryRate || "",
+    spO2: vital?.spO2 || "",
+    bmi: vital?.bmi || "",
+    notes: vital?.notes || "",
+    recordedAt: vital?.recordedAt || new Date().toISOString(),
+  })
+  }, [vital, patientId, appointmentId, procedureId])
+
   /** Automatically calculate BMI */
   useEffect(() => {
     const weight = parseFloat(form.weight);
