@@ -145,7 +145,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
         {["overview", "patient", "appointment",]
           .concat(type === "nurse" ? ["doctor", 'drugchart', "actions",] : [])
           .concat(type === "admin" ? ["doctor", "input-output" ,"actions",] : [])
-          .concat(type === "doctor" ? ["medicalHistory", "input-output" ,] : [])
+          .concat(type === "doctor" ? ["input-output" ,] : [])
           .map((tab) => (
             <button
               key={tab}
