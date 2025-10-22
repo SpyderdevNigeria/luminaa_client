@@ -6,6 +6,7 @@ interface MedicalHistorySectionProps {
   procedure: any;
   type?: "doctor" | "admin";
   fetchProcedure?: () => void;
+  handleBack?: () => void;
 }
 
 interface MedicalHistoryData {
@@ -27,6 +28,7 @@ const MedicalHistorySection = ({
   procedure,
   type = "doctor",
   fetchProcedure,
+  handleBack,
 }: MedicalHistorySectionProps) => {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -104,6 +106,13 @@ const MedicalHistorySection = ({
 
   return (
     <div className="bg-white p-4 rounded shadow">
+
+             <button
+              onClick={handleBack}
+              className="text-sm text-gray-500 hover:text-gray-700"
+            >
+              ← Back
+            </button>
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-semibold text-gray-700">
           Medical History

@@ -13,7 +13,7 @@ import ActionVitalsCreate from "./form/ActionVitalsCreate";
 import { BiArrowBack } from "react-icons/bi";
 import ProcedureReport from "./form/ProcedureReport";
 import DrugChart from "../DrugChart";
-import MedicalHistorySection from "../MedicalHistorySection";
+// import MedicalHistorySection from "../MedicalHistorySection";
 import ProcedureDocuments from "./form/ProcedureDocuments";
 import ProcedureResults from "./form/ProcedureResults";
 import InputOutput from "../input-output/InputOutput";
@@ -183,10 +183,10 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
           <InputOutput procedure={procedure} type={type} />
         )}
 
-        {activeTab === "medicalHistory" &&
+        {/* {activeTab === "medicalHistory" &&
           (
             <MedicalHistorySection procedure={procedure} type={'doctor'} fetchProcedure={onUpdated} />
-          )}
+          )} */}
 
         {/* --- APPOINTMENT --- */}
         {activeTab === "appointment" && (
