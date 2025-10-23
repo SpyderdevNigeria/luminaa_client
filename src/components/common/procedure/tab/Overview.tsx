@@ -67,12 +67,12 @@ const Overview: React.FC<OverviewProps> = ({ procedure }) => {
             <table className="min-w-full text-sm text-gray-700">
               <thead className="bg-gray-100 border-b border-gray-200">
                 <tr>
-                  <th className="px-3 py-2 text-left font-medium">Temperature</th>
+                  {/* <th className="px-3 py-2 text-left font-medium">Temperature</th> */}
                   <th className="px-3 py-2 text-left font-medium">Pulse</th>
                   <th className="px-3 py-2 text-left font-medium">BP (Sys/Dia)</th>
-                  <th className="px-3 py-2 text-left font-medium">Heart Rate</th>
+                  {/* <th className="px-3 py-2 text-left font-medium">Heart Rate</th> */}
                   <th className="px-3 py-2 text-left font-medium">Resp. Rate</th>
-                  <th className="px-3 py-2 text-left font-medium">O₂ Sat</th>
+                  {/* <th className="px-3 py-2 text-left font-medium">O₂ Sat</th> */}
                   <th className="px-3 py-2 text-left font-medium">Weight</th>
                   <th className="px-3 py-2 text-left font-medium">Height</th>
                   <th className="px-3 py-2 text-left font-medium">Notes</th>
@@ -82,12 +82,12 @@ const Overview: React.FC<OverviewProps> = ({ procedure }) => {
               <tbody>
                 {procedure?.vitals.map((v: any) => (
                   <tr key={v?.id} className="border-b border-gray-200">
-                    <td className="px-3 py-2">{v?.temperature || "—"}</td>
+                    {/* <td className="px-3 py-2">{v?.temperature || "—"}</td> */}
                     <td className="px-3 py-2">{v?.pulse || "—"}</td>
                     <td className="px-3 py-2">{v?.systolicBP}/{v?.diastolicBP}</td>
-                    <td className="px-3 py-2">{v?.heartRate || "—"}</td>
+                    {/* <td className="px-3 py-2">{v?.heartRate || "—"}</td> */}
                     <td className="px-3 py-2">{v?.respiratoryRate || "—"}</td>
-                    <td className="px-3 py-2">{v?.oxygenSaturation || "—"}</td>
+                    {/* <td className="px-3 py-2">{v?.oxygenSaturation || "—"}</td> */}
                     <td className="px-3 py-2">{v?.weight || "—"}</td>
                     <td className="px-3 py-2">{v?.height || "—"}</td>
                     <td className="px-3 py-2">{v?.notes || "—"}</td>

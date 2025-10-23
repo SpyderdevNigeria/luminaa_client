@@ -5,7 +5,7 @@ import Section from "../../../components/common/Section";
 import Info from "../../../components/common/Info";
 
 
-const NurseVitalsDetails = () => {
+const PatientVitalsDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [vital, setVital] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ const NurseVitalsDetails = () => {
   if (!vital)
     return <p className="text-gray-600 text-center mt-6">No vital details found.</p>;
 
-  const patient = vital.patient;
+  // const patient = vital.patient;
   // const appointment = vital.appointment;
   // const procedure = vital.procedure;
 
@@ -82,7 +82,7 @@ const NurseVitalsDetails = () => {
       </Section>
 
       {/* Patient Info */}
-      {patient && (
+      {/* {patient && (
         <Section title="Patient Information">
           <div className="grid md:grid-cols-2 gap-4">
             <Info label="Full Name" value={`${patient.user.firstName} ${patient.user.lastName}`} />
@@ -101,7 +101,7 @@ const NurseVitalsDetails = () => {
             />
           </div>
         </Section>
-      )}
+      )} */}
 
       {/* Appointment Info */}
       {/* {appointment && (
@@ -202,4 +202,4 @@ const NurseVitalsDetails = () => {
   );
 };
 
-export default NurseVitalsDetails;
+export default PatientVitalsDetails;

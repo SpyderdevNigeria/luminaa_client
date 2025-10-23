@@ -31,6 +31,10 @@ const routeLinks = {
     medicalHistory:'/patient/diagnosis',
     checkout:'/patient/checkout',
     helpCenter:'/patient/helpcenter',
+    vitals: '/patient/vitals',
+    vitalsDetails: '/patient/vitals/:id',
+    procedures : '/patient/procedures',
+    proceduresDetails : '/patient/procedures/:id',
 
   },
   doctor: {

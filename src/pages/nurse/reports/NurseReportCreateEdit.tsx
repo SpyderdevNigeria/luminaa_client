@@ -121,16 +121,19 @@ export default function NurseReportCreateEdit() {
             name="reportType"
             value={formData.reportType}
             onChange={handleChange}
-            className="border border-gray-300 p-2 rounded-md w-full"
-            disabled // readonly since it's role-based
+            className={`border border-gray-300 p-2 rounded-md w-full ${!user?.isMatron ? 'disabled' : ''}`}
+            disabled={user?.isMatron ? false : true}
           >
             <option value="daily">Daily</option>
-            <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
           </select>
-          <p className="text-xs text-gray-500 mt-1">
-            (Report type is automatically set based on your role)
-          </p>
+          {
+            !user?.isMatron && (
+              <p className="text-sm text-gray-500 mt-1">
+                Note: Only Matrons can create monthly reports.
+              </p>
+            )
+          }
         </div>
 
                 {/* Month (date input for month) */}

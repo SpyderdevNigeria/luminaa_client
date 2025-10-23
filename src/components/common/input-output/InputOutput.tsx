@@ -123,7 +123,9 @@ function InputOutput({procedure, type} : any) {
           </ul>
         </Dropdown>
       ),
+      notVisible: type !== 'admin',
     },
+
   ];
 
   if (showForm) {
@@ -161,12 +163,14 @@ function InputOutput({procedure, type} : any) {
     <div className="space-y-4 p-4 bg-white">
       <div className="flex justify-between items-center">
         <h1 className="text-lg md:text-2xl font-semibold">Input / Output Records</h1>
-        <button
+        {type === 'admin' && (
+            <button
           className="bg-primary text-white px-6 py-2 text-xs md:text-sm rounded-md flex items-center gap-2"
           onClick={() => setShowForm(true)}
         >
           <FiPlus /> Add Record
         </button>
+        )}
       </div>
 
       {/* 🔹 Header Filters Section */}

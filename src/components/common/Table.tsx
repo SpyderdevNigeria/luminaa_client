@@ -6,6 +6,7 @@ export type Column<T> = {
   label: string;
   render?: (item: T) => React.ReactNode;
   arrows?: boolean;
+  notVisible?: boolean;
 };
 
 type Props<T> = {
@@ -111,7 +112,7 @@ const Table = <T extends object>({
             <tr>
               <th className="p-3 font-light">S/N</th>
               {columns.map((col, index) => (
-                <th key={index} className="p-3 font-light whitespace-nowrap">
+                <th key={index} className={`p-3 font-light whitespace-nowrap ${col.notVisible ? "hidden" : ""}`}>
                   <div
                     className={`${
                       col.arrows ? "flex flex-row items-center gap-2" : ""
@@ -163,13 +164,13 @@ const Table = <T extends object>({
           </thead>
           <tbody className="text-text-primary">
             {data.map((item, rowIndex) => (
-              <tr
+              <tr 
                 key={rowIndex}
-                className="bg-white  border-gray-100 hover:bg-gray-50"
+                className={`bg-white  border-gray-100 hover:bg-gray-50`}
               >
                 <td className="p-3">{(page - 1) * limit + rowIndex + 1}</td>
                 {columns.map((col, colIndex) => (
-                  <td key={colIndex} className="p-3 whitespace-nowrap">
+                  <td key={colIndex} className={`p-3 whitespace-nowrap  ${col.notVisible ? "hidden" : ""}`}>
                     {col.render
                       ? col.render(item)
                       : (item[col.key as keyof T] as React.ReactNode)}

@@ -43,7 +43,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
   const [noteForConsent, setNoteForConsent] = useState("");
   const [consentFiles, setConsentFiles] = useState<FileList | null>(null);
   const { showToast } = useToaster();
-  const [tab, setTab] = useState<"status" | "payment" | "schedule" | "consent" | "vitals" | "report" | "documents" | "results">("schedule");
+  const [tab, setTab] = useState<"status" | "payment" | "schedule" | "consent" | "vitals" | "report" | "documents" | "results">("payment");
   const [editingVital, setEditingVital] = useState<any>(null);
   const [addNewVital, setAddNewVital] = useState(false);
 
@@ -143,9 +143,9 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
       {/* ---- TOP TAB NAVIGATION ---- */}
       <div className="flex flex-wrap border-b border-gray-200 mb-4 bg-white ">
         {["overview", "patient", "appointment",]
-          .concat(type === "nurse" ? ["doctor", 'drugchart', "actions",] : [])
-          .concat(type === "admin" ? ["doctor", "input-output" ,"actions",] : [])
-          .concat(type === "doctor" ? ["input-output" ,] : [])
+          .concat(type === "nurse" ? ["doctor", 'drugchart', "vitals", "intake-outtake" , "procedure documents", "actions",] : [])
+          .concat(type === "admin" ? ["doctor", "actions",] : [])
+          .concat(type === "doctor" ? ["intake-outtake" , 'vitals', "procedure documents",'drugchart',] : [])
           .map((tab) => (
             <button
               key={tab}
@@ -179,9 +179,107 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
 
         )}
 
-        {activeTab === "input-output" && (
-          <InputOutput procedure={procedure} type={type} />
+        {activeTab === "intake-outtake" && (
+          <InputOutput procedure={procedure} type={type === "nurse" ? "admin" : "doctor"} />
         )}
+
+       {activeTab === "vitals" && (
+                <div className="p-4 bg-white">
+
+                  {/* Vitals Section */}
+
+                  {type === "nurse" && (
+                    <div className="flex items-center justify-between flex-row">
+                      <h3 className="text-2xl">Vitals</h3>
+                              <button
+                    onClick={() => setAddNewVital(!addNewVital)}
+                    className="mt-3 px-4 py-2 bg-primary text-white rounded"
+                  >
+                    {!addNewVital ? "Add Vital" : "Cancel"} 
+                  </button>
+                    </div>
+                  )}
+
+                  {!editingVital && !addNewVital ? 
+                    procedure?.vitals?.length > 0 && (
+                    <div className="mt-8">
+                      <h3 className="text-base font-semibold text-gray-700 mb-3">
+                        Vitals
+                      </h3>
+                      <div className="overflow-x-auto border border-gray-200 rounded-lg p-4 bg-gray-50">
+                        <table className="min-w-full text-sm text-gray-700">
+                          <thead className="bg-gray-100 border-b border-gray-200">
+                            <tr>
+                              {/* <th className="px-3 py-2 text-left font-medium">Temperature</th> */}
+                              <th className="px-3 py-2 text-left font-medium">Pulse</th>
+                              <th className="px-3 py-2 text-left font-medium">BP (Sys/Dia)</th>
+                              {/* <th className="px-3 py-2 text-left font-medium">Heart Rate</th> */}
+                              <th className="px-3 py-2 text-left font-medium">Resp. Rate</th>
+                              {/* <th className="px-3 py-2 text-left font-medium">O₂ Sat</th> */}
+                              <th className="px-3 py-2 text-left font-medium">Weight</th>
+                              <th className="px-3 py-2 text-left font-medium">Height</th>
+                              <th className="px-3 py-2 text-left font-medium">Notes</th>
+                              {/* <th className="px-3 py-2 text-left font-medium">Actions</th> */}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {procedure?.vitals.map((v: any) => (
+                              <tr key={v?.id} className="border-b border-gray-200">
+                                {/* <td className="px-3 py-2">{v?.temperature || "—"}</td> */}
+                                <td className="px-3 py-2">{v?.pulse || "—"}</td>
+                                <td className="px-3 py-2">{v?.systolicBP}/{v?.diastolicBP}</td>
+                                {/* <td className="px-3 py-2">{v?.heartRate || "—"}</td> */}
+                                <td className="px-3 py-2">{v?.respiratoryRate || "—"}</td>
+                                {/* <td className="px-3 py-2">{v?.oxygenSaturation || "—"}</td> */}
+                                <td className="px-3 py-2">{v?.weight || "—"}</td>
+                                <td className="px-3 py-2">{v?.height || "—"}</td>
+                                <td className="px-3 py-2">{v?.notes || "—"}</td>
+                                {/* <td className="px-3 py-2">
+                        <button
+                          onClick={() => setEditingVital(v)}
+                          className="text-blue-600 hover:underline text-sm"
+                        >
+                          Edit
+                        </button>
+                      </td> */}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ) : null
+                  }
+                  {/* AdminVitalsCreate form for add/edit */}
+                  {(editingVital || addNewVital) && (
+                    <ActionVitalsCreate
+                      vital={editingVital}
+                      patientId={procedure?.patient?.id}
+                      appointmentId={procedure?.appointment?.id}
+                      procedureId={procedure.id}
+                      onClose={() => {
+                        setEditingVital(null);
+                        setAddNewVital(false);
+                        onUpdated?.();
+                      }}
+                      back={false}
+                    />
+                  )}
+
+
+                </div>
+        )}
+
+
+          {activeTab === "procedure documents" && (
+           <div className="p-4 bg-white">
+                 <ProcedureDocuments
+                  procedure={procedure}
+                  procedureId={procedure?.id}
+                  fetchProcedure={onUpdated}
+                />
+           </div>
+              )}
 
         {/* {activeTab === "medicalHistory" &&
           (
@@ -208,7 +306,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
               <h2 className="text-base font-semibold text-gray-700 mb-3 px-2">Actions</h2>
               <div className="flex md:flex-col overflow-x-auto md:overflow-visible">
                 {["payment", "schedule", "status",]
-                  .concat(type === "nurse" ? ["consent", "vitals", "report", "documents", "results" ] : [])
+                  .concat(type === "nurse" ? ["consent", "report",  "results" ] : [])
                   .map((t) => (
                     <button
                       key={t}
@@ -278,88 +376,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                 />
               )}
 
-              {tab === "vitals" && (
-                <div>
 
-                  {/* Vitals Section */}
-
-                  <button
-                    onClick={() => setAddNewVital(!addNewVital)}
-                    className="mt-3 px-4 py-2 bg-primary text-white rounded"
-                  >
-                    {!addNewVital ? "Add Vital" : "Cancel"} 
-                  </button>
-
-                  {!editingVital && !addNewVital ? 
-              procedure?.vitals?.length > 0 && (
-                    <div className="mt-8">
-                      <h3 className="text-base font-semibold text-gray-700 mb-3">
-                        Vitals
-                      </h3>
-                      <div className="overflow-x-auto border border-gray-200 rounded-lg p-4 bg-gray-50">
-                        <table className="min-w-full text-sm text-gray-700">
-                          <thead className="bg-gray-100 border-b border-gray-200">
-                            <tr>
-                              <th className="px-3 py-2 text-left font-medium">Temperature</th>
-                              <th className="px-3 py-2 text-left font-medium">Pulse</th>
-                              <th className="px-3 py-2 text-left font-medium">BP (Sys/Dia)</th>
-                              <th className="px-3 py-2 text-left font-medium">Heart Rate</th>
-                              <th className="px-3 py-2 text-left font-medium">Resp. Rate</th>
-                              <th className="px-3 py-2 text-left font-medium">O₂ Sat</th>
-                              <th className="px-3 py-2 text-left font-medium">Weight</th>
-                              <th className="px-3 py-2 text-left font-medium">Height</th>
-                              <th className="px-3 py-2 text-left font-medium">Notes</th>
-                              {/* <th className="px-3 py-2 text-left font-medium">Actions</th> */}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {procedure?.vitals.map((v: any) => (
-                              <tr key={v?.id} className="border-b border-gray-200">
-                                <td className="px-3 py-2">{v?.temperature || "—"}</td>
-                                <td className="px-3 py-2">{v?.pulse || "—"}</td>
-                                <td className="px-3 py-2">{v?.systolicBP}/{v?.diastolicBP}</td>
-                                <td className="px-3 py-2">{v?.heartRate || "—"}</td>
-                                <td className="px-3 py-2">{v?.respiratoryRate || "—"}</td>
-                                <td className="px-3 py-2">{v?.oxygenSaturation || "—"}</td>
-                                <td className="px-3 py-2">{v?.weight || "—"}</td>
-                                <td className="px-3 py-2">{v?.height || "—"}</td>
-                                <td className="px-3 py-2">{v?.notes || "—"}</td>
-                                {/* <td className="px-3 py-2">
-                        <button
-                          onClick={() => setEditingVital(v)}
-                          className="text-blue-600 hover:underline text-sm"
-                        >
-                          Edit
-                        </button>
-                      </td> */}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  ) : null
-                  }
-                  {console.log(procedure)}
-                  {/* AdminVitalsCreate form for add/edit */}
-                  {(editingVital || addNewVital) && (
-                    <ActionVitalsCreate
-                      vital={editingVital}
-                      patientId={procedure?.patient?.id}
-                      appointmentId={procedure?.appointment?.id}
-                      procedureId={procedure.id}
-                      onClose={() => {
-                        setEditingVital(null);
-                        setAddNewVital(false);
-                        onUpdated?.();
-                      }}
-                      back={false}
-                    />
-                  )}
-
-
-                </div>
-              )}
 
               {tab === "report" && (
                 <ProcedureReport
@@ -369,13 +386,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                 />
               )}
 
-              {tab === "documents" && (
-                <ProcedureDocuments
-                  procedure={procedure}
-                  procedureId={procedure?.id}
-                  fetchProcedure={onUpdated}
-                />
-              )}
+
 
               {tab === "results" && (
                 <ProcedureResults

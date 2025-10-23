@@ -17,6 +17,7 @@ import { IPrescription } from "../../../types/Interfaces";
 import UploadDocumentsModal from "../../../components/modal/UploadDocumentsModal";
 import { useToaster } from "../../../components/common/ToasterContext";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
+import MedicalHistorySection from "../../../components/common/MedicalHistorySection";
 
 interface Diagnosis {
   id?: string;
@@ -39,7 +40,7 @@ interface Document {
 
 const ConsultationView = () => {
   const { id } = useParams<{ id: string }>();
-  const [activeTab, setActiveTab] = useState<"general" | "diagnosis" | "prescription" | "documents">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "diagnosis" | "prescription" | "documents" | "medical history">("general");
   const [appointment, setAppointment] = useState<any>(null);
   const [diagnosis, setDiagnosis] = useState<Diagnosis[]>([]);
   const [prescriptions, setPrescriptions] = useState<IPrescription[]>([]);
@@ -163,7 +164,7 @@ const ConsultationView = () => {
 
         {/* Tab Headers */}
         <div className="flex gap-4 mb-6 border-b border-gray-200 overflow-y-hidden overflow-x-scroll scrollbar-visible">
-          {["general", "diagnosis", "prescription", "documents"].map((tab) => (
+          {["general", "diagnosis", "prescription", "documents", "medical history"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab as any)}
@@ -319,6 +320,11 @@ const ConsultationView = () => {
             />
           </div>
         )}
+
+         {activeTab === "medical history" &&
+          (
+            <MedicalHistorySection procedure={appointment} type={'patient'} fetchProcedure={()=> {}} />
+          )} 
       </div>
     </div>
   );

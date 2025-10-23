@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../../api/apiConfig";
-import Info from "./Info";
+
 
 interface MedicalHistorySectionProps {
   procedure: any;
-  type?: "doctor" | "admin";
+  type?: "doctor" | "admin" | "patient";
   fetchProcedure?: () => void;
   handleBack?: () => void;
 }
@@ -107,12 +107,14 @@ const MedicalHistorySection = ({
   return (
     <div className="bg-white p-4 rounded shadow">
 
-             <button
+       {type !== "patient" && (
+              <button
               onClick={handleBack}
               className="text-sm text-gray-500 hover:text-gray-700"
             >
               ← Back
             </button>
+            )}
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-semibold text-gray-700">
           Medical History
@@ -134,7 +136,7 @@ const MedicalHistorySection = ({
 
       {!editing ? (
         hasMedicalHistory ? (
-          <div className="space-y-2 text-sm">
+          <div className="space-y-4 text-sm">
       <Info label="Presenting Complaint" value={medicalHistory.presentingComplaint || "N/A"} />
       <Info label="History of Presenting Complaint" value={medicalHistory.historyOfPresentingComplaint || "N/A"} />
       <Info label="Past Medical and Surgical History" value={medicalHistory.pastMedicalAndSurgicalHistory || "N/A"} />
@@ -151,8 +153,9 @@ const MedicalHistorySection = ({
         ) : (
           <p className="text-gray-500">No medical history available</p>
         )
-      ) : (
-        <form
+      ) : 
+      type === "doctor" && (
+           <form
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
@@ -295,9 +298,19 @@ const MedicalHistorySection = ({
             </button>
           </div>
         </form>
-      )}
+      )
+      }
     </div>
   );
 };
 
 export default MedicalHistorySection;
+
+
+const Info = ({ label, value, full }: { label: string; value?: any; full?: boolean }) => (
+  <div className={full ? "col-span-2" : ""}>
+    <p className="text-gray-800 font-medium ">{label}</p>
+    <p className="text-sm text-gray-500 border border-gray-200 p-2">{value || "—"}</p>
+  </div>
+);
+

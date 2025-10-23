@@ -47,6 +47,41 @@ export const navItemsPatient = [
       },
     ],
   },
+        {
+    id: 'vitals',
+    label: 'Vitals',
+    title: 'Vitals',
+    icon: MdHealthAndSafety,
+    to: routeLinks.patient.vitals ?? '',
+    subLinks: [
+      
+      {
+        id: "vitals-details",
+        label: "Vitals Details",
+        title: "Vitals / Vitals Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.patient.vitalsDetails ?? '',
+        visible: false,
+      },
+    ]
+  },
+      {
+    id: "procedures",
+    label: "Procedures",
+    title: "Procedures",
+    icon: LiaStethoscopeSolid,
+    to: routeLinks.patient.procedures ?? '',
+    subLinks: [ 
+      {
+        id: "procedures-details",
+        label: "Procedure Details",
+        title: "Procedures / Procedure Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.patient.proceduresDetails ?? '',
+        visible:false,
+      },
+    ],
+  },
   {
     id: "lab-radiology",
     label: "Lab/Radiology",
@@ -146,6 +181,8 @@ export const navItemsDoctor = [
       },
     ],
   },
+
+  
   {
     id: "schedule",
     label: "Schedule",

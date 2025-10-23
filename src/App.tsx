@@ -51,6 +51,10 @@ const MedicalHistory = lazy(() => import("./pages/patient/medical/MedicalHistory
 const PatientMedications = lazy(() => import("./pages/patient/pharmacy/PatientMedications"));
 const PatientCheckout = lazy(() => import("./pages/patient/checkout/PatientCheckout"));
 const PatientHelpCenter = lazy(() => import("./pages/patient/HelpCenter/PatientHelpCenter"));
+const PatientVitals = lazy(() => import("./pages/patient/vitals/PatientVitals"));
+const PatientProcedures = lazy(() => import("./pages/patient/procedures/PatientProcedures"));
+const PatientProceduresDetails = lazy(() => import("./pages/patient/procedures/PatientProcedureDetails"));
+const PatientVitalsDetails = lazy(() => import("./pages/patient/vitals/PatientVitalsDetails"));
 
 // Doctor
 const DoctorDashboard = lazy(() => import("./pages/doctor/dashboard/DoctorDashboard"));
@@ -191,6 +195,10 @@ function App() {
         <Route path={routeLinks.patient.checkout} element={<PatientCheckout />} />
         <Route path={routeLinks.patient.pharmacy} element={<PatientMedications />} />
         <Route path={routeLinks.patient.medicalHistory} element={<MedicalHistory />} />
+        <Route path={routeLinks?.patient?.procedures} element={<PatientProcedures />} />
+        <Route path={routeLinks?.patient?.proceduresDetails} element={<PatientProceduresDetails />} />
+        <Route path={routeLinks?.patient?.vitals} element={<PatientVitals />} />
+        <Route path={routeLinks?.patient?.vitalsDetails} element={<PatientVitalsDetails />} />
       </Route>
 
       {/* Doctor Routes */}
