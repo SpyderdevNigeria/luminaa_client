@@ -16,7 +16,7 @@ function NursesProcedures() {
   const {
     data: procedures,
     loading,
-    error,
+    // error,
     total,
     filters,
     updateFilters,
@@ -168,9 +168,9 @@ function NursesProcedures() {
             </p>
           ) : null}
 
-          {error && (
+          {/* {error && (
             <p className="text-center text-red-500 py-2">{error}</p>
-          )}
+          )} */}
         </section>
       </div>
     </div>

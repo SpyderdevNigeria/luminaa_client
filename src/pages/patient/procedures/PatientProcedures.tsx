@@ -4,7 +4,7 @@ import useProcedures from "../../../hooks/useProcedures";
 import Table, { Column } from "../../../components/common/Table";
 import StatusBadge from "../../../components/common/StatusBadge";
 import { procedurePaymentStatus, procedureStatus, procedureType } from "../../../utils/dashboardUtils";
-import AdminApi from "../../../api/adminApi";
+import PatientApi from "../../../api/PatientApi";
 import Dropdown from "../../../components/dropdown/dropdown";
 import { FiEye } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
@@ -16,12 +16,12 @@ function PatientProcedures() {
   const {
     data: procedures,
     loading,
-    error,
+    // error,
     total,
     filters,
     updateFilters,
     loadProcedures,
-  } = useProcedures(AdminApi);
+  } = useProcedures(PatientApi);
 
   useEffect(() => {
     loadProcedures(); 
@@ -168,9 +168,9 @@ function PatientProcedures() {
             </p>
           ) : null}
 
-          {error && (
+          {/* {error && (
             <p className="text-center text-red-500 py-2">{error}</p>
-          )}
+          )} */}
         </section>
       </div>
     </div>

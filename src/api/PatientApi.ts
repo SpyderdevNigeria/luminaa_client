@@ -170,6 +170,29 @@ const PatientApi = {
     const response = await api.get(`/patient/orders/${id}`);
     return response.data;
   },
+
+    //vitals 
+  getVitals: async (filters: any) => {
+  const response = await api.get("/patient/vitals", { params: filters });
+  return response.data;
+},
+
+getVitalById: async (id: any) => {
+  const response = await api.get(`/patient/vitals/${id}`);
+  return response.data; 
+},
+
+   getProcedures: async (options?: { params?: Record<string, any> }) => {
+    const response = await  api.get("/patient/procedures", {
+      params: options?.params || {}, 
+    }); 
+    return response.data;
+  },
+  getProcedureById: async (id: string) => {
+  const response = await api.get(`/patient/procedures/${id}`);
+  return response.data;
+},
+
 }
 
 export default PatientApi;

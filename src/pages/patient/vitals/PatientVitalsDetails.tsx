@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import AdminApi from "../../../api/adminApi";
+import PatientApi from "../../../api/PatientApi";
 import Section from "../../../components/common/Section";
 import Info from "../../../components/common/Info";
 
@@ -15,7 +15,7 @@ const PatientVitalsDetails = () => {
     const fetchVital = async () => {
       try {
         setLoading(true);
-        const response = await AdminApi.getVitalById(id!);
+        const response = await PatientApi.getVitalById(id!);
         setVital(response?.data);
       } catch (err: any) {
         setError(err.message || "Failed to load vital details");

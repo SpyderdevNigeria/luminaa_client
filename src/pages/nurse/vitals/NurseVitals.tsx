@@ -38,19 +38,10 @@ function NurseVitals() {
     getPatients,
   } = useAdmin(AdminApi);
 
-  //  Load Procedures from Procedure Hook
-  // const {
-  //   data: procedures,
-  //   filters: proceduresFilters,
-  //   loadProcedures,
-  // } = useProcedures(AdminApi);
+
 
   const [showForm, setShowForm] = useState(false);
   const [editVital, setEditVital] = useState<any>(null);
-  //const [confirmOpen, setConfirmOpen] = useState(false);
- // const [confirmLoading, setConfirmLoading] = useState(false);
-  // const [confirmMessage, setConfirmMessage] = useState("");
-  //const [selectedVitalId, setSelectedVitalId] = useState<string | null>(null);
 
   // Load vitals when filters change
   useEffect(() => {
@@ -70,33 +61,6 @@ function NurseVitals() {
     // loadProcedures();
   }, []);
 
-  // const handleEdit = (vital: any) => {
-  //   setEditVital(vital);
-  //   setShowForm(true);
-  // };
-
-  // const confirmDelete = (id: string) => {
-  //   setSelectedVitalId(id);
-  //   setConfirmMessage("Are you sure you want to delete this vital record?");
-  //   setConfirmOpen(true);
-  // };
-
-  // const onConfirmDelete = async () => {
-  //   if (!selectedVitalId) return;
-  //   setConfirmLoading(true);
-  //   try {
-  //     await AdminApi.deleteVital(selectedVitalId);
-  //     showToast("Vital deleted successfully", "success");
-  //     fetchVitals();
-  //   } catch (error) {
-  //     console.error("Delete error:", error);
-  //     showToast("Failed to delete vital", "error");
-  //   } finally {
-  //     setConfirmOpen(false);
-  //     setConfirmLoading(false);
-  //     setSelectedVitalId(null);
-  //   }
-  // };
 
   const columns: Column<any>[] = [
     {
@@ -152,18 +116,6 @@ function NurseVitals() {
             <li>
               <Link to={`${user?.isMatron ? routeLinks.matron.vitals : routeLinks.nurse.vitals}/${vital?.id}`} className="flex items-center gap-4"><FiEye /> View </Link>
             </li>
-            {/* <li
-              onClick={() => handleEdit(vital)}
-              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
-            >
-              <FiEdit /> Edit
-            </li>
-            <li
-              onClick={() => confirmDelete(vital?.id)}
-              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"
-            >
-              <FiTrash2 /> Delete
-            </li> */}
           </ul>
         </Dropdown>
       ),
@@ -207,38 +159,15 @@ function NurseVitals() {
               }
             },
           },
-          // {
-          //   label: "Procedure",
-          //   placeholder: "Search procedure...",
-          //   value: proceduresFilters?.search,
-          //   onChange: (val) => {
-          //     updateFilters({
-          //       search: val,
-          //       page: 1,
-          //     });
-          //     loadProcedures();
-          //   },
-          //   suggestions: procedures?.map(
-          //     (proc: any) => `${proc?.type || "Procedure"} (${proc?.status})`
-          //   ),
-          // },
-        ]}
+          
+        ]
+      }
+        dateFrom={filters.dateFrom}
+        dateTo={filters.dateTo}
+        onDateFromChange={(val) => updateFilters({ dateFrom: val, page: 1 })}
+        onDateToChange={(val) => updateFilters({  dateTo: val, page: 1 })}
       />
 
-
-
-      {/* 🗑 Confirm Delete */}
-      {/* <ConfirmModal
-        open={confirmOpen}
-        description={confirmMessage}
-        onConfirm={onConfirmDelete}
-        onClose={() => {
-          setConfirmOpen(false);
-          setConfirmLoading(false);
-          setSelectedVitalId(null);
-        }}
-        loading={confirmLoading}
-      /> */}
 
       {/* 📋 Table */}
       <div>

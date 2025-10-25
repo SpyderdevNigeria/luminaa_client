@@ -4,7 +4,7 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 
 import { useVitals } from "../../../hooks/useVitals";
 // import { useToaster } from "../../../components/common/ToasterContext";
-import AdminApi from "../../../api/adminApi";
+import PatientApi from "../../../api/PatientApi";
 
 import Table, { Column } from "../../../components/common/Table";
 import Dropdown from "../../../components/dropdown/dropdown";
@@ -12,7 +12,7 @@ import HeaderTab from "../../../components/common/HeaderTab";
 //import ConfirmModal from "../../../components/modal/ConfirmModal";
 import AdminVitalsCreate from "../../../components/common/procedure/form/ActionVitalsCreate";
 // import useProcedures from "../../../hooks/useProcedures";
-import useAdmin from "../../../hooks/useAdmin";
+// import useAdmin from "../../../hooks/useAdmin";
 import { Link } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 // import { useSelector } from "react-redux";
@@ -26,17 +26,17 @@ function PatientVitals() {
     filters,
     fetchVitals,
     updateFilters,
-  } = useVitals(AdminApi);
+  } = useVitals(PatientApi);
   // const {user} = useSelector((state: any) => state.auth);
   // const { showToast } = useToaster();
 
   //  Load Patients from Admin Hook
-  const {
-    patients,
-    patientsSearch,
-    setPatientsSearch,
-    getPatients,
-  } = useAdmin(AdminApi);
+  // const {
+  //   patients,
+  //   patientsSearch,
+  //   setPatientsSearch,
+  //   getPatients,
+  // } = useAdmin(PatientApi);
 
   //  Load Procedures from Procedure Hook
   // const {
@@ -66,7 +66,7 @@ function PatientVitals() {
 
   // Load patients and procedures on mount
   useEffect(() => {
-    getPatients();
+    // getPatients();
     // loadProcedures();
   }, []);
 
@@ -191,22 +191,22 @@ function PatientVitals() {
     <div className="space-y-4  bg-white p-4 ">
       <HeaderTab
         title="Vitals"
-        showSearch
+        showSearch={false}
         searches={[
-           {
-            label: "",
-            placeholder: "Search patients...",
-            value: patientsSearch,
-            data: patients, // full object array
-            getLabel: (p) => `${p?.user?.firstName} ${p?.user?.lastName}`,
-            onChange: (val, selectedPatient) => {
-              setPatientsSearch(val);
-              if (selectedPatient) {
-                updateFilters({ patientId: selectedPatient.id });
-                //  setPatientsSearch("");
-              }
-            },
-          },
+          //  {
+          //   label: "",
+          //   placeholder: "Search patients...",
+          //   value: patientsSearch,
+          //   data: patients, // full object array
+          //   getLabel: (p) => `${p?.user?.firstName} ${p?.user?.lastName}`,
+          //   onChange: (val, selectedPatient) => {
+          //     setPatientsSearch(val);
+          //     if (selectedPatient) {
+          //       updateFilters({ patientId: selectedPatient.id });
+          //       //  setPatientsSearch("");
+          //     }
+          //   },
+          // },
           // {
           //   label: "Procedure",
           //   placeholder: "Search procedure...",
@@ -223,6 +223,11 @@ function PatientVitals() {
           //   ),
           // },
         ]}
+
+        dateFrom={filters.dateFrom}
+        dateTo={filters.dateTo}
+        onDateFromChange={(val) => updateFilters({ dateFrom: val, page: 1 })}
+        onDateToChange={(val) => updateFilters({  dateTo: val, page: 1 })}
       />
 
 

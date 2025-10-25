@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProcedureDetails from "../../../components/common/procedure/ProcedureDetails";
-import AdminApi from "../../../api/adminApi";
+import PatientApi from "../../../api/PatientApi";
 function PatientProcedureDetails() {
   const { id } = useParams();
   const [procedure, setProcedure] = useState<any>(null);
@@ -11,7 +11,7 @@ function PatientProcedureDetails() {
   const fetchProcedure = async () => {
     try {
       if (!id) return;
-      const data = await AdminApi.getProcedureById(id);
+      const data = await PatientApi.getProcedureById(id);
       setProcedure(data);
     } catch (err) {
       console.error(err);

@@ -142,10 +142,10 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
       </button>
       {/* ---- TOP TAB NAVIGATION ---- */}
       <div className="flex flex-wrap border-b border-gray-200 mb-4 bg-white ">
-        {["overview", "patient", "appointment",]
-          .concat(type === "nurse" ? ["doctor", 'drugchart', "vitals", "intake-outtake" , "procedure documents", "actions",] : [])
-          .concat(type === "admin" ? ["doctor", "actions",] : [])
-          .concat(type === "doctor" ? ["intake-outtake" , 'vitals', "procedure documents",'drugchart',] : [])
+        {["overview",  "appointment",]
+          .concat(type === "nurse" ? [ "patient", "doctor", 'drugchart', "vitals", "intake-outtake" , "procedure documents", "actions",] : [])
+          .concat(type === "admin" ? [ "patient", "doctor", "actions",] : [])
+          .concat(type === "doctor" ? [ "patient", "intake-outtake" , 'vitals', "procedure documents",'drugchart',] : [])
           .map((tab) => (
             <button
               key={tab}
