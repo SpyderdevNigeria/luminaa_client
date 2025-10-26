@@ -57,6 +57,13 @@ function Navbar({ sidebarOpen, setSidebarOpen, active, type}: NavbarProps) {
         return navigate(routeLinks?.admin?.profile);
       case "super_admin":
         return navigate(routeLinks?.superAdmin?.profile);
+      case "nurse":
+        if (userProfile?.isMatron) {
+          return navigate(routeLinks?.matron?.profile);
+        } else {
+          return navigate(routeLinks?.nurse?.profile);
+
+        }
       default:
         break;
     }

@@ -294,7 +294,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
           <DrugChart
             patientId={procedure?.patient?.id}
             procedureId={procedure?.id}
-            type={type}
+            type={type === "nurse" ? "admin" : "doctor" }
           />
 
         )}
