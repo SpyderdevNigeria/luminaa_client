@@ -21,6 +21,7 @@ import { CiViewList } from "react-icons/ci";
 import { ImLab } from "react-icons/im";
 import {  MdHealthAndSafety, MdInventory, MdMedication } from "react-icons/md";
 import moment from "moment";
+import { BsMicrosoftTeams } from "react-icons/bs";
 
 export const navItemsPatient = [
   {
@@ -735,6 +736,40 @@ export const navItemsAdmin = [
   //     },
   //   ]
   // },
+    {
+    id:"partners",
+    label: "Partners",
+    title: "Partners",
+    icon: BsMicrosoftTeams ,
+    to: routeLinks.admin.partners ?? '',
+    subLinks: [
+      {
+        id: "partners-details",
+        label: "Partners Details",
+        title: "Partners / Partners Details",
+        icon: BsMicrosoftTeams ,
+        to: routeLinks.admin.partnersDetails ?? '',
+        visible: false,
+      }
+    ]
+  },
+  {
+    id: "services",
+    label: "Services",
+    title: "Services",
+    icon: MdHealthAndSafety,
+    to: routeLinks.admin.services ?? '',
+    subLinks: [
+      {
+        id: "services-details",
+        label: "Services Details",
+        title: "Services / Services Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.admin.servicesDetails ?? '',
+        visible: false,
+      }
+    ]
+  },
   {
     id: "orders",
     label: "Orders",
@@ -966,6 +1001,40 @@ export const navItemsSuperAdmin = [
   //     },
   //   ]
   // },
+  {
+    id:"partners",
+    label: "Partners",
+    title: "Partners",
+    icon: BsMicrosoftTeams ,
+    to: routeLinks.superAdmin.partners ?? '',
+    subLinks: [
+      {
+        id: "partners-details",
+        label: "Partners Details",
+        title: "Partners / Partners Details",
+        icon: BsMicrosoftTeams ,
+        to: routeLinks.superAdmin.partnersDetails ?? '',
+        visible: false,
+      }
+    ]
+  },
+    {
+    id: "services",
+    label: "Services",
+    title: "Services",
+    icon: MdHealthAndSafety,
+    to: routeLinks.superAdmin.services ?? '',
+    subLinks: [
+      {
+        id: "services-details",
+        label: "Services Details",
+        title: "Services / Services Details",
+        icon: IoCalendarClearOutline,
+        to: routeLinks.superAdmin.servicesDetails ?? '',
+        visible: false,
+      }
+    ]
+  },
   {
     id: "admins",
     label: "Admins",
@@ -1203,6 +1272,12 @@ export const labRequestStatus = [
   "CANCELLED",
 ];
 
+export const partnerTypes = [
+ "corporate",
+ "educational",
+ "healthcare",
+ "referral",
+];
 
 export const states = [
   "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno",

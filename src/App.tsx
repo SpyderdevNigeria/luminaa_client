@@ -125,11 +125,13 @@ const AdminProcedures = lazy(() => import("./pages/admin/procedures/AdminProcedu
 const AdminProceduresDetails = lazy(() => import("./pages/admin/procedures/AdminProcedureDetails"));
 const NurseProcedures = lazy(() => import("./pages/nurse/procedures/NursesProcedure"));
 const NurseProceduresDetails = lazy(() => import("./pages/nurse/procedures/NursesProcedureDetails"));
-
+const AdminPartners = lazy(() => import("./pages/admin/partners/AdminPartners"));
+const AdminPartnersDetails = lazy(() => import("./pages/admin/partners/AdminPartnersDetails"));
 // Super Admin
 const SuperAdminAdmins = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdmins"));
 const SuperAdminAdminsDetails = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdminsDetails"));
-
+const AdminServices = lazy(() => import("./pages/admin/services/AdminServices"));
+const AdminServicesDetails = lazy(() => import("./pages/admin/services/AdminServicesDetails"));
 // Nurse
 const NurseDashboard = lazy(() => import("./pages/nurse/dashboard/NurseDashboard"));
 const NurseProfile = lazy(() => import("./pages/nurse/profile/NurseProfile"));
@@ -322,6 +324,10 @@ function App() {
         <Route path={routeLinks.admin.vitalDetails} element={<AdminVitalsDetails />} /> */}
         <Route path={routeLinks?.admin?.procedures} element={<AdminProcedures />} />
         <Route path={routeLinks?.admin?.proceduresDetails} element={<AdminProceduresDetails />} />
+        <Route path={routeLinks?.admin?.partners} element={<AdminPartners />} />
+        <Route path={routeLinks?.admin?.partnersDetails} element={<AdminPartnersDetails />} />
+        <Route path={routeLinks?.admin?.services} element={<AdminServices />} />
+        <Route path={routeLinks?.admin?.servicesDetails} element={<AdminServicesDetails />} />
       </Route>
 
       {/* SuperAdmin Routes */}
@@ -359,6 +365,11 @@ function App() {
         <Route path={routeLinks.superAdmin.vitalDetails} element={<AdminVitalsDetails />} /> */}
         <Route path={routeLinks?.superAdmin?.procedures} element={<AdminProcedures />} />
         <Route path={routeLinks?.superAdmin?.proceduresDetails} element={<AdminProceduresDetails />} />
+
+        <Route path={routeLinks?.superAdmin?.partners} element={<AdminPartners />} />
+        <Route path={routeLinks?.superAdmin?.partnersDetails} element={<AdminPartnersDetails />} />
+        <Route path={routeLinks?.superAdmin?.services} element={<AdminServices />} />
+        <Route path={routeLinks?.superAdmin?.servicesDetails} element={<AdminServicesDetails />} />
       </Route>
 
       {/* Catch all unmatched routes */}

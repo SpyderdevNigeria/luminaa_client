@@ -4,6 +4,7 @@ import AdminApi from "../../../api/adminApi";
 import { format } from "date-fns";
 import UserImage from "../../../assets/images/patient/user.png";
 import { FiArrowLeft } from "react-icons/fi";
+import AssignPartnerModal from "../../../components/modal/AssignPartnerModal";
 
 type User = {
   id: string;
@@ -39,6 +40,7 @@ type User = {
   emergencyContactPhone?: string;
   isBioDataCompleted?: boolean;
   isMedicalHistoryCompleted?: boolean;
+  partner?: any;
 };
 
 function AdminPatientDetails() {
@@ -51,7 +53,8 @@ function AdminPatientDetails() {
     text: "",
     type: "",
   });
-
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"assign" | "unassign">("assign");
   const fetchUser = async () => {
     try {
       setLoading(true);
@@ -87,6 +90,15 @@ function AdminPatientDetails() {
       setVerifying(false);
     }
   };
+    const openAssignModal = () => {
+    setModalType("assign");
+    setModalOpen(true);
+  };
+
+  const openUnassignModal = () => {
+    setModalType("unassign");
+    setModalOpen(true);
+  };
 
   useEffect(() => {
     fetchUser();
@@ -107,13 +119,32 @@ function AdminPatientDetails() {
       <h2 className="text-2xl font-semibold mb-2">Patient Details</h2>
 
       {/* Profile Image */}
-      <section>
-        <h4 className="text-lg font-medium mb-2">Profile Image</h4>
+      <section className="flex flex-row items-center justify-between">
+        <div>
+                <h4 className="text-lg font-medium mb-2">Profile Image</h4>
         <img
           src={user?.user?.profilePicture || UserImage}
           alt=""
           className="w-30 h-30 rounded-full object-cover"
         />
+        </div>
+
+
+              {user.partner ? (
+          <button
+            onClick={openUnassignModal}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+          >
+            Unassign Partner
+          </button>
+        ) : (
+          <button
+            onClick={openAssignModal}
+            className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90"
+          >
+            Assign Partner
+          </button>
+        )}
       </section>
 
       {/* Account Info */}
@@ -234,6 +265,16 @@ function AdminPatientDetails() {
           </p>
         )}
       </section>
+
+
+       <AssignPartnerModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        type={modalType}
+        patientId={id || ""}
+        onSuccess={fetchUser}
+      />
+
     </div>
     </div>
 

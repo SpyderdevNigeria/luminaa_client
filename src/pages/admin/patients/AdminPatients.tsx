@@ -14,6 +14,8 @@ import ConfirmModal from "../../../components/modal/ConfirmModal";
 import { useToaster } from "../../../components/common/ToasterContext";
 import UploadCsvModal from "../../../components/modal/UploadCsvModal";
 import UploadErrorModal from "../../../components/modal/UploadErrorModal";
+import AssignPartnerModal from "../../../components/modal/AssignPartnerModal";
+import { BsMicrosoftTeams } from "react-icons/bs";
 
 function AdminPatients() {
   const {
@@ -58,7 +60,8 @@ const [errorModalOpen, setErrorModalOpen] = useState(false);
     isBioDataCompleted,
     isMedicalHistoryCompleted,
   ]);
-
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalType, setModalType] = useState<"assign" | "unassign">("assign");
   // const handleEdit = (patient: any) => {
   //   setEditPatient(patient);
   //   setShowForm(true);
@@ -143,12 +146,19 @@ const [errorModalOpen, setErrorModalOpen] = useState(false);
             <AdminNavigate role={"patient"} id={patient?.id} type="true">
               <FiEye /> View
             </AdminNavigate>
-            {/* <li
-              onClick={() => handleEdit(patient)}
-              className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
-            >
-              <FiEdit /> Edit
-            </li> */}
+<li
+  onClick={() => {
+    if (patient?.partner) {
+      openUnassignModal(patient?.id);
+    } else {
+      openAssignModal(patient?.id);
+    }
+  }}
+  className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2"
+>
+ <BsMicrosoftTeams /> {patient?.partner ? "Unassign Partner" : "Assign Partner"}
+</li>
+
             <li
               onClick={() => confirmDelete(patient?.id)}
               className="cursor-pointer hover:bg-gray-100 p-1 rounded flex items-center gap-2 text-red-600"
@@ -206,7 +216,17 @@ const handleUpload = async (file: File) => {
     setLoadingUpload(false);
   }
 };
+    const openAssignModal = (id: any) => {
+      setSelectedPatientId(id);
+    setModalType("assign");
+    setModalOpen(true);
+  };
 
+  const openUnassignModal = (id: any) => {
+    setSelectedPatientId(id);
+    setModalType("unassign");
+    setModalOpen(true);
+  };
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -294,6 +314,14 @@ const handleUpload = async (file: File) => {
         loadingUpload={loadingUpload}
       />
 
+      <AssignPartnerModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        type={modalType}
+        patientId={selectedPatientId || ""}
+        onSuccess={getPatients}
+      />
+      
       <UploadErrorModal
         open={errorModalOpen}
         onClose={() => setErrorModalOpen(false)}

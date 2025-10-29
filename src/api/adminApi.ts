@@ -402,6 +402,91 @@ getInputOutputs: async (filters: any) => {
     const response = await api.delete(`/admin/input-output/${id}`);
     return response.data;
   },
+
+  getPartners: async (filters: any) => {
+  const response = await api.get("/admin/partners", { params: filters });
+  return response.data;
+},
+
+  createPartner: async (data: any) => {
+    const response = await api.post("/admin/partners", data);
+    return response.data;
+  },
+  updatePartner: async (id: string, data: any) => {
+    const response = await api.patch(`/admin/partners/${id}`, data);
+    return response.data;
+  },
+  deletePartner: async (id: string) => {
+    const response = await api.delete(`/admin/partners/${id}`);
+    return response.data;
+  },
+
+  getPartnerById: async (id: string) => {
+    const response = await api.get(`/admin/partners/${id}`);
+    return response.data;
+  },
+
+  assignPartnerToPatient: async (data: { patientId: string; partnerId: string }) => {
+    const response = await api.post("/admin/partners/assign-patient", data);
+    return response.data;
+  },
+
+  unassignPartnerFromPatient: async (patientId: string) => {
+    const response = await api.post(`/admin/partners/unassign-patient/${patientId}`);
+    return response.data;
+  },
+
+  getServices: async (filters: any) => {
+    const response = await api.get("/admin/services", { params: filters });
+    return response.data;
+  },
+  createService: async (data: any) => {
+    const response = await api.post("/admin/services", data);
+    return response.data;
+  },
+  updateService: async (id: string, data: any) => {
+    const response = await api.patch(`/admin/services/${id}`, data);
+    return response.data;
+  } ,
+  deleteService: async (id: string) => {
+    const response = await api.delete(`/admin/services/${id}`);
+    return response.data;
+  },
+
+  getServiceById: async (id: string) => {
+    const response = await api.get(`/admin/services/${id}`);
+    return response.data;
+  },
+
+  restoreService: async (id: string) => {
+    const response = await api.post(`/admin/services/${id}/restore`);
+    return response.data;
+  },
+
+  getServicePrices: async (filters: any) => {
+    const response = await api.get("/admin/partner-service-prices", { params: filters });
+    return response.data;
+  },
+
+  restorePartnerServicePrice: async (id: string) => {
+    const response = await api.post(`/admin/partner-service-prices/${id}/restore`);
+    return response.data;
+  },
+
+  deletePartnerServicePrice: async (id: string) => {
+    const response = await api.delete(`/admin/partner-service-prices/${id}`);
+    return response.data;
+  },
+
+  updatePartnerServicePrice: async (id: string, data: any) => {
+    const response = await api.patch(`/admin/partner-service-prices/${id}`, data);
+    return response.data;
+  },
+  createPartnerServicePrice: async (data: any) => {
+    const response = await api.post("/admin/partner-service-prices", data);
+    return response.data;
+  },
+
 };
 
 export default AdminApi;

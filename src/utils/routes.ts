@@ -139,6 +139,10 @@ admin: {
   vitalDetails : '/admin/vitals/:id',
   procedures: '/admin/procedures',
   proceduresDetails: '/admin/procedures/:id',
+  partners: '/admin/partners',
+  partnersDetails: '/admin/partners/:id',
+  services: '/admin/services',
+  servicesDetails: '/admin/services/:id',
 },
 superAdmin: {
   path:'/super-admin',
@@ -182,6 +186,10 @@ superAdmin: {
   vitalDetails : '/super-admin/vitals/:id',
   procedures: '/super-admin/procedures',
   proceduresDetails: '/super-admin/procedures/:id',
+  partners: '/super-admin/partners',
+  partnersDetails: '/super-admin/partners/:id',
+  services: '/super-admin/services',
+  servicesDetails: '/super-admin/services/:id',
 },
 pharmacist: {
   path:'/pharmacist',

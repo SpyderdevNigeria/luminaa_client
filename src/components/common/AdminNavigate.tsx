@@ -4,7 +4,7 @@ import useAdminAuth from "../../hooks/useAdminAuth";
 import routeLinks from "../../utils/routes";
 
 interface AdminNavigateProps {
-  role: "admin" | "doctor" | "procedure" | "nurse" | "patient" | "lab_tech" | "pharmacist" | "super_admin" | "vital";
+  role: "admin" | "doctor" | "procedure" | "nurse" | "patient" | "lab_tech" | "pharmacist" | "super_admin" | "vital" | "partner" | 'services';
   id: string;
   children: ReactNode;
   type?: string;
@@ -38,6 +38,12 @@ function AdminNavigate({ role, id, children, type }: AdminNavigateProps) {
     else if (role === 'procedure') {
       url = type === "true" ? `${routeLinks.superAdmin.procedures}/${id}` : `${routeLinks.superAdmin.users}/${id}`
     }
+        else if (role === 'partner') {
+      url = type === "true" ? `${routeLinks.superAdmin.partners}/${id}` : `${routeLinks.superAdmin.users}/${id}`
+    }
+    else if (role === 'services') {
+      url = type === "true" ? `${routeLinks.superAdmin.services}/${id}` : `${routeLinks.superAdmin.users}/${id}`
+    }
   } else {
     if (role === "admin") {
       url = type === "true" ? `${routeLinks.admin.admin}/${id}` : `${routeLinks.admin.users}/${id}`;
@@ -57,6 +63,12 @@ function AdminNavigate({ role, id, children, type }: AdminNavigateProps) {
     }
     else if (role === 'procedure') {
       url = type === "true" ? `${routeLinks.admin.procedures}/${id}` : `${routeLinks.admin.users}/${id}`
+    }
+        else if (role === 'partner') {
+      url = type === "true" ? `${routeLinks.admin.partners}/${id}` : `${routeLinks.admin.users}/${id}`
+    }
+    else if (role === 'services') {
+      url = type === "true" ? `${routeLinks.admin.services}/${id}` : `${routeLinks.admin.users}/${id}`
     }
   }
 
