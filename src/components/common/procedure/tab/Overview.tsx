@@ -170,42 +170,37 @@ const Overview: React.FC<OverviewProps> = ({ procedure }) => {
       {procedure?.procedureResults && (
         <AccordionSection title="Procedure Results">
           <div className="text-sm text-gray-800 whitespace-pre-line bg-gray-50 p-3 rounded-md">
-            <Info
-              label="Findings"
-              value={
-                procedure?.procedureResults?.findings
-                  ? procedure?.procedureResults?.findings
-                  : "—"
-              }
-            />
+               <div className="text-sm text-gray-800 whitespace-pre-line bg-gray-50 p-3 rounded-md space-y-2">
+            <p>
+              <strong>Procedure Type:</strong> {procedure?.procedureResults.procedureType}
+            </p>
+            <p>
+              <strong>Anaesthesia:</strong> {procedure?.procedureResults.anaesthesia || "N/A"}
+            </p>
 
-            <Info
-              label="Recommendations"
-              value={
-                procedure?.procedureResults?.recommendations
-                  ? procedure?.procedureResults?.recommendations
-                  : "—"
-              }
-            />
+            <div>
+              <strong>Findings:</strong>
+              {procedure?.procedureResults?.additionalTakes?.length > 0 ? (
+                <ul className="list-disc ml-5">
+                  {procedure?.procedureResults?.additionalTakes?.map((f: any, idx: number) => (
+                    <li key={idx}>
+                      <strong>{f.type}:</strong> {f.description}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>N/A</p>
+              )}
+            </div>
 
-            <Info
-              label="Biopsy Taken"
-              value={
-                procedure?.procedureResults?.biopsyTaken
-                  ? procedure?.procedureResults?.biopsyTaken ? "Yes" : "No"
-                  : "—"
-              }
-            />
-
-
-            <Info
-              label="Complications"
-              value={
-                procedure?.procedureResults?.complications
-                  ? procedure?.procedureResults?.complications
-                  : "—"
-              }
-            />
+            <p>
+              <strong>Impression:</strong> {procedure?.procedureResults.impression || "N/A"}
+            </p>
+            <p>
+              <strong>Comment:</strong> {procedure?.procedureResults.comment || "N/A"}
+            </p>
+          </div>
+          
 
           </div>
         </AccordionSection>

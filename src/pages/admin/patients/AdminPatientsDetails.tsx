@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import UserImage from "../../../assets/images/patient/user.png";
 import { FiArrowLeft } from "react-icons/fi";
 import AssignPartnerModal from "../../../components/modal/AssignPartnerModal";
+import { useToaster } from "../../../components/common/ToasterContext";
 
 type User = {
   id: string;
@@ -47,12 +48,29 @@ function AdminPatientDetails() {
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
-  const [verifying, setVerifying] = useState(false);
   const [hmoProvider, setHmoProvider] = useState("");
-  const [message, setMessage] = useState<{ text: string; type: "success" | "error" | "" }>({
-    text: "",
-    type: "",
-  });
+  const [selectedHmo, setSelectedHmo] = useState("");
+  const [showCustomInput, setShowCustomInput] = useState(false);
+  const [verifying, setVerifying] = useState(false);
+  const [message, setMessage] = useState({ text: "", type: "" });
+   const { showToast } = useToaster();
+  const hmoList = [
+    "AXA Mansard",
+    "Hygeia HMO",
+    "Reliance HMO",
+    "Leadway Health",
+    "Redcare HMO",
+    "Avon Healthcare",
+    "MetroHealth HMO",
+    "Novo Health Africa",
+    "Liberty Health",
+    "IHMS",
+    "Prohealth HMO",
+    "Greenbay HMO",
+    "Total Health Trust (THT)",
+    "Mediplan Healthcare",
+    "Healthcare International",
+  ];
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"assign" | "unassign">("assign");
   const fetchUser = async () => {
@@ -68,17 +86,19 @@ function AdminPatientDetails() {
   };
 
   const handleVerifyHMO = async () => {
-    if (!hmoProvider.trim()) {
-      setMessage({ text: "Please enter an HMO Provider", type: "error" });
+    const provider = showCustomInput ? hmoProvider : selectedHmo;
+    if (!provider) {
+      setMessage({ text: "Please select or enter an HMO provider.", type: "error" });
       return;
     }
 
     try {
       setVerifying(true);
       setMessage({ text: "", type: "" });
-      await AdminApi.verifyPaitentHmo(id as string, { hmoProvider });
+      await AdminApi.verifyPaitentHmo(id as string, {hmoProvider : provider });
       setMessage({ text: "Patient HMO verified successfully!", type: "success" });
       setHmoProvider("");
+      showToast("Patient HMO verified successfully", "success");
       await fetchUser();
     } catch (error: any) {
       console.error(error);
@@ -235,10 +255,42 @@ function AdminPatientDetails() {
         </div>
       </section>
 
+{user?.partner !== null && (
+        <section>
+                <h4 className="text-lg font-medium mb-2">Partner</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div>
+            <strong>Partner Name:</strong> {user?.partner?.name || "N/A"}
+          </div>
+          <div>
+            <strong>Partner Type:</strong> {user?.partner?.partnerType || "N/A"}
+          </div>
+          <div className="md:col-span-2">
+            <strong>Partner Description:</strong> {user?.partner?.description || "N/A"}
+          </div>
+        </div>
+      </section>
+)}
+
       {/* Verify HMO Section */}
-      <section className="border-t border-gray-200 pt-4">
-        <h4 className="text-lg font-medium mb-2">Verify HMO</h4>
-        <div className="flex flex-col md:flex-row gap-3 items-center">
+<section className="border-t border-gray-200 pt-4">
+      <h4 className="text-lg font-medium mb-2">Verify HMO</h4>
+
+      <div className="flex flex-col md:flex-row gap-3 items-center">
+        {!showCustomInput ? (
+          <select
+            value={selectedHmo}
+            onChange={(e) => setSelectedHmo(e.target.value)}
+            className="border border-gray-300 rounded-md px-3 py-2 w-full md:w-1/2"
+          >
+            <option value="">Select HMO Provider</option>
+            {hmoList.map((hmo) => (
+              <option key={hmo} value={hmo}>
+                {hmo}
+              </option>
+            ))}
+          </select>
+        ) : (
           <input
             type="text"
             placeholder="Enter HMO Provider"
@@ -246,6 +298,20 @@ function AdminPatientDetails() {
             onChange={(e) => setHmoProvider(e.target.value)}
             className="border border-gray-300 rounded-md px-3 py-2 w-full md:w-1/2"
           />
+        )}
+
+        <div className="flex gap-2">
+          {!showCustomInput && (
+            <button
+              onClick={() => {
+                setShowCustomInput(true);
+                setSelectedHmo("");
+              }}
+              className="border border-primary text-primary px-4 py-2 rounded-md"
+            >
+              Order
+            </button>
+          )}
           <button
             onClick={handleVerifyHMO}
             disabled={verifying}
@@ -254,17 +320,18 @@ function AdminPatientDetails() {
             {verifying ? "Verifying..." : "Verify HMO"}
           </button>
         </div>
+      </div>
 
-        {message.text && (
-          <p
-            className={`mt-2 text-sm ${
-              message.type === "success" ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {message.text}
-          </p>
-        )}
-      </section>
+      {message.text && (
+        <p
+          className={`mt-2 text-sm ${
+            message.type === "success" ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {message.text}
+        </p>
+      )}
+    </section>
 
 
        <AssignPartnerModal

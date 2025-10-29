@@ -5,6 +5,7 @@ import Section from "../../../components/common/Section";
 import Info from "../../../components/common/Info";
 import AdminServicePrices from "./AdminServicePrices";
 import { Tabs } from "../../../components/common/Tabs";
+import PartnerPatients from "./PartnerPatient";
 
 const AdminPartnersDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -91,7 +92,10 @@ const AdminPartnersDetails = () => {
       {activeTab === "patients" && (
         <div className="bg-white p-4 border border-gray-200">
           <h3 className="text-lg font-semibold mb-4">Patients</h3>
-          <p className="text-gray-600">List of patients assigned to this partner (to be implemented).</p>
+                <PartnerPatients
+                  partnerId={partner.id}
+
+                />
         </div>
       )}
 

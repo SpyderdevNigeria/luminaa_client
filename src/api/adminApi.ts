@@ -350,15 +350,20 @@ deleteVital: async (id: string) => {
 },
 
 
-createProcedureResults: async (id: string, data: { procedureResults: {
-  findings: string;
-  recommendations: string;
-  biopsyTaken: boolean;
-  complications: string;
-} }) => {
-  const response = await api.post(`/admin/procedures/${id}/procedure-results`, data);
+createProcedureResults: async (id: string, data: any) => {
+  const response = await api.post(
+    `/admin/procedures/${id}/procedure-results`,
+    { procedureResults: data },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   return response.data;
 },
+
+
 
 
 uploadProcedureDocument: async (id: string, formData: FormData) => {
@@ -486,7 +491,12 @@ getInputOutputs: async (filters: any) => {
     const response = await api.post("/admin/partner-service-prices", data);
     return response.data;
   },
-
+  getPartnerPatientsById: async (id: string, { page, limit }: { page: number; limit: number }) => {
+    const response = await api.get(`/admin/partners/${id}/patients`, {
+      params: { page, limit },
+    });
+    return response.data;
+  },
 };
 
 export default AdminApi;
