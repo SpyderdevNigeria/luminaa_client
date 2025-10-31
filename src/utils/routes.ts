@@ -35,6 +35,7 @@ const routeLinks = {
     vitalsDetails: '/patient/vitals/:id',
     procedures : '/patient/procedures',
     proceduresDetails : '/patient/procedures/:id',
+    notification: '/patient/notifications',
 
   },
   doctor: {
@@ -54,6 +55,7 @@ const routeLinks = {
       helpCenter:'/doctor/helpcenter',
       procedures:'/doctor/procedures',
       proceduresDetails:'/doctor/procedures/:id',
+      notification: '/doctor/notifications',
 },
 nurse : {
   path: '/nurse',
@@ -70,6 +72,7 @@ nurse : {
   proceduresDetails : '/nurse/procedures/:id',
   patient : '/nurse/patients',
   patientDetails : '/nurse/patients/:id',
+  notification: '/nurse/notifications',
 },
 matron : {
   path: '/matron',
@@ -86,6 +89,7 @@ matron : {
   proceduresDetails : '/matron/procedures/:id',
   patient : '/matron/patients',
   patientDetails : '/matron/patients/:id',
+  notification: '/matron/notifications',
 },
 lab: { 
     path:'/lab',
@@ -94,6 +98,7 @@ lab: {
     labRequestsDetails: '/lab/requests/:id', 
     profile: '/lab/profile',
     helpCenter:'/lab/helpcenter',
+    notification: '/lab/notifications',
 },
 
 admin: {
@@ -143,6 +148,7 @@ admin: {
   partnersDetails: '/admin/partners/:id',
   services: '/admin/services',
   servicesDetails: '/admin/services/:id',
+  notification: '/admin/notifications',
 },
 superAdmin: {
   path:'/super-admin',
@@ -190,6 +196,7 @@ superAdmin: {
   partnersDetails: '/super-admin/partners/:id',
   services: '/super-admin/services',
   servicesDetails: '/super-admin/services/:id',
+  notification: '/super-admin/notifications',
 },
 pharmacist: {
   path:'/pharmacist',
@@ -203,6 +210,7 @@ pharmacist: {
   pharmacistInventoryMedication: '/pharmacist/inventory/medication/:id',
   profile:'/pharmacist/profile',
   helpCenter:'/pharmacist/helpcenter',
+  notification: '/pharmacist/notifications',
 }
 }
 

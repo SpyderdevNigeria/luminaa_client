@@ -55,7 +55,7 @@ const PatientVitals = lazy(() => import("./pages/patient/vitals/PatientVitals"))
 const PatientProcedures = lazy(() => import("./pages/patient/procedures/PatientProcedures"));
 const PatientProceduresDetails = lazy(() => import("./pages/patient/procedures/PatientProcedureDetails"));
 const PatientVitalsDetails = lazy(() => import("./pages/patient/vitals/PatientVitalsDetails"));
-
+const PatientNotification = lazy(() => import("./pages/patient/notification/PatientNotification"));
 // Doctor
 const DoctorDashboard = lazy(() => import("./pages/doctor/dashboard/DoctorDashboard"));
 const DoctorAppointments = lazy(() => import("./pages/doctor/appointments/DoctorAppointments"));
@@ -72,13 +72,14 @@ const DoctorAllPatientsDetails = lazy(() => import("./pages/doctor/allpatients/D
 const DoctorHelpCenter = lazy(() => import("./pages/admin/HelpCenter/AdminHelpCenter")); // double-check this path
 const DoctorProcedures = lazy(() => import("./pages/doctor/procedures/DoctorProcedures"));
 const DoctorProcedureDetails = lazy(() => import("./pages/doctor/procedures/DoctorProcedureDetails"));
+const DoctorNotification = lazy(() => import("./pages/doctor/notification/DoctorNotification"));
 // Lab
 const LabDashboard = lazy(() => import("./pages/lab/dashboard/LabDashboard"));
 const LabTestRequests = lazy(() => import("./pages/lab/test/LabTestRequests"));
 const LabTestRequestsDetails = lazy(() => import("./pages/lab/test/LabTestRequestsDetails"));
 const LabProfile = lazy(() => import("./pages/lab/profile/LabProfile"));
 const LabHelpCenter = lazy(() => import("./pages/lab/HelpCenter/LabHelpCenter"));
-
+const LabNotification = lazy(() => import("./pages/lab/notification/LabNotification"));
 // Pharmacy
 const PharmacyDashboard = lazy(() => import("./pages/pharmacy/dashboard/PharmacistDashboard"));
 const PharmacyProfile = lazy(() => import("./pages/pharmacy/profile/PharmacistProfile"));
@@ -90,7 +91,7 @@ const PharmacyInventoryMedication = lazy(() => import("./pages/pharmacy/inventor
 const PharmacyOrder = lazy(() => import("./pages/pharmacy/order/PharmacyOrder"));
 const PharmacyOrderDetails = lazy(() => import("./pages/pharmacy/order/PharmacyOrderDetails"));
 const PharmacyHelpCenter = lazy(() => import("./pages/pharmacy/HelpCenter/PharmacyHelpCenter"));
-
+const PharmacyNotification = lazy(() => import("./pages/pharmacy/notification/PharmacyNotification"));
 // Admin
 const AdminLogin = lazy(() => import("./pages/admin/auth/AdminLogin"));
 const AdminDashboard = lazy(() => import("./pages/admin/dashboard/AdminDashboard"));
@@ -127,6 +128,7 @@ const NurseProcedures = lazy(() => import("./pages/nurse/procedures/NursesProced
 const NurseProceduresDetails = lazy(() => import("./pages/nurse/procedures/NursesProcedureDetails"));
 const AdminPartners = lazy(() => import("./pages/admin/partners/AdminPartners"));
 const AdminPartnersDetails = lazy(() => import("./pages/admin/partners/AdminPartnersDetails"));
+const AdminNotification = lazy(() => import("./pages/admin/notification/AdminNotification"));
 // Super Admin
 const SuperAdminAdmins = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdmins"));
 const SuperAdminAdminsDetails = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdminsDetails"));
@@ -140,6 +142,7 @@ const NurseReportsDetails = lazy(() => import("./pages/nurse/reports/NurseReport
 const NurseReportsCreateEdit = lazy(() => import("./pages/nurse/reports/NurseReportCreateEdit"));
 const NursePatient = lazy(() => import("./pages/nurse/patients/NursesPatients"));
 const NursePatientDetails = lazy(() => import("./pages/nurse/patients/NursesPatientsDetails"));
+const NurseNotification  = lazy(() => import("./pages/nurse/notification/NurseNotification"));
 // Business
 const Home = lazy(() => import("./pages/business/Home"));
 
@@ -201,6 +204,7 @@ function App() {
         <Route path={routeLinks?.patient?.proceduresDetails} element={<PatientProceduresDetails />} />
         <Route path={routeLinks?.patient?.vitals} element={<PatientVitals />} />
         <Route path={routeLinks?.patient?.vitalsDetails} element={<PatientVitalsDetails />} />
+        <Route path={routeLinks?.patient?.notification} element={<PatientNotification />} />
       </Route>
 
       {/* Doctor Routes */}
@@ -221,6 +225,7 @@ function App() {
         <Route path={routeLinks.doctor.helpCenter} element={<DoctorHelpCenter />} />
         <Route path={routeLinks?.doctor?.procedures} element={<DoctorProcedures />} />
         <Route path={routeLinks?.doctor?.proceduresDetails} element={<DoctorProcedureDetails />} />
+        <Route path={routeLinks?.doctor?.notification} element={<DoctorNotification />} />
       </Route>
 
       {/* Lab Routes */}
@@ -231,6 +236,7 @@ function App() {
         <Route path={routeLinks.lab.labRequestsDetails} element={<LabTestRequestsDetails />} />
         <Route path={routeLinks.lab.helpCenter} element={<LabHelpCenter />} />
         <Route path={routeLinks.lab.profile} element={<LabProfile />} />
+        <Route path={routeLinks?.lab?.notification} element={<LabNotification />} />
       </Route>
       
       {/* Nurse Routes */}
@@ -249,6 +255,7 @@ function App() {
          <Route path={routeLinks.nurse.patient} element={<NursePatient />} />
           <Route path={routeLinks.nurse.patientDetails} element={<NursePatientDetails />} />
         <Route path={routeLinks.nurse.helpCenter} element={<NurseHelpCenter />} />
+        <Route path={routeLinks?.nurse?.notification} element={<NurseNotification />} />
       </Route>
 
             {/* Matron Routes */}
@@ -267,6 +274,7 @@ function App() {
           <Route path={routeLinks.matron.patient} element={<NursePatient />} />
           <Route path={routeLinks.matron.patientDetails} element={<NursePatientDetails />} />
             <Route path={routeLinks.matron.helpCenter} element={<NurseHelpCenter />} />
+        <Route path={routeLinks?.matron?.notification} element={<NurseNotification />} />
       </Route>
 
       {/* Pharmacist Routes */}
@@ -282,6 +290,7 @@ function App() {
         <Route path={routeLinks.pharmacist.pharmacistInventoryMedication} element={<PharmacyInventoryMedication />} />
         <Route path={routeLinks.pharmacist.helpCenter} element={<PharmacyHelpCenter />} />
         <Route path={routeLinks.pharmacist.profile} element={<PharmacyProfile />} />
+        <Route path={routeLinks.pharmacist.notification} element={<PharmacyNotification />} />
       </Route>
 
       {/* Admin Auth */}
@@ -328,6 +337,7 @@ function App() {
         <Route path={routeLinks?.admin?.partnersDetails} element={<AdminPartnersDetails />} />
         <Route path={routeLinks?.admin?.services} element={<AdminServices />} />
         <Route path={routeLinks?.admin?.servicesDetails} element={<AdminServicesDetails />} />
+        <Route path={routeLinks.admin.notification} element={<AdminNotification />} />
       </Route>
 
       {/* SuperAdmin Routes */}
@@ -370,6 +380,7 @@ function App() {
         <Route path={routeLinks?.superAdmin?.partnersDetails} element={<AdminPartnersDetails />} />
         <Route path={routeLinks?.superAdmin?.services} element={<AdminServices />} />
         <Route path={routeLinks?.superAdmin?.servicesDetails} element={<AdminServicesDetails />} />
+        <Route path={routeLinks.superAdmin.notification} element={<AdminNotification />} />
       </Route>
 
       {/* Catch all unmatched routes */}

@@ -3,6 +3,7 @@ import PatientApi from "../../../../api/PatientApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import { useAppDispatch } from "../../../../hooks/reduxHooks";
 import { updateUser } from "../../../../reducers/authSlice";
+
 interface MedicalHistoryFormData {
   Genotype: string;
   BloodGroup: string;
@@ -40,6 +41,7 @@ function BookingCondition({userProfile}: { userProfile: any }) {
   const dispatch = useAppDispatch();
     const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ message: "", type: "" });
+  
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
@@ -81,6 +83,8 @@ function BookingCondition({userProfile}: { userProfile: any }) {
           type: "",
         });
       }, [formData])
+
+
 
   return (
     <div className="w-full">

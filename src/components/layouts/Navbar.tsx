@@ -19,10 +19,11 @@ type NavbarProps = {
     title: string;
     sublink?: string;
   };
-  type:string
+  type:string,
+
 };
 
-function Navbar({ sidebarOpen, setSidebarOpen, active, type}: NavbarProps) {
+function Navbar({ sidebarOpen, setSidebarOpen, active, type, }: NavbarProps) {
   const userProfile = useAppSelector((state) => state.auth.user);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -90,7 +91,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active, type}: NavbarProps) {
 
         <div className="flex items-center gap-4">
           <Multilingual/>
-          <Notification />
+          <Notification  role={type}/>
 
           {/* Avatar & Dropdown */}
           <div className="relative hidden md:block" ref={dropdownRef}>

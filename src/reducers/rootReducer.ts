@@ -18,6 +18,7 @@ import medicationSlice from "./medicationSlice";
 import appointmentSlice from "./appointmentSlice";
 import inputOutputSlice from "./inputOutputSlice";
 import servicePriceSlice from "./servicePriceSlice";
+import notificationSlice from "./notificationSlice";
 import prescriptionSlice from "./prescriptionSlice";
 import PrescriptionOrderSlice from './prescriptionOrderSlice';
 
@@ -40,6 +41,7 @@ const appReducer = combineReducers({
   medications: medicationSlice,
   inputOutput: inputOutputSlice,
   appointments: appointmentSlice,
+  notifications: notificationSlice,
   servicePrices: servicePriceSlice,
   prescriptions: prescriptionSlice,
   prescriptionOrders: PrescriptionOrderSlice,
