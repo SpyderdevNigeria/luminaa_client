@@ -1,34 +1,24 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, } from "react";
 import { FiBell } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import api from "../../api/apiConfig";
+import useNotifications from "../../hooks/useNotifications";
 
 interface NotificationProps {
   role: string | undefined;
 }
 
 function Notification({ role }: NotificationProps) {
-  const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+    const {
+      unreadCount,
+    } = useNotifications();
+  
   // Fetch unread notifications count
-  const fetchUnreadCount = async () => {
-    try {
-      const res = await api.get(`/notifications/unread-count`);
-      setUnreadCount(res?.data?.data?.count || 0);
-    } catch (error) {
-      console.error("Failed to fetch unread count:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUnreadCount();
-  }, []);
 
   // Navigate to the notifications page
   const handleNavigateToNotifications = () => {
-    navigate(`/${role}/notifications`);
+    navigate(`/${role?.replace(" ", "-")}/notifications`);
   };
 
   return (
