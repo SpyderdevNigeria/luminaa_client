@@ -4,7 +4,7 @@ import useAdminAuth from "../../hooks/useAdminAuth";
 import routeLinks from "../../utils/routes";
 
 interface AdminNavigateProps {
-  role: "admin" | "doctor" | "procedure" | "nurse" | "patient" | "lab_tech" | "pharmacist" | "super_admin" | "vital" | "partner" | 'services';
+  role: "admin" | "doctor" | "procedure" | "nurse" | "patient" | "lab_tech" | "pharmacist" | "super_admin" | "vital" | "partner" | 'services' | "voucher";
   id: string;
   children: ReactNode;
   type?: string;
@@ -44,6 +44,9 @@ function AdminNavigate({ role, id, children, type }: AdminNavigateProps) {
     else if (role === 'services') {
       url = type === "true" ? `${routeLinks.superAdmin.services}/${id}` : `${routeLinks.superAdmin.users}/${id}`
     }
+    else if (role === 'voucher') {
+      url = type === "true" ? `${routeLinks.superAdmin.paymentVouchers}/${id}` : `${routeLinks.superAdmin.users}/${id}`;
+    }
   } else {
     if (role === "admin") {
       url = type === "true" ? `${routeLinks.admin.admin}/${id}` : `${routeLinks.admin.users}/${id}`;
@@ -69,6 +72,9 @@ function AdminNavigate({ role, id, children, type }: AdminNavigateProps) {
     }
     else if (role === 'services') {
       url = type === "true" ? `${routeLinks.admin.services}/${id}` : `${routeLinks.admin.users}/${id}`
+    }
+    else if (role === 'voucher') {
+      url = type === "true" ? `${routeLinks.admin.paymentVouchers}/${id}` : `${routeLinks.admin.users}/${id}`;
     }
   }
 

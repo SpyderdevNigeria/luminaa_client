@@ -59,7 +59,7 @@ const AdminPatientStats = () => {
       </div>
 
       {/* Gender Distribution */}
-      <div className="bg-white  rounded-2xl shadow-md border border-gray-100 p-6">
+      {/* <div className="bg-white  rounded-2xl shadow-md border border-gray-100 p-6">
         <h3 className="text-xl font-semibold text-gray-800 mb-4">Gender Distribution</h3>
         <ul className="space-y-3">
           {Object.entries(stats.genderDistribution).map(([gender, count]) => (
@@ -74,10 +74,10 @@ const AdminPatientStats = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
 
       {/* City Distribution */}
-      <div className="bg-white  rounded-2xl shadow-md border border-gray-100 p-6">
+      {/* <div className="bg-white  rounded-2xl shadow-md border border-gray-100 p-6">
         <h3 className="text-xl font-semibold text-gray-800 mb-4">City Distribution</h3>
         <ul className="space-y-3">
           {Object.entries(stats.cityDistribution).map(([city, count]) => (
@@ -92,7 +92,7 @@ const AdminPatientStats = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

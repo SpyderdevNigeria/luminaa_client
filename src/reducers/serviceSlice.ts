@@ -1,6 +1,7 @@
 // src/redux/slices/servicesSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import AdminApi from "../api/adminApi";
+import PatientApi from "../api/PatientApi";
 
 
 export interface Service {
@@ -62,7 +63,22 @@ export const fetchServices = createAsyncThunk(
     }
   }
 );
-
+export const fetchServicesForPatient = createAsyncThunk(
+  "services/fetchServicesForPatient",
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const state = getState() as { services: ServicesState };
+      const { filters } = state.services;
+      const params = {
+        ...filters,
+      };
+      const res = await PatientApi.getServices(params);
+        return res;
+    } catch (err: any) {
+      return rejectWithValue(err.message || "Failed to fetch services");
+    }
+  }
+);
 const servicesSlice = createSlice({
   name: "services",
   initialState,
@@ -84,8 +100,23 @@ const servicesSlice = createSlice({
       .addCase(fetchServices.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+
+      .addCase(fetchServicesForPatient.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchServicesForPatient.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload?.data?.data || [];
+        state.total = action.payload?.data?.total || 0;
+      })
+      .addCase(fetchServicesForPatient.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
+  
+
 });
 
 export const { updateFilters } = servicesSlice.actions;

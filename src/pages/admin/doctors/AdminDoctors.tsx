@@ -71,6 +71,11 @@ function AdminDoctors() {
       render: (doctor) => <span>{doctor?.licenseNumber}</span>,
     },
     {
+      key:"type",
+      label: "Type",
+      render: (doctor) => <span>{doctor?.type}</span>,
+    },
+    {
       key: "status",
       label: "Status",
       render: (doctor) => (

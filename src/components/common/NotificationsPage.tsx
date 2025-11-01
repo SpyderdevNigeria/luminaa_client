@@ -25,7 +25,7 @@ export default function NotificationsPage() {
   //  Filter based on toggle
   const filteredNotifications = showAll
     ? notifications
-    : notifications.filter((n) => !n.isRead);
+    : notifications.filter((n: { isRead: any; }) => !n.isRead);
 
   return (
     <div className="p-4 relative bg-white">

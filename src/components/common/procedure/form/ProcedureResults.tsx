@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useToaster } from "../../ToasterContext";
-import AdminApi from "../../../../api/adminApi";
+import DoctorApi from "../../../../api/doctorApi";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 interface ProcedureResultsProps {
@@ -94,7 +94,7 @@ const ProcedureResults = ({
     try {
       const payload = { ...results };
 
-      await AdminApi.createProcedureResults(procedureId, payload);
+      await DoctorApi.createProcedureResults(procedureId, payload);
 
       showToast("Procedure results saved successfully", "success");
       setEdit(false);
@@ -108,7 +108,7 @@ const ProcedureResults = ({
   };
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 p-4 bg-white">
       {/* View Mode */}
       {!edit && procedure?.procedureResults && (
         <div>

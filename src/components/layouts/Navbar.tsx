@@ -94,7 +94,7 @@ function Navbar({ sidebarOpen, setSidebarOpen, active, type, }: NavbarProps) {
           <Notification  role={type}/>
 
           {/* Avatar & Dropdown */}
-          <div className="relative hidden md:block" ref={dropdownRef}>
+          <div className="relative w-10 h-10" ref={dropdownRef}>
             <img
               src={
                 userProfile?.user?.profilePicture

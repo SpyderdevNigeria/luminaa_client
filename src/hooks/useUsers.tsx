@@ -13,7 +13,7 @@ function useUsers(api: any) {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [errorUsers, setErrorUsers] = useState("");
-
+  const [search, setSearch] = useState(""); 
   const { users, page, total, limit, totalPages } = useSelector(
     (state: RootState) => state.users
   );
@@ -30,6 +30,7 @@ function useUsers(api: any) {
       if (status) params.append("status", status);
       if (dateFrom) params.append("dateFrom", dateFrom);
       if (dateTo) params.append("dateTo", dateTo);
+      if (search) params.append("search", search);
       params.append("page", page.toString());
       params.append("limit", limit.toString());
 
@@ -63,6 +64,8 @@ function useUsers(api: any) {
     limit,
     totalPages,
     status,
+    search,
+    setSearch,
     dateFrom,
     dateTo,
     setStatus,

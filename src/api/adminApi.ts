@@ -497,6 +497,21 @@ getInputOutputs: async (filters: any) => {
     });
     return response.data;
   },
+
+  getPaymentVoucherById : async (id: string) => {
+  const response = await api.get(`/admin/payment-vouchers/${id}`);
+  return response.data;
+},
+
+  getPaymentVouchers: async (query: any) => {
+    const response = await api.get(`/admin/payment-vouchers?${query}`);
+    return response.data;
+  },
+
+  updatePaymentVoucherStatus: async (id: string, data: any) => {
+    const response = await api.patch(`/admin/payment-vouchers/${id}/status`, data);
+    return response.data;
+  },
 };
 
 export default AdminApi;

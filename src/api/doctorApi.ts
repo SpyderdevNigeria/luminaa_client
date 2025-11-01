@@ -268,6 +268,42 @@ getInputOutputs: async (filters: any) => {
     const response = await api.delete(`/doctor/input-output/${id}`);
     return response.data;
   },
+
+  createProcedureResults: async (id: string, data: any) => {
+  const response = await api.post(
+    `/doctor/procedures/${id}/procedure-results`,
+    { procedureResults: data },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+},
+getPaymentVoucherById : async (id: string) => {
+  const response = await api.get(`/doctor/payment-vouchers/${id}`);
+  return response.data;
+},
+createPaymentVoucher: async (body: any) => {
+    const response = await api.post("/doctor/payment-vouchers", body);
+    return response.data;
+  },
+
+  updatePaymentVoucher: async (id: string, body: any) => {
+    const response = await api.patch(`/doctor/payment-vouchers/${id}`, body);
+    return response.data;
+  },
+
+  deletePaymentVoucher: async (id: string) => {
+    const response = await api.delete(`/doctor/payment-vouchers/${id}`);
+    return response.data;
+  },
+
+  getPaymentVouchers: async (query: any) => {
+    const response = await api.get(`/doctor/payment-vouchers?${query}`);
+    return response.data;
+  },
 }
 
 export default DoctorApi;

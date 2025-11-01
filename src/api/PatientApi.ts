@@ -192,7 +192,14 @@ getVitalById: async (id: any) => {
   const response = await api.get(`/patient/procedures/${id}`);
   return response.data;
 },
-
+  getServiceById: async (id: string) => {
+    const response = await api.get(`/patient/services/${id}`);
+    return response.data;
+  },
+    getServices: async (filters: any) => {
+    const response = await api.get("/patient/services", { params: filters });
+    return response.data;
+  },
 }
 
 export default PatientApi;

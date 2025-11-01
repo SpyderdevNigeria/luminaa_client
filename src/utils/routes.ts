@@ -36,6 +36,8 @@ const routeLinks = {
     procedures : '/patient/procedures',
     proceduresDetails : '/patient/procedures/:id',
     notification: '/patient/notifications',
+    services: '/patient/services',
+    servicesDetails: '/patient/services/:id',
 
   },
   doctor: {
@@ -56,6 +58,8 @@ const routeLinks = {
       procedures:'/doctor/procedures',
       proceduresDetails:'/doctor/procedures/:id',
       notification: '/doctor/notifications',
+      paymentVouchers: '/doctor/payment-vouchers',
+      paymentVouchersDetails: '/doctor/payment-vouchers/:id',
 },
 nurse : {
   path: '/nurse',
@@ -149,6 +153,8 @@ admin: {
   services: '/admin/services',
   servicesDetails: '/admin/services/:id',
   notification: '/admin/notifications',
+  paymentVouchers: '/admin/payment-vouchers',
+  paymentVouchersDetails: '/admin/payment-vouchers/:id',
 },
 superAdmin: {
   path:'/super-admin',
@@ -197,6 +203,8 @@ superAdmin: {
   services: '/super-admin/services',
   servicesDetails: '/super-admin/services/:id',
   notification: '/super-admin/notifications',
+  paymentVouchers: '/super-admin/payment-vouchers',
+  paymentVouchersDetails: '/super-admin/payment-vouchers/:id',
 },
 pharmacist: {
   path:'/pharmacist',

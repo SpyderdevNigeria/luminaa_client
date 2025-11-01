@@ -16,8 +16,14 @@ function DoctorPatients() {
     total,
     limit,
     totalPages,
+    search,
+    dateFrom,
+    dateTo,
     status,
+    setDateFrom,
+    setDateTo,
     setStatus,
+    setSearch,
     getUsers,
     handleSetPage,
     loadingUsers,
@@ -26,7 +32,7 @@ function DoctorPatients() {
   useEffect(() => {
     getUsers();
     return () => {};
-  }, [page, status]);
+  }, [page, status, search, dateFrom, dateTo]);
 
   const columns: Column<IPatient>[] = [
     {
@@ -104,8 +110,10 @@ function DoctorPatients() {
       {/* Table Section */}
       <section className="container-bd">
         <HeaderTab
-          title="Patients"
-          showSearch={false}
+        title="Patients"
+        showSearch={true}
+        searchPlaceholder="Search by Name"
+        onSearchChange={(val) => setSearch(val)}
           dropdowns={[
             {
               label: "Status",
@@ -115,6 +123,8 @@ function DoctorPatients() {
                 setStatus(value === "All" ? "" : value.toLowerCase()),
             },
           ]}
+          onDateFromChange={(val) => setDateFrom(val)}
+          onDateToChange={(val) => setDateTo(val)}
         />
         {loadingUsers ? (
           <p>Loading...</p>

@@ -3,6 +3,8 @@ import { LiaStethoscopeSolid } from "react-icons/lia";
 import { LiaPillsSolid } from "react-icons/lia";
 import { FiPackage } from "react-icons/fi";
 import {
+  FaBed,
+  FaMoneyBillWave,
   FaRegCircleUser,
   FaUser,
   FaUserDoctor,
@@ -65,6 +67,23 @@ export const navItemsPatient = [
         visible: false,
       },
     ]
+  },
+  {
+    id: "services",
+    label: "Services",
+    title: "Services",
+    icon: FaBed ,
+    to: routeLinks.patient.services ?? '',
+    subLinks: [
+      {
+        id: "services-details",
+        label: "Services Details",
+        title: "Services / Services Details",
+        icon: FaBed ,
+        to: routeLinks.patient.servicesDetails ?? '',
+        visible: false,
+      },
+    ],
   },
       {
     id: "procedures",
@@ -246,6 +265,22 @@ export const navItemsDoctor = [
         to: routeLinks.doctor.patientView ?? '',
         visible: false,
       },
+      {
+        id: "payments-voucher",
+        label: "Payments Voucher",
+        title: "Payments Voucher",
+        icon: FaMoneyBillWave,
+        to: routeLinks.doctor.paymentVouchers ?? '',
+        visible: true,
+      },
+      {
+        id: "payments-voucher-details",
+        label: "Payment Voucher Details",
+        title: "Payments Voucher / Payment Voucher Details",
+        icon: FaMoneyBillWave,
+        to: routeLinks.doctor.paymentVouchersDetails ?? '',
+        visible: false,
+      }
     ],
   },
   {
@@ -569,6 +604,22 @@ export const navItemsAdmin = [
         to: routeLinks.admin.patientsStats ?? '',
         visible: true,
       },
+           {
+        id: "payments-voucher",
+        label: "Payments Voucher",
+        title: "Payments Voucher",
+        icon: FaMoneyBillWave,
+        to: routeLinks.admin.paymentVouchers ?? '',
+        visible: true,
+      },
+      {
+        id: "payments-voucher-details",
+        label: "Payment Voucher Details",
+        title: "Payments Voucher / Payment Voucher Details",
+        icon: FaMoneyBillWave,
+        to: routeLinks.admin.paymentVouchersDetails ?? '',
+        visible: false,
+      }
     ],
   },
   {
@@ -834,6 +885,22 @@ export const navItemsSuperAdmin = [
         to: routeLinks.superAdmin.patientsStats ?? '',
         visible: true,
       },
+           {
+        id: "payments-voucher",
+        label: "Payments Voucher",
+        title: "Payments Voucher",
+        icon: FaMoneyBillWave,
+        to: routeLinks.superAdmin.paymentVouchers ?? '',
+        visible: true,
+      },
+      {
+        id: "payments-voucher-details",
+        label: "Payment Voucher Details",
+        title: "Payments Voucher / Payment Voucher Details",
+        icon: FaMoneyBillWave,
+        to: routeLinks.superAdmin.paymentVouchersDetails ?? '',
+        visible: false,
+      }
     ],
   },
   {

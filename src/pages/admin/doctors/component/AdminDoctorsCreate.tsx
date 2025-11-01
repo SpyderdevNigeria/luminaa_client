@@ -21,6 +21,7 @@ export type Doctor = {
   gender: string;
   dateOfBirth: string;
   joinedDate: string;
+  type:string
 };
 
 type FormData = {
@@ -34,6 +35,7 @@ type FormData = {
   gender: string;
   dateOfBirth: string;
   joinedDate: string;
+  type:string
 };
 
 type Props = {
@@ -60,6 +62,7 @@ const AdminDoctorsCreate: React.FC<Props> = ({
     gender: "",
     dateOfBirth: "",
     joinedDate: "",
+    type:"",
   });
 
   const { showToast } = useToaster();
@@ -76,6 +79,7 @@ const AdminDoctorsCreate: React.FC<Props> = ({
         gender: doctor.gender || "",
         dateOfBirth: doctor.dateOfBirth?.slice(0, 10) || "",
         joinedDate: doctor.joinedDate?.slice(0, 10) || "",
+        type:doctor.type || "",
       });
     }
   }, [doctor]);
@@ -162,6 +166,13 @@ const AdminDoctorsCreate: React.FC<Props> = ({
       label: "Joined Date",
       type: "date",
       required: true,
+    },
+    {
+      name: "type",
+      label: "Type",
+      type: "select",
+      required: true,
+      options: ["internal", "external"],
     },
   ];
 

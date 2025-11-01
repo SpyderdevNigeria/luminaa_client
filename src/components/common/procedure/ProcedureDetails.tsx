@@ -145,7 +145,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
         {["overview",  "appointment",]
           .concat(type === "nurse" ? [ "patient", "doctor", 'drugchart', "vitals", "intake-outtake" , "procedure documents", "actions",] : [])
           .concat(type === "admin" ? [ "patient", "doctor", "actions",] : [])
-          .concat(type === "doctor" ? [ "patient", "intake-outtake" , 'vitals', "procedure documents",'drugchart',] : [])
+          .concat(type === "doctor" ? [ "patient", "intake-outtake" , 'vitals', 'drugchart',"procedure documents",'procedure results'] : [])
           .map((tab) => (
             <button
               key={tab}
@@ -279,7 +279,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                   fetchProcedure={onUpdated}
                 />
            </div>
-              )}
+          )}
 
         {/* {activeTab === "medicalHistory" &&
           (
@@ -298,6 +298,14 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
           />
 
         )}
+
+         {activeTab === "procedure results" && (
+                <ProcedureResults
+                  procedure={procedure}
+                  procedureId={procedure?.id}
+                  fetchProcedure={onUpdated}
+                />
+              )}
         {/* --- ADMIN ACTIONS (Modal inside) --- */}
         {activeTab === "actions" && (
           <div className="flex flex-col md:flex-row gap-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
@@ -388,13 +396,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
 
 
 
-              {tab === "results" && (
-                <ProcedureResults
-                  procedure={procedure}
-                  procedureId={procedure?.id}
-                  fetchProcedure={onUpdated}
-                />
-              )}
+
 
 
             </div>

@@ -23,6 +23,10 @@ import NurseLayout from "./components/layouts/NurseLayout";
 import Appointment from "./pages/patient/appointment/Appointment";
 import MatronLayout from "./components/layouts/MatronLayout";
 import NurseHelpCenter from "./pages/nurse/HelpCenter/NurseHelpCenter";
+import DoctorPaymentVouchers from "./pages/doctor/paymentvouchers/DoctorPaymentVouchers";
+import DoctorPaymentVouchersDetails from "./pages/doctor/paymentvouchers/DoctorPaymentVouchersDetails";
+import PatientServices from "./pages/patient/services/PatientServices";
+import PatientServicesDetails from "./pages/patient/services/PatientServicesDetails";
 
 // Public / Business
 const Second = lazy(() => import("./pages/business/second"));
@@ -73,6 +77,8 @@ const DoctorHelpCenter = lazy(() => import("./pages/admin/HelpCenter/AdminHelpCe
 const DoctorProcedures = lazy(() => import("./pages/doctor/procedures/DoctorProcedures"));
 const DoctorProcedureDetails = lazy(() => import("./pages/doctor/procedures/DoctorProcedureDetails"));
 const DoctorNotification = lazy(() => import("./pages/doctor/notification/DoctorNotification"));
+
+
 // Lab
 const LabDashboard = lazy(() => import("./pages/lab/dashboard/LabDashboard"));
 const LabTestRequests = lazy(() => import("./pages/lab/test/LabTestRequests"));
@@ -129,6 +135,8 @@ const NurseProceduresDetails = lazy(() => import("./pages/nurse/procedures/Nurse
 const AdminPartners = lazy(() => import("./pages/admin/partners/AdminPartners"));
 const AdminPartnersDetails = lazy(() => import("./pages/admin/partners/AdminPartnersDetails"));
 const AdminNotification = lazy(() => import("./pages/admin/notification/AdminNotification"));
+const AdminPaymentVouchers = lazy(() => import("./pages/admin/paymentvouchers/AdminPaymentVouchers"));
+const AdminPaymentVouchersDetails = lazy(() => import("./pages/admin/paymentvouchers/AdminPaymentVouchersDetails"));
 // Super Admin
 const SuperAdminAdmins = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdmins"));
 const SuperAdminAdminsDetails = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdminsDetails"));
@@ -205,6 +213,8 @@ function App() {
         <Route path={routeLinks?.patient?.vitals} element={<PatientVitals />} />
         <Route path={routeLinks?.patient?.vitalsDetails} element={<PatientVitalsDetails />} />
         <Route path={routeLinks?.patient?.notification} element={<PatientNotification />} />
+        <Route path={routeLinks?.patient?.services} element={<PatientServices />} />
+        <Route path={routeLinks?.patient?.servicesDetails} element={<PatientServicesDetails />} />
       </Route>
 
       {/* Doctor Routes */}
@@ -226,6 +236,8 @@ function App() {
         <Route path={routeLinks?.doctor?.procedures} element={<DoctorProcedures />} />
         <Route path={routeLinks?.doctor?.proceduresDetails} element={<DoctorProcedureDetails />} />
         <Route path={routeLinks?.doctor?.notification} element={<DoctorNotification />} />
+        <Route path={routeLinks?.doctor?.paymentVouchers} element={<DoctorPaymentVouchers />} />
+        <Route path={routeLinks?.doctor?.paymentVouchersDetails} element={<DoctorPaymentVouchersDetails />} />
       </Route>
 
       {/* Lab Routes */}
@@ -338,6 +350,8 @@ function App() {
         <Route path={routeLinks?.admin?.services} element={<AdminServices />} />
         <Route path={routeLinks?.admin?.servicesDetails} element={<AdminServicesDetails />} />
         <Route path={routeLinks.admin.notification} element={<AdminNotification />} />
+        <Route path={routeLinks.admin.paymentVouchers} element={<AdminPaymentVouchers />} />
+        <Route path={routeLinks.admin.paymentVouchersDetails} element={<AdminPaymentVouchersDetails />} />
       </Route>
 
       {/* SuperAdmin Routes */}
@@ -381,6 +395,9 @@ function App() {
         <Route path={routeLinks?.superAdmin?.services} element={<AdminServices />} />
         <Route path={routeLinks?.superAdmin?.servicesDetails} element={<AdminServicesDetails />} />
         <Route path={routeLinks.superAdmin.notification} element={<AdminNotification />} />
+
+                <Route path={routeLinks.superAdmin.paymentVouchers} element={<AdminPaymentVouchers />} />
+        <Route path={routeLinks.superAdmin.paymentVouchersDetails} element={<AdminPaymentVouchersDetails />} />
       </Route>
 
       {/* Catch all unmatched routes */}
