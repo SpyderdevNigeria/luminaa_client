@@ -22,6 +22,10 @@ export default function useNotifications() {
     dispatch(fetchUnreadCount());
   }, [dispatch, page]);
 
+  function fetchUnreadCountFunc() {
+    dispatch(fetchUnreadCount());
+  }
+
   return {
     notifications,
     unreadCount,
@@ -30,7 +34,7 @@ export default function useNotifications() {
     detailLoading,
     page,
     limit,
-
+    fetchUnreadCountFunc,
     // actions
     setPage: (p: number) => dispatch(setPage(p)),
     clearSelected: () => dispatch(clearSelected()),

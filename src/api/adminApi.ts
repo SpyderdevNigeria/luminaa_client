@@ -367,7 +367,7 @@ createProcedureResults: async (id: string, data: any) => {
 
 
 uploadProcedureDocument: async (id: string, formData: FormData) => {
-  const response = await api.post(`/admin/procedures/${id}/documents`, formData, {
+  const response = await api.post(`/doctor/procedures/${id}/documents`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -381,7 +381,7 @@ getInputOutputById: async (id: string) => {
 },
 
 deleteProcedureDocument: async (id: string, documentId: string) => {
-  const response = await api.delete(`/admin/procedures/${id}/documents/${documentId}`);
+  const response = await api.delete(`/doctor/procedures/${id}/documents/${documentId}`);
   return response.data;
 },
 
