@@ -26,8 +26,8 @@ function AdminVitalsCreate({
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     patientId: vital?.patientId || patientId || "",
-    appointmentId: vital?.appointmentId || appointmentId || "",
-    procedureId: vital?.procedureId || procedureId || "",
+    appointmentId: vital?.appointmentId || appointmentId || null|| "",
+    procedureId: vital?.procedureId || procedureId ||  null|| "",
     systolicBP: vital?.systolicBP || "",
     diastolicBP: vital?.diastolicBP || "",
     pulse: vital?.pulse || "",
@@ -43,8 +43,8 @@ function AdminVitalsCreate({
   useEffect(()=> {
     setForm({
     patientId: vital?.patientId || patientId || "",
-    appointmentId: vital?.appointmentId || appointmentId || "",
-    procedureId: vital?.procedureId || procedureId || "",
+    appointmentId: vital?.appointmentId || appointmentId ||  null|| "",
+    procedureId: vital?.procedureId || procedureId ||  null|| "",
     systolicBP: vital?.systolicBP || "",
     diastolicBP: vital?.diastolicBP || "",
     pulse: vital?.pulse || "",
@@ -99,7 +99,11 @@ function AdminVitalsCreate({
         await AdminApi.updateVital(vital.id, form);
         showToast("Vital updated successfully", "success");
       } else {
-        await AdminApi.createVital(form);
+        await AdminApi.createVital({
+          ...form,
+          procedureId: form.procedureId === "" ? null : form.procedureId,
+          appointmentId: form.appointmentId === "" ? null : form.appointmentId,
+        });
         showToast("Vital created successfully", "success");
       }
       onClose();

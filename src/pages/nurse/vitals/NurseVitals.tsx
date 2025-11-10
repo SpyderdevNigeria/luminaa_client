@@ -38,7 +38,7 @@ function NurseVitals() {
     setPatientsSearch,
     getPatients,
   } = useAdmin(NurseApi);
-
+  console.log(patients);
 
 
   const [showForm, setShowForm] = useState(false);
@@ -72,6 +72,15 @@ function NurseVitals() {
           {vital?.patient?.user?.firstName && vital?.patient?.user?.lastName
             ? `${vital?.patient?.user?.firstName} ${vital?.patient?.user?.lastName}`
             : "N/A"}
+        </span>
+      ),
+    },
+    {
+      key: "patient Email",
+      label: "Patient Email",
+      render: (vital: any) => (
+        <span>
+          {vital?.patient?.user?.email}
         </span>
       ),
     },
@@ -151,11 +160,11 @@ function NurseVitals() {
             placeholder: "Search patients...",
             value: patientsSearch,
             data: patients, // full object array
-            getLabel: (p) => `${p?.user?.firstName} ${p?.user?.lastName}`,
+            getLabel: (p) => `${p?.user?.firstName} ${p?.user?.lastName} : ${p?.user?.email}`,
             onChange: (val, selectedPatient) => {
               setPatientsSearch(val);
               if (selectedPatient) {
-                updateFilters({ patientId: selectedPatient.id });
+                updateFilters({ patientId: selectedPatient?.id });
                 //  setPatientsSearch("");
               }
             },
