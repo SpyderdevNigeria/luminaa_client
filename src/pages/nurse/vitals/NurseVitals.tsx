@@ -16,6 +16,7 @@ import useAdmin from "../../../hooks/useAdmin";
 import { Link } from "react-router-dom";
 import routeLinks from "../../../utils/routes";
 import { useSelector } from "react-redux";
+import NurseApi from "../../../api/nurseApi";
 
 function NurseVitals() {
   const {
@@ -36,7 +37,7 @@ function NurseVitals() {
     patientsSearch,
     setPatientsSearch,
     getPatients,
-  } = useAdmin(AdminApi);
+  } = useAdmin(NurseApi);
 
 
 

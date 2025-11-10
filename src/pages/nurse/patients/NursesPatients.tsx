@@ -151,6 +151,8 @@ function NursePatients() {
       <div  className="p-4 bg-white ">
    <ActionVitalsCreate
         patientId={selectedPatientId}
+        appointmentId={null}
+        procedureId={null}
         onClose={handleCloseForm}
         onBack={() => setShowForm(false)}
       />

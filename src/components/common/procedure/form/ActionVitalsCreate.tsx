@@ -4,9 +4,9 @@ import AdminApi from "../../../../api/adminApi";
 
 interface Props {
   vital?: any;
-  patientId?: string;
-  appointmentId?: string;
-  procedureId?: string;
+  patientId?: string | null;
+  appointmentId?: string | null;
+  procedureId?: string | null;
   onClose: () => void;
   onBack?: () => void;
   back?: boolean;
