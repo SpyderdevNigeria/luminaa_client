@@ -107,7 +107,7 @@ const AdminLabDetails = lazy(() => import("./pages/admin/lab/AdminLabDetails"));
 const AdminDoctors = lazy(() => import("./pages/admin/doctors/AdminDoctors"));
 const AdminDoctorsDetails = lazy(() => import("./pages/admin/doctors/AdminDoctorsDetails"));
 const AdminDoctorsStats = lazy(() => import("./pages/admin/doctors/AdminDoctorsStats"));
-const AdminDoctorsSpecialties = lazy(() => import("./pages/admin/doctors/AdminDoctorsSpecialties"));
+const AdminDoctorsSpecialties = lazy(() => import("./pages/admin/doctors/AdminSpecialisationsTab"));
 const AdminPharmacists = lazy(() => import("./pages/admin/pharmacists/AdminPharmacists"));
 const AdminPharmacistsDetails = lazy(() => import("./pages/admin/pharmacists/AdminPharmacistsDetails"));
 const AdminMedications = lazy(() => import("./pages/admin/medications/AdminMedications"));
@@ -137,6 +137,7 @@ const AdminPartnersDetails = lazy(() => import("./pages/admin/partners/AdminPart
 const AdminNotification = lazy(() => import("./pages/admin/notification/AdminNotification"));
 const AdminPaymentVouchers = lazy(() => import("./pages/admin/paymentvouchers/AdminPaymentVouchers"));
 const AdminPaymentVouchersDetails = lazy(() => import("./pages/admin/paymentvouchers/AdminPaymentVouchersDetails"));
+const AdminPatientHmos = lazy(() => import("./pages/admin/patients/AdminPatientHmos"));
 // Super Admin
 const SuperAdminAdmins = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdmins"));
 const SuperAdminAdminsDetails = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdminsDetails"));
@@ -352,6 +353,7 @@ function App() {
         <Route path={routeLinks.admin.notification} element={<AdminNotification />} />
         <Route path={routeLinks.admin.paymentVouchers} element={<AdminPaymentVouchers />} />
         <Route path={routeLinks.admin.paymentVouchersDetails} element={<AdminPaymentVouchersDetails />} />
+        <Route path={routeLinks.admin.hmos} element={<AdminPatientHmos />} />
       </Route>
 
       {/* SuperAdmin Routes */}
@@ -398,6 +400,7 @@ function App() {
 
                 <Route path={routeLinks.superAdmin.paymentVouchers} element={<AdminPaymentVouchers />} />
         <Route path={routeLinks.superAdmin.paymentVouchersDetails} element={<AdminPaymentVouchersDetails />} />
+        <Route path={routeLinks.superAdmin.hmos} element={<AdminPatientHmos />} />
       </Route>
 
       {/* Catch all unmatched routes */}

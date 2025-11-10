@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import DoctorApi from "../../../api/doctorApi";
 import routeLinks from "../../../utils/routes";
+import { useSelector } from "react-redux";
 
 interface PaymentVoucher {
   id: string;
@@ -24,7 +25,8 @@ export default function DoctorPaymentVoucherDetails() {
   const [voucher, setVoucher] = useState<PaymentVoucher | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const {user} = useSelector((state:any) =>  state.auth);
+  console.log(user);
   useEffect(() => {
     if (!id) return;
     const fetchVoucher = async () => {
@@ -59,6 +61,14 @@ export default function DoctorPaymentVoucherDetails() {
     return (
       <div className="text-center text-gray-500 mt-8">Voucher not found.</div>
     );
+  }
+    if (user?.type === "internal") {
+    return (
+      <div className="space-y-4 bg-white p-4">
+        <h1 className="text-2xl font-semibold">Payment Vouchers</h1>
+        <p className="text-gray-600">You do not have permission to access this page</p>
+      </div>
+    )
   }
 
   return (

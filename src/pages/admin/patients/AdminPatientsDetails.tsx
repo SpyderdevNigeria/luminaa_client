@@ -6,6 +6,7 @@ import UserImage from "../../../assets/images/patient/user.png";
 import { FiArrowLeft } from "react-icons/fi";
 import AssignPartnerModal from "../../../components/modal/AssignPartnerModal";
 import { useToaster } from "../../../components/common/ToasterContext";
+import { useHmo } from "../../../hooks/useHmos";
 
 type User = {
   id: string;
@@ -36,7 +37,18 @@ type User = {
   country?: string;
   zipCode?: string;
   hmoNumber?: string;
-  hmoProvider?: string;
+  hmoProvider?: {
+    id?: string;
+    name: string;
+    description?: string;
+    contactEmail?: string;
+    contactPhone?: string;
+    address?: string;
+    isActive?: boolean;
+    patientCount?: number;
+    createdAt?: string;
+    updatedAt?: string;
+  };
   emergencyContactName?: string;
   emergencyContactPhone?: string;
   isBioDataCompleted?: boolean;
@@ -48,72 +60,62 @@ function AdminPatientDetails() {
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
-  const [hmoProvider, setHmoProvider] = useState("");
   const [hmoNumber, setHmoNumber] = useState("");
-  const [selectedHmo, setSelectedHmo] = useState("");
-  const [showCustomInput, setShowCustomInput] = useState(false);
+    const [selectedHmoId, setSelectedHmoId] = useState("");
   const [verifying, setVerifying] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
    const { showToast } = useToaster();
-  const hmoList = [
-    "AXA Mansard",
-    "Hygeia HMO",
-    "Reliance HMO",
-    "Leadway Health",
-    "Redcare HMO",
-    "Avon Healthcare",
-    "MetroHealth HMO",
-    "Novo Health Africa",
-    "Liberty Health",
-    "IHMS",
-    "Prohealth HMO",
-    "Greenbay HMO",
-    "Total Health Trust (THT)",
-    "Mediplan Healthcare",
-    "Healthcare International",
-  ];
+
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"assign" | "unassign">("assign");
+   const { hmos, getHmos, loading: hmoLoading } = useHmo();
   const fetchUser = async () => {
     try {
       setLoading(true);
       if (!id) return;
       const response = await AdminApi.getPatientById(id);
-      setUser(response?.data);
-      setHmoProvider(response?.data?.hmoProvider || "");
-      setHmoNumber(response?.data?.hmoNumber || "");
+      console.log(response);
+      setUser(response?.data);;
+       setHmoNumber(response?.data?.hmoNumber || "");
+      setSelectedHmoId(response?.data?.hmoProvider?.id || "");
+    } catch (error: any) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-const handleVerifyHMO = async () => {
-  const provider = showCustomInput ? hmoProvider : selectedHmo;
-  if (!provider) {
-    setMessage({ text: "Please select or enter an HMO provider.", type: "error" });
-    return;
-  }
+ // Handle HMO verification
+  const handleVerifyHMO = async () => {
+    if (!selectedHmoId) {
+      setMessage({ text: "Please select an HMO provider.", type: "error" });
+      return;
+    }
+    if (!hmoNumber) {
+      setMessage({ text: "Please enter the HMO number.", type: "error" });
+      return;
+    }
 
-  try {
-    setVerifying(true);
-    setMessage({ text: "", type: "" });
-    await AdminApi.verifyPaitentHmo(id as string, {
-      hmoProvider: provider,
-      hmoNumber: hmoNumber,
-    });
-    setMessage({ text: "Patient HMO verified successfully!", type: "success" });
-    showToast("Patient HMO verified successfully", "success");
-    await fetchUser();
-  } catch (error: any) {
-    console.error(error);
-    setMessage({
-      text: error?.response?.data?.message || "Failed to verify HMO",
-      type: "error",
-    });
-  } finally {
-    setVerifying(false);
-  }
-};
+    try {
+      setVerifying(true);
+      setMessage({ text: "", type: "" });
+      await AdminApi.verifyPaitentHmo(id as string, {
+        hmoId: selectedHmoId,
+        hmoNumber: hmoNumber,
+      });
+      setMessage({ text: "Patient HMO verified successfully!", type: "success" });
+      showToast("Patient HMO verified successfully", "success");
+      await fetchUser();
+    } catch (error: any) {
+      console.error(error);
+      setMessage({
+        text: error?.response?.data?.message || "Failed to verify HMO",
+        type: "error",
+      });
+    } finally {
+      setVerifying(false);
+    }
+  };
     const openAssignModal = () => {
     setModalType("assign");
     setModalOpen(true);
@@ -126,6 +128,7 @@ const handleVerifyHMO = async () => {
 
   useEffect(() => {
     fetchUser();
+    getHmos();
   }, [id]);
 
   if (loading || !user) return <p>Loading patient...</p>;
@@ -204,10 +207,10 @@ const handleVerifyHMO = async () => {
             <strong>HMO Number:</strong> {user.hmoNumber || "N/A"}
           </div>
           <div>
-            <strong>HMO Provider:</strong> {user.hmoProvider || "N/A"}
+            <strong>HMO Provider:</strong> {user?.hmoProvider?.name || "N/A"}
           </div>
           <div>
-            <strong>HMO Status:</strong> {user.hmoStatus || "N/A"}
+            <strong>HMO Status:</strong> {user?.hmoProvider?.isActive ? "Active" : "Inactive" }
           </div>
         </div>
       </section>
@@ -277,88 +280,61 @@ const handleVerifyHMO = async () => {
 )}
 
       {/* Verify HMO Section */}
-{/* Verify HMO Section */}
-<section className="border-t border-gray-200 pt-4">
-  <h4 className="text-lg font-medium mb-2">Verify HMO</h4>
+ <section className="border-t border-gray-200 pt-4">
+          <h4 className="text-lg font-medium mb-2">Verify HMO</h4>
 
-  <div className="flex flex-col  gap-3 items-center">
-      {message.text && (
-    <p
-      className={`mt-2 text-sm ${
-        message.type === "success" ? "text-green-600" : "text-red-600"
-      }`}
-    >
-      {message.text}
-    </p>
-  )}
-    <div className="flex flex-col gap-3 w-full">
-    <div>
-      <label htmlFor="hmoNumber">HMO Number</label>     
-       <input
-        type="text"
-        placeholder="Enter HMO Number"
-        value={hmoNumber}
-        onChange={(e) => setHmoNumber(e.target.value)}
-        className="border border-gray-300 rounded-md px-3 py-2 w-full"
-      />
-    </div>
-    <div>
-      <label htmlFor="hmoProvider">HMO Provider</label>
-      <div className="flex flex-row items-center gap-3">
-                    {!showCustomInput ? (
-        <select
-          value={selectedHmo}
-          onChange={(e) => setSelectedHmo(e.target.value)}
-          className="border border-gray-300 rounded-md px-3 py-2 w-full"
-        >
-          <option value="">Select HMO Provider</option>
-          {hmoList.map((hmo) => (
-            <option key={hmo} value={hmo}>
-              {hmo}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <input
-          type="text"
-          placeholder="Enter HMO Provider"
-          value={hmoProvider}
-          onChange={(e) => setHmoProvider(e.target.value)}
-          className="border border-gray-300 rounded-md px-3 py-2 w-full"
-        />
-      )}
-              {!showCustomInput && (
-        <button
-          onClick={() => {
-            setShowCustomInput(true);
-            setSelectedHmo("");
-          }}
-          className="border border-primary text-nowrap text-sm text-primary px-4 py-2 rounded-md"
-        >
-          Enter HMO
-        </button>
-      )}
-      </div>
+          <div className="flex flex-col gap-3 items-center">
+            {message.text && (
+              <p
+                className={`mt-2 text-sm ${
+                  message.type === "success" ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {message.text}
+              </p>
+            )}
 
-    </div>
+            <div className="flex flex-col gap-3 w-full">
+              <div>
+                <label htmlFor="hmoNumber">HMO Number</label>
+                <input
+                  type="text"
+                  placeholder="Enter HMO Number"
+                  value={hmoNumber}
+                  onChange={(e) => setHmoNumber(e.target.value)}
+                  className="border border-gray-300 rounded-md px-3 py-2 w-full"
+                />
+              </div>
 
+              <div>
+                <label htmlFor="hmoProvider">HMO Provider</label>
+                <select
+                  value={selectedHmoId}
+                  onChange={(e) => setSelectedHmoId(e.target.value)}
+                  className="border border-gray-300 rounded-md px-3 py-2 w-full"
+                  disabled={hmoLoading}
+                >
+                  <option value="">Select HMO Provider</option>
+                  {hmos.map((hmo) => (
+                    <option key={hmo.id} value={hmo.id}>
+                      {hmo.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-    </div>
-
-    <div className="w-full">
-
-      <button
-        onClick={handleVerifyHMO}
-        disabled={verifying}
-        className="bg-primary text-white px-6 py-2 w-full rounded-md disabled:bg-gray-400"
-      >
-        {verifying ? "Verifying..." : "Verify HMO"}
-      </button>
-    </div>
-  </div>
-
-
-</section>
+            <div className="w-full">
+              <button
+                onClick={handleVerifyHMO}
+                disabled={verifying}
+                className="bg-primary text-white px-6 py-2 w-full rounded-md disabled:bg-gray-400"
+              >
+                {verifying ? "Verifying..." : "Verify HMO"}
+              </button>
+            </div>
+          </div>
+        </section>
 
 
 

@@ -3,8 +3,8 @@ import { FiArrowLeft } from "react-icons/fi";
 import AdminApi from "../../../../api/adminApi";
 import FeedbackMessage from "../../../../components/common/FeedbackMessage";
 import CommonFormField from "../../../../components/common/CommonFormField";
-import { adminDoctorSpecialties } from "../../../../utils/dashboardUtils";
 import { useToaster } from "../../../../components/common/ToasterContext";
+import { useSpecialisations } from "../../../../hooks/useSpecialisations";
 
 type DoctorUser = {
   firstName: string;
@@ -16,12 +16,13 @@ export type Doctor = {
   id: string;
   user: DoctorUser;
   specialty: string;
+  specialisationId?: string;
   licenseNumber: string;
   contactNumber: string;
   gender: string;
   dateOfBirth: string;
   joinedDate: string;
-  type:string
+  type: string;
 };
 
 type FormData = {
@@ -29,13 +30,13 @@ type FormData = {
   lastName: string;
   email: string;
   password?: string;
-  specialty: string;
+  specialisationId?: string;
   licenseNumber: string;
   contactNumber: string;
   gender: string;
   dateOfBirth: string;
   joinedDate: string;
-  type:string
+  type: string;
 };
 
 type Props = {
@@ -56,16 +57,19 @@ const AdminDoctorsCreate: React.FC<Props> = ({
     lastName: "",
     email: "",
     password: "",
-    specialty: "",
+    specialisationId: "",
     licenseNumber: "",
     contactNumber: "",
     gender: "",
     dateOfBirth: "",
     joinedDate: "",
-    type:"",
+    type: "",
   });
 
   const { showToast } = useToaster();
+
+  // Fetch specialisations dynamically
+  const { specialisations, loading: specLoading,  } = useSpecialisations();
 
   useEffect(() => {
     if (doctor) {
@@ -73,13 +77,13 @@ const AdminDoctorsCreate: React.FC<Props> = ({
         firstName: doctor.user.firstName || "",
         lastName: doctor.user.lastName || "",
         email: doctor.user.email || "",
-        specialty: doctor.specialty || "",
+        specialisationId: doctor.specialisationId || "",
         licenseNumber: doctor.licenseNumber || "",
         contactNumber: doctor.contactNumber || "",
         gender: doctor.gender || "",
         dateOfBirth: doctor.dateOfBirth?.slice(0, 10) || "",
         joinedDate: doctor.joinedDate?.slice(0, 10) || "",
-        type:doctor.type || "",
+        type: doctor.type || "",
       });
     }
   }, [doctor]);
@@ -98,54 +102,64 @@ const AdminDoctorsCreate: React.FC<Props> = ({
     e.preventDefault();
     const payload = { ...formData };
     setLoading(true);
-    if (doctor && !payload.password) {
-      delete payload.password;
-    }
+
+    // Remove password field if editing without change
+    if (doctor && !payload.password) delete payload.password;
 
     try {
       if (doctor) {
+        // ✅ Include specialisationId for update
         const response = await AdminApi.updateDoctors(payload);
         setMessage({
           message: response?.data?.message || "Doctor updated successfully",
           type: "success",
         });
-        showToast('Doctor updated successfully', 'success');
+        showToast("Doctor updated successfully", "success");
       } else {
+        // ✅ Include specialisationId for create
         const response = await AdminApi.createDoctors(payload);
         setMessage({
           message: response?.data?.message || "Doctor created successfully",
           type: "success",
         });
-        showToast('Doctor created successfully', 'success');
+        showToast("Doctor created successfully", "success");
       }
       onClose();
-    } catch (error:any) {
+    } catch (error: any) {
       console.error(error);
       setMessage({
         message: error?.response?.data?.message || "An error occurred",
         type: "error",
       });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
+
   useEffect(() => {
-    setMessage({
-      message: "",
-      type: "",
-    });
-  }, [formData])
+    setMessage({ message: "", type: "" });
+  }, [formData]);
 
   const fields: {
     name: keyof FormData;
     label: string;
     type?: string;
     required?: boolean;
-    options?: string[];
+    options?: { value: string; label: string }[];
   }[] = [
     { name: "firstName", label: "First Name", required: true },
     { name: "lastName", label: "Last Name", required: true },
     { name: "email", label: "Email", type: "email", required: true },
-    { name: "specialty", label: "Specialty", type:"select", options:adminDoctorSpecialties,  required: true, },
+    {
+      name: "specialisationId",
+      label: "Specialty",
+      type: "select",
+      required: true,
+      options: specialisations.map((spec) => ({
+        value: spec.id || "",
+        label: spec.name,
+      })),
+    },
     { name: "licenseNumber", label: "License Number", required: true },
     { name: "contactNumber", label: "Contact Number", required: true },
     {
@@ -153,7 +167,11 @@ const AdminDoctorsCreate: React.FC<Props> = ({
       label: "Gender",
       type: "select",
       required: true,
-      options: ["male", "female", "other"],
+      options: [
+        { value: "male", label: "Male" },
+        { value: "female", label: "Female" },
+        { value: "other", label: "Other" },
+      ],
     },
     {
       name: "dateOfBirth",
@@ -172,7 +190,10 @@ const AdminDoctorsCreate: React.FC<Props> = ({
       label: "Type",
       type: "select",
       required: true,
-      options: ["internal", "external"],
+      options: [
+        { value: "internal", label: "Internal" },
+        { value: "external", label: "External" },
+      ],
     },
   ];
 
@@ -184,7 +205,7 @@ const AdminDoctorsCreate: React.FC<Props> = ({
       >
         <FiArrowLeft /> Back to List
       </button>
-      <div className="bg-white  p-6 rounded-lg max-w-6xl mx-auto">
+      <div className="bg-white p-6 rounded-lg max-w-6xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">
           {doctor ? "Edit Doctor" : "Add Doctor"}
         </h2>
@@ -199,20 +220,22 @@ const AdminDoctorsCreate: React.FC<Props> = ({
             )}
           </div>
 
-          {fields.map((field) => (
-            <CommonFormField
-              key={field.name}
-              type={field.type || "text"}
-              name={field.name}
-              label={field.label}
-              value={formData[field.name] || ""}
-              required={field.required}
-              onChange={handleChange}
-              options={
-                field.options?.map((opt) => ({ value: opt, label: opt })) || []
-              }
-            />
-          ))}
+          {specLoading ? (
+            <p className="text-gray-500 text-sm">Loading specialities...</p>
+          ) : (
+            fields.map((field) => (
+              <CommonFormField
+                key={field.name}
+                type={field.type || "text"}
+                name={field.name}
+                label={field.label}
+                value={formData[field.name] || ""}
+                required={field.required}
+                onChange={handleChange}
+                options={field.options || []}
+              />
+            ))
+          )}
 
           <div className="col-span-1 md:col-span-2 flex justify-end">
             <button
@@ -220,7 +243,11 @@ const AdminDoctorsCreate: React.FC<Props> = ({
               className="bg-primary text-white px-6 py-2 rounded-md mt-4"
               disabled={loading}
             >
-              {loading ? "Loading..." : doctor ? "Update Doctor" : "Create Doctor"}
+              {loading
+                ? "Loading..."
+                : doctor
+                ? "Update Doctor"
+                : "Create Doctor"}
             </button>
           </div>
         </form>

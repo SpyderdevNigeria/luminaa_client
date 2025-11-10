@@ -512,6 +512,57 @@ getInputOutputs: async (filters: any) => {
     const response = await api.patch(`/admin/payment-vouchers/${id}/status`, data);
     return response.data;
   },
+
+  getSpecialisations: async () => {
+    const response = await api.get("/admin/doctors/specialties/available");
+    return response.data;
+  },
+  getSpecialisationsList: async () => { 
+    const response = await api.get("/admin/doctors/specialisations/all");
+    return response.data;
+  },
+  getSpecialisationsById: async (id: string) => {
+    const response = await api.get(`/admin/doctors/specialisations/${id}`);
+    return response.data;
+  },
+  updateSpecialisation: async (id: string, data: any) => {
+    const response = await api.patch(`/admin/doctors/specialisations/${id}`, data);
+    return response.data;
+  },
+  createSpecialisation: async (data: any) => {
+    const response = await api.post("/admin/doctors/specialisations", data);
+    return response.data;
+  },
+  deleteSpecialisation: async (id: string) => {
+    const response = await api.delete(`/admin/doctors/specialisations/${id}`);
+    return response.data;
+  },
+  getAllHmos: async () => {
+    const response = await api.get(`/admin/hmo`);
+    return response.data;
+  },
+  getHmoById: async (id: string) => {
+    const response = await api.get(`/admin/hmo/${id}`);
+    return response.data;
+  },
+  updateHmo: async (id: string, data: any) => {
+    const response = await api.put(`/admin/hmo/${id}`, data);
+    return response.data;
+  },
+  createHmo: async (data: any) => {
+    const response = await api.post("/admin/hmo", data);
+    return response.data;
+  },
+  deleteHmo: async (id: string) => {
+    const response = await api.delete(`/admin/hmo/${id}`);
+    return response.data;
+  },
+  getHmoPatients: async (id: string, page = 1, limit = 10) => {
+    const response = await api.get(`/admin/hmo/${id}/patients`, {
+      params: { page, limit },
+    });
+    return response.data;
+  }
 };
 
 export default AdminApi;

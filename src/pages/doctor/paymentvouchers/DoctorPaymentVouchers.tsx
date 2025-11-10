@@ -11,7 +11,7 @@ import DoctorPaymentVoucherCreateEditModal from "../../../components/modal/Docto
 import routeLinks from "../../../utils/routes";
 import { Link } from "react-router-dom";
 import usePaymentVouchers from "../../../hooks/usePaymentVouchers";
-
+import { useSelector } from "react-redux";
 function DoctorPaymentVoucher() {
   const {
     vouchers,
@@ -32,7 +32,8 @@ function DoctorPaymentVoucher() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [selectedVoucherId, setSelectedVoucherId] = useState<string | null>(null);
-
+    const {user} = useSelector((state:any) =>  state.auth);
+    console.log(user);
   useEffect(() => {
     refetch();
   }, [page, status]);
@@ -105,7 +106,14 @@ function DoctorPaymentVoucher() {
       ),
     },
   ];
-
+  if (user?.type === "internal") {
+    return (
+      <div className="space-y-4 bg-white p-4">
+        <h1 className="text-2xl font-semibold">Payment Vouchers</h1>
+        <p className="text-gray-600">You do not have permission to access this page</p>
+      </div>
+    )
+  }
   return (
     <div className="space-y-4 bg-white p-4">
       <div className="flex justify-between items-center">

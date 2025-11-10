@@ -604,6 +604,14 @@ export const navItemsAdmin = [
         to: routeLinks.admin.patientsStats ?? '',
         visible: true,
       },
+            {
+        id: "HMOs",
+        label: "HMOs",
+        title: "HMOs",
+        icon: FaUserInjured,
+        to: routeLinks.admin.hmos ?? '',
+        visible: true,
+      },
            {
         id: "payments-voucher",
         label: "Payments Voucher",
@@ -883,6 +891,14 @@ export const navItemsSuperAdmin = [
         title: "Patients Stats",
         icon: FaUserInjured,
         to: routeLinks.superAdmin.patientsStats ?? '',
+        visible: true,
+      },
+      {
+        id: "HMOs",
+        label: "HMOs",
+        title: "HMOs",
+        icon: FaUserInjured,
+        to: routeLinks.superAdmin.hmos ?? '',
         visible: true,
       },
            {

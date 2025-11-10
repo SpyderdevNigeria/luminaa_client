@@ -155,6 +155,8 @@ admin: {
   notification: '/admin/notifications',
   paymentVouchers: '/admin/payment-vouchers',
   paymentVouchersDetails: '/admin/payment-vouchers/:id',
+  hmos: '/admin/hmos',
+  hmoDetails: '/admin/hmos/:id',
 },
 superAdmin: {
   path:'/super-admin',
@@ -205,6 +207,8 @@ superAdmin: {
   notification: '/super-admin/notifications',
   paymentVouchers: '/super-admin/payment-vouchers',
   paymentVouchersDetails: '/super-admin/payment-vouchers/:id',
+  hmos: '/super-admin/hmos',
+  hmoDetails: '/super-admin/hmos/:id',
 },
 pharmacist: {
   path:'/pharmacist',
