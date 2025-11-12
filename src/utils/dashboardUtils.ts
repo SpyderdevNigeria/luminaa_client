@@ -1535,7 +1535,8 @@ export function getFormattedDateTime(isoDateString: string) {
     minute: "2-digit",
   });
 
-  const formattedDate = moment(getDate).format("MMMM Do YYYY") !==  'Invalid date' ? moment(getDate).format("MMMM Do YYYY") : getDate;
+   const formattedDate = moment(isoDateString).format('dddd, MMMM D, YYYY') !==  'Invalid date' ? moment(isoDateString).format('dddd, MMMM D, YYYY') : getDate;
+
   return {
     formattedDate,
     formattedTime,
