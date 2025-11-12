@@ -309,6 +309,11 @@ createPaymentVoucher: async (body: any) => {
   const response = await api.get("/doctor/vitals/list", { params: filters });
   return response.data;
 },
+
+    getServices: async (filters: any) => {
+    const response = await api.get("/doctor/services", { params: filters });
+    return response.data;
+  },
 }
 
 export default DoctorApi;

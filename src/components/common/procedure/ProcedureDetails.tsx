@@ -144,7 +144,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
       {/* ---- TOP TAB NAVIGATION ---- */}
       <div className="flex flex-wrap border-b border-gray-200 mb-4 bg-white ">
         {["overview",  "appointment",]
-          .concat(type === "nurse" ? [ "patient", "doctor", 'drugchart', "vitals", "intake-outtake" , "procedure documents", "actions",] : [])
+          .concat(type === "nurse" ? [ "patient", "doctor", 'drugchart', "vitals", "intake-outtake" ,  "actions",] : [])
           .concat(type === "admin" ? [ "patient", "doctor", "payment details", "actions",] : [])
           .concat(type === "doctor" ? [ "patient", "intake-outtake" , 'vitals', 'drugchart',"procedure documents",'procedure results'] : [])
           .map((tab) => (
@@ -165,7 +165,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
       <div className="space-y-6">
         {/* --- OVERVIEW --- */}
         {activeTab === "overview" && procedure && (
-          <Overview procedure={procedure} />
+          <Overview procedure={procedure} type={type} />
         )}
         {/* --- PATIENT INFO --- */}
         {activeTab === "patient" && (
@@ -293,7 +293,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
 
         {/* --- APPOINTMENT --- */}
         {activeTab === "appointment" && (
-          <Appointment procedure={procedure}  type={type === "nurse" ? "admin" : "doctor" }/>
+          <Appointment procedure={procedure}  type={type }/>
         )}
         {activeTab === "drugchart" && (
           <DrugChart
@@ -318,8 +318,8 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
             <div className="w-full md:w-1/4 border-r border-gray-200">
               <h2 className="text-base font-semibold text-gray-700 mb-3 px-2">Actions</h2>
               <div className="flex md:flex-col overflow-x-auto md:overflow-visible">
-                {["payment", "schedule", "status",]
-                  .concat(type === "nurse" ? ["consent", "report",  "results" ] : [])
+                {["payment", "status", "schedule", ]
+                  .concat(type === "nurse" ? ["consent", "report",  ] : [])
                   .map((t) => (
                     <button
                       key={t}

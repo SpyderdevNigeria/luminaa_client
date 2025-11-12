@@ -3,10 +3,14 @@ import Section from "../../Section";
 import Info from "../../Info";
 import ConsentFormSection from "./ConsentFormSection";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
+import { usePaystackPayment } from "../../../../hooks/usePaystackPayment";
+import { EntityType } from "../../../../types/Interfaces";
+
 
 
 interface OverviewProps {
   procedure: any;
+  type?: string;
 }
 
 const AccordionSection = ({
@@ -37,7 +41,18 @@ const AccordionSection = ({
   );
 };
 
-const Overview: React.FC<OverviewProps> = ({ procedure }) => {
+const Overview: React.FC<OverviewProps> = ({ procedure, type }) => {
+
+    const { initializePayment, loading: paystackLoading } = usePaystackPayment();
+    const [isProcessing, setIsProcessing] = useState(false);
+    const handlePayment = async () => {
+      setIsProcessing(true);
+      try {
+        await initializePayment(EntityType.PROCEDURE, procedure.id);
+      } finally {
+        setIsProcessing(false);
+      }
+    };
   return (
     <Section title="Overview">
       <AccordionSection title="Basic Details" defaultOpen>
@@ -58,6 +73,22 @@ const Overview: React.FC<OverviewProps> = ({ procedure }) => {
           <Info label="Note" value={procedure?.note} full />
           <Info label="Nurse Message" value={procedure?.nurseMessage} full />
           <Info label="Patient Message" value={procedure?.patientMessage} full />
+
+            {type == "patient" && procedure?.paymentStatus !== 'completed' && (
+              <div className="flex flex-col md:flex-row items-center justify-between">
+            <h2>Pay for Procedure {procedure?.type} </h2>
+                        {procedure?.paymentStatus !== 'completed' &&         <div >
+          <button
+            type="submit"
+            disabled={paystackLoading || isProcessing}
+            className="mt-4 bg-primary px-4 text-white py-2 rounded-md hover:bg-primary/90 transition"
+            onClick={handlePayment}
+          >
+            {paystackLoading || isProcessing ? "Processing..." : "Pay Now"}
+          </button>
+        </div>}
+          </div>
+            )}
         </div>
       </AccordionSection>
 

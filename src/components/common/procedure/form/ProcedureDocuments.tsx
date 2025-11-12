@@ -23,8 +23,8 @@ const ProcedureDocuments = ({ procedure, procedureId, fetchProcedure }: Procedur
     const [confirmMessage, setConfirmMessage] = useState("");
 
     const handleUpload = async () => {
-        if (!name || !type || !file) {
-            showToast("Name, type, and file are required", "error");
+        if (!name  || !file) {
+            showToast("Name,  and file are required", "error");
             return;
         }
 

@@ -23,7 +23,7 @@ const OrderForm = () => {
   const { showToast } = useToaster();
   const [loading, setLoading] = useState(false);
   const { items: cartItems, update, subtotal, clear } = useCart();
-  const { initializePayment, loading: paystackLoading } = usePaystackPayment(); // 👈 use hook
+  const { initializePayment, loading: paystackLoading } = usePaystackPayment(); //  use hook
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();

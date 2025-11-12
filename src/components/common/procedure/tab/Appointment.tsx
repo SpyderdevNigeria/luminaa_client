@@ -2,7 +2,7 @@ import Section from '../../Section'
 import Info from '../../Info'
 import PaymentDetails from '../../PaymentDetails'
 
-function Appointment({procedure}: any) {
+function Appointment({procedure, type}: any) {
   return (
       <Section title="Appointment Information">
             <div className="grid grid-cols-2 gap-4">
@@ -24,7 +24,9 @@ function Appointment({procedure}: any) {
                 full
               />
             </div>
+            { type == 'admin' &&
             <PaymentDetails entityType="appointment" entityId={procedure.appointment?.id} patientId={procedure?.patient?.id} amount={procedure.amount} />
+            }
           </Section>
   )
 }

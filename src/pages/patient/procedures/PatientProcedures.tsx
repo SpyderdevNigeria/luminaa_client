@@ -63,7 +63,7 @@ function PatientProcedures() {
        label: "Nurse Message",
        render: (procedure: { nurseMessage: any }) => (
          <span className="truncate max-w-[200px] block">
-           {procedure.nurseMessage}
+           {procedure.nurseMessage || "N/A"}
          </span>
        ),
      },
@@ -72,7 +72,7 @@ function PatientProcedures() {
        label: "Patient Message",
        render: (procedure: { patientMessage: any }) => (
          <span className="truncate max-w-[200px] block">
-           {procedure.patientMessage}
+           {procedure.patientMessage || "N/A"}
          </span>
        ),
      },

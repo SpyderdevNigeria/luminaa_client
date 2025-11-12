@@ -60,11 +60,21 @@ const ProcedureDetails = ({ appointment, handleBack }: ProcedureDetailsProps) =>
        render: (procedure: { status: string; }) => <StatusBadge status={procedure.status} />,
      },
      {
+      key:"services",
+      label:"Services",
+      render: (procedure: { service: any; }) => <span>{procedure.service?.name || "N/A"}</span>,
+     },
+          {
+      key:"services price",
+      label:"Services Price",
+      render: (procedure: { service: any; }) => <span>{procedure.service?.price || "N/A"}</span>,
+     },
+     {
        key: "nurseMessage",
        label: "Nurse Message",
        render: (procedure: { nurseMessage: any }) => (
          <span className="truncate max-w-[200px] block">
-           {procedure.nurseMessage}
+           {procedure.nurseMessage || "N/A"}
          </span>
        ),
      },
@@ -73,7 +83,7 @@ const ProcedureDetails = ({ appointment, handleBack }: ProcedureDetailsProps) =>
        label: "Patient Message",
        render: (procedure: { patientMessage: any }) => (
          <span className="truncate max-w-[200px] block">
-           {procedure.patientMessage}
+           {procedure.patientMessage || "N/A"}
          </span>
        ),
      },

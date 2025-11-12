@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { RootState, AppDispatch } from "../store";
-import { fetchServices, fetchServicesForPatient, updateFilters } from "../reducers/serviceSlice";
+import { fetchServices, fetchServicesForPatient, updateFilters, fetchServicesForDoctor } from "../reducers/serviceSlice";
 
 export const useServices = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,6 +19,9 @@ export const useServices = () => {
     dispatch(fetchServicesForPatient());
   }, [dispatch, filters]);
 
+    const fetchServicesListDoctor = useCallback(() => {
+    dispatch(fetchServicesForDoctor());
+  }, [dispatch, filters]);
   const setFilters = (newFilters: Partial<typeof filters>) => {
     dispatch(updateFilters(newFilters));
   };
@@ -31,6 +34,7 @@ export const useServices = () => {
     filters,
     fetchServices: fetchServicesList,
     updateFilters: setFilters,
-    fetchServicesListPatient  :fetchServicesListPatient
+    fetchServicesListPatient  :fetchServicesListPatient,
+    fetchServicesListDoctor :fetchServicesListDoctor
   };
 };

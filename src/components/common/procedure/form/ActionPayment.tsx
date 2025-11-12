@@ -50,7 +50,10 @@ const ActionPayment = ({
           >
             <option value="">Select</option>
             <option value="pending">Pending</option>
-            <option value="complete">Complete</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="refunded">Refunded</option>
+            <option value="partially-refunded">Partially Refunded</option>
             <option value="failed">Failed</option>
           </select>
           <button

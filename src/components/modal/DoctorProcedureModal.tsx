@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./modal";
-import DoctorApi from "../../api/doctorApi";
 import FeedbackMessage from "../common/FeedbackMessage";
 import { useToaster } from "../common/ToasterContext";
 import { procedureType } from "../../utils/dashboardUtils";
+import { useServices } from "../../hooks/useServices";
+import DoctorApi from "../../api/doctorApi";
 
 interface DoctorProcedureModalProps {
   open: boolean;
@@ -20,15 +21,27 @@ const DoctorProcedureModal: React.FC<DoctorProcedureModalProps> = ({
   appointmentId,
   onSuccess,
 }) => {
+  const { showToast } = useToaster();
+  const {
+    data: services,
+    loading: servicesLoading,
+    fetchServicesListDoctor,
+  } = useServices();
+
   const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState({ message: "", type: "" });
+  const [message, setMessage] = useState({ message: "", type: "" });
   const [procedureData, setProcedureData] = useState({
     nurseMessage: "",
     patientMessage: "",
     type: "",
     note: "",
+    serviceId: "",
   });
-   const { showToast } = useToaster();
+
+  useEffect(() => {
+    if (open) fetchServicesListDoctor();
+  }, [open, fetchServicesListDoctor]);
+
   // handle form input
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -40,36 +53,46 @@ const DoctorProcedureModal: React.FC<DoctorProcedureModalProps> = ({
   // handle submit
   const handleSubmit = async () => {
     setLoading(true);
+    if  (
+      !procedureData.type ||
+      !procedureData.serviceId
+    ) {
+      showToast("Procedure Type and Service fields are required to submit this form", "error");
+      return;
+    }
     try {
       const payload = {
         ...procedureData,
         patientId,
         appointmentId,
       };
-      console.log(payload)
-       const response = await DoctorApi.createProcedure(payload);
-      console.log("Procedure created:", payload);
+
+      console.log("Submitting procedure:", payload);
+
+      // Assuming useServices provides a createServiceProcedure or similar
+      const response = await DoctorApi.createProcedure(payload);
 
       setProcedureData({
         nurseMessage: "",
         patientMessage: "",
         type: "",
         note: "",
+        serviceId: "",
       });
-        setMessage({
-        message: response?.data?.message || "Nurse updated successfully",
+
+      setMessage({
+        message: response?.data?.message || "Procedure created successfully",
         type: "success",
       });
-       showToast(`${response?.data?.message || "Procedure created successfully"}`, "success");
-       onSuccess && onSuccess();
+
+      showToast(`${response?.data?.message || "Procedure created successfully"}`, "success");
+      onSuccess && onSuccess();
     } catch (error) {
       console.error("Error creating procedure:", error);
-       console.error(error);
       setMessage({
-        message: "An error occurred",
+        message: "An error occurred while creating the procedure",
         type: "error",
       });
-      
     } finally {
       setLoading(false);
     }
@@ -85,12 +108,11 @@ const DoctorProcedureModal: React.FC<DoctorProcedureModalProps> = ({
       loading={loading}
     >
       <div className="flex flex-col gap-4">
-        <div className="">
-            {message.message && (
-              <FeedbackMessage type={message.type} message={message.message} />
-            )}
-          </div>
-          
+        {message.message && (
+          <FeedbackMessage type={message.type} message={message.message} />
+        )}
+
+        {/* Nurse Message */}
         <textarea
           name="nurseMessage"
           value={procedureData.nurseMessage}
@@ -98,6 +120,8 @@ const DoctorProcedureModal: React.FC<DoctorProcedureModalProps> = ({
           placeholder="Nurse Message"
           className="form-input"
         />
+
+        {/* Patient Message */}
         <textarea
           name="patientMessage"
           value={procedureData.patientMessage}
@@ -105,6 +129,8 @@ const DoctorProcedureModal: React.FC<DoctorProcedureModalProps> = ({
           placeholder="Patient Message"
           className="form-input"
         />
+
+        {/* Procedure Type */}
         <select
           name="type"
           value={procedureData.type}
@@ -118,6 +144,25 @@ const DoctorProcedureModal: React.FC<DoctorProcedureModalProps> = ({
             </option>
           ))}
         </select>
+
+        {/* Service Selection */}
+        <select
+          name="serviceId"
+          value={procedureData.serviceId}
+          onChange={handleChange}
+          className="form-input"
+        >
+          <option value="">Select Service</option>
+          {servicesLoading && <option>Loading services...</option>}
+          {!servicesLoading &&
+            services?.map((service: any) => (
+              <option key={service.id} value={service.id}>
+                {service.name}
+              </option>
+            ))}
+        </select>
+
+        {/* Note */}
         <textarea
           name="note"
           value={procedureData.note}
