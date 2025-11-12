@@ -52,7 +52,9 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
       };
       console.log(payload);
       const response = await PatientApi.createAppointment(payload);
-      dispatch(updateUser({...user, hasBookedInitialConsultation: user.hasBookedInitialConsultation === false ? true : false }));
+      if (user.hasBookedInitialConsultation === false) {
+        dispatch(updateUser({...user, hasBookedInitialConsultation: true}))
+      }
       if (response?.status) {
         setIsSuccess(true);
         setData((prevData: any) => ({
