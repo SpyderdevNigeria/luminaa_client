@@ -27,6 +27,9 @@ function Appointment() {
       dispatch(logout());
       navigate(routeLinks?.auth?.login);
     }
+    if (userProfile?.registrationPaymentStatus === "pending") {
+      navigate(routeLinks?.patient?.paymentPending);
+    }
   }, [authLoading, userProfile, navigate, dispatch]);
 
   // Show choice screen if patient has no medical history
@@ -98,8 +101,8 @@ function Appointment() {
 
           <p className="text-gray-600 mb-6 text-sm leading-relaxed">
             To help doctors provide you with the best possible care, we need some 
-            background information about your health. Your 
-            <strong> Premorbid Condition </strong> form includes important details such as your 
+            background information about your health. By filling our 
+            <strong> Premorbid Condition </strong> form with includes the following  
             <strong> blood group, genotype, </strong> and any previous medical history like 
             <strong> hypertension, diabetes, asthma, kidney or liver disease,</strong> and others. 
             This information helps your doctor understand your health risks, avoid 
