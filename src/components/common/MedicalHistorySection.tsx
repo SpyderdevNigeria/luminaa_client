@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../api/apiConfig";
-
+import PatientVitals from "./patientDetailsComponent/PatientVitals";
 
 interface MedicalHistorySectionProps {
   procedure: any;
@@ -32,6 +32,7 @@ const MedicalHistorySection = ({
 }: MedicalHistorySectionProps) => {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"vitals" | "history">("vitals"); // 👈 New state
 
   const medicalHistory = procedure?.medicalHistory || {};
 
@@ -105,16 +106,16 @@ const MedicalHistorySection = ({
     Object.keys(procedure?.medicalHistory || {}).length > 0;
 
   return (
-    <div className="bg-white p-4 rounded shadow">
+    <div className="bg-white p-4  ">
+      {type !== "patient" && (
+        <button
+          onClick={handleBack}
+          className="text-sm text-gray-500 hover:text-gray-700"
+        >
+          ← Back
+        </button>
+      )}
 
-       {type !== "patient" && (
-              <button
-              onClick={handleBack}
-              className="text-sm text-gray-500 hover:text-gray-700"
-            >
-              ← Back
-            </button>
-            )}
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-semibold text-gray-700">
           Medical History
@@ -134,183 +135,120 @@ const MedicalHistorySection = ({
         )}
       </div>
 
-      {!editing ? (
-        hasMedicalHistory ? (
-          <div className="space-y-4 text-sm">
-      <Info label="Presenting Complaint" value={medicalHistory.presentingComplaint || "N/A"} />
-      <Info label="History of Presenting Complaint" value={medicalHistory.historyOfPresentingComplaint || "N/A"} />
-      <Info label="Past Medical and Surgical History" value={medicalHistory.pastMedicalAndSurgicalHistory || "N/A"} />
-      <Info label="Drug History" value={medicalHistory.drugHistory || "N/A"} />
-      <Info label="Social History" value={medicalHistory.socialHistory || "N/A"} />
-      <Info label="General Physical Examination" value={medicalHistory.generalPhysicalExamination || "N/A"} />
-      <Info label="Abdominal Examination" value={medicalHistory.abdominalExamination || "N/A"} />
-      <Info label="Cardiovascular System Exam" value={medicalHistory.cardiovascularSystemExam || "N/A"} />
-      <Info label="Respiratory System Exam" value={medicalHistory.respiratorySystemExam || "N/A"} />
-      <Info label="Musculoskeletal System Exam" value={medicalHistory.musculoskeletalSystemExam || "N/A"} />
-      <Info label="Urogenital System Exam" value={medicalHistory.urogenitalSystemExam || "N/A"} />
-      <Info label="Central Nervous System Exam" value={medicalHistory.centralNervousSystemExam || "N/A"} />
-          </div>
-        ) : (
-          <p className="text-gray-500">No medical history available</p>
-        )
-      ) : 
-      type === "doctor" && (
-           <form
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
-        >
-          {/* All textareas with labels (same as before) */}
-          <div className="flex flex-col">
-            <label>Presenting Complaint</label>
-            <textarea
-              value={formData.presentingComplaint}
-              onChange={(e) =>
-                handleChange("presentingComplaint", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
+      {/* Tabs (only for doctor) */}
+      {type === "doctor" && (
+        <div className="flex border-b border-gray-200 mb-4">
+          <button
+            onClick={() => setActiveTab("vitals")}
+            className={`px-4 py-2 text-sm font-medium ${
+              activeTab === "vitals"
+                ? "border-b-2 border-primary text-primary"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Patient Vitals
+          </button>
+          <button
+            onClick={() => setActiveTab("history")}
+            className={`px-4 py-2 text-sm font-medium ${
+              activeTab === "history"
+                ? "border-b-2 border-primary text-primary"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Medical History
+          </button>
+        </div>
+      )}
 
-          <div className="flex flex-col">
-            <label>History of Presenting Complaint</label>
-            <textarea
-              value={formData.historyOfPresentingComplaint}
-              onChange={(e) =>
-                handleChange("historyOfPresentingComplaint", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
+      {/* Tab Content */}
+      {type === "doctor" && activeTab === "vitals" && (
+        <PatientVitals patient={procedure?.patient} />
+      )}
 
-          <div className="flex flex-col">
-            <label>Past Medical and Surgical History</label>
-            <textarea
-              value={formData.pastMedicalAndSurgicalHistory}
-              onChange={(e) =>
-                handleChange("pastMedicalAndSurgicalHistory", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
+      {(!type || type !== "doctor" || activeTab === "history") && (
+        <>
+          {!editing ? (
+            hasMedicalHistory ? (
+              <div className="space-y-4 text-sm">
+                <Info label="Presenting Complaint" value={medicalHistory.presentingComplaint || "N/A"} />
+                <Info label="History of Presenting Complaint" value={medicalHistory.historyOfPresentingComplaint || "N/A"} />
+                <Info label="Past Medical and Surgical History" value={medicalHistory.pastMedicalAndSurgicalHistory || "N/A"} />
+                <Info label="Drug History" value={medicalHistory.drugHistory || "N/A"} />
+                <Info label="Social History" value={medicalHistory.socialHistory || "N/A"} />
+                <Info label="General Physical Examination" value={medicalHistory.generalPhysicalExamination || "N/A"} />
+                <Info label="Abdominal Examination" value={medicalHistory.abdominalExamination || "N/A"} />
+                <Info label="Cardiovascular System Exam" value={medicalHistory.cardiovascularSystemExam || "N/A"} />
+                <Info label="Respiratory System Exam" value={medicalHistory.respiratorySystemExam || "N/A"} />
+                <Info label="Musculoskeletal System Exam" value={medicalHistory.musculoskeletalSystemExam || "N/A"} />
+                <Info label="Urogenital System Exam" value={medicalHistory.urogenitalSystemExam || "N/A"} />
+                <Info label="Central Nervous System Exam" value={medicalHistory.centralNervousSystemExam || "N/A"} />
+              </div>
+            ) : (
+              <p className="text-gray-500">No medical history available</p>
+            )
+          ) : (
+            type === "doctor" && (
+              <form
+                onSubmit={handleSubmit}
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              >
+                {Object.keys(formData).map((key) => (
+                  <div
+                    key={key}
+                    className={`flex flex-col ${
+                      key.includes("urogenital") ||
+                      key.includes("centralNervous")
+                        ? "md:col-span-2"
+                        : ""
+                    }`}
+                  >
+                    <label className="capitalize">
+                      {key.replace(/([A-Z])/g, " $1")}
+                    </label>
+                    <textarea
+                      value={(formData as any)[key]}
+                      onChange={(e) =>
+                        handleChange(key as keyof MedicalHistoryData, e.target.value)
+                      }
+                      className="border p-2 rounded border-gray-200"
+                    />
+                  </div>
+                ))}
 
-          <div className="flex flex-col">
-            <label>Drug History</label>
-            <textarea
-              value={formData.drugHistory}
-              onChange={(e) => handleChange("drugHistory", e.target.value)}
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label>Social History</label>
-            <textarea
-              value={formData.socialHistory}
-              onChange={(e) => handleChange("socialHistory", e.target.value)}
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label>General Physical Examination</label>
-            <textarea
-              value={formData.generalPhysicalExamination}
-              onChange={(e) =>
-                handleChange("generalPhysicalExamination", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label>Abdominal Examination</label>
-            <textarea
-              value={formData.abdominalExamination}
-              onChange={(e) =>
-                handleChange("abdominalExamination", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label>Cardiovascular System Exam</label>
-            <textarea
-              value={formData.cardiovascularSystemExam}
-              onChange={(e) =>
-                handleChange("cardiovascularSystemExam", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label>Respiratory System Exam</label>
-            <textarea
-              value={formData.respiratorySystemExam}
-              onChange={(e) =>
-                handleChange("respiratorySystemExam", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label>Musculoskeletal System Exam</label>
-            <textarea
-              value={formData.musculoskeletalSystemExam}
-              onChange={(e) =>
-                handleChange("musculoskeletalSystemExam", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
-
-          <div className="flex flex-col md:col-span-2">
-            <label>Urogenital System Exam</label>
-            <textarea
-              value={formData.urogenitalSystemExam}
-              onChange={(e) =>
-                handleChange("urogenitalSystemExam", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
-
-          <div className="flex flex-col md:col-span-2">
-            <label>Central Nervous System Exam</label>
-            <textarea
-              value={formData.centralNervousSystemExam}
-              onChange={(e) =>
-                handleChange("centralNervousSystemExam", e.target.value)
-              }
-              className="border p-2 rounded border-gray-200"
-            />
-          </div>
-
-          <div className="md:col-span-2 flex justify-end mt-3">
-            <button
-              type="submit"
-              disabled={loading}
-              className="px-4 py-2 bg-primary text-white rounded"
-            >
-              {loading ? "Saving..." : "Save Changes"}
-            </button>
-          </div>
-        </form>
-      )
-      }
+                <div className="md:col-span-2 flex justify-end mt-3">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="px-4 py-2 bg-primary text-white rounded"
+                  >
+                    {loading ? "Saving..." : "Save Changes"}
+                  </button>
+                </div>
+              </form>
+            )
+          )}
+        </>
+      )}
     </div>
   );
 };
 
 export default MedicalHistorySection;
 
-
-const Info = ({ label, value, full }: { label: string; value?: any; full?: boolean }) => (
+const Info = ({
+  label,
+  value,
+  full,
+}: {
+  label: string;
+  value?: any;
+  full?: boolean;
+}) => (
   <div className={full ? "col-span-2" : ""}>
-    <p className="text-gray-800 font-medium ">{label}</p>
-    <p className="text-sm text-gray-500 border border-gray-200 p-2">{value || "—"}</p>
+    <p className="text-gray-800 font-medium">{label}</p>
+    <p className="text-sm text-gray-500 border border-gray-200 p-2">
+      {value || "—"}
+    </p>
   </div>
 );
-

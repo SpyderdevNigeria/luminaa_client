@@ -304,6 +304,11 @@ createPaymentVoucher: async (body: any) => {
     const response = await api.get(`/doctor/payment-vouchers?${query}`);
     return response.data;
   },
+
+    getVitals: async (filters: any) => {
+  const response = await api.get("/doctor/vitals/list", { params: filters });
+  return response.data;
+},
 }
 
 export default DoctorApi;

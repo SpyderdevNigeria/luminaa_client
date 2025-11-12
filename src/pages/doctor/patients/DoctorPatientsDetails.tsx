@@ -9,6 +9,7 @@ import { IPatient } from "../../../types/Interfaces";
 import UserImage from "../../../assets/images/patient/user.png"
 import PatientInformation from "../../../components/common/patientDetailsComponent/PatientInformation";
 import MedicalHistory from "../../../components/common/patientDetailsComponent/PatientMedicalHistory";
+import PatientVitals from "../../../components/common/patientDetailsComponent/PatientVitals";
 function DoctorPatientsDetails() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("Patient Information");
@@ -50,6 +51,10 @@ function DoctorPatientsDetails() {
     {
       label: "Diagnosis",
       component: <PatientDiagnosis />,
+    },
+        {
+      label: "Vitals",
+      component: <PatientVitals />,
     },
   ];
   if (loading) return <p className="p-4">Loading patient details...</p>;
