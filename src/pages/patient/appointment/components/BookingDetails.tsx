@@ -5,12 +5,14 @@ import useAppointments from "../../../../hooks/useAppointments";
 import { useEffect, useState } from "react";
 import { usePaystackPayment } from "../../../../hooks/usePaystackPayment";
 import { EntityType } from "../../../../types/Interfaces";
+import { useSelector } from "react-redux";
 
 function BookingDetails() {
   const { appointments, page, getAppointments } = useAppointments(PatientApi);
   const { initializePayment, loading, message } = usePaystackPayment();
   const [isProcessing, setIsProcessing] = useState(false);
-
+  const {user} = useSelector((state:any) =>  state.auth);
+  const [appointmentDetails, setAppointmentDetails] = useState<any>(null);
   useEffect(() => {
     getAppointments();
   }, [page]);
@@ -20,8 +22,15 @@ function BookingDetails() {
   }, []);
 
   const appointment = appointments[0];
+  useEffect(() => {
+    if (appointment) getAppointmentDetails();
+  }, [appointment]);
+  const getAppointmentDetails = async () => {
+    const response = await PatientApi.getAppointmentsById(appointment.id);
+    setAppointmentDetails(response.data);
+  };
 
-  if (!appointment)
+  if (!appointment || !appointmentDetails)
     return (
       <div className="flex flex-col items-center justify-center h-[500px]">
         Loading Appointment Details ...
@@ -104,18 +113,28 @@ function BookingDetails() {
 
       {/* Total */}
       <div className="mt-4 border-t pt-6 pb-0 border-gray-light">
-        {/* <div className="flex flex-row items-center mt-8 mb-4 justify-between">
+        <div className="flex flex-row items-center mt-8 mb-4 justify-between">
           <h5 className="text-xl">Total Amount</h5>
-          <h6 className="text-xl">₦100,004</h6>
-        </div> */}
-
-        <button
+          <h6 className="text-xl">₦{appointmentDetails?.doctor?.specialisation?.consultationPrice}</h6>
+        </div>
+        {user?.hasBookedInitialConsultation === false ? (
+          <div >
+            <button  className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50">
+             Go to Dashboard
+            </button>
+          </div>
+        ) : (
+            <div>
+            <button
           className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50"
           disabled={loading || isProcessing}
           onClick={handlePayment}
         >
           {loading || isProcessing ? "Processing..." : "Proceed to Pay"}
         </button>
+          </div>
+            )}
+
 
         {message && (
           <div className="bg-blue-50 border border-blue-100 text-blue-700 text-center mt-4 p-3 rounded-lg text-sm">
@@ -128,3 +147,4 @@ function BookingDetails() {
 }
 
 export default BookingDetails;
+

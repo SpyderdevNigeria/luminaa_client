@@ -64,6 +64,7 @@ export interface IUser {
   };
 }
 export interface IDoctor {
+    specialisation: any;
     specialty?:string;
     firstName?:string;
     lastName?:string;
