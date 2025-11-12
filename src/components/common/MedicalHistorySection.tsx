@@ -163,7 +163,7 @@ const MedicalHistorySection = ({
 
       {/* Tab Content */}
       {type === "doctor" && activeTab === "vitals" && (
-        <PatientVitals patient={procedure?.patient} />
+        <PatientVitals patientId={procedure?.patient?.id} />
       )}
 
       {(!type || type !== "doctor" || activeTab === "history") && (

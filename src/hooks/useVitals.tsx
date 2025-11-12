@@ -14,9 +14,13 @@ export const useVitals = (api:any) => {
     try {
       dispatch(setVitalsLoading(true));
       const response = await api.getVitals(filters); 
-      console.log(response)
+
       // response should return { data, total }
-      dispatch(setVitals({ data: response?.data?.data, total: response?.data?.total }));
+      if (response?.data?.length > 0) {
+              dispatch(setVitals({ data: response?.data, total: response?.total }));
+      }else if (response?.data?.data.length > 0) {
+        dispatch(setVitals({ data: response?.data?.data, total: response?.data?.total }));
+      }
     } catch (err: any) {
       dispatch(setVitalsError(err.message || "Failed to fetch vitals"));
     } finally {

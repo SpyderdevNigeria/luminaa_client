@@ -55,7 +55,7 @@ select option:hover {
 
 /* Pharmacist Theme */
 [data-theme="pharmacist"] {
-  --color-primary: #00BA8F;
+  --color-primary:  #037347;
 }
 
 /* Admin Theme */
@@ -65,7 +65,7 @@ select option:hover {
 
 /* Super Admin Theme */
 [data-theme="super_admin"] {
-  --color-primary: #037347;
+  --color-primary:  #037347;
 }
 
 

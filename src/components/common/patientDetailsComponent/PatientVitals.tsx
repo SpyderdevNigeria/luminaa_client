@@ -37,6 +37,7 @@ function PatientVitals({patientId}: any) {
 //   const [editVital, setEditVital] = useState<any>(null);
 
   // Load vitals when filters change
+
   useEffect(() => {
     fetchVitals();
   }, [
@@ -50,7 +51,7 @@ function PatientVitals({patientId}: any) {
 
   useEffect(() => {
     if (id || patientId) {
-    const selectedId = patientId || id;
+      const selectedId = patientId ? patientId : id;
       updateFilters({ patientId: selectedId, page: 1 });
     }
   }, [id, patientId]);
@@ -59,26 +60,26 @@ function PatientVitals({patientId}: any) {
 
 
   const columns: Column<any>[] = [
-    {
-      key: "patient",
-      label: "Patient",
-      render: (vital: any) => (
-        <span>
-          {vital?.patient?.user?.firstName && vital?.patient?.user?.lastName
-            ? `${vital?.patient?.user?.firstName} ${vital?.patient?.user?.lastName}`
-            : "N/A"}
-        </span>
-      ),
-    },
-    {
-      key: "patient Email",
-      label: "Patient Email",
-      render: (vital: any) => (
-        <span>
-          {vital?.patient?.user?.email}
-        </span>
-      ),
-    },
+    // {
+    //   key: "patient",
+    //   label: "Patient",
+    //   render: (vital: any) => (
+    //     <span>
+    //       {vital?.patient?.user?.firstName && vital?.patient?.user?.lastName
+    //         ? `${vital?.patient?.user?.firstName} ${vital?.patient?.user?.lastName}`
+    //         : "N/A"}
+    //     </span>
+    //   ),
+    // },
+    // {
+    //   key: "patient Email",
+    //   label: "Patient Email",
+    //   render: (vital: any) => (
+    //     <span>
+    //       {vital?.patient?.user?.email}
+    //     </span>
+    //   ),
+    // },
     {
       key: "systolicBP",
       label: "BP",
