@@ -112,6 +112,7 @@ function NursePatients() {
         <span>{patient?.isMedicalHistoryCompleted ? "YES" : "NO"}</span>
       ),
     },
+    {key : "createdAt", label: "Created", render: (patient) => <span>{new Date(patient?.createdAt).toLocaleString()}</span>},
     {
       key: "actions",
       label: "Actions",
