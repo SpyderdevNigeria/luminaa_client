@@ -7,6 +7,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import AssignPartnerModal from "../../../components/modal/AssignPartnerModal";
 import { useToaster } from "../../../components/common/ToasterContext";
 import { useHmo } from "../../../hooks/useHmos";
+import PaymentDetails from "../../../components/common/PaymentDetails";
 
 type User = {
   id: string;
@@ -261,23 +262,25 @@ function AdminPatientDetails() {
           </div>
         </div>
       </section>
-
-{user?.partner !== null && (
-        <section>
-                <h4 className="text-lg font-medium mb-2">Partner</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div>
-            <strong>Partner Name:</strong> {user?.partner?.name || "N/A"}
-          </div>
-          <div>
-            <strong>Partner Type:</strong> {user?.partner?.partnerType || "N/A"}
-          </div>
-          <div className="md:col-span-2">
-            <strong>Partner Description:</strong> {user?.partner?.description || "N/A"}
-          </div>
+            <div>
+        <PaymentDetails entityType="patient_registration" entityId={user.id} patientId={user?.id} amount={0} />
         </div>
-      </section>
-)}
+      {user?.partner !== null && (
+              <section>
+                      <h4 className="text-lg font-medium mb-2">Partner</h4>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <strong>Partner Name:</strong> {user?.partner?.name || "N/A"}
+                </div>
+                <div>
+                  <strong>Partner Type:</strong> {user?.partner?.partnerType || "N/A"}
+                </div>
+                <div className="md:col-span-2">
+                  <strong>Partner Description:</strong> {user?.partner?.description || "N/A"}
+                </div>
+              </div>
+            </section>
+      )}
 
       {/* Verify HMO Section */}
  <section className="border-t border-gray-200 pt-4">

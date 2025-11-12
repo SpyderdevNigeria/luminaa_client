@@ -200,6 +200,15 @@ getVitalById: async (id: any) => {
     const response = await api.get("/patient/services", { params: filters });
     return response.data;
   },
+    getPayments: async (query: any) => {
+    const response = await api.get(`/patient/payments${query}`);
+    return response.data;
+  },
+
+  getPaymentById: async (id: string) => {
+    const response = await api.get(`/patient/payments/${id}`);
+    return response.data;
+  },
 }
 
 export default PatientApi;

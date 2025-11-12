@@ -562,6 +562,20 @@ getInputOutputs: async (filters: any) => {
       params: { page, limit },
     });
     return response.data;
+  },
+
+  getPayments: async (query: any) => {
+    const response = await api.get(`/admin/payments${query}`);
+    return response.data;
+  },
+
+  getPaymentById: async (id: string) => {
+    const response = await api.get(`/admin/payments/${id}`);
+    return response.data;
+  },
+  getPaymentsByEntity: async (entityType: string, entityId: string) => {
+    const response = await api.get(`/admin/payments/entity/${entityType}/${entityId}`);
+    return response.data;
   }
 };
 

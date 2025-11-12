@@ -13,11 +13,12 @@ import PrescriptionDetailsModal from "../../../components/modal/PrescriptionDeta
 import PrescriptionDownloadModal from "../../../components/modal/PrescriptionDownloadModal";
 
 import { getFormattedDateTime } from "../../../utils/dashboardUtils";
-import { IPrescription } from "../../../types/Interfaces";
+import { EntityType, IPrescription } from "../../../types/Interfaces";
 import UploadDocumentsModal from "../../../components/modal/UploadDocumentsModal";
 import { useToaster } from "../../../components/common/ToasterContext";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
 import MedicalHistorySection from "../../../components/common/MedicalHistorySection";
+import { usePaystackPayment } from "../../../hooks/usePaystackPayment";
 
 interface Diagnosis {
   id?: string;
@@ -56,6 +57,8 @@ const ConsultationView = () => {
     const [confirmOpen, setConfirmOpen] = useState(false);
       const [selectedKey, setSelectedKey] = useState<string | null>(null);
       const [loadingConfirm, setLoadingConfirm] = useState(false);
+        const [isProcessing, setIsProcessing] = useState(false);
+        const { initializePayment, loading: paymentLoading, message } = usePaystackPayment();
   const { showToast } = useToaster();
   const fetchDocuments = async () => {
     try {
@@ -65,7 +68,14 @@ const ConsultationView = () => {
       console.error("Error fetching documents", error);
     }
   };
-
+    const handlePayment = async () => {
+      setIsProcessing(true);
+      try {
+        await initializePayment(EntityType.APPOINTMENT, appointment.id);
+      } finally {
+        setIsProcessing(false);
+      }
+    };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -203,6 +213,26 @@ const ConsultationView = () => {
               <p className="text-sm">{appointment.patientNote || "No note provided."}</p>
               <h3 className="text-sm font-medium text-gray-500 mt-6 mb-2">Doctor Note</h3>
               <p className="text-sm">{appointment.doctorNote || "No note provided."}</p>
+            </div>
+            <div>
+                <div className="flex flex-col md:flex-row items-center justify-between ">
+          <div>
+                          <h3 className="text-sm font-medium text-gray-500 mt-6 mb-2">Payment Status</h3>
+              <p className="text-sm capitalize">{appointment.paymentStatus}</p>
+          </div>
+              <div>
+                {appointment.paymentStatus === "pending" && (
+                          <button
+                        className="cursor-pointer text-xs bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50"
+                          disabled={paymentLoading || isProcessing}
+                          onClick={handlePayment}
+                        >
+                          {paymentLoading || isProcessing ? "Processing..." : "Proceed to Pay"}
+                        </button>
+                )}
+              </div>
+            </div>
+            <p>{message}</p>
             </div>
           </div>
         )}

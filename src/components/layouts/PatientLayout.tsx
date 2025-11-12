@@ -22,6 +22,9 @@ function PatientLayout() {
       dispatch(logout());
       navigate(routeLinks?.auth?.login);
     }
+    if (userProfile?.registrationPaymentStatus === "pending") {
+    navigate(routeLinks?.patient?.paymentPending);
+  }
   }, [authLoading, userProfile, navigate]);
 
   // Loading while auth is verifying

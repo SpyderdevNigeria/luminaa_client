@@ -103,7 +103,7 @@ const orderColumns: Column<any>[] = [
             Wallet Balance <AiOutlineEye className="inline w-4 h-4 ml-2" />
           </p>
           <h2 className="text-xl md:text-5xl my-8">
-            ₦ 1004.<span className="text-2xl">89</span>
+            ₦ 0.<span className="text-2xl">00</span>
           </h2>
           <button className="mt-4 bg-primary text-white px-4 py-3 rounded flex items-center gap-2">
             <BiWallet /> <span className="text-sm">Fund wallet</span>

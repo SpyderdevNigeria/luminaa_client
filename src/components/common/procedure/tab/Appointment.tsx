@@ -1,5 +1,6 @@
 import Section from '../../Section'
 import Info from '../../Info'
+import PaymentDetails from '../../PaymentDetails'
 
 function Appointment({procedure}: any) {
   return (
@@ -23,6 +24,7 @@ function Appointment({procedure}: any) {
                 full
               />
             </div>
+            <PaymentDetails entityType="appointment" entityId={procedure.appointment?.id} patientId={procedure?.patient?.id} amount={procedure.amount} />
           </Section>
   )
 }

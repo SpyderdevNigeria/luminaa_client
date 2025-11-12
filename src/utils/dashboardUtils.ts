@@ -21,7 +21,7 @@ import { HiMiniUsers, HiUsers } from "react-icons/hi2";
 import { RxDashboard } from "react-icons/rx";
 import { CiViewList } from "react-icons/ci";
 import { ImLab } from "react-icons/im";
-import {  MdHealthAndSafety, MdInventory, MdMedication } from "react-icons/md";
+import {  MdHealthAndSafety, MdInventory, MdMedication, MdPayment } from "react-icons/md";
 import moment from "moment";
 import { BsMicrosoftTeams } from "react-icons/bs";
 
@@ -166,6 +166,23 @@ export const navItemsPatient = [
         visible: true,
       },
     ],
+  },
+      {
+    id: "payments",
+    label: "Payments",
+    title: "Payments",
+    icon: MdPayment,
+    to: routeLinks.patient.payments ?? '',
+    subLinks: [
+      {
+        id: "payments-details",
+        label: "Payments Details",
+        title: "Payments / Payments Details",
+        icon: MdPayment,
+        to: routeLinks.patient.paymentDetails ?? '',
+        visible: false,
+      }
+    ]
   },
   {
     id: "profile",
@@ -846,6 +863,23 @@ export const navItemsAdmin = [
       },
     ],
   },
+    {
+    id: "payments",
+    label: "Payments",
+    title: "Payments",
+    icon: MdPayment,
+    to: routeLinks.admin.payments ?? '',
+    subLinks: [
+      {
+        id: "payments-details",
+        label: "Payments Details",
+        title: "Payments / Payments Details",
+        icon: MdPayment,
+        to: routeLinks.admin.paymentDetails ?? '',
+        visible: false,
+      }
+    ]
+  },
   {
     id: "profile-management",
     label: "Profile Management",
@@ -1143,6 +1177,23 @@ export const navItemsSuperAdmin = [
     ],
   },
   {
+    id: "payments",
+    label: "Payments",
+    title: "Payments",
+    icon: MdPayment,
+    to: routeLinks.superAdmin.payments ?? '',
+    subLinks: [
+      {
+        id: "payments-details",
+        label: "Payments Details",
+        title: "Payments / Payments Details",
+        icon: MdPayment,
+        to: routeLinks.superAdmin.paymentDetails ?? '',
+        visible: false,
+      }
+    ]
+  },
+  {
     id: "profile-management",
     label: "Profile Management",
     title: "Profile Management",
@@ -1383,6 +1434,10 @@ export const returnMemberNavigationUrlLogic = (user: any) => {
     return routeLinks?.patient?.onboarding;
   }
 
+  if (user?.registrationPaymentStatus === "pending") {
+    return routeLinks?.patient?.paymentPending;
+  }
+
   return "/patient/dashboard";
 };
 
@@ -1474,13 +1529,13 @@ export function getFormattedDateTime(isoDateString: string) {
   const dateObj = new Date(localDateString);
 
   const getDate = dateObj.toLocaleDateString();
+
   const formattedTime = dateObj.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
 
-  const formattedDate = moment(getDate).format("MMMM Do YYYY");
-
+  const formattedDate = moment(getDate).format("MMMM Do YYYY") !==  'Invalid date' ? moment(getDate).format("MMMM Do YYYY") : getDate;
   return {
     formattedDate,
     formattedTime,

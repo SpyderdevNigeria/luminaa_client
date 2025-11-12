@@ -44,6 +44,7 @@ export interface IUser {
   isBioDataCompleted: boolean;
   isMedicalHistoryCompleted: boolean;
   licenseNumber:string;
+  registrationPaymentStatus:string;
   isMatron:string|boolean|undefined|null;
   user: {
     id: string;
@@ -259,4 +260,11 @@ export interface IInventoryLog {
   notes: string;
   reference: string;
   timestamp: string; 
+}
+
+export enum EntityType {
+  PATIENT_REGISTRATION = 'patient_registration',
+  APPOINTMENT = 'appointment',
+  PROCEDURE = 'procedure',
+  MEDICATION_ORDER = 'medication_order',
 }

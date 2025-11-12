@@ -5,6 +5,14 @@ import { FaBookmark } from "react-icons/fa6";
 import Modal from "../modal/modal";
 import { useToaster } from "./ToasterContext";
 
+interface Specialisation {
+  id: string;
+  name: string;
+  description: string;
+  additionalInfo?: string;
+  consultationPrice: string;
+}
+
 interface Doctor {
   id: string;
   user: {
@@ -15,6 +23,9 @@ interface Doctor {
   };
   isActive: boolean;
   specialty: string;
+  contactNumber?: string;
+  licenseNumber?: string;
+  type?: string;
   availability: {
     data:
       | {
@@ -24,6 +35,7 @@ interface Doctor {
           startTime: string;
         }[] | null;
   } | null;
+  specialisation?: Specialisation;
 }
 
 interface DoctorCardProps {
@@ -37,10 +49,11 @@ const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
 
   const fullName = `Dr. ${doctor.user.firstName} ${doctor.user.lastName}`;
   const imageUrl = doctor.user.profilePicture?.url || DoctorIcon;
+  const specialisation = doctor.specialisation;
 
   return (
     <>
-      <div className="bg-white  border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-all p-4 flex flex-col items-center">
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-all p-4 flex flex-col items-center">
         {/* Profile Picture */}
         <div className="w-20 h-20 rounded-full overflow-hidden shadow-md mb-3">
           <img
@@ -54,7 +67,22 @@ const DoctorCard = ({ doctor, handleClick }: DoctorCardProps) => {
         <h3 className="text-center text-base font-semibold text-gray-800">
           {fullName}
         </h3>
-        <span className="mt-1 text-sm text-gray-500">{doctor.specialty}</span>
+        {/* <span className="mt-1 text-sm text-gray-500">{doctor.specialty}</span> */}
+
+        {/* Extra Specialisation Info */}
+        {specialisation && (
+          <div className="mt-3 text-center text-sm text-gray-600 space-y-1">
+            <p className="mt-1 text-sm text-gray-500">
+              {specialisation.name?.trim()}
+            </p>
+            <p className="text-gray-500 text-xs leading-snug line-clamp-2">
+              {specialisation.description}
+            </p>
+            <p className="text-primary font-semibold text-sm">
+              ₦{parseFloat(specialisation.consultationPrice).toLocaleString()}
+            </p>
+          </div>
+        )}
 
         {/* Actions */}
         <div className="flex items-center gap-2 mt-4 w-full">

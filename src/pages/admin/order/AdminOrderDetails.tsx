@@ -4,6 +4,7 @@ import AdminApi from "../../../api/adminApi";
 import { PiPillDuotone } from "react-icons/pi";
 import StatusBadge from "../../../components/common/StatusBadge";
 import { useToaster } from "../../../components/common/ToasterContext";
+import PaymentDetails from "../../../components/common/PaymentDetails";
 
 const AdminOrderDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -148,7 +149,9 @@ const AdminOrderDetails = () => {
         </div>
       </div>
 
-
+        <div>
+        <PaymentDetails entityType="medication_order" entityId={order.id} patientId={order?.patient?.id} amount={order.amount} />
+        </div>
     </div>
   );
 };

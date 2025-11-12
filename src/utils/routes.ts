@@ -38,6 +38,11 @@ const routeLinks = {
     notification: '/patient/notifications',
     services: '/patient/services',
     servicesDetails: '/patient/services/:id',
+    paymentPending: '/patient/payment-pending',
+    callback: '/patient/payment/callback',
+    paymentSucess: '/patient/payment/success',
+    payments : '/patient/payments',
+    paymentDetails : '/patient/payments/:id',
 
   },
   doctor: {
@@ -157,6 +162,8 @@ admin: {
   paymentVouchersDetails: '/admin/payment-vouchers/:id',
   hmos: '/admin/hmos',
   hmoDetails: '/admin/hmos/:id',
+  payments : '/admin/payments',
+  paymentDetails : '/admin/payments/:id',
 },
 superAdmin: {
   path:'/super-admin',
@@ -209,6 +216,8 @@ superAdmin: {
   paymentVouchersDetails: '/super-admin/payment-vouchers/:id',
   hmos: '/super-admin/hmos',
   hmoDetails: '/super-admin/hmos/:id',
+    payments : '/super-admin/payments',
+  paymentDetails : '/super-admin/payments/:id',
 },
 pharmacist: {
   path:'/pharmacist',

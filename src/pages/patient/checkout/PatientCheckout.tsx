@@ -7,6 +7,8 @@ import PatientApi from "../../../api/PatientApi";
 import { numberWithCommas } from "../../../utils/dashboardUtils";
 import { useToaster } from "../../../components/common/ToasterContext";
 import CheckoutModal from "../../../components/modal/CheckoutModal";
+import { usePaystackPayment } from "../../../hooks/usePaystackPayment";
+import { EntityType } from "../../../types/Interfaces";
 
 const orderTypes = ["pickup", "delivery"];
 const paymentMethods = ["cash", "card"];
@@ -21,12 +23,14 @@ const OrderForm = () => {
   const { showToast } = useToaster();
   const [loading, setLoading] = useState(false);
   const { items: cartItems, update, subtotal, clear } = useCart();
+  const { initializePayment, loading: paystackLoading } = usePaystackPayment(); // 👈 use hook
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setWarnings([]);
     setError([]);
     setLoading(true);
+
     const items = cartItems.map((item) => ({
       medicationId: item?.id,
       quantity: item.quantity,
@@ -42,12 +46,21 @@ const OrderForm = () => {
     try {
       const response = await PatientApi?.createPrescriptionOrderValidate(orderData);
       const data = response?.data;
+
       if (data?.isValid) {
         const finalResponse = await PatientApi?.createPrescriptionOrder(orderData);
-        if (finalResponse) {
+        const order = finalResponse?.data;
+
+        if (order) {
           showToast("Order created successfully", "success");
           clear();
-          setModalOpen(true);
+
+          //  If payment method is card, trigger Paystack
+          if (paymentMethod === "card") {
+            await initializePayment(EntityType.MEDICATION_ORDER, order.id);
+          } else {
+            setModalOpen(true); // cash order success modal
+          }
         }
       } else {
         const errorMessages: string[] = [];
@@ -80,7 +93,7 @@ const OrderForm = () => {
         setError(formattedErrors);
         showToast("Order validation failed", "error");
       } else {
-        showToast("Order creating failed", "error");
+        showToast("Order creation failed", "error");
       }
       console.log(error);
     } finally {
@@ -99,7 +112,7 @@ const OrderForm = () => {
   if (cartItems?.length === 0)
     return (
       <div className="h-[500px] flex flex-col items-center justify-center gap-4 container-bd">
-        <h5>You currently dont have any medication in your cart</h5>
+        <h5>You currently don't have any medication in your cart</h5>
         <Link
           to={routeLinks?.patient?.pharmacy}
           className="bg-primary text-white p-3 rounded-md"
@@ -180,17 +193,17 @@ const OrderForm = () => {
         <div className="flex justify-end">
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || paystackLoading}
             className="mt-4 bg-primary px-4 text-white py-2 rounded-md hover:bg-primary/90 transition"
           >
-            {loading ? "Processing..." : "Place Order"}
+            {loading || paystackLoading ? "Processing..." : "Place Order"}
           </button>
         </div>
       </form>
 
       {/* Right: Order Summary */}
       <div className="space-y-4 container-bd md:col-span-2 flex flex-col justify-between">
-        <div className="">
+        <div>
           <h3 className="text-lg font-semibold mb-2">Order Summary</h3>
           <div className="space-y-5 max-h-[70vh] overflow-y-auto pr-2">
             {cartItems.map((item) => (
@@ -237,7 +250,6 @@ const OrderForm = () => {
         </div>
       </div>
 
-      {/* Order Success Modal */}
       <CheckoutModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );

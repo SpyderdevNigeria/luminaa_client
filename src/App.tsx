@@ -27,6 +27,7 @@ import DoctorPaymentVouchers from "./pages/doctor/paymentvouchers/DoctorPaymentV
 import DoctorPaymentVouchersDetails from "./pages/doctor/paymentvouchers/DoctorPaymentVouchersDetails";
 import PatientServices from "./pages/patient/services/PatientServices";
 import PatientServicesDetails from "./pages/patient/services/PatientServicesDetails";
+import PaymentSuccessful from "./components/common/payment/PaymentSuccessful";
 
 // Public / Business
 const Second = lazy(() => import("./pages/business/second"));
@@ -60,6 +61,10 @@ const PatientProcedures = lazy(() => import("./pages/patient/procedures/PatientP
 const PatientProceduresDetails = lazy(() => import("./pages/patient/procedures/PatientProcedureDetails"));
 const PatientVitalsDetails = lazy(() => import("./pages/patient/vitals/PatientVitalsDetails"));
 const PatientNotification = lazy(() => import("./pages/patient/notification/PatientNotification"));
+const RegistrationPayment = lazy(() => import("./pages/patient/registration/RegistrationPayment"));
+const PaymentCallback = lazy(() => import("./components/common/payment/PaymentCallback"));
+const PatientPayments = lazy(() => import("./pages/patient/payments/PatientPayments"));
+const PatientPaymentsDetails = lazy(() => import("./pages/patient/payments/PatientPaymentDetails"));
 // Doctor
 const DoctorDashboard = lazy(() => import("./pages/doctor/dashboard/DoctorDashboard"));
 const DoctorAppointments = lazy(() => import("./pages/doctor/appointments/DoctorAppointments"));
@@ -138,6 +143,8 @@ const AdminNotification = lazy(() => import("./pages/admin/notification/AdminNot
 const AdminPaymentVouchers = lazy(() => import("./pages/admin/paymentvouchers/AdminPaymentVouchers"));
 const AdminPaymentVouchersDetails = lazy(() => import("./pages/admin/paymentvouchers/AdminPaymentVouchersDetails"));
 const AdminPatientHmos = lazy(() => import("./pages/admin/patients/AdminPatientHmos"));
+const AdminPayments = lazy(() => import("./pages/admin/payments/AdminPayments"));
+const AdminPaymentDetails = lazy(() => import("./pages/admin/payments/AdminPaymentDetails"));
 // Super Admin
 const SuperAdminAdmins = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdmins"));
 const SuperAdminAdminsDetails = lazy(() => import("./pages/admin/superadmin/admins/SuperAdminAdminsDetails"));
@@ -192,7 +199,9 @@ function App() {
       {/* Patient onboarding and appointment */}
       <Route path={routeLinks.patient.onboarding} element={<Onboarding />} />
       <Route path={routeLinks.patient.appointment} element={<Appointment />} />
-
+      <Route path={routeLinks?.patient?.paymentPending} element={<RegistrationPayment />} />
+      <Route path={routeLinks?.patient?.callback} element={<PaymentCallback />} />
+              <Route path={routeLinks?.patient?.paymentSucess} element={<PaymentSuccessful />} />
       {/* Patient Dashboard */}
       <Route path={routeLinks.patient.path} element={<PatientLayout />}>
         <Route index element={<Navigate to={routeLinks.patient.dashboard} replace />} />
@@ -216,6 +225,9 @@ function App() {
         <Route path={routeLinks?.patient?.notification} element={<PatientNotification />} />
         <Route path={routeLinks?.patient?.services} element={<PatientServices />} />
         <Route path={routeLinks?.patient?.servicesDetails} element={<PatientServicesDetails />} />
+        <Route path={routeLinks?.patient?.payments} element={<PatientPayments />} />
+        <Route path={routeLinks?.patient?.paymentDetails} element={<PatientPaymentsDetails />} />
+
       </Route>
 
       {/* Doctor Routes */}
@@ -354,6 +366,8 @@ function App() {
         <Route path={routeLinks.admin.paymentVouchers} element={<AdminPaymentVouchers />} />
         <Route path={routeLinks.admin.paymentVouchersDetails} element={<AdminPaymentVouchersDetails />} />
         <Route path={routeLinks.admin.hmos} element={<AdminPatientHmos />} />
+        <Route path={routeLinks.admin.payments} element={<AdminPayments />} />
+        <Route path={routeLinks.admin.paymentDetails} element={<AdminPaymentDetails />} />
       </Route>
 
       {/* SuperAdmin Routes */}
@@ -397,6 +411,8 @@ function App() {
         <Route path={routeLinks?.superAdmin?.services} element={<AdminServices />} />
         <Route path={routeLinks?.superAdmin?.servicesDetails} element={<AdminServicesDetails />} />
         <Route path={routeLinks.superAdmin.notification} element={<AdminNotification />} />
+        <Route path={routeLinks.superAdmin.payments} element={<AdminPayments />} />
+        <Route path={routeLinks.superAdmin.paymentDetails} element={<AdminPaymentDetails />} />
 
                 <Route path={routeLinks.superAdmin.paymentVouchers} element={<AdminPaymentVouchers />} />
         <Route path={routeLinks.superAdmin.paymentVouchersDetails} element={<AdminPaymentVouchersDetails />} />

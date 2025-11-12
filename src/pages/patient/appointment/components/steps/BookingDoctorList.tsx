@@ -76,6 +76,15 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
           setDoctors(response.data.data);
           setTotal(response.data.total);
           setTotalPages(Math.ceil(response.data.total / limit));
+          if (data?.type !== "A Specialist") {
+            for (let index = 0; index < response.data.data.length; index++) {
+              const element = response.data.data[index];
+              if (element?.availability?.data?.length > 0) {
+               return setSelectedDoctor(element);
+              }
+            }
+
+          }
         }
       } catch (error) {
         console.error("Failed to fetch doctors", error);
@@ -244,16 +253,16 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
                 >
                   All
                 </li>
-                {specialties.map(({ specialty: name, doctorCount }) => (
+                {specialties.map(({ specialty: name }) => (
                   <li
                     key={name}
                     onClick={() => handleSpecialtySelect(name)}
                     className={`cursor-pointer flex justify-between items-center px-4 py-2 rounded-md ${specialty.toLowerCase() === name.toLowerCase() ? "bg-primary text-white" : "hover:bg-primary hover:text-white"}`}
                   >
                     <span>{name}</span>
-                    <span className="text-sm bg-white  text-primary font-semibold rounded-full px-2 py-0.5 border border-primary">
+                    {/* <span className="text-sm bg-white  text-primary font-semibold rounded-full px-2 py-0.5 border border-primary">
                       {doctorCount}
-                    </span>
+                    </span> */}
                   </li>
                 ))}
               </ul>

@@ -17,6 +17,7 @@ import DrugChart from "../DrugChart";
 import ProcedureDocuments from "./form/ProcedureDocuments";
 import ProcedureResults from "./form/ProcedureResults";
 import InputOutput from "../input-output/InputOutput";
+import PaymentDetails from "../PaymentDetails";
 
 
 interface ProcedureDetailsProps {
@@ -144,7 +145,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
       <div className="flex flex-wrap border-b border-gray-200 mb-4 bg-white ">
         {["overview",  "appointment",]
           .concat(type === "nurse" ? [ "patient", "doctor", 'drugchart', "vitals", "intake-outtake" , "procedure documents", "actions",] : [])
-          .concat(type === "admin" ? [ "patient", "doctor", "actions",] : [])
+          .concat(type === "admin" ? [ "patient", "doctor", "payment details", "actions",] : [])
           .concat(type === "doctor" ? [ "patient", "intake-outtake" , 'vitals', 'drugchart',"procedure documents",'procedure results'] : [])
           .map((tab) => (
             <button
@@ -171,7 +172,11 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
           <Patient procedure={procedure} />
 
         )}
-
+        {activeTab === "payment details" && (
+          <div>
+        <PaymentDetails entityType="procedure" entityId={procedure.id} patientId={procedure?.patient?.id} amount={procedure.amount} />
+          </div>
+        )}
         {/* --- DOCTOR INFO --- */}
         {activeTab === "doctor" && (
 
@@ -288,7 +293,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
 
         {/* --- APPOINTMENT --- */}
         {activeTab === "appointment" && (
-          <Appointment procedure={procedure} />
+          <Appointment procedure={procedure}  type={type === "nurse" ? "admin" : "doctor" }/>
         )}
         {activeTab === "drugchart" && (
           <DrugChart

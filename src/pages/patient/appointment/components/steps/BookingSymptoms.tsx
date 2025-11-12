@@ -3,6 +3,7 @@ import BookingDetails from "../BookingDetails";
 import PatientApi from "../../../../../api/PatientApi";
 import FeedbackMessage from "../../../../../components/common/FeedbackMessage";
 import { useToaster } from "../../../../../components/common/ToasterContext";
+import { useSelector } from "react-redux";
 interface BookingSymptomsProps {
   prevStep: () => void;
   data: any;
@@ -18,6 +19,7 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { showToast } = useToaster();
+  const {user} = useSelector((state:any) =>  state.auth);
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     setForm((prev) => ({
@@ -41,10 +43,11 @@ function BookingSymptoms({ prevStep, data, setData }: BookingSymptomsProps) {
 
       const payload = {
         ...data,
-
+        consultationType : data?.type ===  "A Specialist" ? "specialist" : "general",
         location: form.location,
         patientNote: form.symptoms,
-        isInitialConsultation: true,
+        isInitialConsultation: user.hasBookedInitialConsultation === false ? true : false
+,
       };
       console.log(payload);
       const response = await PatientApi.createAppointment(payload);
