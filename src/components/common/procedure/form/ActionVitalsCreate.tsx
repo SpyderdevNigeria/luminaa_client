@@ -224,7 +224,7 @@ function AdminVitalsCreate({
       </div>
 
       <div>
-        <label className="text-sm text-gray-600">Notes</label>
+        <label className="text-sm text-gray-600">Case Condition</label>
         <textarea
           name="notes"
           value={form.notes}

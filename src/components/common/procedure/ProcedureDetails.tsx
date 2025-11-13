@@ -192,7 +192,8 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                 <div className="p-4 bg-white">
 
                   {/* Vitals Section */}
-                {procedure?.scheduledDate ?   <div>
+                {procedure?.scheduledDate ?  
+                 <div>
                     
                   {type === "nurse" && (
                     <div className="flex items-center justify-between flex-row">
@@ -254,7 +255,15 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                         </table>
                       </div>
                     </div>
-                  ) : null
+                  ) : <div> 
+                     <div className="mt-8">
+                      <h3 className="text-base font-semibold text-gray-700 mb-3">
+                        Vitals
+                      </h3>
+
+                      <p className="flex flex-col items-center justify-center h-[500px]">No Vitals Found</p>
+                        </div>
+                      </div>
                   }
                   {/* AdminVitalsCreate form for add/edit */}
                   {(editingVital || addNewVital) && (
