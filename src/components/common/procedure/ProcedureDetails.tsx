@@ -192,7 +192,8 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                 <div className="p-4 bg-white">
 
                   {/* Vitals Section */}
-
+                {procedure?.scheduledDate ?   <div>
+                    
                   {type === "nurse" && (
                     <div className="flex items-center justify-between flex-row">
                       <h3 className="text-2xl">Vitals</h3>
@@ -270,6 +271,13 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                       back={false}
                     />
                   )}
+                  </div> : 
+                  <div>
+                    <h3 className="text-2xl">Vitals</h3>
+                    <p className="text-gray-700">You need to schedule an appointment first.</p>
+                  </div>
+                  
+                  }
 
 
                 </div>
