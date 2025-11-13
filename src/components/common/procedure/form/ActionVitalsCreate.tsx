@@ -168,6 +168,7 @@ function AdminVitalsCreate({
             name="weight"
             value={form.weight}
             onChange={handleChange}
+            type="number"
             placeholder="Enter weight"
             className="form-input w-full p-2 rounded border"
             required
@@ -181,6 +182,7 @@ function AdminVitalsCreate({
             value={form.height}
             onChange={handleChange}
             placeholder="Enter height"
+            type="number"
             className="form-input w-full p-2 rounded border"
             required
           />
@@ -192,6 +194,7 @@ function AdminVitalsCreate({
             name="respiratoryRate"
             value={form.respiratoryRate}
             onChange={handleChange}
+            type="number"
             placeholder="Enter respiratory rate"
             className="form-input w-full p-2 rounded border"
             required
@@ -205,6 +208,7 @@ function AdminVitalsCreate({
             value={form.spO2}
             onChange={handleChange}
             placeholder="Enter SpO₂"
+            type="number"
             className="form-input w-full p-2 rounded border"
             required
           />

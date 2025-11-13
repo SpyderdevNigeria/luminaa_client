@@ -208,7 +208,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
                   )}
 
                   {!editingVital && !addNewVital ? 
-                    procedure?.vitals?.length > 0 && (
+                    procedure?.vitals?.length > 0 ? (
                     <div className="mt-8">
                       <h3 className="text-base font-semibold text-gray-700 mb-3">
                         Vitals
@@ -263,7 +263,7 @@ const ProcedureDetails: React.FC<ProcedureDetailsProps> = ({
 
                       <p className="flex flex-col items-center justify-center h-[500px]">No Vitals Found</p>
                         </div>
-                      </div>
+                      </div> : null
                   }
                   {/* AdminVitalsCreate form for add/edit */}
                   {(editingVital || addNewVital) && (
