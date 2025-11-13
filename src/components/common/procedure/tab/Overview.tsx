@@ -70,10 +70,13 @@ const Overview: React.FC<OverviewProps> = ({ procedure, type }) => {
           />
           <Info label="Created At" value={new Date(procedure?.createdAt).toLocaleString()} />
           <Info label="Updated At" value={new Date(procedure?.updatedAt).toLocaleString()} />
-          <Info label="Note" value={procedure?.note} full />
-          <Info label="Nurse Message" value={procedure?.nurseMessage} full />
-          <Info label="Patient Message" value={procedure?.patientMessage} full />
+            {type === "doctor" || type === "nurse" || type === "admin" ? 
+            <>
+            <Info label="Note" value={procedure?.note} full />
+            <Info label="Nurse Message" value={procedure?.nurseMessage} full />
+            </> : ""}
 
+          <Info label="Patient Message" value={procedure?.patientMessage} full />
             {type == "patient" && procedure?.paymentStatus !== 'completed' && (
               <div className="flex flex-col md:flex-row items-center justify-between">
             <h2>Pay for Procedure {procedure?.type} </h2>
