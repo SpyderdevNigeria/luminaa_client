@@ -22,7 +22,7 @@ function PatientLayout() {
       dispatch(logout());
       navigate(routeLinks?.auth?.login);
     }
-    if (userProfile?.registrationPaymentStatus === "pending" && userProfile?.hmoNumber) {
+    if (userProfile?.registrationPaymentStatus === "pending" && !userProfile?.hmoNumber) {
     navigate(routeLinks?.patient?.paymentPending);
   }
   }, [authLoading, userProfile, navigate]);

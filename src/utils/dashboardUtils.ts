@@ -1437,7 +1437,7 @@ export const returnMemberNavigationUrlLogic = (user: any) => {
     return routeLinks?.patient?.onboarding;
   }
 
-  if (user?.registrationPaymentStatus === "pending" && user?.hmoNumber) {
+    if (user?.registrationPaymentStatus === "pending" && !user?.hmoNumber) {
     return routeLinks?.patient?.paymentPending;
   }
 
