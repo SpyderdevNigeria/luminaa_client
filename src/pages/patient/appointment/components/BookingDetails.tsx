@@ -118,22 +118,28 @@ function BookingDetails() {
           <h6 className="text-xl">₦{appointmentDetails?.doctor?.specialisation?.consultationPrice}</h6>
         </div>
         {user?.hasBookedInitialConsultation === false ? (
-          <div >
-            <button  className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50">
-             Go to Dashboard
+          <div>
+            <button className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50">
+              Go to Dashboard
+            </button>
+          </div>
+        ) : user?.hmoStatus === "active" && user?.hmoNumber ? (
+          <div>
+            <button className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50">
+              Go to Dashboard
             </button>
           </div>
         ) : (
-            <div>
+          <div>
             <button
-          className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50"
-          disabled={loading || isProcessing}
-          onClick={handlePayment}
-        >
-          {loading || isProcessing ? "Processing..." : "Proceed to Pay"}
-        </button>
+              className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50"
+              disabled={loading || isProcessing}
+              onClick={handlePayment}
+            >
+              {loading || isProcessing ? "Processing..." : "Proceed to Pay"}
+            </button>
           </div>
-            )}
+        )}
 
 
         {message && (

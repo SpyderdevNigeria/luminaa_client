@@ -9,6 +9,7 @@ import { useToaster } from "../../../components/common/ToasterContext";
 import CheckoutModal from "../../../components/modal/CheckoutModal";
 import { usePaystackPayment } from "../../../hooks/usePaystackPayment";
 import { EntityType } from "../../../types/Interfaces";
+import { useSelector } from "react-redux";
 
 const orderTypes = ["pickup", "delivery"];
 const paymentMethods = ["cash", "card"];
@@ -24,7 +25,7 @@ const OrderForm = () => {
   const [loading, setLoading] = useState(false);
   const { items: cartItems, update, subtotal, clear } = useCart();
   const { initializePayment, loading: paystackLoading } = usePaystackPayment(); //  use hook
-
+  const { user } = useSelector((state: any) => state?.auth);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setWarnings([]);
@@ -57,7 +58,9 @@ const OrderForm = () => {
 
           //  If payment method is card, trigger Paystack
           if (paymentMethod === "card") {
-            await initializePayment(EntityType.MEDICATION_ORDER, order.id);
+           if (user?.hmoStatus !== "active" || !user?.hmoNumber) {
+             await initializePayment(EntityType.MEDICATION_ORDER, order.id);
+           }  
           } else {
             setModalOpen(true); // cash order success modal
           }

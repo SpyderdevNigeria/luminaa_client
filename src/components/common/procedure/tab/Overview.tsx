@@ -5,6 +5,7 @@ import ConsentFormSection from "./ConsentFormSection";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { usePaystackPayment } from "../../../../hooks/usePaystackPayment";
 import { EntityType } from "../../../../types/Interfaces";
+import { useSelector } from "react-redux";
 
 
 
@@ -45,6 +46,7 @@ const Overview: React.FC<OverviewProps> = ({ procedure, type }) => {
 
     const { initializePayment, loading: paystackLoading } = usePaystackPayment();
     const [isProcessing, setIsProcessing] = useState(false);
+    const {user} = useSelector((state: any) => state.auth);
     const handlePayment = async () => {
       setIsProcessing(true);
       try {
@@ -77,7 +79,11 @@ const Overview: React.FC<OverviewProps> = ({ procedure, type }) => {
             </> : ""}
 
           <Info label="Patient Message" value={procedure?.patientMessage} full />
-            {type == "patient" && procedure?.paymentStatus !== 'completed' && (
+          {user?.hmoStatus === "active" && user?.hmoNumber ? (
+          <div>
+          </div>
+        ) : (
+            type == "patient" && procedure?.paymentStatus !== 'completed' && (
               <div className="flex flex-col md:flex-row items-center justify-between">
             <h2>Pay for Procedure {procedure?.type} </h2>
                         {procedure?.paymentStatus !== 'completed' &&         <div >
@@ -91,7 +97,7 @@ const Overview: React.FC<OverviewProps> = ({ procedure, type }) => {
           </button>
         </div>}
           </div>
-            )}
+            ) )}
         </div>
       </AccordionSection>
 

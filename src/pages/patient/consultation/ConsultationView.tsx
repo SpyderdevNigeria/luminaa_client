@@ -19,6 +19,7 @@ import { useToaster } from "../../../components/common/ToasterContext";
 import ConfirmModal from "../../../components/modal/ConfirmModal";
 import MedicalHistorySection from "../../../components/common/MedicalHistorySection";
 import { usePaystackPayment } from "../../../hooks/usePaystackPayment";
+import { useSelector } from "react-redux";
 
 interface Diagnosis {
   id?: string;
@@ -59,6 +60,8 @@ const ConsultationView = () => {
       const [loadingConfirm, setLoadingConfirm] = useState(false);
         const [isProcessing, setIsProcessing] = useState(false);
         const { initializePayment, loading: paymentLoading, message } = usePaystackPayment();
+        const {user} = useSelector((state:any) => state?.auth);
+        console.log(user);
   const { showToast } = useToaster();
   const fetchDocuments = async () => {
     try {
@@ -220,6 +223,9 @@ const ConsultationView = () => {
                           <h3 className="text-sm font-medium text-gray-500 mt-6 mb-2">Payment Status</h3>
               <p className="text-sm capitalize">{appointment.paymentStatus}</p>
           </div>
+          {user?.hmoStatus === "active" && user?.hmoNumber ? (
+            ""
+        ) : (
               <div>
                 {appointment.paymentStatus === "pending" && (
                           <button
@@ -231,6 +237,7 @@ const ConsultationView = () => {
                         </button>
                 )}
               </div>
+)}
             </div>
             <p>{message}</p>
             </div>
