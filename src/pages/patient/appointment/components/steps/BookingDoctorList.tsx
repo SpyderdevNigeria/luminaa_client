@@ -76,15 +76,15 @@ const BookingDoctorList: React.FC<BookingDoctorListProps> = ({
           setDoctors(response.data.data);
           setTotal(response.data.total);
           setTotalPages(Math.ceil(response.data.total / limit));
-          if (data?.type !== "A Specialist") {
-            for (let index = 0; index < response.data.data.length; index++) {
-              const element = response.data.data[index];
-              if (element?.availability?.data?.length > 0) {
-               return setSelectedDoctor(element);
-              }
-            }
+          // if (data?.type !== "A Specialist") {
+          //   for (let index = 0; index < response.data.data.length; index++) {
+          //     const element = response.data.data[index];
+          //     if (element?.availability?.data?.length > 0) {
+          //      return setSelectedDoctor(element);
+          //     }
+          //   }
 
-          }
+          // }
         }
       } catch (error) {
         console.error("Failed to fetch doctors", error);

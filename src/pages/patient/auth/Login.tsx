@@ -172,13 +172,14 @@ function Login() {
         </div>
 
         {/* Footer */}
-        <h5 className="text-text-secondary text-base text-center mt-4 md:col-span-2">
+
+      </form>
+              <h5 className="text-text-secondary text-base text-center mt-4 md:col-span-2">
           Don't have an account?{" "}
           <button onClick={()=>{navigate(routeLinks?.auth?.register)}} className="text-primary">
             Register
           </button>
         </h5>
-      </form>
     </main>
   );
 }

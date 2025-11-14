@@ -16,7 +16,8 @@ function SidebarFooter() {
   const handleLogout = () => {
     dispatch(logout());
     setIsLogoutOpen(false);
-    navigate(routeLinks.auth.login);
+     navigate(routeLinks.auth.login);
+
   };
 
   const handleNavigateToHelpCenter = () => {

@@ -40,6 +40,7 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.user = null;
+      state.refreshToken = null;
     },
     // update only user profile info
     updateUser: (state, action: PayloadAction<AuthState["user"]>) => {

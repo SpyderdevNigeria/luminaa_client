@@ -258,14 +258,15 @@ function Register() {
           </button>
         </div>
 
-        {/* Login Link */}
+
+      </form>
+              {/* Login Link */}
         <h5 className="text-text-secondary text-base text-center md:col-span-2 ">
           Already have an account?{" "}
           <button onClick={() => { navigate(routeLinks?.auth?.login) }} className="text-primary">
            Log in
           </button>
         </h5>
-      </form>
     </main>
   );
 }

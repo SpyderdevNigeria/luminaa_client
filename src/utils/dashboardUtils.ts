@@ -629,22 +629,7 @@ export const navItemsAdmin = [
         to: routeLinks.admin.hmos ?? '',
         visible: true,
       },
-           {
-        id: "payments-voucher",
-        label: "Payments Voucher",
-        title: "Payments Voucher",
-        icon: FaMoneyBillWave,
-        to: routeLinks.admin.paymentVouchers ?? '',
-        visible: true,
-      },
-      {
-        id: "payments-voucher-details",
-        label: "Payment Voucher Details",
-        title: "Payments Voucher / Payment Voucher Details",
-        icon: FaMoneyBillWave,
-        to: routeLinks.admin.paymentVouchersDetails ?? '',
-        visible: false,
-      }
+
     ],
   },
   {
@@ -678,6 +663,23 @@ export const navItemsAdmin = [
         to: routeLinks.admin.doctorsSpecialties ?? '',
         visible: true,
       },
+
+                 {
+        id: "payments-voucher",
+        label: "Payments Voucher",
+        title: "Payments Voucher",
+        icon: FaMoneyBillWave,
+        to: routeLinks.admin.paymentVouchers ?? '',
+        visible: true,
+      },
+      {
+        id: "payments-voucher-details",
+        label: "Payment Voucher Details",
+        title: "Payments Voucher / Payment Voucher Details",
+        icon: FaMoneyBillWave,
+        to: routeLinks.admin.paymentVouchersDetails ?? '',
+        visible: false,
+      }
     ],
   },
   {
@@ -935,22 +937,7 @@ export const navItemsSuperAdmin = [
         to: routeLinks.superAdmin.hmos ?? '',
         visible: true,
       },
-           {
-        id: "payments-voucher",
-        label: "Payments Voucher",
-        title: "Payments Voucher",
-        icon: FaMoneyBillWave,
-        to: routeLinks.superAdmin.paymentVouchers ?? '',
-        visible: true,
-      },
-      {
-        id: "payments-voucher-details",
-        label: "Payment Voucher Details",
-        title: "Payments Voucher / Payment Voucher Details",
-        icon: FaMoneyBillWave,
-        to: routeLinks.superAdmin.paymentVouchersDetails ?? '',
-        visible: false,
-      }
+
     ],
   },
   {
@@ -984,6 +971,22 @@ export const navItemsSuperAdmin = [
         to: routeLinks.superAdmin.doctorsSpecialties ?? '',
         visible: true,
       },
+                 {
+        id: "payments-voucher",
+        label: "Payments Voucher",
+        title: "Payments Voucher",
+        icon: FaMoneyBillWave,
+        to: routeLinks.superAdmin.paymentVouchers ?? '',
+        visible: true,
+      },
+      {
+        id: "payments-voucher-details",
+        label: "Payment Voucher Details",
+        title: "Payments Voucher / Payment Voucher Details",
+        icon: FaMoneyBillWave,
+        to: routeLinks.superAdmin.paymentVouchersDetails ?? '',
+        visible: false,
+      }
     ],
   },
     {
@@ -1434,7 +1437,7 @@ export const returnMemberNavigationUrlLogic = (user: any) => {
     return routeLinks?.patient?.onboarding;
   }
 
-  if (user?.registrationPaymentStatus === "pending") {
+  if (user?.registrationPaymentStatus === "pending" && user?.hmoNumber) {
     return routeLinks?.patient?.paymentPending;
   }
 

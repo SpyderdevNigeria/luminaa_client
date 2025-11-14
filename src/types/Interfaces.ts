@@ -46,6 +46,7 @@ export interface IUser {
   licenseNumber:string;
   registrationPaymentStatus:string;
   isMatron:string|boolean|undefined|null;
+  hmoNumber:string;
   user: {
     id: string;
     createdAt: string;
