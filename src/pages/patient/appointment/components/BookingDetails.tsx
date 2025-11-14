@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { usePaystackPayment } from "../../../../hooks/usePaystackPayment";
 import { EntityType } from "../../../../types/Interfaces";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import routeLinks from "../../../../utils/routes";
 
 function BookingDetails() {
   const { appointments, page, getAppointments } = useAppointments(PatientApi);
@@ -13,6 +15,7 @@ function BookingDetails() {
   const [isProcessing, setIsProcessing] = useState(false);
   const {user} = useSelector((state:any) =>  state.auth);
   const [appointmentDetails, setAppointmentDetails] = useState<any>(null);
+  const navigation = useNavigate();
   useEffect(() => {
     getAppointments();
   }, [page]);
@@ -118,14 +121,22 @@ function BookingDetails() {
           <h6 className="text-xl">₦{appointmentDetails?.doctor?.specialisation?.consultationPrice}</h6>
         </div>
         {user?.hasBookedInitialConsultation === false ? (
-          <div>
-            <button className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50">
+       <div>
+            <button className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50"
+            onClick={()=>{
+              navigation(`${routeLinks?.patient?.consultations}/${appointment?.id}`);
+            }}
+            >
               Go to Dashboard
             </button>
           </div>
         ) : user?.hmoStatus === "active" && user?.hmoNumber ? (
           <div>
-            <button className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50">
+            <button className="cursor-pointer form-primary-button bg-primary mt-4 text-white rounded-lg px-6 py-3 hover:bg-primary/90 transition disabled:opacity-50"
+            onClick={()=>{
+              navigation(`${routeLinks?.patient?.consultations}/${appointment?.id}`);
+            }}
+            >
               Go to Dashboard
             </button>
           </div>
